@@ -9,7 +9,8 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2015", "esnext.asynciterable"],
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
