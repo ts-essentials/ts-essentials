@@ -1,5 +1,11 @@
 {
   "name": "ts-essentials",
+  "description": "All essential Typescript types in one place",
+  "keywords": [
+    "typescript",
+    "types",
+    "essentials"
+  ],
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",

@@ -1,6 +1,6 @@
 # ts-essentials
 
-All basic Typescript types in one place 🤙
+All essential Typescript types in one place 🤙
 
 ## What's inside?
 
