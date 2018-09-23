@@ -4,6 +4,16 @@ All basic Typescript types in one place 🤙
 
 ## What's inside?
 
+- [Basic](#Basic)
+    * Primitive
+- [Dictionaries](#dictionaries)
+    * Dictionary
+    * DictionaryValues
+- [Deep Partial & Deep Readonly](#deep-partial--deep-readonly)
+- [Omit](#omit)
+- [Literal types](#literal-types)
+- [Exhaustive switch cases in typescript](#exhaustive-switch-cases-in-typescript)
+
 ### Basic:
 
 `Primitive` type matching all primitive values
