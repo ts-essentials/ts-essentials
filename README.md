@@ -1,10 +1,10 @@
-# TS-STL
+# ts-essentials
 
-Typescript Standard Library — all basic Typescript types in one place 🤙
+All basic Typescript types in one place 🤙
 
 ## What's inside?
 
-### Essentials:
+### Basic:
 
 `Primitive` type matching all primitive values
 

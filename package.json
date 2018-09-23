@@ -1,8 +1,8 @@
 {
-  "name": "ts-stl",
+  "name": "ts-essentials",
   "version": "0.0.2",
   "main": "dist/index.js",
-  "repository": "git@github.com:krzkaczor/ts-stl.git",
+  "repository": "git@github.com:krzkaczor/ts-essentials.git",
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
   "scripts": {
