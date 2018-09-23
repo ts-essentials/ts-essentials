@@ -4,7 +4,7 @@ All basic Typescript types in one place 🤙
 
 ## What's inside?
 
-- [Basic](#Basic)
+- [Basic](#basic)
     * Primitive
 - [Dictionaries](#dictionaries)
     * Dictionary
