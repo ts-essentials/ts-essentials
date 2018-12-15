@@ -1,3 +1,6 @@
+/**
+ * This file contains a lot of unused functions as it's only typechecked.
+ */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import { DeepReadonly, DeepRequired } from "../lib";
 
