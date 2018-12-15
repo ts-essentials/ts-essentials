@@ -1,21 +1,27 @@
-import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Omit, Opaque } from "../lib/types";
+import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Omit, Opaque, DeepRequired } from "../lib/types";
 
 const stringDict: Dictionary<string> = {
   a: "A",
   b: "B",
 };
 
-// Use Dictionary type with union string type to make sure to cover all possible values
+// Specify second type argument to change dictionary keys type
+const dictOfNumbers: Dictionary<string, number> = {
+  420: "four twenty",
+  1337: "HAX"
+};
+
+// You may specify union types as key to cover all possible cases. It's acts the same as Record from TS's standard library
 export type DummyOptions = "open" | "closed" | "unknown";
 const dictFromUnionType: Dictionary<number, DummyOptions> = {
   closed: 1,
   open: 2,
   unknown: 3,
 };
+
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
 
-// recursive deep partials
 type ComplexObject = {
   simple: number;
   nested: {
@@ -23,10 +29,22 @@ type ComplexObject = {
     array: [{ bar: number }];
   };
 };
+
+// recursive deep partial
 type ComplexObjectPartial = DeepPartial<ComplexObject>;
-const sample: ComplexObjectPartial = {
+const samplePartial: ComplexObjectPartial = {
   nested: {
-    array: [{}],
+    array: [],
+  },
+};
+
+// recursive deep required
+type ComplexObjectAgain = DeepRequired<ComplexObjectPartial>;
+const sampleRequired: ComplexObjectAgain = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: []
   },
 };
 
@@ -43,5 +61,5 @@ function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
     throw new Error("Value not positive !!!");
   }
-  return n as any as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
+  return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
