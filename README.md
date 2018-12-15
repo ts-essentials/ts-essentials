@@ -2,6 +2,18 @@
 
 All essential Typescript types in one place 🤙
 
+## Install
+
+```sh
+npm add --save-dev ts-essentials
+```
+
+or 
+
+```sh
+yarn add --dev ts-essentials
+```
+
 ## What's inside?
 
 - [Basic](#basic)
