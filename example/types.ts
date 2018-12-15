@@ -5,13 +5,20 @@ const stringDict: Dictionary<string> = {
   b: "B",
 };
 
-// Use Dictionary type with union string type to make sure to cover all possible values
+// Specify second type argument to change dictionary keys type
+const dictOfNumbers: Dictionary<string, number> = {
+  420: "four twenty",
+  1337: "HAX"
+};
+
+// You may specify union types as key to cover all possible cases. It's acts the same as Record from TS's standard library
 export type DummyOptions = "open" | "closed" | "unknown";
 const dictFromUnionType: Dictionary<number, DummyOptions> = {
   closed: 1,
   open: 2,
   unknown: 3,
 };
+
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
 
@@ -43,5 +50,5 @@ function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
     throw new Error("Value not positive !!!");
   }
-  return n as any as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
+  return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
