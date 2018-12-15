@@ -1,4 +1,4 @@
-import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Omit, Opaque } from "../lib/types";
+import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Omit, Opaque, DeepRequired } from "../lib/types";
 
 const stringDict: Dictionary<string> = {
   a: "A",
@@ -22,7 +22,6 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
 
-// recursive deep partials
 type ComplexObject = {
   simple: number;
   nested: {
@@ -30,10 +29,22 @@ type ComplexObject = {
     array: [{ bar: number }];
   };
 };
+
+// recursive deep partial
 type ComplexObjectPartial = DeepPartial<ComplexObject>;
-const sample: ComplexObjectPartial = {
+const samplePartial: ComplexObjectPartial = {
   nested: {
-    array: [{}],
+    array: [],
+  },
+};
+
+// recursive deep required
+type ComplexObjectAgain = DeepRequired<ComplexObjectPartial>;
+const sampleRequired: ComplexObjectAgain = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: []
   },
 };
 

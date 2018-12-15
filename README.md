@@ -8,7 +8,7 @@ All essential Typescript types in one place 🤙
 npm add --save-dev ts-essentials
 ```
 
-or 
+or
 
 ```sh
 yarn add --dev ts-essentials
@@ -17,18 +17,21 @@ yarn add --dev ts-essentials
 ## What's inside?
 
 - [Basic](#basic)
-    * Primitive
+  - Primitive
+  - NonNullable
 - [Dictionaries](#dictionaries)
-    * Dictionary
-    * DictionaryValues
-- [Deep Partial & Deep Readonly](#deep-partial--deep-readonly)
+  - Dictionary
+  - DictionaryValues
+- [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
 - [Omit](#omit)
+- [Opaque types](#opaque-types)
 - [Literal types](#literal-types)
-- [Exhaustive switch cases in typescript](#exhaustive-switch-cases-in-typescript)
+- [Exhaustive switch cases](#exhaustive-switch-cases-in-typescript)
 
 ### Basic:
 
-`Primitive` type matching all primitive values
+- `Primitive` type matching all primitive values.
+- `NonNullable` remove `null` and `undefined` from union type.
 
 ### Dictionaries
 
@@ -41,7 +44,7 @@ const stringDict: Dictionary<string> = {
 // Specify second type argument to change dictionary keys type
 const dictOfNumbers: Dictionary<string, number> = {
   420: "four twenty",
-  1337: "HAX"
+  1337: "HAX",
 };
 
 // You may specify union types as key to cover all possible cases. It acts the same as Record from TS's standard library
@@ -56,7 +59,7 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 type stringDictValues = DictionaryValues<typeof stringDict>;
 ```
 
-### Deep Partial & Deep Readonly
+### Deep Partial & Deep Required & Deep Readonly
 
 ```typescript
 type ComplexObject = {
@@ -66,10 +69,20 @@ type ComplexObject = {
     array: [{ bar: number }];
   };
 };
+
 type ComplexObjectPartial = DeepPartial<ComplexObject>;
-const sample: ComplexObjectPartial = {
+const samplePartial: ComplexObjectPartial = {
   nested: {
     array: [{}],
+  },
+};
+
+type ComplexObjectAgain = DeepRequired<ComplexObjectPartial>;
+const sampleRequired: ComplexObjectAgain = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: [],
   },
 };
 
@@ -82,7 +95,7 @@ type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
 ```
 
-### Opaque
+### Opaque types
 
 ```typescript
 type PositiveNumber = Opaque<number, "positive-number">;
@@ -105,7 +118,7 @@ const t = {
 };
 ```
 
-### Exhaustive switch cases in typescript
+### Exhaustive switch cases
 
 ```typescript
 function actOnDummyOptions(options: DummyOptions): string {
