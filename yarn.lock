@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
-typescript@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+conditional-type-checks@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/conditional-type-checks/-/conditional-type-checks-0.5.0.tgz#f06567a2d416f23a5b6b01830b1855368bc617ff"
+  integrity sha1-8GVnotQW8jpbawGDCxhVNovGF/8=
+
+typescript@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
+  integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==

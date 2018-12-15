@@ -15,8 +15,9 @@ export type DeepPartial<T> = {
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Primitive
   ? T
-  : T extends Array<infer U> ? ReadonlyArray<U> : T extends Function ? T : DeepReadonlyObject<T>;
+  : T extends any[] ? DeepReadonlyArray<T[number]> : T extends Function ? T : DeepReadonlyObject<T>;
 type DeepReadonlyObject<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };
+interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
