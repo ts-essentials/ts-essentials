@@ -8,6 +8,7 @@
   ],
   "version": "1.0.1",
   "main": "dist/index.js",
+  "types": "dist/types.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
