@@ -6,7 +6,7 @@
     "types",
     "essentials"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
