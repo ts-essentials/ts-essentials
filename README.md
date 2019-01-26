@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/toolbox_1f9f0.png" width="120" alt="TypeStrict">
-  <h3 align="center">ts-essentials</h3> 
+  <h3 align="center">ts-essentials</h3>
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
@@ -30,6 +30,7 @@ yarn add --dev ts-essentials
   - DictionaryValues
 - [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
 - [Omit](#omit)
+- [Merge](#merge)
 - [Opaque types](#opaque-types)
 - [Literal types](#literal-types)
 - [Exhaustive switch cases](#exhaustive-switch-cases-in-typescript)
@@ -99,6 +100,21 @@ type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
 
 ```typescript
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+```
+
+### Merge
+
+```typescript
+type Foo = {
+  a: number,
+  b: string
+};
+
+type Bar = {
+  b: number
+};
+
+const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
 ```
 
 ### Opaque types
