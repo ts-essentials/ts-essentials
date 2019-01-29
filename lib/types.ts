@@ -43,3 +43,6 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
 export type Opaque<K, T> = T & { __TYPE__: K };
+
+/** Easily extract the type of a given object's values */
+export type ValueOf<T> = T[keyof T];
