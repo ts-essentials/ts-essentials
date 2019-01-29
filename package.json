@@ -15,13 +15,15 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "prepublishOnly": "yarn test && yarn build",
-    "test": "tsc --noEmit"
+    "test": "prettier -c **/*.ts && tsc --noEmit",
+    "test:fix": "prettier --write **/*.ts && tsc --noEmit"
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
     "conditional-type-checks": "^0.5.0",
+    "prettier": "^1.16.1",
     "typescript": "^3.2.2"
   }
 }

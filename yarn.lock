@@ -7,6 +7,11 @@ conditional-type-checks@^0.5.0:
   resolved "https://registry.yarnpkg.com/conditional-type-checks/-/conditional-type-checks-0.5.0.tgz#f06567a2d416f23a5b6b01830b1855368bc617ff"
   integrity sha1-8GVnotQW8jpbawGDCxhVNovGF/8=
 
+prettier@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.1.tgz#534c2c9d7853f8845e5e078384e71973bd74089f"
+  integrity sha512-XXUITwIkGb3CPJ2hforHah/zTINRyie5006Jd2HKy2qz7snEJXl0KLfsJZW/wst9g6R2rFvqba3VpNYdu1hDcA==
+
 typescript@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
