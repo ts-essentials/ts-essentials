@@ -33,7 +33,8 @@ yarn add --dev ts-essentials
 - [Merge](#merge)
 - [Opaque types](#opaque-types)
 - [Literal types](#literal-types)
-- [Exhaustive switch cases](#exhaustive-switch-cases-in-typescript)
+- [Exhaustive switch cases](#exhaustive-switch-cases)
+- [ValueOf](#valueof-type)
 
 ### Basic:
 
@@ -156,4 +157,16 @@ function actOnDummyOptions(options: DummyOptions): string {
       throw new UnreachableCaseError(options);
   }
 }
+```
+
+### ValueOf type
+
+```typescript
+const obj = {
+  id: "123e4567-e89b-12d3-a456-426655440000",
+  name: "Test object",
+  timestamp: 1548768231486,
+};
+
+type objKeys = ValueOf<typeof obj>; // string | number
 ```
