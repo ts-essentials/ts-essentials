@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/toolbox_1f9f0.png" width="120" alt="TypeStrict">
-  <h3 align="center">ts-essentials</h3> 
+  <h3 align="center">ts-essentials</h3>
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
@@ -140,4 +140,16 @@ function actOnDummyOptions(options: DummyOptions): string {
       throw new UnreachableCaseError(options);
   }
 }
+```
+
+### ValueOf type
+
+```typescript
+const obj = {
+  id: "123e4567-e89b-12d3-a456-426655440000",
+  name: "Test object",
+  timestamp: 1548768231486,
+};
+
+type objKeys = ValueOf<typeof obj>; // string | number
 ```
