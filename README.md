@@ -33,6 +33,7 @@ yarn add --dev ts-essentials
 - [Opaque types](#opaque-types)
 - [Literal types](#literal-types)
 - [Exhaustive switch cases](#exhaustive-switch-cases-in-typescript)
+- [ValueOf](#valueof-type)
 
 ### Basic:
 
