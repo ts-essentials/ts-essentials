@@ -7,7 +7,6 @@ const t = {
   digit: literal(5), // type stays 5 not number
 };
 
-
 // exhaustive switch cases in typescript!
 function actOnDummyOptions(options: DummyOptions): string {
   switch (options) {

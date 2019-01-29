@@ -40,7 +40,7 @@ export type NonNullable<T> = T & {};
 
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-                       
+
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 
