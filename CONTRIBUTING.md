@@ -11,4 +11,6 @@ Do you have idea for a new type? Please, first submit github issue (or send me P
 
 Please make sure to add new type to README (both menu and description).
 
+When you're done with your changes use `yarn test:fix` to run `prettier` to reformat code and `tsc` to make sure that there are no compilation errors.
+
 Thanks! 🙏🏻

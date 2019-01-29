@@ -170,3 +170,8 @@ const obj = {
 
 type objKeys = ValueOf<typeof obj>; // string | number
 ```
+
+
+## Contributing
+
+All contributions are welcomed [Read more](./CONTRIBUTING.md)
