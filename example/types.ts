@@ -8,7 +8,7 @@ const stringDict: Dictionary<string> = {
 // Specify second type argument to change dictionary keys type
 const dictOfNumbers: Dictionary<string, number> = {
   420: "four twenty",
-  1337: "HAX"
+  1337: "HAX",
 };
 
 // You may specify union types as key to cover all possible cases. It's acts the same as Record from TS's standard library
@@ -44,7 +44,7 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: []
+    array: [],
   },
 };
 
