@@ -29,6 +29,7 @@ yarn add --dev ts-essentials
   - Dictionary
   - DictionaryValues
 - [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
+- [Writable](#writable)
 - [Omit](#omit)
 - [Merge](#merge)
 - [Opaque types](#opaque-types)
@@ -94,6 +95,19 @@ const sampleRequired: ComplexObjectAgain = {
 };
 
 type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
+```
+
+### Writable
+
+```typescript
+type Foo = {
+  readonly a: number,
+  readonly b: string,
+}
+
+const foo: Foo = { a: 1, b: 'b' }
+
+(foo as Writable<typeof foo>).a = 42
 ```
 
 ### Omit
