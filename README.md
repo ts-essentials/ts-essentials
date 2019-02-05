@@ -25,7 +25,6 @@ yarn add --dev ts-essentials
 
 - [Basic](#basic)
   - Primitive
-  - NonNullable
 - [Dictionaries](#dictionaries)
   - Dictionary
   - DictionaryValues
@@ -40,7 +39,6 @@ yarn add --dev ts-essentials
 ### Basic:
 
 - `Primitive` type matching all primitive values.
-- `NonNullable` remove `null` and `undefined` from union type.
 
 ### Dictionaries
 
