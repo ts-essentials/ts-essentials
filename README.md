@@ -33,6 +33,7 @@ yarn add --dev ts-essentials
 - [Omit](#omit)
 - [Merge](#merge)
 - [Opaque types](#opaque-types)
+- [Tuple constraint](#tuple-constraint)
 - [Literal types](#literal-types)
 - [Exhaustive switch cases](#exhaustive-switch-cases)
 - [ValueOf](#valueof-type)
@@ -142,6 +143,18 @@ function makePositiveNumber(n: number): PositiveNumber {
   }
   return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
+```
+
+### Tuple constraint
+
+```typescript
+function foo<T extends Tuple>(tuple: T): T {
+    return tuple;
+}
+
+const ret = foo(["s", 1]);
+// return type of [string, number]
+
 ```
 
 ### Literal types

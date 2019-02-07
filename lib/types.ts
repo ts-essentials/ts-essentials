@@ -49,3 +49,6 @@ export type Opaque<K, T> = T & { __TYPE__: K };
 
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T[keyof T];
+
+/** Type constrant for tuple inference */
+export type Tuple = [any] | any[];
