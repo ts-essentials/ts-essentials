@@ -2,7 +2,7 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
-import { DeepReadonly, DeepRequired } from "../lib";
+import { DeepReadonly, DeepRequired, Tuple } from "../lib";
 
 function testDeepReadonly() {
   type Input = {
@@ -44,4 +44,16 @@ function testDeepRequire() {
   }[];
 
   type Test = Assert<IsExact<DeepRequired<Input>, Expected>>;
+}
+
+function testTupleInference() {
+  type Expected = [number, string];
+
+  function returnTuple<T extends Tuple>(tuple: T) {
+    return tuple;
+  }
+
+  const ret = returnTuple([1, "s"]);
+
+  type Test = Assert<IsExact<typeof ret, Expected>>;
 }
