@@ -35,6 +35,9 @@ export type DeepReadonly<T> = T extends Primitive
 type DeepReadonlyObject<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };
 interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 
+/** Make readonly object writable */
+export type Writable<T> = { -readonly [P in keyof T]: T[P] };
+
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
