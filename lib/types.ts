@@ -17,7 +17,7 @@ export type DeepPartial<T> = {
 /** Like Required but recursive */
 export type DeepRequired<T> = T extends Primitive
   ? NonNullable<T>
-  : T extends any[]
+  : T extends (any[] | ReadonlyArray<any>)
   ? DeepRequiredArray<NonNullable<T[number]>>
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }
