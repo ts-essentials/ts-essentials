@@ -24,9 +24,10 @@ function testDeepReadonly1() {
   type Test = Assert<IsExact<DeepReadonly<Input>, Expected>>;
 }
 
-interface IDeepReadonlyTestHelperType extends DeepReadonly<{
-  field: string[];
-}> {}
+interface IDeepReadonlyTestHelperType
+  extends DeepReadonly<{
+    field: string[];
+  }> {}
 
 // Build-time test to ensure the fix for
 // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
