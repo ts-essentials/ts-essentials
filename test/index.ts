@@ -25,17 +25,17 @@ function testDeepReadonly1() {
 }
 
 interface IDeepReadonlyTestHelperType extends DeepReadonly<{
-	field: string[];
+  field: string[];
 }> {}
 
 // Build-time test to ensure the fix for https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
 function testDeepReadonly2() {
   const a: DeepReadonly<IDeepReadonlyTestHelperType> = {
-	  field: ['lala'],
+    field: ['lala'],
   };
 
   let b: IDeepReadonlyTestHelperType = {
-	  field: ['lala'],
+    field: ['lala'],
   };
 
   b = a;
