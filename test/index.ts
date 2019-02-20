@@ -4,7 +4,7 @@
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import { DeepReadonly, DeepRequired, Tuple } from "../lib";
 
-function testDeepReadonly() {
+function testDeepReadonly1() {
   type Input = {
     a: number[][];
     nested: {
@@ -22,6 +22,25 @@ function testDeepReadonly() {
   }>;
 
   type Test = Assert<IsExact<DeepReadonly<Input>, Expected>>;
+}
+
+interface IDeepReadonlyTestHelperType
+  extends DeepReadonly<{
+    field: string[];
+  }> {}
+
+// Build-time test to ensure the fix for
+// https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
+function testDeepReadonly2() {
+  const a: DeepReadonly<IDeepReadonlyTestHelperType> = {
+    field: ["lala"],
+  };
+
+  let b: IDeepReadonlyTestHelperType = {
+    field: ["lala"],
+  };
+
+  b = a;
 }
 
 function testNonNullable() {
