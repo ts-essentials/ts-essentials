@@ -44,6 +44,11 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 
+/** Convert union type to intersection #darkmagic */
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
+  ? I
+  : never;
+
 /** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
 export type Opaque<K, T> = T & { __TYPE__: K };
 
