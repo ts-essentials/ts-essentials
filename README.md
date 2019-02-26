@@ -32,6 +32,7 @@ yarn add --dev ts-essentials
 - [Writable](#writable)
 - [Omit](#omit)
 - [Merge](#merge)
+- [UnionToIntersection](#uniontointersection)
 - [Opaque types](#opaque-types)
 - [Tuple constraint](#tuple-constraint)
 - [Literal types](#literal-types)
@@ -130,6 +131,21 @@ type Bar = {
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
+```
+
+### UnionToIntersection
+
+Useful for converting mapped types with function values to intersection type (so in this case - overloaded function).
+
+```typescript
+type Foo = {
+  bar: string,
+  xyz: number
+};
+
+type Fn = UnionToIntersection<
+  { [K in keyof Foo]: (type: K, arg: Foo[K]) => any }[keyof Foo]
+>;
 ```
 
 ### Opaque types
