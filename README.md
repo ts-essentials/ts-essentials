@@ -31,6 +31,7 @@ yarn add --dev ts-essentials
 - [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
 - [Writable](#writable)
 - [Omit](#omit)
+- [NonNever](#nonnever)
 - [Merge](#merge)
 - [UnionToIntersection](#uniontointersection)
 - [Opaque types](#opaque-types)
@@ -116,6 +117,15 @@ const foo: Foo = { a: 1, b: 'b' }
 
 ```typescript
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+```
+
+### NonNever
+
+Useful for purifying object types. It improves intellisense but also allows for extracting keys satisfying a conditional type.
+
+```typescript
+type GetDefined<TypesMap extends { [key: string]: any }> =
+  keyof NonNever<{ [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T] }>;
 ```
 
 ### Merge

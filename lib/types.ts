@@ -41,6 +41,9 @@ export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+/** Remove keys with `never` value from object type */
+export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
+
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 

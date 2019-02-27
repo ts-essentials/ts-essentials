@@ -2,7 +2,7 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
-import { DeepReadonly, DeepRequired, Tuple } from "../lib";
+import { DeepReadonly, DeepRequired, Tuple, NonNever } from "../lib";
 
 function testDeepReadonly1() {
   type Input = {
@@ -75,4 +75,17 @@ function testTupleInference() {
   const ret = returnTuple([1, "s"]);
 
   type Test = Assert<IsExact<typeof ret, Expected>>;
+}
+
+function testNonNever() {
+  type TypesMap = {
+    foo: string;
+    bar: number;
+    xyz: undefined;
+  };
+
+  type Mapped = { [K in keyof TypesMap]: TypesMap[K] extends undefined ? never : TypesMap[K] };
+
+  type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
+  type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
 }
