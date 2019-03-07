@@ -108,3 +108,24 @@ function testDeepWritable() {
   test.foo = "b";
   test.bar.x = 2;
 }
+
+function testDeepWritable2() {
+  type Foo = {
+    readonly foo: string;
+    bar: {
+      readonly x: number;
+    };
+  }[];
+
+  const test: DeepWritable<Foo> = [
+    {
+      foo: "a",
+      bar: {
+        x: 5,
+      },
+    },
+  ];
+
+  test[0].foo = "b";
+  test[0].bar.x = 2;
+}
