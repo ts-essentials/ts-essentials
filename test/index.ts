@@ -2,7 +2,7 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
-import { DeepReadonly, DeepRequired, Tuple, NonNever } from "../lib";
+import { DeepReadonly, DeepRequired, Tuple, NonNever, Writable, DeepWritable } from "../lib";
 
 function testDeepReadonly1() {
   type Input = {
@@ -88,4 +88,44 @@ function testNonNever() {
 
   type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
   type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
+}
+
+function testDeepWritable() {
+  type ReadonlyType = {
+    readonly foo: string;
+    bar: {
+      readonly x: number;
+    };
+  };
+
+  const test: DeepWritable<ReadonlyType> = {
+    foo: "a",
+    bar: {
+      x: 5,
+    },
+  };
+
+  test.foo = "b";
+  test.bar.x = 2;
+}
+
+function testDeepWritable2() {
+  type Foo = {
+    readonly foo: string;
+    bar: {
+      readonly x: number;
+    };
+  }[];
+
+  const test: DeepWritable<Foo> = [
+    {
+      foo: "a",
+      bar: {
+        x: 5,
+      },
+    },
+  ];
+
+  test[0].foo = "b";
+  test[0].bar.x = 2;
 }

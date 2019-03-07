@@ -29,7 +29,7 @@ yarn add --dev ts-essentials
   - Dictionary
   - DictionaryValues
 - [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
-- [Writable](#writable)
+- [Writable & DeepWritable](#writable)
 - [Omit](#omit)
 - [NonNever](#nonnever)
 - [Merge](#merge)
@@ -113,6 +113,26 @@ type Foo = {
 const foo: Foo = { a: 1, b: 'b' }
 
 (foo as Writable<typeof foo>).a = 42
+```
+
+```typescript
+type Foo = {
+  readonly foo: string;
+  bar: {
+    readonly x: number;
+  };
+}[];
+
+const test: DeepWritable<Foo> = [{
+  foo: "a",
+  bar: {
+    x: 5,
+  },
+}];
+
+// we can freely write to this object
+test[0].foo = "b";
+test[0].bar.x = 2;
 ```
 
 ### Omit
