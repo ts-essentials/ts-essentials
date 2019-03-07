@@ -38,6 +38,17 @@ interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 /** Make readonly object writable */
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
+/** Like Writable but recursive */
+export type DeepWritable<T> = T extends Primitive
+  ? T
+  : T extends (any[] | ReadonlyArray<any>)
+  ? WritableArray<T[number]>
+  : T extends Function
+  ? T
+  : DeepWritableObject<T>;
+type DeepWritableObject<T> = { -readonly [P in keyof T]: DeepWritable<T[P]> };
+interface WritableArray<T> extends Array<DeepWritable<T>> {}
+
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
