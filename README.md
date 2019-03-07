@@ -102,6 +102,8 @@ type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
 
 ### Writable
 
+Make all attributes of object writable.
+
 ```typescript
 type Foo = {
   readonly a: number,
