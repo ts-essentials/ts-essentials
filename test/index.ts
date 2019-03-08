@@ -77,6 +77,14 @@ function testTupleInference() {
   type Test = Assert<IsExact<typeof ret, Expected>>;
 }
 
+function testParametrizedTuple() {
+  function acceptsCertainTuple<T extends Tuple<number | string>>(tuple: T) {
+    return tuple;
+  }
+
+  acceptsCertainTuple([42, "foo"]);
+}
+
 function testNonNever() {
   type TypesMap = {
     foo: string;
