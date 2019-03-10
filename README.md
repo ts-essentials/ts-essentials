@@ -205,6 +205,8 @@ const ret = foo(["s", 1]);
 
 ```
 
+You can also parametrize `Tuple` type with a type argument to constraint it to certain types, i.e. `Tuple<string | number>`.
+
 ### Literal types
 
 ```typescript

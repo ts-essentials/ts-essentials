@@ -70,4 +70,4 @@ export type Opaque<K, T> = T & { __TYPE__: K };
 export type ValueOf<T> = T[keyof T];
 
 /** Type constrant for tuple inference */
-export type Tuple = [any] | any[];
+export type Tuple<T = any> = [T] | T[];
