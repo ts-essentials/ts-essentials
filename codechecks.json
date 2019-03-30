@@ -1,0 +1,11 @@
+{
+  "checks": [
+    {
+      "name": "build-size-watcher",
+      "options": {
+        "gzip": false,
+        "files": [{ "path": "./dist/**/*.d.ts" }, { "path": "./dist/**/*.js" }]
+      }
+    }
+  ]
+}
