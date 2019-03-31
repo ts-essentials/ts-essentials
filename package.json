@@ -22,6 +22,8 @@
     "dist"
   ],
   "devDependencies": {
+    "@codechecks/build-size-watcher": "^0.0.13",
+    "@codechecks/client": "^0.0.52",
     "conditional-type-checks": "^0.5.0",
     "prettier": "^1.16.1",
     "typescript": "^3.2.2"
