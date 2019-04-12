@@ -52,6 +52,9 @@ interface WritableArray<T> extends Array<DeepWritable<T>> {}
 /** Omit given key in object type */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+/** Omit all properties of given type in object type */
+export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
+
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
