@@ -31,6 +31,7 @@ yarn add --dev ts-essentials
 - [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
 - [Writable & DeepWritable](#writable)
 - [Omit](#omit)
+- [OmitProperties](#omitproperties)
 - [NonNever](#nonnever)
 - [Merge](#merge)
 - [UnionToIntersection](#uniontointersection)
@@ -139,6 +140,17 @@ test[0].bar.x = 2;
 
 ```typescript
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+```
+
+### OmitProperties
+
+```typescript
+interface Example {
+  log(): void;
+  version: string;
+}
+
+type ExampleWithoutMethods = OmitProperties<Example, Function>;
 ```
 
 ### NonNever
