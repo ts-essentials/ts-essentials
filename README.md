@@ -144,6 +144,8 @@ type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
 
 ### OmitProperties
 
+Removes all properties extending type `P` in type `T`.
+
 ```typescript
 interface Example {
   log(): void;
@@ -151,6 +153,11 @@ interface Example {
 }
 
 type ExampleWithoutMethods = OmitProperties<Example, Function>;
+
+// Result:
+// {
+//   version: string;
+// }
 ```
 
 ### NonNever
