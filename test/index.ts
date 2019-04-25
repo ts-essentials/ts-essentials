@@ -137,3 +137,16 @@ function testDeepWritable2() {
   test[0].foo = "b";
   test[0].bar.x = 2;
 }
+
+// Test whether for totally writable types, apply DeepReadonly then DeepWritable will yield the original type
+function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
+  type TotallyWritableType = {
+    a: number[][];
+    nested: {
+      a: 1;
+    };
+    numberArray: number[];
+  }[];
+
+  type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
+}
