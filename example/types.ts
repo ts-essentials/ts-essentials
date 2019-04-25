@@ -1,4 +1,13 @@
-import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Omit, Opaque, DeepRequired } from "../lib/types";
+import {
+  Dictionary,
+  DictionaryValues,
+  DeepPartial,
+  DeepReadonly,
+  Omit,
+  Opaque,
+  DeepRequired,
+  AsyncOrSync,
+} from "../lib/types";
 
 const stringDict: Dictionary<string> = {
   a: "A",
@@ -62,4 +71,23 @@ function makePositiveNumber(n: number): PositiveNumber {
     throw new Error("Value not positive !!!");
   }
   return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
+}
+
+interface CiProvider {
+  getSHA(): AsyncOrSync<string>;
+}
+
+class Circle implements CiProvider {
+  // implementation can use sync version
+  getSHA() {
+    return "abc";
+  }
+}
+
+class Travis implements CiProvider {
+  // implementation can use async version when needed
+  async getSHA() {
+    // do async call
+    return "def";
+  }
 }
