@@ -13,10 +13,10 @@
     gzip-size "^5.0.0"
     lodash "^4.17.11"
 
-"@codechecks/client@^0.0.56":
-  version "0.0.56"
-  resolved "https://registry.yarnpkg.com/@codechecks/client/-/client-0.0.56.tgz#e74fdd78f16746f6fcc1fc45eae28a1cca279eaa"
-  integrity sha512-PKg2UzVSgLWAB9xF3Z8aktBpr2IVP9cloYtmtjDJWlL/10FPbtY1zfDPl6XP0iq5hEJhWjavRI7nQV/TcS529w==
+"@codechecks/client@^0.0.57":
+  version "0.0.57"
+  resolved "https://registry.yarnpkg.com/@codechecks/client/-/client-0.0.57.tgz#e8274143bcf19d9caef472bce469a189a0d33666"
+  integrity sha512-x+bq98V24P4u7zDfObUZarRt+ybtqm+l5DvUslWzMARdh+jkw0X94npD9g0KErsgDNPias7uTJY5rdeAadH8Lw==
   dependencies:
     bluebird "^3.5.3"
     commander "^2.19.0"
