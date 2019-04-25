@@ -228,6 +228,8 @@ You can also parametrize `Tuple` type with a type argument to constraint it to c
 
 ### Literal types
 
+*Deprecated*: TypeScript 3.4 shipped [`const` assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html) which are very similar to our `literal` helper but also make type readonly, you should prefer `as const` construct. 
+
 ```typescript
 // prevent type widening https://blog.mariusschulz.com/2017/02/04/typescript-2-1-literal-type-widening
 const t = {
