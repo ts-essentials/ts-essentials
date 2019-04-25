@@ -70,6 +70,7 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
+// Result: string
 ```
 
 ### Deep Partial & Deep Required & Deep Readonly
@@ -140,7 +141,19 @@ test[0].bar.x = 2;
 ### Omit
 
 ```typescript
+type ComplexObject = {
+  simple: number;
+  nested: {
+    a: string;
+    array: [{ bar: number }];
+  };
+};
+
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+// Result:
+// {
+//  simple: number
+// }
 ```
 
 ### OmitProperties
@@ -185,6 +198,11 @@ type Bar = {
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
+// Result:
+// {
+//   a: number,
+//   b: number,
+// }
 ```
 
 ### UnionToIntersection
@@ -268,7 +286,8 @@ const obj = {
   timestamp: 1548768231486,
 };
 
-type objKeys = ValueOf<typeof obj>; // string | number
+type objKeys = ValueOf<typeof obj>;
+// Result: string | number
 ```
 
 ### AsyncOrSync type
