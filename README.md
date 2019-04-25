@@ -40,6 +40,7 @@ yarn add --dev ts-essentials
 - [Literal types](#literal-types)
 - [Exhaustive switch cases](#exhaustive-switch-cases)
 - [ValueOf](#valueof-type)
+- [AsyncOrSync](#asyncorsync-type)
 
 ### Basic:
 
@@ -69,6 +70,7 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
+// Result: string
 ```
 
 ### Deep Partial & Deep Required & Deep Readonly
@@ -107,13 +109,11 @@ Make all attributes of object writable.
 
 ```typescript
 type Foo = {
-  readonly a: number,
-  readonly b: string,
-}
+  readonly a: number;
+  readonly b: string;
+};
 
-const foo: Foo = { a: 1, b: 'b' }
-
-(foo as Writable<typeof foo>).a = 42
+const foo: Foo = ({ a: 1, b: "b" }(foo as Writable<typeof foo>).a = 42);
 ```
 
 ```typescript
@@ -124,12 +124,14 @@ type Foo = {
   };
 }[];
 
-const test: DeepWritable<Foo> = [{
-  foo: "a",
-  bar: {
-    x: 5,
+const test: DeepWritable<Foo> = [
+  {
+    foo: "a",
+    bar: {
+      x: 5,
+    },
   },
-}];
+];
 
 // we can freely write to this object
 test[0].foo = "b";
@@ -139,7 +141,19 @@ test[0].bar.x = 2;
 ### Omit
 
 ```typescript
+type ComplexObject = {
+  simple: number;
+  nested: {
+    a: string;
+    array: [{ bar: number }];
+  };
+};
+
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+// Result:
+// {
+//  simple: number
+// }
 ```
 
 ### OmitProperties
@@ -162,26 +176,33 @@ type ExampleWithoutMethods = OmitProperties<Example, Function>;
 
 ### NonNever
 
-Useful for purifying object types. It improves intellisense but also allows for extracting keys satisfying a conditional type.
+Useful for purifying object types. It improves intellisense but also allows for extracting keys satisfying a conditional
+type.
 
 ```typescript
-type GetDefined<TypesMap extends { [key: string]: any }> =
-  keyof NonNever<{ [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T] }>;
+type GetDefined<TypesMap extends { [key: string]: any }> = keyof NonNever<
+  { [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T] }
+>;
 ```
 
 ### Merge
 
 ```typescript
 type Foo = {
-  a: number,
-  b: string
+  a: number;
+  b: string;
 };
 
 type Bar = {
-  b: number
+  b: number;
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
+// Result:
+// {
+//   a: number,
+//   b: number,
+// }
 ```
 
 ### UnionToIntersection
@@ -190,13 +211,11 @@ Useful for converting mapped types with function values to intersection type (so
 
 ```typescript
 type Foo = {
-  bar: string,
-  xyz: number
+  bar: string;
+  xyz: number;
 };
 
-type Fn = UnionToIntersection<
-  { [K in keyof Foo]: (type: K, arg: Foo[K]) => any }[keyof Foo]
->;
+type Fn = UnionToIntersection<{ [K in keyof Foo]: (type: K, arg: Foo[K]) => any }[keyof Foo]>;
 ```
 
 ### Opaque types
@@ -216,17 +235,21 @@ function makePositiveNumber(n: number): PositiveNumber {
 
 ```typescript
 function foo<T extends Tuple>(tuple: T): T {
-    return tuple;
+  return tuple;
 }
 
 const ret = foo(["s", 1]);
 // return type of [string, number]
-
 ```
 
-You can also parametrize `Tuple` type with a type argument to constraint it to certain types, i.e. `Tuple<string | number>`.
+You can also parametrize `Tuple` type with a type argument to constraint it to certain types, i.e.
+`Tuple<string | number>`.
 
 ### Literal types
+
+_Deprecated_: TypeScript 3.4 shipped
+[`const` assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html) which are very
+similar to our `literal` helper but also make type readonly, you should prefer `as const` construct.
 
 ```typescript
 // prevent type widening https://blog.mariusschulz.com/2017/02/04/typescript-2-1-literal-type-widening
@@ -263,9 +286,36 @@ const obj = {
   timestamp: 1548768231486,
 };
 
-type objKeys = ValueOf<typeof obj>; // string | number
+type objKeys = ValueOf<typeof obj>;
+// Result: string | number
 ```
 
+### AsyncOrSync type
+
+Useful as a return type in interfaces or abstract classes with missing implementation
+
+```typescript
+interface CiProvider {
+  getSHA(): AsyncOrSync<string>;
+  // same as
+  getSHA(): Promise<string> | string;
+}
+
+class Circle implements CiProvider {
+  // implementation can use sync version
+  getSHA() {
+    return "abc";
+  }
+}
+
+class Travis implements CiProvider {
+  // implementation can use async version when needed
+  async getSHA() {
+    // do async call
+    return "def";
+  }
+}
+```
 
 ## Contributing
 
