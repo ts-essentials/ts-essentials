@@ -11,6 +11,12 @@ function testDeepReadonly1() {
       a: 1;
     };
     readonlyAlready: ReadonlyArray<number>;
+    stringProperty: string;
+    numberProperty: number;
+    booleanProperty: boolean;
+    unknownProperty: unknown;
+    nullProperty: null;
+    undefinedProperty: undefined;
   }[];
 
   type Expected = ReadonlyArray<{
@@ -19,6 +25,12 @@ function testDeepReadonly1() {
       readonly a: 1;
     };
     readonly readonlyAlready: ReadonlyArray<number>;
+    readonly stringProperty: string;
+    readonly numberProperty: number;
+    readonly booleanProperty: boolean;
+    readonly unknownProperty: unknown;
+    readonly nullProperty: null;
+    readonly undefinedProperty: undefined;
   }>;
 
   type Test = Assert<IsExact<DeepReadonly<Input>, Expected>>;

@@ -31,7 +31,9 @@ export type DeepReadonly<T> = T extends Primitive
   ? DeepReadonlyArray<T[number]>
   : T extends Function
   ? T
-  : DeepReadonlyObject<T>;
+  : T extends {}
+  ? DeepReadonlyObject<T>
+  : unknown;
 type DeepReadonlyObject<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };
 interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 
