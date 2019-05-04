@@ -160,5 +160,6 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
     numberArray: number[];
   }[];
 
+  type Test_Indeed_Obj_Totally_Writable = Assert<IsExact< TotallyWritableType, DeepWritable<TotallyWritableType> >>;
   type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
 }
