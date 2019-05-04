@@ -150,10 +150,17 @@ type ComplexObject = {
 };
 
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+
 // Result:
 // {
 //  simple: number
 // }
+
+// if you want to Omit multiple properties just use union type:
+type SimplifiedComplexObject = Omit<ComplexObject, "nested" | "simple">;
+
+// Result:
+// { } (empty type)
 ```
 
 ### OmitProperties
@@ -172,6 +179,13 @@ type ExampleWithoutMethods = OmitProperties<Example, Function>;
 // {
 //   version: string;
 // }
+
+// if you want to Omit multiple properties just use union type like
+
+type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
+// Result:
+// { } (empty type)
+
 ```
 
 ### NonNever
