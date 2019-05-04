@@ -78,4 +78,4 @@ export type ValueOf<T> = T[keyof T];
 export type Tuple<T = any> = [T] | T[];
 
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
-export type AsyncOrSync<T> = Promise<T> | T;
+export type AsyncOrSync<T> = PromiseLike<T> | T;
