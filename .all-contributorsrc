@@ -16,11 +16,98 @@
         "example",
         "doc"
       ]
+    },
+    {
+      "login": "yxliang01",
+      "name": "Xiao Liang",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9780746?v=4",
+      "profile": "https://scholar.google.com/citations?user=3xZtvpAAAAAJ",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "Andarist",
+      "name": "Mateusz Burzyński",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9800850?v=4",
+      "profile": "https://github.com/Andarist",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "macbem",
+      "name": "Maciej Bembenista",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12464061?v=4",
+      "profile": "https://github.com/macbem",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "MichaelTontchev",
+      "name": "Michael Tontchev",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12261336?v=4",
+      "profile": "https://github.com/MichaelTontchev",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "ThomasdenH",
+      "name": "Thomas den Hollander",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3889750?v=4",
+      "profile": "http://ThomasdH.blogspot.com",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "epeli",
+      "name": "Esa-Matti Suuronen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/225712?v=4",
+      "profile": "https://twitter.com/esamatti",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "IlyaSemenov",
+      "name": "Ilya Semenov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/128121?v=4",
+      "profile": "https://github.com/IlyaSemenov",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "codechecks",
+      "name": "Code Checks",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/46399828?v=4",
+      "profile": "https://codechecks.io",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "ts-essentials",
   "projectOwner": "krzkaczor",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "commitConvention": "none"
 }
