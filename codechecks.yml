@@ -1,0 +1,14 @@
+checks:
+  - name: build-size-watcher
+    options:
+      name: "Build size (runtime)"
+      gzip: false
+      files:
+        - path: "./dist/**/*.js"
+
+  - name: build-size-watcher
+    options:
+      name: "Build size (types)"
+      gzip: false
+      files:
+        - path: "./dist/**/*.d.ts"
