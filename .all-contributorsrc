@@ -13,6 +13,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "yxliang01",
+      "name": "Xiao Liang",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9780746?v=4",
+      "profile": "https://scholar.google.com/citations?user=3xZtvpAAAAAJ",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
