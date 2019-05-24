@@ -102,6 +102,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "alcuadrado",
+      "name": "Patricio Palladino",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/176499?v=4",
+      "profile": "http://www.nomiclabs.io",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
