@@ -165,7 +165,6 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
 }
 
 function testMerge() {
-  
   {
     type T = {
       a: number,
