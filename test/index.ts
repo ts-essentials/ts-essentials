@@ -168,14 +168,14 @@ function testMerge() {
   {
     type T = {
       a: number,
-      b: string
+      b: string,
     };
 
     type Merged = Merge<T, { a: string }>;
 
     type ExpectedMerged = {
       a: string,
-      b: string
+      b: string,
     };
 
     type Test = Assert<IsExact<Merged, ExpectedMerged>>;
