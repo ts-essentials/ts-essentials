@@ -36,6 +36,7 @@ yarn add --dev ts-essentials
 - [OmitProperties](#omitproperties)
 - [NonNever](#nonnever)
 - [Merge](#merge)
+- [MarkRequired](#markrequired)
 - [UnionToIntersection](#uniontointersection)
 - [Opaque types](#opaque-types)
 - [Tuple constraint](#tuple-constraint)
@@ -219,6 +220,25 @@ const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
 //   a: number,
 //   b: number,
 // }
+```
+
+### MarkRequired
+
+Useful when you're sure some optional properties will be set. A real life example: when selecting
+an object with its related entities from an ORM.
+
+```typescript
+class User {
+  id: number;
+  posts?: Post[];
+  photos?: Photo[];
+}
+type UserWithPosts = MarkRequired<User, 'posts'>;
+
+// example usage with a TypeORM repository -- `posts` are now required, `photos` are still optional
+async function getUserWithPosts(id: number): Promise<UserWithPosts> {
+  return userRepo.findOneOrFail({ id }, { relations: ['posts'] }) as Promise<UserWithPosts>;
+}
 ```
 
 ### UnionToIntersection
