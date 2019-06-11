@@ -2,7 +2,7 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
-import { DeepReadonly, DeepRequired, Tuple, NonNever, Writable, DeepWritable } from "../lib";
+import { DeepReadonly, DeepRequired, Tuple, NonNever, Writable, DeepWritable, MarkRequired } from "../lib";
 
 function testDeepReadonly1() {
   type Input = {
@@ -162,4 +162,21 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
 
   type Test_Indeed_Obj_Totally_Writable = Assert<IsExact<TotallyWritableType, DeepWritable<TotallyWritableType>>>;
   type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
+}
+
+function testMarkRequired() {
+  type TestType = {
+    required1: number;
+    required2: string;
+    optional1?: null;
+    optional2?: boolean;
+  };
+  type ExpectedType = {
+    required1: number;
+    required2: string;
+    optional1: null;
+    optional2?: boolean;
+  };
+
+  type Test = Assert<IsExact<MarkRequired<TestType, "required2" | "optional1">, ExpectedType>>;
 }
