@@ -82,3 +82,16 @@ export type Tuple<T = any> = [T] | T[];
 
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
+
+/** Dark magic helper, needed for WritableKeys & ReadonlyKeys */
+type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? A : B;
+
+/** Gets keys of an object which are readonly */
+export type ReadonlyKeys<T extends object> = {
+  [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
+}[keyof T];
+
+/** Gets keys of an object which are writable */
+export type WritableKeys<T extends {}> = {
+  [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, P>
+}[keyof T];
