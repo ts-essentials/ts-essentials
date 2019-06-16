@@ -37,6 +37,8 @@ yarn add --dev ts-essentials
 - [NonNever](#nonnever)
 - [Merge](#merge)
 - [MarkRequired](#markrequired)
+- [ReadonlyKeys](#readonlykeys)
+- [WritableKeys](#writablekeys)
 - [UnionToIntersection](#uniontointersection)
 - [Opaque types](#opaque-types)
 - [Tuple constraint](#tuple-constraint)
@@ -240,6 +242,14 @@ async function getUserWithPosts(id: number): Promise<UserWithPosts> {
   return userRepo.findOneOrFail({ id }, { relations: ['posts'] }) as Promise<UserWithPosts>;
 }
 ```
+
+### ReadonlyKeys
+
+Gets keys of an object which are readonly.
+
+### WritableKeys
+
+Gets keys of an object which are writable
 
 ### UnionToIntersection
 
