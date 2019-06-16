@@ -2,7 +2,18 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
-import { DeepReadonly, DeepRequired, Tuple, NonNever, Writable, DeepWritable, MarkRequired, Merge } from "../lib";
+import {
+  DeepReadonly,
+  DeepRequired,
+  Tuple,
+  NonNever,
+  Writable,
+  DeepWritable,
+  MarkRequired,
+  Merge,
+  ReadonlyKeys,
+  WritableKeys,
+} from "../lib";
 
 function testDeepReadonly1() {
   type Input = {
@@ -197,4 +208,30 @@ function testMerge() {
 
     type Test = Assert<IsExact<Merged, ExpectedMerged>>;
   }
+}
+
+function testReadonlyKeys() {
+  type T = {
+    readonly a: number;
+    b: string;
+  };
+
+  type Actual = ReadonlyKeys<T>;
+
+  type Expected = "a";
+
+  type Test = Assert<IsExact<Actual, Expected>>;
+}
+
+function testWritableKeys() {
+  type T = {
+    readonly a: number;
+    b: string;
+  };
+
+  type Actual = WritableKeys<T>;
+
+  type Expected = "b";
+
+  type Test = Assert<IsExact<Actual, Expected>>;
 }

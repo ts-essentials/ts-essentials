@@ -145,6 +145,8 @@ test[0].bar.x = 2;
 
 ### Omit
 
+NOTE: Builtin `Omit` became part of TypeScript 3.5
+
 ```typescript
 type ComplexObject = {
   simple: number;
@@ -247,9 +249,29 @@ async function getUserWithPosts(id: number): Promise<UserWithPosts> {
 
 Gets keys of an object which are readonly.
 
+```typescript
+type T = {
+  readonly a: number;
+  b: string;
+};
+type Result = ReadonlyKeys<T>
+// Result:
+// "a"
+```
+
 ### WritableKeys
 
 Gets keys of an object which are writable
+
+```typescript
+type T = {
+  readonly a: number;
+  b: string;
+};
+type Result = WritableKeys<T>
+// Result:
+// "b"
+```
 
 ### UnionToIntersection
 
