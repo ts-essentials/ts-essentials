@@ -51,7 +51,10 @@ export type DeepWritable<T> = T extends Primitive
 type DeepWritableObject<T> = { -readonly [P in keyof T]: DeepWritable<T[P]> };
 interface WritableArray<T> extends Array<DeepWritable<T>> {}
 
-/** Omit given key in object type */
+/**
+ * Omit given key in object type
+ * @deprecated Starting with TypeScript 3.5, Omit is natively available.
+ */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /** Omit all properties of given type in object type */
