@@ -86,15 +86,28 @@ export type Tuple<T = any> = [T] | T[];
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
 
-/** Dark magic helper, needed for WritableKeys & ReadonlyKeys */
-type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? A : B;
+// A helper for `ReadonlyKeys` & `WritableKeys`
+// This potentially abuses compiler some inconsistencies in checking type equality for generics,
+// because normally `readonly` doesn't affect whether types are assignable.
+// @see https://stackoverflow.com/a/52473108/1815209 with comments
+type IsEqualConsideringWritability<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2)
+  ? true
+  : false;
+
+// This also probably uses some inconsistencies -- even though it _should_ be the same to just use
+// `T, Writable<T>` for generic arguments, it stops working then, always evaluating to `false`.
+// Swapping `Writable` to `Readable` always returns false too, instead of yielding opposite results.
+type IsFullyWritable<T extends object> = IsEqualConsideringWritability<
+  { [Q in keyof T]: T[Q] },
+  Writable<{ [Q in keyof T]: T[Q] }>
+>;
 
 /** Gets keys of an object which are readonly */
 export type ReadonlyKeys<T extends object> = {
-  [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
+  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? never : P
 }[keyof T];
 
 /** Gets keys of an object which are writable */
 export type WritableKeys<T extends {}> = {
-  [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, P>
+  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? P : never
 }[keyof T];
