@@ -261,7 +261,7 @@ type Result = ReadonlyKeys<T>
 
 ### WritableKeys
 
-Gets keys of an object which are writable
+Gets keys of an object which are writable.
 
 ```typescript
 type T = {
