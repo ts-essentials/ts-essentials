@@ -25,6 +25,7 @@ function testDeepPartial() {
     simple: number;
     nested: {
       date: Date;
+      func: () => string;
     };
     params: Params;
   };
@@ -32,9 +33,12 @@ function testDeepPartial() {
   type Expected = {
     simple?: number;
     nested?: {
-      date?: DeepPartial<Date>;
+      date?: Date;
+      func?: () => string;
     };
-    params?: DeepPartial<Params>;
+    params?: {
+      [key: string]: any;
+    };
   };
 
   type Test = Assert<IsExact<DeepPartial<Input>, Expected>>;
