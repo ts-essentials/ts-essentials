@@ -7,7 +7,9 @@ export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
+  [P in keyof T]?: T[P] extends Primitive
+    ? T[P]
+    : T[P] extends Array<infer U>
     ? Array<DeepPartial<U>>
     : T[P] extends ReadonlyArray<infer U>
     ? ReadonlyArray<DeepPartial<U>>
