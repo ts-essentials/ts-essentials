@@ -3,6 +3,7 @@
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
+  DeepPartial,
   DeepReadonly,
   DeepRequired,
   Tuple,
@@ -14,6 +15,34 @@ import {
   ReadonlyKeys,
   WritableKeys,
 } from "../lib";
+
+function testDeepPartial() {
+  type Params = {
+    [key: string]: any;
+  };
+
+  type Input = {
+    simple: number;
+    nested: {
+      date: Date;
+      func: () => string;
+    };
+    params: Params;
+  };
+
+  type Expected = {
+    simple?: number;
+    nested?: {
+      date?: Date;
+      func?: () => string;
+    };
+    params?: {
+      [key: string]: any;
+    };
+  };
+
+  type Test = Assert<IsExact<DeepPartial<Input>, Expected>>;
+}
 
 function testDeepReadonly1() {
   type Input = {
