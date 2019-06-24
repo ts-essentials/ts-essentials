@@ -101,14 +101,16 @@ function testNonNullable() {
 }
 
 function testDeepNonNullable() {
+  type Nested = {
+    date: Date | null | undefined;
+    array: { bar: number | null | undefined }[] | null | undefined;
+    tuple: [string | null | undefined, number | null | undefined, { good: boolean | null | undefined }];
+    func: (() => string) | null | undefined;
+  };
+
   type Input = {
     simple: number | null | undefined;
-    nested: {
-      date: Date | null | undefined;
-      array: { bar: number | null | undefined }[] | null | undefined;
-      tuple: [string | null | undefined, number | null | undefined, {good: boolean | null | undefined}];
-      func: (() => string) | null | undefined;
-    } | null | undefined;
+    nested: Nested | null | undefined;
   };
 
   type Expected = {
@@ -116,12 +118,12 @@ function testDeepNonNullable() {
     nested: {
       date: Date;
       array: { bar: number }[];
-      tuple: [string, number, {good: boolean}];
+      tuple: [string, number, { good: boolean }];
       func: () => string;
     };
   };
 
-  type Test = Assert<IsExact<DeepNonNullable<Input>, Expected>>
+  type Test = Assert<IsExact<DeepNonNullable<Input>, Expected>>;
 }
 
 function testDeepRequire() {
