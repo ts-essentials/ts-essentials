@@ -17,7 +17,7 @@ export type DeepPartial<T> = {
     ? Array<DeepPartial<U>>
     : T[P] extends ReadonlyArray<infer U>
     ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>
+    : DeepPartial<T[P]>;
 };
 
 /** Like NonNullable but recursive */
@@ -27,9 +27,15 @@ export type DeepNonNullable<T> = T extends Primitive
   ? NonNullable<T>
   : T extends Date
   ? NonNullable<T>
+  : T extends Map<infer K, infer V>
+  ? NonNullableMap<K, V>
+  : T extends Set<infer U>
+  ? NonNullableSet<U>
   : T extends {}
   ? { [K in keyof T]: DeepNonNullable<T[K]> }
   : T;
+interface NonNullableSet<ItemType> extends Set<DeepNonNullable<ItemType>> {}
+interface NonNullableMap<KeyType, ValueType> extends Map<DeepNonNullable<KeyType>, DeepNonNullable<ValueType>> {}
 
 /** Like Required but recursive */
 export type DeepRequired<T> = T extends Primitive
@@ -121,10 +127,10 @@ type IsFullyWritable<T extends object> = IsEqualConsideringWritability<
 
 /** Gets keys of an object which are readonly */
 export type ReadonlyKeys<T extends object> = {
-  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? never : P
+  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? never : P;
 }[keyof T];
 
 /** Gets keys of an object which are writable */
 export type WritableKeys<T extends {}> = {
-  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? P : never
+  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? P : never;
 }[keyof T];

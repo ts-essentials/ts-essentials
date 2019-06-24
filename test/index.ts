@@ -1,7 +1,7 @@
 /**
  * This file contains a lot of unused functions as it's only typechecked.
  */
-import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
+import { IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
   DeepNonNullable,
   DeepPartial,
@@ -106,12 +106,16 @@ function testDeepNonNullable() {
     array: { bar: number | null | undefined }[] | null | undefined;
     tuple: [string | null | undefined, number | null | undefined, { good: boolean | null | undefined }];
     func: (() => string) | null | undefined;
+    set: Set<string | null | undefined> | string;
+    map: Map<number | null, string | null | undefined> | null | undefined;
   };
 
   type Input = {
     simple: number | null | undefined;
     nested: Nested | null | undefined;
   };
+
+  type A = DeepNonNullable<Input>;
 
   type Expected = {
     simple: number;
@@ -120,6 +124,8 @@ function testDeepNonNullable() {
       array: { bar: number }[];
       tuple: [string, number, { good: boolean }];
       func: () => string;
+      set: Set<string> | string;
+      map: Map<number, string>;
     };
   };
 
