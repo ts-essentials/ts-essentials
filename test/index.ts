@@ -115,8 +115,6 @@ function testDeepNonNullable() {
     nested: Nested | null | undefined;
   };
 
-  type A = DeepNonNullable<Input>;
-
   type Expected = {
     simple: number;
     nested: {
