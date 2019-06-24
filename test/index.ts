@@ -18,24 +18,24 @@ import {
 
 function testDeepPartial() {
   type Params = {
-    [key: string]: any
-  }
-  
+    [key: string]: any;
+  };
+
   type Input = {
-    simple: number
+    simple: number;
     nested: {
-      date: Date
-    }
-    params: Params
-  }
+      date: Date;
+    };
+    params: Params;
+  };
 
   type Expected = {
-    simple?: number
+    simple?: number;
     nested?: {
-      date?: DeepPartial<Date>
-    }
-    params?: DeepPartial<Params>
-  }
+      date?: DeepPartial<Date>;
+    };
+    params?: DeepPartial<Params>;
+  };
 
   type Test = Assert<IsExact<DeepPartial<Input>, Expected>>;
 }
