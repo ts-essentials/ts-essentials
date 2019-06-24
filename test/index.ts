@@ -3,6 +3,7 @@
  */
 import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
+  DeepNonNullable,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -97,6 +98,30 @@ function testDeepReadonly2() {
 
 function testNonNullable() {
   type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
+}
+
+function testDeepNonNullable() {
+  type Input = {
+    simple: number | null | undefined;
+    nested: {
+      date: Date | null | undefined;
+      array: { bar: number | null | undefined }[] | null | undefined;
+      tuple: [string | null | undefined, number | null | undefined, {good: boolean | null | undefined}];
+      func: (() => string) | null | undefined;
+    } | null | undefined;
+  };
+
+  type Expected = {
+    simple: number;
+    nested: {
+      date: Date;
+      array: { bar: number }[];
+      tuple: [string, number, {good: boolean}];
+      func: () => string;
+    };
+  };
+
+  type Test = Assert<IsExact<DeepNonNullable<Input>, Expected>>
 }
 
 function testDeepRequire() {

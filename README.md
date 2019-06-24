@@ -30,7 +30,7 @@ yarn add --dev ts-essentials
 - [Dictionaries](#dictionaries)
   - Dictionary
   - DictionaryValues
-- [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
+- [Deep Partial & DeepRequired & Deep Readonly & Deep NonNullablee](#deep-partial--deep-required--deep-readonly--deep-nonnullable)
 - [Writable & DeepWritable](#writable)
 - [Omit](#omit)
 - [OmitProperties](#omitproperties)
@@ -78,7 +78,7 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 ```
 
-### Deep Partial & Deep Required & Deep Readonly
+### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
 
 ```typescript
 type ComplexObject = {
@@ -106,6 +106,23 @@ const sampleRequired: ComplexObjectAgain = {
 };
 
 type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
+
+type ComplexNullableObject = {
+  simple: number | null | undefined;
+  nested: {
+    a: string | null | undefined;
+    array: [{ bar: number | null | undefined }] | null | undefined;
+  };
+};
+
+type ComplexObjectNonNullable = DeepNonNullable<ComplexNullableObject>;
+const sampleNonNullable: ComplexObjectNonNullable = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: [{bar: null}], // Error: Type 'null' is not assignable to type 'number'
+  }
+}
 ```
 
 ### Writable

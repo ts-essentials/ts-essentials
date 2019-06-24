@@ -20,6 +20,17 @@ export type DeepPartial<T> = {
     : DeepPartial<T[P]>
 };
 
+/** Like NonNullable but recursive */
+export type DeepNonNullable<T> = T extends Primitive
+  ? NonNullable<T>
+  : T extends Function
+  ? NonNullable<T>
+  : T extends Date
+  ? NonNullable<T>
+  : T extends {}
+  ? { [K in keyof T]: DeepNonNullable<T[K]> }
+  : T;
+
 /** Like Required but recursive */
 export type DeepRequired<T> = T extends Primitive
   ? NonNullable<T>
