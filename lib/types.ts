@@ -6,19 +6,26 @@ export type Dictionary<T, K extends string | number = string> = { [key in K]: T 
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
 /** Like Partial but recursive */
-export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Primitive
-    ? T[P]
-    : T[P] extends Function
-    ? T[P]
-    : T[P] extends Date
-    ? T[P]
-    : T[P] extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T[P] extends ReadonlyArray<infer U>
-    ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>;
-};
+export type DeepPartial<T> = T extends Primitive
+  ? T
+  : T extends Function
+  ? T
+  : T extends Date
+  ? T
+  : T extends Map<infer K, infer V>
+  ? DeepPartialMap<K, V>
+  : T extends Set<infer U>
+  ? DeepPartialSet<U>
+  : T extends Tuple
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends Array<infer U>
+  ? DeepPartialArray<U>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
+interface DeepPartialArray<ItemType> extends Array<DeepPartial<ItemType>> {}
+interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
+interface DeepPartialMap<KeyType, ValueType> extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
 
 /** Like NonNullable but recursive */
 export type DeepNonNullable<T> = T extends Primitive
@@ -33,32 +40,43 @@ export type DeepNonNullable<T> = T extends Primitive
   ? NonNullableSet<U>
   : T extends {}
   ? { [K in keyof T]: DeepNonNullable<T[K]> }
-  : T;
+  : NonNullable<T>;
 interface NonNullableSet<ItemType> extends Set<DeepNonNullable<ItemType>> {}
 interface NonNullableMap<KeyType, ValueType> extends Map<DeepNonNullable<KeyType>, DeepNonNullable<ValueType>> {}
 
 /** Like Required but recursive */
 export type DeepRequired<T> = T extends Primitive
   ? NonNullable<T>
-  : T extends any[]
-  ? DeepRequiredArray<NonNullable<T[number]>>
+  : T extends Function
+  ? NonNullable<T>
+  : T extends Date
+  ? NonNullable<T>
+  : T extends Map<infer K, infer V>
+  ? RequiredMap<K, V>
+  : T extends Set<infer U>
+  ? RequiredSet<U>
   : T extends {}
-  ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }
-  : T;
-interface DeepRequiredArray<T> extends Array<DeepRequired<T>> {}
+  ? { [K in keyof T]-?: DeepRequired<T[K]> }
+  : NonNullable<T>;
+interface RequiredSet<ItemType> extends Set<DeepRequired<ItemType>> {}
+interface RequiredMap<KeyType, ValueType> extends Map<DeepRequired<KeyType>, DeepRequired<ValueType>> {}
 
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Primitive
   ? T
-  : T extends (any[] | ReadonlyArray<any>)
-  ? DeepReadonlyArray<T[number]>
   : T extends Function
   ? T
+  : T extends Date
+  ? T
+  : T extends Map<infer K, infer V>
+  ? ReadonlyMap<K, V>
+  : T extends Set<infer U>
+  ? ReadonlySet<U>
   : T extends {}
-  ? DeepReadonlyObject<T>
-  : unknown;
-type DeepReadonlyObject<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };
-interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
+  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+  : T;
+interface ReadonlySet<ItemType> extends Set<DeepReadonly<ItemType>> {}
+interface ReadonlyMap<KeyType, ValueType> extends Map<DeepReadonly<KeyType>, DeepReadonly<ValueType>> {}
 
 /** Make readonly object writable */
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
@@ -66,13 +84,19 @@ export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 /** Like Writable but recursive */
 export type DeepWritable<T> = T extends Primitive
   ? T
-  : T extends (any[] | ReadonlyArray<any>)
-  ? WritableArray<T[number]>
   : T extends Function
   ? T
-  : DeepWritableObject<T>;
-type DeepWritableObject<T> = { -readonly [P in keyof T]: DeepWritable<T[P]> };
-interface WritableArray<T> extends Array<DeepWritable<T>> {}
+  : T extends Date
+  ? T
+  : T extends Map<infer K, infer V>
+  ? WritableMap<K, V>
+  : T extends Set<infer U>
+  ? WritableSet<U>
+  : T extends {}
+  ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
+  : T;
+interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
+interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
 
 /**
  * Omit given key in object type
