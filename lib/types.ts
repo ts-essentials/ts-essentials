@@ -5,93 +5,63 @@ export type Primitive = string | number | boolean | bigint | symbol | undefined 
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
-/** Like Partial but recursive */
-export type DeepPartial<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
-  ? T
-  : T extends Map<infer K, infer V>
-  ? DeepPartialMap<K, V>
-  : T extends Set<infer U>
-  ? DeepPartialSet<U>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
-interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
-interface DeepPartialMap<KeyType, ValueType> extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
-
-/** Like NonNullable but recursive */
-export type DeepNonNullable<T> = T extends Primitive
-  ? NonNullable<T>
-  : T extends Function
-  ? NonNullable<T>
-  : T extends Date
-  ? NonNullable<T>
-  : T extends Map<infer K, infer V>
-  ? NonNullableMap<K, V>
-  : T extends Set<infer U>
-  ? NonNullableSet<U>
-  : T extends {}
-  ? { [K in keyof T]: DeepNonNullable<T[K]> }
-  : NonNullable<T>;
-interface NonNullableSet<ItemType> extends Set<DeepNonNullable<ItemType>> {}
-interface NonNullableMap<KeyType, ValueType> extends Map<DeepNonNullable<KeyType>, DeepNonNullable<ValueType>> {}
-
-/** Like Required but recursive */
-export type DeepRequired<T> = T extends Primitive
-  ? NonNullable<T>
-  : T extends Function
-  ? NonNullable<T>
-  : T extends Date
-  ? NonNullable<T>
-  : T extends Map<infer K, infer V>
-  ? RequiredMap<K, V>
-  : T extends Set<infer U>
-  ? RequiredSet<U>
-  : T extends {}
-  ? { [K in keyof T]-?: DeepRequired<T[K]> }
-  : NonNullable<T>;
-interface RequiredSet<ItemType> extends Set<DeepRequired<ItemType>> {}
-interface RequiredMap<KeyType, ValueType> extends Map<DeepRequired<KeyType>, DeepRequired<ValueType>> {}
-
-/** Like Readonly but recursive */
-export type DeepReadonly<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
-  ? T
-  : T extends Map<infer K, infer V>
-  ? ReadonlyMap<K, V>
-  : T extends Set<infer U>
-  ? ReadonlySet<U>
-  : T extends {}
-  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : Readonly<T>;
-interface ReadonlySet<ItemType> extends Set<DeepReadonly<ItemType>> {}
-interface ReadonlyMap<KeyType, ValueType> extends Map<DeepReadonly<KeyType>, DeepReadonly<ValueType>> {}
+type NonNullableSymbol = "NonNullable";
+type ReadonlySymbol = "Readonly";
+type WritableSymbol = "Writable";
+type RequiredSymbol = "Required";
+type PartialSymbol = "Partial";
 
 /** Make readonly object writable */
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
-/** Like Writable but recursive */
-export type DeepWritable<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
-  ? T
+type DeepGeneric<P, T> = T extends Primitive | Function | Date
+  ? P extends NonNullableSymbol | RequiredSymbol
+    ? NonNullable<T>
+    : T
   : T extends Map<infer K, infer V>
-  ? WritableMap<K, V>
+  ? DeepGenericMap<P, K, V>
   : T extends Set<infer U>
-  ? WritableSet<U>
+  ? DeepGenericSet<P, U>
   : T extends {}
-  ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
+  ? P extends NonNullableSymbol
+    ? { [K in keyof T]: DeepGeneric<P, T[K]> }
+    : P extends ReadonlySymbol
+    ? { readonly [K in keyof T]: DeepGeneric<P, T[K]> }
+    : P extends PartialSymbol
+    ? { [K in keyof T]?: DeepGeneric<P, T[K]> }
+    : P extends WritableSymbol
+    ? { -readonly [K in keyof T]: DeepGeneric<P, T[K]> }
+    : P extends RequiredSymbol
+    ? { [K in keyof T]-?: DeepGeneric<P, T[K]> }
+    : T
+  : P extends NonNullableSymbol
+  ? NonNullable<T>
+  : P extends ReadonlySymbol
+  ? Readonly<T>
+  : P extends PartialSymbol
+  ? Partial<T>
+  : P extends WritableSymbol
+  ? Writable<T>
+  : P extends RequiredSymbol
+  ? Required<T>
   : T;
-interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
-interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
+interface DeepGenericSet<P, ItemType> extends Set<DeepGeneric<P, ItemType>> {}
+interface DeepGenericMap<P, KeyType, ValueType> extends Map<DeepGeneric<P, KeyType>, DeepGeneric<P, ValueType>> {}
+
+/** Like Partial but recursive */
+export type DeepPartial<T> = DeepGeneric<PartialSymbol, T>;
+
+/** Like NonNullable but recursive */
+export type DeepNonNullable<T> = DeepGeneric<NonNullableSymbol, T>;
+
+/** Like Required but recursive */
+export type DeepRequired<T> = DeepGeneric<RequiredSymbol, T>;
+
+/** Like Readonly but recursive */
+export type DeepReadonly<T> = DeepGeneric<ReadonlySymbol, T>;
+
+/** Like Writable but recursive */
+export type DeepWritable<T> = DeepGeneric<WritableSymbol, T>;
 
 /**
  * Omit given key in object type
