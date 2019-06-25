@@ -16,14 +16,9 @@ export type DeepPartial<T> = T extends Primitive
   ? DeepPartialMap<K, V>
   : T extends Set<infer U>
   ? DeepPartialSet<U>
-  : T extends Tuple
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : T extends Array<infer U>
-  ? DeepPartialArray<U>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-interface DeepPartialArray<ItemType> extends Array<DeepPartial<ItemType>> {}
 interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
 interface DeepPartialMap<KeyType, ValueType> extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
 
