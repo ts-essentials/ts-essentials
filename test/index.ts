@@ -109,12 +109,10 @@ type ComplexNestedReadonly = {
 };
 
 function testDeepPartial() {
-  type A = DeepPartial<ComplexNestedRequired>;
   type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
 }
 
 function testDeepReadonly1() {
-  type T = DeepReadonly<ComplexNestedRequired>;
   type Test = Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>;
 }
 

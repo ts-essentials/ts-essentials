@@ -69,7 +69,7 @@ export type DeepReadonly<T> = T extends Primitive
   ? ReadonlySet<U>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : T;
+  : Readonly<T>;
 interface ReadonlySet<ItemType> extends Set<DeepReadonly<ItemType>> {}
 interface ReadonlyMap<KeyType, ValueType> extends Map<DeepReadonly<KeyType>, DeepReadonly<ValueType>> {}
 
