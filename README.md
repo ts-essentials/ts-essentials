@@ -25,27 +25,27 @@ yarn add --dev ts-essentials
 
 ## What's inside?
 
-- [Basic](#basic)
-  - Primitive
-- [Dictionaries](#dictionaries)
-  - Dictionary
-  - DictionaryValues
-- [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
-- [Writable & DeepWritable](#writable)
-- [Omit](#omit)
-- [OmitProperties](#omitproperties)
-- [NonNever](#nonnever)
-- [Merge](#merge)
-- [MarkRequired](#markrequired)
-- [ReadonlyKeys](#readonlykeys)
-- [WritableKeys](#writablekeys)
-- [UnionToIntersection](#uniontointersection)
-- [Opaque types](#opaque-types)
-- [Tuple constraint](#tuple-constraint)
-- [Literal types](#literal-types)
-- [Exhaustive switch cases](#exhaustive-switch-cases)
-- [ValueOf](#valueof-type)
-- [AsyncOrSync](#asyncorsync-type)
+- [Install](#Install)
+- [What's inside?](#Whats-inside)
+  - [Basic:](#Basic)
+  - [Dictionaries](#Dictionaries)
+  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
+  - [Writable](#Writable)
+  - [Omit](#Omit)
+  - [OmitProperties](#OmitProperties)
+  - [NonNever](#NonNever)
+  - [Merge](#Merge)
+  - [MarkRequired](#MarkRequired)
+  - [ReadonlyKeys](#ReadonlyKeys)
+  - [WritableKeys](#WritableKeys)
+  - [UnionToIntersection](#UnionToIntersection)
+  - [Opaque types](#Opaque-types)
+  - [Tuple constraint](#Tuple-constraint)
+  - [Literal types](#Literal-types)
+  - [Exhaustive switch cases](#Exhaustive-switch-cases)
+  - [ValueOf type](#ValueOf-type)
+  - [AsyncOrSync type](#AsyncOrSync-type)
+- [Contributors](#Contributors)
 
 ### Basic:
 
@@ -78,7 +78,7 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 ```
 
-### Deep Partial & Deep Required & Deep Readonly
+### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
 
 ```typescript
 type ComplexObject = {
@@ -101,11 +101,28 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: [],
+    array: [{bar: 1}],
   },
 };
 
 type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
+
+type ComplexNullableObject = {
+  simple: number | null | undefined;
+  nested: {
+    a: string | null | undefined;
+    array: [{ bar: number | null | undefined }] | null | undefined;
+  };
+};
+
+type ComplexObjectNonNullable = DeepNonNullable<ComplexNullableObject>;
+const sampleNonNullable: ComplexObjectNonNullable = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: [{bar: null}], // Error: Type 'null' is not assignable to type 'number'
+  }
+}
 ```
 
 ### Writable

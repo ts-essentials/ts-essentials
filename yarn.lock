@@ -13,10 +13,10 @@
     gzip-size "^5.0.0"
     lodash "^4.17.11"
 
-"@codechecks/client@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@codechecks/client/-/client-0.1.0.tgz#148909a05832ebc4000b0c2eab48d266f486ce79"
-  integrity sha512-zzYroWMmJKAEPldCQRLJnK7BXT6D8KM94+NyTy4piCwHXySSBZbn0f4OrXWi3wMBTk9mzJeOw4voMbMxTYb8Ug==
+"@codechecks/client@^0.1.1-beta.0":
+  version "0.1.1-beta.0"
+  resolved "https://registry.yarnpkg.com/@codechecks/client/-/client-0.1.1-beta.0.tgz#2f4ba3305aa89618a386451f6f7891cee948b528"
+  integrity sha512-N1YLxgF6f4qHApv3voyjZutvqYVKGOHBxfgCFLki3tDp9hNMrdnM9n2OTUqkDo5SOIiVN9c9Haj3Sk+MqJDRng==
   dependencies:
     bluebird "^3.5.3"
     commander "^2.19.0"
@@ -206,10 +206,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-conditional-type-checks@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/conditional-type-checks/-/conditional-type-checks-0.5.0.tgz#f06567a2d416f23a5b6b01830b1855368bc617ff"
-  integrity sha1-8GVnotQW8jpbawGDCxhVNovGF/8=
+conditional-type-checks@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/conditional-type-checks/-/conditional-type-checks-1.0.1.tgz#0905a8631ea11bf155e7a6edb6d6b55c2e50520e"
+  integrity sha512-+O/IE/QGjXzdk4ttJFLRQm8pofQE0KZZmgcamquUGhHfaZt0UTZMlklqW0J9tWO8HQvC70cPahEAVMwSfeqtuQ==
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -629,10 +629,10 @@ pify@^3.0.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
 
-prettier@^1.16.1:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.1.tgz#534c2c9d7853f8845e5e078384e71973bd74089f"
-  integrity sha512-XXUITwIkGb3CPJ2hforHah/zTINRyie5006Jd2HKy2qz7snEJXl0KLfsJZW/wst9g6R2rFvqba3VpNYdu1hDcA==
+prettier@^1.18.2:
+  version "1.18.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
+  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
 
 promise@^8.0.2:
   version "8.0.3"
@@ -858,10 +858,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-typescript@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
-  integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
+typescript@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.2.tgz#a09e1dc69bc9551cadf17dba10ee42cf55e5d56c"
+  integrity sha512-7KxJovlYhTX5RaRbUdkAXN1KUZ8PwWlTzQdHV6xNqvuFOs7+WBo10TQUqT19Q/Jz2hk5v9TQDIhyLhhJY4p5AA==
 
 uri-js@^4.2.2:
   version "4.2.2"

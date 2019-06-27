@@ -1,8 +1,9 @@
 /**
  * This file contains a lot of unused functions as it's only typechecked.
  */
-import { IsExactType as IsExact, AssertTrue as Assert } from "conditional-type-checks";
+import { IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
+  DeepNonNullable,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -16,64 +17,103 @@ import {
   WritableKeys,
 } from "../lib";
 
+type ComplexNestedPartial = {
+  simple?: number;
+  nested?: {
+    date?: Date;
+    func?: () => string;
+    array?: ({ bar?: number } | undefined)[];
+    tuple?: [string?, number?, { good?: boolean }?];
+    set?: Set<{
+      name?: string;
+    }>;
+    map?: Map<
+      string,
+      {
+        name?: string;
+      }
+    >;
+  };
+};
+
+type ComplexNestedRequired = {
+  simple: number;
+  nested: {
+    date: Date;
+    func: () => string;
+    array: { bar: number }[];
+    tuple: [string, number, { good: boolean }];
+    set: Set<{
+      name: string;
+    }>;
+    map: Map<
+      string,
+      {
+        name: string;
+      }
+    >;
+  };
+};
+
+type ComplexNestedNullable = {
+  simple: number | null | undefined;
+  nested: {
+    date: Date | null | undefined;
+    func: (() => string) | null | undefined;
+    array: ({ bar: number | null | undefined } | null | undefined)[] | null | undefined;
+    tuple:
+      | [string | null | undefined, number | null | undefined, { good: boolean | null | undefined } | null | undefined]
+      | null
+      | undefined;
+    set:
+      | Set<
+          | {
+              name: string | null | undefined;
+            }
+          | null
+          | undefined
+        >
+      | null
+      | undefined;
+    map:
+      | Map<
+          string | null | undefined,
+          | {
+              name: string | null | undefined;
+            }
+          | null
+          | undefined
+        >
+      | null
+      | undefined;
+  };
+};
+
+type ComplexNestedReadonly = {
+  readonly simple: number;
+  readonly nested: {
+    readonly date: Date;
+    readonly func: () => string;
+    readonly array: readonly { readonly bar: number }[];
+    readonly tuple: readonly [string, number, { readonly good: boolean }];
+    readonly set: Set<{
+      readonly name: string;
+    }>;
+    readonly map: Map<
+      string,
+      {
+        readonly name: string;
+      }
+    >;
+  };
+};
+
 function testDeepPartial() {
-  type Params = {
-    [key: string]: any;
-  };
-
-  type Input = {
-    simple: number;
-    nested: {
-      date: Date;
-      func: () => string;
-    };
-    params: Params;
-  };
-
-  type Expected = {
-    simple?: number;
-    nested?: {
-      date?: Date;
-      func?: () => string;
-    };
-    params?: {
-      [key: string]: any;
-    };
-  };
-
-  type Test = Assert<IsExact<DeepPartial<Input>, Expected>>;
+  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
 }
 
 function testDeepReadonly1() {
-  type Input = {
-    a: number[][];
-    nested: {
-      a: 1;
-    };
-    readonlyAlready: ReadonlyArray<number>;
-    stringProperty: string;
-    numberProperty: number;
-    booleanProperty: boolean;
-    unknownProperty: unknown;
-    nullProperty: null;
-    undefinedProperty: undefined;
-  }[];
-
-  type Expected = ReadonlyArray<{
-    readonly a: ReadonlyArray<ReadonlyArray<number>>;
-    readonly nested: {
-      readonly a: 1;
-    };
-    readonly readonlyAlready: ReadonlyArray<number>;
-    readonly stringProperty: string;
-    readonly numberProperty: number;
-    readonly booleanProperty: boolean;
-    readonly unknownProperty: unknown;
-    readonly nullProperty: null;
-    readonly undefinedProperty: undefined;
-  }>;
-
-  type Test = Assert<IsExact<DeepReadonly<Input>, Expected>>;
+  type Test = Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>;
 }
 
 interface IDeepReadonlyTestHelperType
@@ -99,22 +139,12 @@ function testNonNullable() {
   type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
 }
 
+function testDeepNonNullable() {
+  type Test = Assert<IsExact<DeepNonNullable<ComplexNestedNullable>, ComplexNestedRequired>>;
+}
+
 function testDeepRequire() {
-  type Input = {
-    a?: number;
-    nested?: {
-      a?: 1;
-    };
-  }[];
-
-  type Expected = {
-    a: number;
-    nested: {
-      a: 1;
-    };
-  }[];
-
-  type Test = Assert<IsExact<DeepRequired<Input>, Expected>>;
+  type Test = Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>;
 }
 
 function testTupleInference() {
@@ -151,22 +181,7 @@ function testNonNever() {
 }
 
 function testDeepWritable() {
-  type ReadonlyType = {
-    readonly foo: string;
-    bar: {
-      readonly x: number;
-    };
-  };
-
-  const test: DeepWritable<ReadonlyType> = {
-    foo: "a",
-    bar: {
-      x: 5,
-    },
-  };
-
-  test.foo = "b";
-  test.bar.x = 2;
+  type Test = Assert<IsExact<DeepWritable<ComplexNestedReadonly>, ComplexNestedRequired>>;
 }
 
 function testDeepWritable2() {

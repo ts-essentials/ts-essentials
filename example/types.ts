@@ -53,7 +53,7 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: [],
+    array: [{ bar: 1 }],
   },
 };
 
