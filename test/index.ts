@@ -177,21 +177,23 @@ function testDeepOmit() {
 
   type Filter = {
     a: {
-      b: true;
+      b: never;
       c: {
-        d: true;
+        d: never;
       };
     };
     array: {
-      a: true;
+      a: never;
     };
     set: {
-      a: true;
+      a: never;
     };
     map: {
-      a: true;
+      a: never;
     };
   };
+
+  type T = DeepOmit<Nested, Filter>;
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
 }

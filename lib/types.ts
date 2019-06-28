@@ -125,7 +125,9 @@ export type DeepOmit<T extends DeepOmitModify<P>, P> = T extends Primitive | Fun
         },
         never
       >;
-type DeepOmitSuper<P> = { [K in keyof P]: P[K] extends true ? any : DeepOmitModify<P[K]> };
+type DeepOmitSuper<P> = {
+  [K in keyof P]: P[K] extends never ? any : P[K] extends object ? DeepOmitModify<P[K]> : never;
+};
 type DeepOmitModify<P> =
   | DeepOmitSuper<P>
   | Array<DeepOmitSuper<P>>

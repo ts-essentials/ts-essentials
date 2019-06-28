@@ -25,32 +25,32 @@ yarn add --dev ts-essentials
 
 ## What's inside?
 
-- [Install](#install)
-- [What's inside?](#whats-inside)
-  - [Basic:](#basic)
-  - [Dictionaries](#dictionaries)
-  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#deep-partial--deep-required--deep-readonly--deep-nonnullable)
-  - [Writable](#writable)
-  - [Omit](#omit)
-  - [StrictOmit](#strictomit)
-    - [Comparison between `Omit` and `StrictOmit`](#comparison-between-omit-and-strictomit)
-  - [DeepOmit](#deepomit)
-  - [OmitProperties](#omitproperties)
-  - [NonNever](#nonnever)
-  - [Merge](#merge)
-  - [MarkRequired](#markrequired)
-  - [ReadonlyKeys](#readonlykeys)
-  - [WritableKeys](#writablekeys)
-  - [UnionToIntersection](#uniontointersection)
-  - [Opaque types](#opaque-types)
-  - [Tuple constraint](#tuple-constraint)
-  - [Literal types](#literal-types)
-  - [Exhaustive switch cases](#exhaustive-switch-cases)
-  - [ValueOf type](#valueof-type)
-  - [AsyncOrSync type](#asyncorsync-type)
-- [Contributors](#contributors)
+- [Install](#Install)
+- [What's inside?](#Whats-inside)
+  - [Basic](#Basic)
+  - [Dictionaries](#Dictionaries)
+  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
+  - [Writable](#Writable)
+  - [Omit](#Omit)
+  - [StrictOmit](#StrictOmit)
+    - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
+  - [DeepOmit](#DeepOmit)
+  - [OmitProperties](#OmitProperties)
+  - [NonNever](#NonNever)
+  - [Merge](#Merge)
+  - [MarkRequired](#MarkRequired)
+  - [ReadonlyKeys](#ReadonlyKeys)
+  - [WritableKeys](#WritableKeys)
+  - [UnionToIntersection](#UnionToIntersection)
+  - [Opaque types](#Opaque-types)
+  - [Tuple constraint](#Tuple-constraint)
+  - [Literal types](#Literal-types)
+  - [Exhaustive switch cases](#Exhaustive-switch-cases)
+  - [ValueOf type](#ValueOf-type)
+  - [AsyncOrSync type](#AsyncOrSync-type)
+- [Contributors](#Contributors)
 
-### Basic:
+### Basic
 
 - `Primitive` type matching all primitive values.
 
@@ -228,13 +228,13 @@ interface Teacher {
 
 Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this with a simple type filter.
 
-In the filter, the properties to be omitted completely should be defined as `true`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
+In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
 type TeacherSimple = DeepOmit<Teacher, {
-  gender: true,
+  gender: never,
   students: {
-    score: true,
+    score: never,
   }
 }>
 
@@ -245,7 +245,8 @@ type TeacherSimple = DeepOmit<Teacher, {
 // }
 ```
 
-NOTE: 
+NOTE
+
 - `DeepOmit` works fine with `Array`s and `Set`s. When applied to a `Map`, the filter is only applied to its value.
 - If there exists any property in the filter which is not in the original type, an error will occur.
 
