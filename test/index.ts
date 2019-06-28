@@ -193,8 +193,6 @@ function testDeepOmit() {
     };
   };
 
-  type T = DeepOmit<Nested, Filter>;
-
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
 }
 
