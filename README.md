@@ -25,28 +25,30 @@ yarn add --dev ts-essentials
 
 ## What's inside?
 
-- [Install](#Install)
-- [What's inside?](#Whats-inside)
-  - [Basic:](#Basic)
-  - [Dictionaries](#Dictionaries)
-  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
-  - [Writable](#Writable)
-  - [Omit](#Omit)
-  - [DeepOmit](#DeepOmit)
-  - [OmitProperties](#OmitProperties)
-  - [NonNever](#NonNever)
-  - [Merge](#Merge)
-  - [MarkRequired](#MarkRequired)
-  - [ReadonlyKeys](#ReadonlyKeys)
-  - [WritableKeys](#WritableKeys)
-  - [UnionToIntersection](#UnionToIntersection)
-  - [Opaque types](#Opaque-types)
-  - [Tuple constraint](#Tuple-constraint)
-  - [Literal types](#Literal-types)
-  - [Exhaustive switch cases](#Exhaustive-switch-cases)
-  - [ValueOf type](#ValueOf-type)
-  - [AsyncOrSync type](#AsyncOrSync-type)
-- [Contributors](#Contributors)
+- [Install](#install)
+- [What's inside?](#whats-inside)
+  - [Basic:](#basic)
+  - [Dictionaries](#dictionaries)
+  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#deep-partial--deep-required--deep-readonly--deep-nonnullable)
+  - [Writable](#writable)
+  - [Omit](#omit)
+  - [StrictOmit](#strictomit)
+    - [Comparison between `Omit` and `StrictOmit`](#comparison-between-omit-and-strictomit)
+  - [DeepOmit](#deepomit)
+  - [OmitProperties](#omitproperties)
+  - [NonNever](#nonnever)
+  - [Merge](#merge)
+  - [MarkRequired](#markrequired)
+  - [ReadonlyKeys](#readonlykeys)
+  - [WritableKeys](#writablekeys)
+  - [UnionToIntersection](#uniontointersection)
+  - [Opaque types](#opaque-types)
+  - [Tuple constraint](#tuple-constraint)
+  - [Literal types](#literal-types)
+  - [Exhaustive switch cases](#exhaustive-switch-cases)
+  - [ValueOf type](#valueof-type)
+  - [AsyncOrSync type](#asyncorsync-type)
+- [Contributors](#contributors)
 
 ### Basic:
 
@@ -163,9 +165,52 @@ test[0].bar.x = 2;
 
 ### Omit
 
-Removed in `v3`.
+Our version of `Omit` is renamed to `StrictOmit` in `v3`, since the builtin `Omit` has become part of TypeScript 3.5
 
-NOTE: Builtin `Omit` became part of TypeScript 3.5
+### StrictOmit
+
+Usage is similar to the builtin version, but checks the filter type more strictly.
+
+```typescript
+type ComplexObject = {
+  simple: number;
+  nested: {
+    a: string;
+    array: [{ bar: number }];
+  };
+};
+
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
+
+// Result:
+// {
+//  simple: number
+// }
+
+// if you want to Omit multiple properties just use union type:
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
+
+// Result:
+// { } (empty type)
+```
+
+#### Comparison between `Omit` and `StrictOmit`
+
+Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
+
+```typescript
+type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: error
+// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'.
+// Type '"nonexistent"' is not assignable to type '"simple" | "nested"'.
+
+type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: no error
+```
+
+As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
 
 ### DeepOmit
 
@@ -181,19 +226,17 @@ interface Teacher {
 }
 ```
 
-Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can simple define a filter type and then use `DeepOmit`.
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this with a simple type filter.
 
-In the filter type, the properties to be omitted completely should be defined as `true`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
+In the filter, the properties to be omitted completely should be defined as `true`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
-interface Filter {
+type TeacherSimple = DeepOmit<Teacher, {
   gender: true,
   students: {
     score: true,
   }
-}
-
-type TeacherSimple = DeepOmit<Teacher, Filter>
+}>
 
 // The result will be:
 // {
@@ -202,7 +245,9 @@ type TeacherSimple = DeepOmit<Teacher, Filter>
 // }
 ```
 
-NOTE: `DeepOmit` works fine with `Array`s and `Set`s. When applied to a  `Map`, if its key and value shares common properties, both will be omitted.
+NOTE: 
+- `DeepOmit` works fine with `Array`s and `Set`s. When applied to a `Map`, the filter is only applied to its value.
+- If there exists any property in the filter which is not in the original type, an error will occur.
 
 ### OmitProperties
 
