@@ -93,14 +93,25 @@ export type DeepWritable<T> = T extends Primitive
 interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
 interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
 
-/**
- * Omit given key in object type
- * @deprecated Starting with TypeScript 3.5, Omit is natively available.
- */
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
 /** Omit all properties of given type in object type */
 export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
+
+/** Recursively omit deep properties */
+export type DeepOmit<T, P extends {}> = T extends Primitive | Function | Date
+  ? T
+  : T extends Map<infer K, infer V>
+  ? DeepOmitMap<K, V, P>
+  : T extends Set<infer U>
+  ? DeepOmitSet<U, P>
+  : T extends Array<infer U>
+  ? DeepOmitArray<U, P>
+  : T extends {}
+  ? { [K in Exclude<keyof T, keyof P>]: T[K] } & OmitProperties<DeepOmitAffected<T, P>, never>
+  : T;
+type DeepOmitAffected<T, P> = { [K in Extract<keyof T, keyof P>]: P[K] extends K ? never : DeepOmit<T[K], P[K]> };
+interface DeepOmitArray<ItemType, P> extends Array<DeepOmit<ItemType, P>> {}
+interface DeepOmitSet<ItemType, P> extends Set<DeepOmit<ItemType, P>> {}
+interface DeepOmitMap<KeyType, ValueType, P> extends Map<DeepOmit<KeyType, P>, DeepOmit<ValueType, P>> {}
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;

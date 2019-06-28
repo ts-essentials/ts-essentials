@@ -32,6 +32,7 @@ yarn add --dev ts-essentials
   - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
   - [Writable](#Writable)
   - [Omit](#Omit)
+  - [DeepOmit](#DeepOmit)
   - [OmitProperties](#OmitProperties)
   - [NonNever](#NonNever)
   - [Merge](#Merge)
@@ -162,30 +163,44 @@ test[0].bar.x = 2;
 
 ### Omit
 
+Removed in `v3`.
+
 NOTE: Builtin `Omit` became part of TypeScript 3.5
 
+### DeepOmit
+
+Recursively omit deep properties according to key names.
+
+Here is the `Teacher` interface.
+
 ```typescript
-type ComplexObject = {
-  simple: number;
-  nested: {
-    a: string;
-    array: [{ bar: number }];
-  };
-};
-
-type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
-
-// Result:
-// {
-//  simple: number
-// }
-
-// if you want to Omit multiple properties just use union type:
-type SimplifiedComplexObject = Omit<ComplexObject, "nested" | "simple">;
-
-// Result:
-// { } (empty type)
+interface Teacher {
+  name: string,
+  gender: string,
+  students: {name: string, score: number}[]
+}
 ```
+
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can simple define a filter like this, and then use `DeepOmit`.
+
+```typescript
+interface Filter {
+  gender: "gender",
+  students: {
+    score: "score",
+  }
+}
+
+type TeacherSimple = DeepOmit<Teacher, Filter>
+
+// The result will be:
+{
+  name: string,
+  students: {name: string}[]
+}
+```
+
+NOTE: `DeepOmit` works fine with `Array`s and `Set`s. When applied to a  `Map`, if its key and value shares common properties, both will be omitted.
 
 ### OmitProperties
 
