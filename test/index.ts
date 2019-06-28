@@ -160,7 +160,7 @@ function testDeepOmit() {
     };
     array: { a: string; b: boolean }[];
     set: Set<{ a: string; b: boolean }>;
-    map: Map<number, {a: string, b: boolean}>
+    map: Map<number, { a: string; b: boolean }>;
   };
 
   type Omitted = {
@@ -172,26 +172,28 @@ function testDeepOmit() {
     };
     array: { b: boolean }[];
     set: Set<{ b: boolean }>;
-    map: Map<number, {b: boolean}>
+    map: Map<number, { b: boolean }>;
   };
 
   type Filter = {
     a: {
-      b: "b";
+      b: true;
       c: {
-        d: "d";
+        d: true;
       };
     };
     array: {
-      a: "a";
+      a: true;
     };
     set: {
-      a: "a";
+      a: true;
     };
     map: {
-      a: "a";
-    }
+      a: true;
+    };
   };
+
+  type T = DeepOmit<Nested, Filter>;
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
 }

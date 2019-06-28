@@ -106,9 +106,9 @@ export type DeepOmit<T, P extends {}> = T extends Primitive | Function | Date
   : T extends Array<infer U>
   ? DeepOmitArray<U, P>
   : T extends {}
-  ? { [K in Exclude<keyof T, keyof P>]: T[K] } & OmitProperties<DeepOmitAffected<T, P>, never>
+  ? { [K in Exclude<keyof T, keyof P>]: T[K] } &
+      OmitProperties<{ [K in Extract<keyof T, keyof P>]: P[K] extends true ? never : DeepOmit<T[K], P[K]> }, never>
   : T;
-type DeepOmitAffected<T, P> = { [K in Extract<keyof T, keyof P>]: P[K] extends K ? never : DeepOmit<T[K], P[K]> };
 interface DeepOmitArray<ItemType, P> extends Array<DeepOmit<ItemType, P>> {}
 interface DeepOmitSet<ItemType, P> extends Set<DeepOmit<ItemType, P>> {}
 interface DeepOmitMap<KeyType, ValueType, P> extends Map<DeepOmit<KeyType, P>, DeepOmit<ValueType, P>> {}

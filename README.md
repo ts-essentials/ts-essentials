@@ -181,23 +181,25 @@ interface Teacher {
 }
 ```
 
-Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can simple define a filter like this, and then use `DeepOmit`.
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can simple define a filter type and then use `DeepOmit`.
+
+In the filter type, the properties to be omitted completely should be defined as `true`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
 interface Filter {
-  gender: "gender",
+  gender: true,
   students: {
-    score: "score",
+    score: true,
   }
 }
 
 type TeacherSimple = DeepOmit<Teacher, Filter>
 
 // The result will be:
-{
-  name: string,
-  students: {name: string}[]
-}
+// {
+//  name: string,
+//  students: {name: string}[]
+// }
 ```
 
 NOTE: `DeepOmit` works fine with `Array`s and `Set`s. When applied to a  `Map`, if its key and value shares common properties, both will be omitted.
