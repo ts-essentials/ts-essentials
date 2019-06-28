@@ -128,11 +128,10 @@ export type DeepOmit<T extends DeepOmitModify<P>, P> = T extends Primitive | Fun
 type DeepOmitSuper<P> = {
   [K in keyof P]: P[K] extends never ? any : P[K] extends object ? DeepOmitModify<P[K]> : never;
 };
-type DeepOmitModify<P> =
-  | DeepOmitSuper<P>
-  | Array<DeepOmitSuper<P>>
-  | Set<DeepOmitSuper<P>>
-  | Map<any, DeepOmitSuper<P>>;
+type DeepOmitModify<P> = DeepOmitSuper<P> | DeepOmitModifyArray<P> | DeepOmitModifySet<P> | DeepOmitModifyMap<P>;
+interface DeepOmitModifyArray<ItemType> extends Array<DeepOmitModify<ItemType>> {}
+interface DeepOmitModifySet<ItemType> extends Set<DeepOmitModify<ItemType>> {}
+interface DeepOmitModifyMap<ValueType> extends Map<any, DeepOmitModify<ValueType>> {}
 interface DeepOmitArray<ItemType extends DeepOmitModify<P>, P> extends Array<DeepOmit<ItemType, P>> {}
 interface DeepOmitSet<ItemType extends DeepOmitModify<P>, P> extends Set<DeepOmit<ItemType, P>> {}
 interface DeepOmitMap<KeyType, ValueType extends DeepOmitModify<P>, P> extends Map<KeyType, DeepOmit<ValueType, P>> {}

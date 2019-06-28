@@ -158,7 +158,7 @@ function testDeepOmit() {
       };
       f: number;
     };
-    array: { a: string; b: boolean }[];
+    array: { a: string; b: boolean }[][];
     set: Set<{ a: string; b: boolean }>;
     map: Map<number, { a: string; b: boolean }>;
   };
@@ -170,7 +170,7 @@ function testDeepOmit() {
       };
       f: number;
     };
-    array: { b: boolean }[];
+    array: { b: boolean }[][];
     set: Set<{ b: boolean }>;
     map: Map<number, { b: boolean }>;
   };
