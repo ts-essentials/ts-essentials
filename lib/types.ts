@@ -125,18 +125,7 @@ export type DeepOmit<T extends DeepOmitModify<P>, P> = T extends Primitive | Fun
         },
         never
       >;
-type DeepOmitSuper<P> = P extends Primitive | Function | Date
-  ? P
-  : P extends Map<infer K, infer V>
-  ? DeepOmitSuperMap<K, V>
-  : P extends Set<infer U>
-  ? DeepOmitSuperSet<U>
-  : P extends Array<infer U>
-  ? DeepOmitSuperArray<U>
-  : { [K in keyof P]: P[K] extends true ? any : DeepOmitModify<P[K]> };
-interface DeepOmitSuperArray<ItemType> extends Array<DeepOmitSuper<ItemType>> {}
-interface DeepOmitSuperSet<ItemType> extends Set<DeepOmitSuper<ItemType>> {}
-interface DeepOmitSuperMap<KeyType, ValueType> extends Map<KeyType, DeepOmitSuper<ValueType>> {}
+type DeepOmitSuper<P> = { [K in keyof P]: P[K] extends true ? any : DeepOmitModify<P[K]> };
 type DeepOmitModify<P> =
   | DeepOmitSuper<P>
   | Array<DeepOmitSuper<P>>
