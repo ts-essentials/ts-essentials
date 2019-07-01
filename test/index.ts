@@ -4,6 +4,7 @@
 import { IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
   DeepNonNullable,
+  DeepOmit,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -145,6 +146,54 @@ function testDeepNonNullable() {
 
 function testDeepRequire() {
   type Test = Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>;
+}
+
+function testDeepOmit() {
+  type Nested = {
+    a: {
+      b: string;
+      c: {
+        d: string;
+        e: boolean;
+      };
+      f: number;
+    };
+    array: { a: string; b: boolean }[][];
+    set: Set<{ a: string; b: boolean }>;
+    map: Map<number, { a: string; b: boolean }>;
+  };
+
+  type Omitted = {
+    a: {
+      c: {
+        e: boolean;
+      };
+      f: number;
+    };
+    array: { b: boolean }[][];
+    set: Set<{ b: boolean }>;
+    map: Map<number, { b: boolean }>;
+  };
+
+  type Filter = {
+    a: {
+      b: never;
+      c: {
+        d: never;
+      };
+    };
+    array: {
+      a: never;
+    };
+    set: {
+      a: never;
+    };
+    map: {
+      a: never;
+    };
+  };
+
+  type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
 }
 
 function testTupleInference() {

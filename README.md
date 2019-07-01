@@ -27,11 +27,14 @@ yarn add --dev ts-essentials
 
 - [Install](#Install)
 - [What's inside?](#Whats-inside)
-  - [Basic:](#Basic)
+  - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
   - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
   - [Writable](#Writable)
   - [Omit](#Omit)
+  - [StrictOmit](#StrictOmit)
+    - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
+  - [DeepOmit](#DeepOmit)
   - [OmitProperties](#OmitProperties)
   - [NonNever](#NonNever)
   - [Merge](#Merge)
@@ -47,7 +50,7 @@ yarn add --dev ts-essentials
   - [AsyncOrSync type](#AsyncOrSync-type)
 - [Contributors](#Contributors)
 
-### Basic:
+### Basic
 
 - `Primitive` type matching all primitive values.
 
@@ -162,7 +165,11 @@ test[0].bar.x = 2;
 
 ### Omit
 
-NOTE: Builtin `Omit` became part of TypeScript 3.5
+Our version of `Omit` is renamed to `StrictOmit` in `v3`, since the builtin `Omit` has become part of TypeScript 3.5
+
+### StrictOmit
+
+Usage is similar to the builtin version, but checks the filter type more strictly.
 
 ```typescript
 type ComplexObject = {
@@ -173,7 +180,7 @@ type ComplexObject = {
   };
 };
 
-type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
 
 // Result:
 // {
@@ -181,11 +188,67 @@ type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
 // }
 
 // if you want to Omit multiple properties just use union type:
-type SimplifiedComplexObject = Omit<ComplexObject, "nested" | "simple">;
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
 
 // Result:
 // { } (empty type)
 ```
+
+#### Comparison between `Omit` and `StrictOmit`
+
+Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
+
+```typescript
+type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: error
+// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'.
+// Type '"nonexistent"' is not assignable to type '"simple" | "nested"'.
+
+type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: no error
+```
+
+As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
+
+### DeepOmit
+
+Recursively omit deep properties according to key names.
+
+Here is the `Teacher` interface.
+
+```typescript
+interface Teacher {
+  name: string,
+  gender: string,
+  students: {name: string, score: number}[]
+}
+```
+
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this with a simple type filter.
+
+In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
+
+```typescript
+type TeacherSimple = DeepOmit<Teacher, {
+  gender: never,
+  students: {
+    score: never,
+  }
+}>
+
+// The result will be:
+// {
+//  name: string,
+//  students: {name: string}[]
+// }
+```
+
+NOTE
+
+- `DeepOmit` works fine with `Array`s and `Set`s. When applied to a `Map`, the filter is only applied to its value.
+- If there exists any property in the filter which is not in the original type, an error will occur.
 
 ### OmitProperties
 

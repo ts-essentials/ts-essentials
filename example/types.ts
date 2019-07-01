@@ -3,7 +3,6 @@ import {
   DictionaryValues,
   DeepPartial,
   DeepReadonly,
-  Omit,
   Opaque,
   DeepRequired,
   AsyncOrSync,

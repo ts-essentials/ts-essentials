@@ -93,14 +93,49 @@ export type DeepWritable<T> = T extends Primitive
 interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
 interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
 
-/**
- * Omit given key in object type
- * @deprecated Starting with TypeScript 3.5, Omit is natively available.
- */
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** Similar to the builtin Omit, but checks the filter strictly. */
+export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /** Omit all properties of given type in object type */
 export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
+
+/** Recursively omit deep properties */
+export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Primitive | Function | Date
+  ? T
+  : T extends Map<infer KeyType, infer ValueType>
+  ? ValueType extends DeepOmitModify<Filter>
+    ? DeepOmitMap<KeyType, ValueType, Filter>
+    : T
+  : T extends Set<infer ItemType>
+  ? ItemType extends DeepOmitModify<Filter>
+    ? DeepOmitSet<ItemType, Filter>
+    : T
+  : T extends Array<infer ItemType>
+  ? ItemType extends DeepOmitModify<Filter>
+    ? DeepOmitArray<ItemType, Filter>
+    : T
+  : { [K in Exclude<keyof T, keyof Filter>]: T[K] } &
+      OmitProperties<
+        {
+          [K in Extract<keyof T, keyof Filter>]: Filter[K] extends true
+            ? never
+            : T[K] extends DeepOmitModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
+            : T[K];
+        },
+        never
+      >;
+type DeepOmitSuper<T> = {
+  [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
+};
+type DeepOmitModify<T> = DeepOmitSuper<T> | DeepOmitModifyArray<T> | DeepOmitModifySet<T> | DeepOmitModifyMap<T>;
+interface DeepOmitModifyArray<ItemType> extends Array<DeepOmitModify<ItemType>> {}
+interface DeepOmitModifySet<ItemType> extends Set<DeepOmitModify<ItemType>> {}
+interface DeepOmitModifyMap<ValueType> extends Map<any, DeepOmitModify<ValueType>> {}
+interface DeepOmitArray<ItemType extends DeepOmitModify<Filter>, Filter> extends Array<DeepOmit<ItemType, Filter>> {}
+interface DeepOmitSet<ItemType extends DeepOmitModify<Filter>, Filter> extends Set<DeepOmit<ItemType, Filter>> {}
+interface DeepOmitMap<KeyType, ValueType extends DeepOmitModify<Filter>, Filter>
+  extends Map<KeyType, DeepOmit<ValueType, Filter>> {}
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
