@@ -14,13 +14,7 @@
 ## Install
 
 ```sh
-npm add --save-dev ts-essentials
-```
-
-or
-
-```sh
-yarn add --dev ts-essentials
+npm add --save-dev ts-essentials@3.0.0-beta.1
 ```
 
 ## What's inside?
