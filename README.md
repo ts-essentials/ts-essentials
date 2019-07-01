@@ -17,11 +17,7 @@
 npm add --save-dev ts-essentials
 ```
 
-or
-
-```sh
-yarn add --dev ts-essentials
-```
+Note: If you're already a user of `typescript@3.5` consider using [`next`](https://github.com/krzkaczor/ts-essentials/tree/next) branch for newest features like for example `DeepOmit` type.
 
 ## What's inside?
 
