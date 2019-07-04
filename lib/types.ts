@@ -25,6 +25,8 @@ export type DeepRequired<T> = T extends Primitive
   ? NonNullable<T>
   : T extends any[]
   ? DeepRequiredArray<NonNullable<T[number]>>
+  : T extends Function
+  ? T
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }
   : T;
