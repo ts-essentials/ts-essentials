@@ -134,6 +134,15 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "kevinpeno",
+      "name": "Kevin Peno",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/343808?v=4",
+      "profile": "http://kevinpeno.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
