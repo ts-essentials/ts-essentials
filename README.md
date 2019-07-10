@@ -17,7 +17,7 @@
 npm add --save-dev ts-essentials
 ```
 
-Note: We require typescript>=3.5 If you're looking for support for older TS versions use `ts-essentials@2` instead.
+👉 We require `typescript>=3.5`. If you're looking for support for older TS versions use `ts-essentials@2` instead.
 
 ## What's inside?
 
