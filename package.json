@@ -6,7 +6,7 @@
     "types",
     "essentials"
   ],
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
@@ -21,9 +21,12 @@
   "files": [
     "dist"
   ],
+  "peerDependencies": {
+    "typescript": ">=3.5.0"
+  },
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.1.0",
-    "@codechecks/client": "^0.1.1-beta.0",
+    "@codechecks/client": "^0.1.4",
     "conditional-type-checks": "^1.0.1",
     "prettier": "^1.18.2",
     "typescript": "^3.5.2"
