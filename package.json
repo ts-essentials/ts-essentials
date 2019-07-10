@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.1.0",
-    "@codechecks/client": "^0.1.1-beta.0",
+    "@codechecks/client": "^0.1.4",
     "conditional-type-checks": "^1.0.1",
     "prettier": "^1.18.2",
     "typescript": "^3.5.2"
