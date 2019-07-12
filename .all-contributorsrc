@@ -119,7 +119,9 @@
       "profile": "http://twitter.com/quezak2",
       "contributions": [
         "code",
-        "ideas"
+        "ideas",
+        "doc",
+        "review"
       ]
     },
     {
@@ -129,7 +131,17 @@
       "profile": "https://github.com/lucifer1004",
       "contributions": [
         "code",
-        "ideas"
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "kevinpeno",
+      "name": "Kevin Peno",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/343808?v=4",
+      "profile": "http://kevinpeno.com",
+      "contributions": [
+        "code"
       ]
     }
   ],
