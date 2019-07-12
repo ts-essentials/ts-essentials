@@ -3,7 +3,6 @@ import {
   DictionaryValues,
   DeepPartial,
   DeepReadonly,
-  Omit,
   Opaque,
   DeepRequired,
   AsyncOrSync,
@@ -53,7 +52,7 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: [],
+    array: [{ bar: 1 }],
   },
 };
 

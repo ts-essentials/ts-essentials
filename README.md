@@ -6,7 +6,7 @@
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
     <img alt="Build status" src="https://circleci.com/gh/krzkaczor/ts-essentials.svg?style=svg">
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <img src="https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square" alt="All Contributors">
+    <img src="https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square" alt="All Contributors">
     <img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io">
   </p>
 </p>
@@ -17,33 +17,36 @@
 npm add --save-dev ts-essentials
 ```
 
-Note: If you're already a user of `typescript@3.5` consider using [`next`](https://github.com/krzkaczor/ts-essentials/tree/next) branch for newest features like for example `DeepOmit` type.
+👉 We require `typescript>=3.5`. If you're looking for support for older TS versions use `ts-essentials@2` instead.
 
 ## What's inside?
 
-- [Basic](#basic)
-  - Primitive
-- [Dictionaries](#dictionaries)
-  - Dictionary
-  - DictionaryValues
-- [Deep Partial & DeepRequired & Deep Readonly](#deep-partial--deep-required--deep-readonly)
-- [Writable & DeepWritable](#writable)
-- [Omit](#omit)
-- [OmitProperties](#omitproperties)
-- [NonNever](#nonnever)
-- [Merge](#merge)
-- [MarkRequired](#markrequired)
-- [ReadonlyKeys](#readonlykeys)
-- [WritableKeys](#writablekeys)
-- [UnionToIntersection](#uniontointersection)
-- [Opaque types](#opaque-types)
-- [Tuple constraint](#tuple-constraint)
-- [Literal types](#literal-types)
-- [Exhaustive switch cases](#exhaustive-switch-cases)
-- [ValueOf](#valueof-type)
-- [AsyncOrSync](#asyncorsync-type)
+- [Install](#Install)
+- [What's inside?](#Whats-inside)
+  - [Basic](#Basic)
+  - [Dictionaries](#Dictionaries)
+  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
+  - [Writable](#Writable)
+  - [Omit](#Omit)
+  - [StrictOmit](#StrictOmit)
+    - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
+  - [DeepOmit](#DeepOmit)
+  - [OmitProperties](#OmitProperties)
+  - [NonNever](#NonNever)
+  - [Merge](#Merge)
+  - [MarkRequired](#MarkRequired)
+  - [ReadonlyKeys](#ReadonlyKeys)
+  - [WritableKeys](#WritableKeys)
+  - [UnionToIntersection](#UnionToIntersection)
+  - [Opaque types](#Opaque-types)
+  - [Tuple constraint](#Tuple-constraint)
+  - [Literal types](#Literal-types)
+  - [Exhaustive switch cases](#Exhaustive-switch-cases)
+  - [ValueOf type](#ValueOf-type)
+  - [AsyncOrSync type](#AsyncOrSync-type)
+- [Contributors](#Contributors)
 
-### Basic:
+### Basic
 
 - `Primitive` type matching all primitive values.
 
@@ -74,7 +77,7 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 ```
 
-### Deep Partial & Deep Required & Deep Readonly
+### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
 
 ```typescript
 type ComplexObject = {
@@ -97,11 +100,28 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: [],
+    array: [{bar: 1}],
   },
 };
 
 type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
+
+type ComplexNullableObject = {
+  simple: number | null | undefined;
+  nested: {
+    a: string | null | undefined;
+    array: [{ bar: number | null | undefined }] | null | undefined;
+  };
+};
+
+type ComplexObjectNonNullable = DeepNonNullable<ComplexNullableObject>;
+const sampleNonNullable: ComplexObjectNonNullable = {
+  simple: 5,
+  nested: {
+    a: "test",
+    array: [{bar: null}], // Error: Type 'null' is not assignable to type 'number'
+  }
+}
 ```
 
 ### Writable
@@ -141,7 +161,11 @@ test[0].bar.x = 2;
 
 ### Omit
 
-NOTE: Builtin `Omit` became part of TypeScript 3.5
+Our version of `Omit` is renamed to `StrictOmit` in `v3`, since the builtin `Omit` has become part of TypeScript 3.5
+
+### StrictOmit
+
+Usage is similar to the builtin version, but checks the filter type more strictly.
 
 ```typescript
 type ComplexObject = {
@@ -152,7 +176,7 @@ type ComplexObject = {
   };
 };
 
-type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
 
 // Result:
 // {
@@ -160,11 +184,67 @@ type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
 // }
 
 // if you want to Omit multiple properties just use union type:
-type SimplifiedComplexObject = Omit<ComplexObject, "nested" | "simple">;
+type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
 
 // Result:
 // { } (empty type)
 ```
+
+#### Comparison between `Omit` and `StrictOmit`
+
+Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
+
+```typescript
+type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: error
+// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'.
+// Type '"nonexistent"' is not assignable to type '"simple" | "nested"'.
+
+type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
+
+// Result: no error
+```
+
+As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
+
+### DeepOmit
+
+Recursively omit deep properties according to key names.
+
+Here is the `Teacher` interface.
+
+```typescript
+interface Teacher {
+  name: string,
+  gender: string,
+  students: {name: string, score: number}[]
+}
+```
+
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this with a simple type filter.
+
+In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
+
+```typescript
+type TeacherSimple = DeepOmit<Teacher, {
+  gender: never,
+  students: {
+    score: never,
+  }
+}>
+
+// The result will be:
+// {
+//  name: string,
+//  students: {name: string}[]
+// }
+```
+
+NOTE
+
+- `DeepOmit` works fine with `Array`s and `Set`s. When applied to a `Map`, the filter is only applied to its value.
+- If there exists any property in the filter which is not in the original type, an error will occur.
 
 ### OmitProperties
 
