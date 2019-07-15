@@ -1,6 +1,13 @@
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
+/**
+ * Construct a type with the properties of T except for those in type K.
+ * Use this instead of TS 3.5 Omit to keep it backwards compatible.
+ */
+type _Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+
+
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
@@ -141,7 +148,7 @@ interface DeepOmitMap<KeyType, ValueType extends DeepOmitModify<Filter>, Filter>
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
-export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
+export type Merge<M, N> = _Omit<M, Extract<keyof M, keyof N>> & N;
 
 /** Mark some properties as required, leaving others unchanged */
 export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick<T, RK>>;
