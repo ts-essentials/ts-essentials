@@ -7,7 +7,6 @@ export type Primitive = string | number | boolean | bigint | symbol | undefined 
  */
 type _Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
-
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
