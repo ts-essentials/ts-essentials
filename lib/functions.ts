@@ -6,6 +6,10 @@ export class UnreachableCaseError extends Error {
   }
 }
 
+/**
+ * @deprecated since ts-essentials 3.x -- use `as const` assertions available from TS 3.4
+ * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions
+ */
 export function literal<T extends Primitive>(value: T): T {
   return value;
 }
