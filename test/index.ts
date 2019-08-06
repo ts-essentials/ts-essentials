@@ -8,6 +8,7 @@ import {
   DeepPartial,
   DeepReadonly,
   DeepRequired,
+  PickProperties,
   Tuple,
   NonNever,
   Writable,
@@ -146,6 +147,11 @@ function testDeepNonNullable() {
 
 function testDeepRequire() {
   type Test = Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>;
+}
+
+function testPickProperties() {
+  type Test1 = Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>;
+  type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
 }
 
 function testDeepOmit() {
