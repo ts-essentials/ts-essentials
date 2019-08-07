@@ -152,6 +152,16 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "EduardoRFS",
+      "name": "EduardoRFS",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3393115?v=4",
+      "profile": "https://github.com/EduardoRFS",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
