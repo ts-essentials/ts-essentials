@@ -99,6 +99,9 @@ export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Omit all properties of given type in object type */
 export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
 
+/** Pick all properties of given type in object type */
+export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
+
 /** Recursively omit deep properties */
 export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Primitive | Function | Date
   ? T

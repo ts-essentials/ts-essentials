@@ -32,6 +32,7 @@ npm add --save-dev ts-essentials
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
   - [DeepOmit](#DeepOmit)
   - [OmitProperties](#OmitProperties)
+  - [PickProperties](#PickProperties)
   - [NonNever](#NonNever)
   - [Merge](#Merge)
   - [MarkRequired](#MarkRequired)
@@ -268,6 +269,35 @@ type ExampleWithoutMethods = OmitProperties<Example, Function>;
 type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
 // Result:
 // { } (empty type)
+
+```
+
+### PickProperties
+
+Pick only properties extending type `P` in type `T`.
+
+```typescript
+interface Example {
+  log(): void;
+  version: string;
+  versionNumber: number;
+}
+
+type ExampleOnlyMethods = PickProperties<Example, Function>;
+
+// Result:
+// {
+//   log(): void;
+// }
+
+// if you want to pick multiple properties just use union type like
+
+type ExampleOnlyMethodsAndString = PickProperties<Example, Function | string>;
+// Result:
+// {
+//   log(): void;
+//   version: string;
+// }
 
 ```
 
