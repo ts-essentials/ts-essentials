@@ -519,6 +519,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://kevinpeno.com"><img src="https://avatars1.githubusercontent.com/u/343808?v=4" width="100px;" alt="Kevin Peno"/><br /><sub><b>Kevin Peno</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=kevinpeno" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/DomParfitt"><img src="https://avatars2.githubusercontent.com/u/11363907?v=4" width="100px;" alt="Dom Parfitt"/><br /><sub><b>Dom Parfitt</b></sub></a><br /><a href="#ideas-DomParfitt" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/EduardoRFS"><img src="https://avatars0.githubusercontent.com/u/3393115?v=4" width="100px;" alt="EduardoRFS"/><br /><sub><b>EduardoRFS</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=EduardoRFS" title="Code">💻</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=EduardoRFS" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
