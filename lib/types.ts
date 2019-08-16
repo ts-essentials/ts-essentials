@@ -143,6 +143,8 @@ interface DeepOmitMap<KeyType, ValueType extends DeepOmitModify<Filter>, Filter>
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
+export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
+
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 

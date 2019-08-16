@@ -312,6 +312,21 @@ type GetDefined<TypesMap extends { [key: string]: any }> = keyof NonNever<
 >;
 ```
 
+### NonEmptyObject
+
+Useful for accepting only objects with keys, great after a filter like OmitProperties or PickProperties.
+
+```typescript
+/* return never if the object doesn't have any number value*/
+type NumberDictionary<T> = NonEmptyObject<PickProperties<T, number>>;
+
+// return { a: number }
+type SomeObject = NumberDictionary<{ a: number, b: string }>;
+
+// return never
+type EmptyObject = NumberDictionary<{}>;
+```
+
 ### Merge
 
 ```typescript

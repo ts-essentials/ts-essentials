@@ -11,6 +11,7 @@ import {
   PickProperties,
   Tuple,
   NonNever,
+  NonEmptyObject,
   Writable,
   DeepWritable,
   MarkRequired,
@@ -233,6 +234,18 @@ function testNonNever() {
 
   type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
   type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
+}
+
+function testNonEmptyObject() {
+  type ObjectWithKeys = {
+    foo: string;
+    bar: number;
+    xyz: undefined;
+  };
+  type EmptyObject = {};
+
+  type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
+  type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
 }
 
 function testDeepWritable() {
