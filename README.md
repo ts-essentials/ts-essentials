@@ -536,6 +536,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/EduardoRFS"><img src="https://avatars0.githubusercontent.com/u/3393115?v=4" width="100px;" alt="EduardoRFS"/><br /><sub><b>EduardoRFS</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=EduardoRFS" title="Code">💻</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=EduardoRFS" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://andydvorak.net/"><img src="https://avatars1.githubusercontent.com/u/409245?v=4" width="100px;" alt="Andrew C. Dvorak"/><br /><sub><b>Andrew C. Dvorak</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=acdvorak" title="Documentation">📖</a></td>
   </tr>
 </table>
 
