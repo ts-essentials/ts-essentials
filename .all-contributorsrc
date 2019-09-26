@@ -162,6 +162,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "acdvorak",
+      "name": "Andrew C. Dvorak",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/409245?v=4",
+      "profile": "https://andydvorak.net/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
