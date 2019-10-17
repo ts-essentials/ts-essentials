@@ -3,6 +3,7 @@
  */
 import { IsExact, AssertTrue as Assert } from "conditional-type-checks";
 import {
+  Buildable,
   DeepNonNullable,
   DeepOmit,
   DeepPartial,
@@ -285,6 +286,10 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
 
   type Test_Indeed_Obj_Totally_Writable = Assert<IsExact<TotallyWritableType, DeepWritable<TotallyWritableType>>>;
   type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
+}
+
+function testBuildable() {
+  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>;
 }
 
 function testMarkRequired() {
