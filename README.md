@@ -27,6 +27,7 @@ npm install --save-dev ts-essentials
   - [Dictionaries](#Dictionaries)
   - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
   - [Writable](#Writable)
+  - [Buildable](#Buildable)
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
@@ -158,6 +159,29 @@ const test: DeepWritable<Foo> = [
 // we can freely write to this object
 test[0].foo = "b";
 test[0].bar.x = 2;
+```
+
+### Buildable
+
+A combination of both `DeepWritable` and `DeepPartial`.
+This type allows building an object step-by-step by assigning values to its attributes in multiple statements.
+
+```typescript
+interface ReadonlyObject extends Readonly<{
+  simple: number;
+  nested: Readonly<{
+    a: string;
+    array: ReadonlyArray<Readonly<{ bar: number }>>;
+  }>;
+}> {}
+
+const buildable: Buildable<ReadonlyObject> = {};
+buildable.simple = 7;
+buildable.nested = {};
+buildable.nested.a = 'test';
+buildable.nested.array = [];
+buildable.nested.array.push({ bar: 1 });
+const finished = buildable as ReadonlyObject;
 ```
 
 ### Omit

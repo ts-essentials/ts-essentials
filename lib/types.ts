@@ -93,6 +93,9 @@ export type DeepWritable<T> = T extends Primitive
 interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
 interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
 
+/** Combination of DeepPartial and DeepWritable */
+export type Buildable<T> = DeepPartial<DeepWritable<T>>;
+
 /** Similar to the builtin Omit, but checks the filter strictly. */
 export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
