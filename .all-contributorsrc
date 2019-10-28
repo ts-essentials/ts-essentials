@@ -171,6 +171,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "a1russell",
+      "name": "Adam Russell",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/241628?v=4",
+      "profile": "https://github.com/a1russell",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
