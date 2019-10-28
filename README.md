@@ -164,6 +164,7 @@ test[0].bar.x = 2;
 ### Buildable
 
 A combination of both `DeepWritable` and `DeepPartial`.
+This type allows building an object step-by-step by assigning values to its attributes in multiple statements.
 
 ```typescript
 interface ReadonlyObject extends Readonly<{
@@ -175,7 +176,12 @@ interface ReadonlyObject extends Readonly<{
 }> {}
 
 const buildable: Buildable<ReadonlyObject> = {};
-buildable.nested = { a: 'test' };
+buildable.simple = 7;
+buildable.nested = {};
+buildable.nested.a = 'test';
+buildable.nested.array = [];
+buildable.nested.array.push({ bar: 1 });
+const finished = buildable as ReadonlyObject;
 ```
 
 ### Omit
