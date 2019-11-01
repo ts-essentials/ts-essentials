@@ -6,11 +6,7 @@ export type Dictionary<T, K extends string | number = string> = { [key in K]: T 
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
 /** Like Partial but recursive */
-export type DeepPartial<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
+export type DeepPartial<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
   ? DeepPartialMap<K, V>
@@ -23,11 +19,7 @@ interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
 interface DeepPartialMap<KeyType, ValueType> extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
 
 /** Like NonNullable but recursive */
-export type DeepNonNullable<T> = T extends Primitive
-  ? NonNullable<T>
-  : T extends Function
-  ? NonNullable<T>
-  : T extends Date
+export type DeepNonNullable<T> = T extends Primitive | Function | Date
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? NonNullableMap<K, V>
@@ -40,11 +32,7 @@ interface NonNullableSet<ItemType> extends Set<DeepNonNullable<ItemType>> {}
 interface NonNullableMap<KeyType, ValueType> extends Map<DeepNonNullable<KeyType>, DeepNonNullable<ValueType>> {}
 
 /** Like Required but recursive */
-export type DeepRequired<T> = T extends Primitive
-  ? NonNullable<T>
-  : T extends Function
-  ? NonNullable<T>
-  : T extends Date
+export type DeepRequired<T> = T extends Primitive | Function | Date
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? RequiredMap<K, V>
@@ -57,11 +45,7 @@ interface RequiredSet<ItemType> extends Set<DeepRequired<ItemType>> {}
 interface RequiredMap<KeyType, ValueType> extends Map<DeepRequired<KeyType>, DeepRequired<ValueType>> {}
 
 /** Like Readonly but recursive */
-export type DeepReadonly<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
+export type DeepReadonly<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
   ? ReadonlyMap<K, V>
@@ -77,11 +61,7 @@ interface ReadonlyMap<KeyType, ValueType> extends Map<DeepReadonly<KeyType>, Dee
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
 /** Like Writable but recursive */
-export type DeepWritable<T> = T extends Primitive
-  ? T
-  : T extends Function
-  ? T
-  : T extends Date
+export type DeepWritable<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
   ? WritableMap<K, V>
