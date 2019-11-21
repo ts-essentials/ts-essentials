@@ -37,6 +37,7 @@ npm install --save-dev ts-essentials
   - [NonNever](#NonNever)
   - [Merge](#Merge)
   - [MarkRequired](#MarkRequired)
+  - [MarkOptional](#MarkOptional)
   - [ReadonlyKeys](#ReadonlyKeys)
   - [WritableKeys](#WritableKeys)
   - [UnionToIntersection](#UnionToIntersection)
@@ -388,6 +389,31 @@ type UserWithPosts = MarkRequired<User, 'posts'>;
 async function getUserWithPosts(id: number): Promise<UserWithPosts> {
   return userRepo.findOneOrFail({ id }, { relations: ['posts'] }) as Promise<UserWithPosts>;
 }
+```
+
+### MarkOptional
+
+Useful when you want to make some properties optional without creating a separate type.
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
+type UserWithoutPassword = MarkOptional<User, 'password'>;
+
+// Result:
+
+// {
+//   id: number;
+//   name: string;
+//   email: string;
+//   password?: string;
+// }
+
 ```
 
 ### ReadonlyKeys

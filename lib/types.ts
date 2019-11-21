@@ -134,6 +134,9 @@ export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 /** Mark some properties as required, leaving others unchanged */
 export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick<T, RK>>;
 
+/** Mark some properties as optional, leaving others unchanged */
+export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
   ? I
