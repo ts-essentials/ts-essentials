@@ -22,7 +22,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "typescript": ">=3.5.0"
+    "typescript": ">=3.7.0"
   },
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.1.0",
