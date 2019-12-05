@@ -9,53 +9,45 @@ export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 export type DeepPartial<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
-  ? DeepPartialMap<K, V>
+  ? Map<DeepPartial<K>, DeepPartial<V>>
   : T extends Set<infer U>
-  ? DeepPartialSet<U>
+  ? Set<DeepPartial<U>>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
-interface DeepPartialMap<KeyType, ValueType> extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
 
 /** Like NonNullable but recursive */
 export type DeepNonNullable<T> = T extends Primitive | Function | Date
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
-  ? NonNullableMap<K, V>
+  ? Map<DeepNonNullable<K>, DeepNonNullable<V>>
   : T extends Set<infer U>
-  ? NonNullableSet<U>
+  ? Set<DeepNonNullable<U>>
   : T extends {}
   ? { [K in keyof T]: DeepNonNullable<T[K]> }
   : NonNullable<T>;
-interface NonNullableSet<ItemType> extends Set<DeepNonNullable<ItemType>> {}
-interface NonNullableMap<KeyType, ValueType> extends Map<DeepNonNullable<KeyType>, DeepNonNullable<ValueType>> {}
 
 /** Like Required but recursive */
 export type DeepRequired<T> = T extends Primitive | Function | Date
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
-  ? RequiredMap<K, V>
+  ? Map<DeepRequired<K>, DeepRequired<V>>
   : T extends Set<infer U>
-  ? RequiredSet<U>
+  ? Set<DeepRequired<U>>
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<T[K]> }
   : NonNullable<T>;
-interface RequiredSet<ItemType> extends Set<DeepRequired<ItemType>> {}
-interface RequiredMap<KeyType, ValueType> extends Map<DeepRequired<KeyType>, DeepRequired<ValueType>> {}
 
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
-  ? ReadonlyMap<K, V>
+  ? Map<DeepReadonly<K>, DeepReadonly<V>>
   : T extends Set<infer U>
-  ? ReadonlySet<U>
+  ? Set<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : Readonly<T>;
-interface ReadonlySet<ItemType> extends Set<DeepReadonly<ItemType>> {}
-interface ReadonlyMap<KeyType, ValueType> extends Map<DeepReadonly<KeyType>, DeepReadonly<ValueType>> {}
 
 /** Make readonly object writable */
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
@@ -64,14 +56,12 @@ export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 export type DeepWritable<T> = T extends Primitive | Function | Date
   ? T
   : T extends Map<infer K, infer V>
-  ? WritableMap<K, V>
+  ? Map<DeepWritable<K>, DeepWritable<V>>
   : T extends Set<infer U>
-  ? WritableSet<U>
+  ? Set<DeepWritable<U>>
   : T extends {}
   ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
   : T;
-interface WritableSet<ItemType> extends Set<DeepWritable<ItemType>> {}
-interface WritableMap<KeyType, ValueType> extends Map<DeepWritable<KeyType>, DeepReadonly<ValueType>> {}
 
 /** Combination of DeepPartial and DeepWritable */
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
@@ -90,15 +80,15 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Primi
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? ValueType extends DeepOmitModify<Filter>
-    ? DeepOmitMap<KeyType, ValueType, Filter>
+    ? Map<KeyType, DeepOmit<ValueType, Filter>>
     : T
   : T extends Set<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
-    ? DeepOmitSet<ItemType, Filter>
+    ? Set<DeepOmit<ItemType, Filter>>
     : T
   : T extends Array<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
-    ? DeepOmitArray<ItemType, Filter>
+    ? Array<DeepOmit<ItemType, Filter>>
     : T
   : { [K in Exclude<keyof T, keyof Filter>]: T[K] } &
       OmitProperties<
@@ -111,17 +101,13 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Primi
         },
         never
       >;
-type DeepOmitSuper<T> = {
-  [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
-};
-type DeepOmitModify<T> = DeepOmitSuper<T> | DeepOmitModifyArray<T> | DeepOmitModifySet<T> | DeepOmitModifyMap<T>;
-interface DeepOmitModifyArray<ItemType> extends Array<DeepOmitModify<ItemType>> {}
-interface DeepOmitModifySet<ItemType> extends Set<DeepOmitModify<ItemType>> {}
-interface DeepOmitModifyMap<ValueType> extends Map<any, DeepOmitModify<ValueType>> {}
-interface DeepOmitArray<ItemType extends DeepOmitModify<Filter>, Filter> extends Array<DeepOmit<ItemType, Filter>> {}
-interface DeepOmitSet<ItemType extends DeepOmitModify<Filter>, Filter> extends Set<DeepOmit<ItemType, Filter>> {}
-interface DeepOmitMap<KeyType, ValueType extends DeepOmitModify<Filter>, Filter>
-  extends Map<KeyType, DeepOmit<ValueType, Filter>> {}
+type DeepOmitModify<T> =
+  | {
+      [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
+    }
+  | Array<DeepOmitModify<T>>
+  | Set<DeepOmitModify<T>>
+  | Map<any, DeepOmitModify<T>>;
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
@@ -138,9 +124,7 @@ export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick
 export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 /** Convert union type to intersection #darkmagic */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
-  ? I
-  : never;
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
 /** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
 export type Opaque<K, T> = T & { __TYPE__: K };
@@ -158,7 +142,7 @@ export type AsyncOrSync<T> = PromiseLike<T> | T;
 // This potentially abuses compiler some inconsistencies in checking type equality for generics,
 // because normally `readonly` doesn't affect whether types are assignable.
 // @see https://stackoverflow.com/a/52473108/1815209 with comments
-type IsEqualConsideringWritability<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2)
+type IsEqualConsideringWritability<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
   ? true
   : false;
 
