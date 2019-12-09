@@ -14,7 +14,7 @@ export function literal<T extends Primitive>(value: T): T {
   return value;
 }
 
-function assert(condition: any, msg: string = "no additional info provided"): asserts condition {
+export function assert(condition: any, msg: string = "no additional info provided"): asserts condition {
   if (!condition) {
     throw new Error("Assertion Error: " + msg);
   }
