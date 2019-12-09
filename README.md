@@ -47,6 +47,7 @@ npm install --save-dev ts-essentials
   - [Exhaustive switch cases](#Exhaustive-switch-cases)
   - [ValueOf type](#ValueOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
+  - [Assertions](#Assertions)
 - [Contributors](#Contributors)
 
 ### Basic
@@ -557,6 +558,24 @@ class Travis implements CiProvider {
     return "def";
   }
 }
+```
+
+### Assertions
+
+*keywords: invariant*
+
+Simple runtime assertion that narrows involved types using [assertion functions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions).
+
+Note: This function is not purely type level and leaves minimal runtime trace in generated code.
+
+```typescript
+const something: string | undefined = "abc" as any
+assert(something, "Something has to be defined!")
+// from now on `something` is string, if this wouldn't be a case, assert would throw
+
+const anything: any = "abc" as any
+assert(anything instanceof String, "anything has to be a string!")
+// from now on `anything` is string
 ```
 
 ## Contributors
