@@ -20,6 +20,7 @@ import {
   ReadonlyKeys,
   WritableKeys,
   MarkOptional,
+  assert,
 } from "../lib";
 
 type ComplexNestedPartial = {
@@ -369,4 +370,14 @@ function testWritableKeys() {
   type Expected = "b";
 
   type Test = Assert<IsExact<Actual, Expected>>;
+}
+
+function testAssert() {
+  type TestType1 = string | undefined;
+  type Expected = string;
+  const anything = (undefined as any) as TestType1;
+
+  assert(anything);
+  type Actual = typeof anything;
+  type Test = Assert<IsExact<Actual, string>>;
 }
