@@ -56,6 +56,8 @@ npm install --save-dev ts-essentials
 
 ### Dictionaries
 
+*keywords: map*
+
 ```typescript
 const stringDict: Dictionary<string> = {
   a: "A",
@@ -82,6 +84,8 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 ```
 
 ### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
+
+*keywords: nested, optional*
 
 ```typescript
 type ComplexObject = {
@@ -164,6 +168,8 @@ test[0].bar.x = 2;
 ```
 
 ### Buildable
+
+*keywords: builder*
 
 A combination of both `DeepWritable` and `DeepPartial`.
 This type allows building an object step-by-step by assigning values to its attributes in multiple statements.
@@ -275,7 +281,9 @@ NOTE
 
 ### OmitProperties
 
-Removes all properties extending type `P` in type `T`.
+*keywords: filter, props*
+
+Removes all properties extending type `P` in type `T`. NOTE: it works opposite to filtering.
 
 ```typescript
 interface Example {
@@ -354,6 +362,8 @@ type EmptyObject = NumberDictionary<{}>;
 ```
 
 ### Merge
+
+*keywords: override*
 
 ```typescript
 type Foo = {
