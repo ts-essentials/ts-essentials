@@ -55,6 +55,8 @@ npm install --save-dev ts-essentials
 
 ### Dictionaries
 
+*keywords: map*
+
 ```typescript
 const stringDict: Dictionary<string> = {
   a: "A",
@@ -81,6 +83,8 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 ```
 
 ### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
+
+*keywords: nested, optional*
 
 ```typescript
 type ComplexObject = {
@@ -357,6 +361,8 @@ type EmptyObject = NumberDictionary<{}>;
 ```
 
 ### Merge
+
+*keywords: override*
 
 ```typescript
 type Foo = {
