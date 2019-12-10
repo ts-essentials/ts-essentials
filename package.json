@@ -1,12 +1,17 @@
 {
   "name": "ts-essentials",
-  "description": "All essential Typescript types in one place",
+  "description": "All essential TypeScript types in one place",
   "keywords": [
     "typescript",
     "types",
-    "essentials"
+    "essentials",
+    "utils",
+    "toolbox",
+    "toolbelt",
+    "lodash",
+    "underscore"
   ],
-  "version": "3.0.4",
+  "version": "4.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
