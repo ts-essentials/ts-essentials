@@ -573,7 +573,7 @@ const something: string | undefined = "abc" as any
 assert(something, "Something has to be defined!")
 // from now on `something` is string, if this wouldn't be a case, assert would throw
 
-const anything: any = "abc" as any
+const anything = "abc" as any
 assert(anything instanceof String, "anything has to be a string!")
 // from now on `anything` is string
 ```
