@@ -1,11 +1,5 @@
-import { literal, UnreachableCaseError } from "../lib/functions";
+import { UnreachableCaseError } from "../lib/functions";
 import { DummyOptions } from "./types";
-
-// prevent type widening https://blog.mariusschulz.com/2017/02/04/typescript-2-1-literal-type-widening
-const t = {
-  letter: literal("a"), // type stays "a" not string
-  digit: literal(5), // type stays 5 not number
-};
 
 // exhaustive switch cases in typescript!
 function actOnDummyOptions(options: DummyOptions): string {

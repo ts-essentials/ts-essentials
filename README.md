@@ -17,7 +17,7 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=3.5`. If you're looking for support for older TS versions use `ts-essentials@2` instead.
+👉 We require `typescript>=3.7`. If you're looking for support for older TS versions use `ts-essentials@3` (for 3.6>=) or `ts-essentials@2` instead.
 
 ## What's inside?
 
@@ -43,7 +43,6 @@ npm install --save-dev ts-essentials
   - [UnionToIntersection](#UnionToIntersection)
   - [Opaque types](#Opaque-types)
   - [Tuple constraint](#Tuple-constraint)
-  - [Literal types](#Literal-types)
   - [Exhaustive switch cases](#Exhaustive-switch-cases)
   - [ValueOf type](#ValueOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
@@ -494,23 +493,6 @@ const ret = foo(["s", 1]);
 
 You can also parametrize `Tuple` type with a type argument to constraint it to certain types, i.e.
 `Tuple<string | number>`.
-
-### Literal types
-
-_For TypeScript >= 3.4_: TypeScript 3.4 shipped
-[`const` assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html) which are very
-similar to our `literal` helper but also make type readonly, you should prefer `as const` construct.
-`literal` is deprecated tn `ts-essentials` 3.x, which requires TypeScript >=3.5.
-
-_For TypeScript < 3.4_: this is served as a backport of the [`const` assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html) added since TypeScript 3.4.
-
-```typescript
-// prevent type widening https://blog.mariusschulz.com/2017/02/04/typescript-2-1-literal-type-widening
-const t = {
-  letter: literal("a"), // type stays "a" not string
-  digit: literal(5), // type stays 5 not number
-};
-```
 
 ### Exhaustive switch cases
 
