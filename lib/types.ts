@@ -1,50 +1,74 @@
 /** Essentials */
-export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+export type Builtin = string | number | boolean | bigint | symbol | undefined | null | Function | Date | Error | RegExp;
 
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
 /** Like Partial but recursive */
-export type DeepPartial<T> = T extends Primitive | Function | Date
+export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepPartial<K>, DeepPartial<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepPartial<K>, DeepPartial<V>>
   : T extends Set<infer U>
   ? Set<DeepPartial<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepPartial<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepPartial<U>>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 /** Like NonNullable but recursive */
-export type DeepNonNullable<T> = T extends Primitive | Function | Date
+export type DeepNonNullable<T> = T extends Builtin
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? Map<DeepNonNullable<K>, DeepNonNullable<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepNonNullable<K>, DeepNonNullable<V>>
   : T extends Set<infer U>
   ? Set<DeepNonNullable<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepNonNullable<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepNonNullable<U>>
   : T extends {}
   ? { [K in keyof T]: DeepNonNullable<T[K]> }
   : NonNullable<T>;
 
 /** Like Required but recursive */
-export type DeepRequired<T> = T extends Primitive | Function | Date
+export type DeepRequired<T> = T extends Builtin
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? Map<DeepRequired<K>, DeepRequired<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepRequired<K>, DeepRequired<V>>
   : T extends Set<infer U>
   ? Set<DeepRequired<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepRequired<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepRequired<U>>
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<T[K]> }
   : NonNullable<T>;
 
 /** Like Readonly but recursive */
-export type DeepReadonly<T> = T extends Primitive | Function | Date
+export type DeepReadonly<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepReadonly<K>, DeepReadonly<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepReadonly<K>, DeepReadonly<V>>
   : T extends Set<infer U>
   ? Set<DeepReadonly<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepReadonly<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : Readonly<T>;
@@ -53,12 +77,18 @@ export type DeepReadonly<T> = T extends Primitive | Function | Date
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
 /** Like Writable but recursive */
-export type DeepWritable<T> = T extends Primitive | Function | Date
+export type DeepWritable<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepWritable<K>, DeepWritable<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepWritable<K>, DeepWritable<V>>
   : T extends Set<infer U>
   ? Set<DeepWritable<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepWritable<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepWritable<U>>
   : T extends {}
   ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
   : T;
@@ -76,19 +106,31 @@ export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? ne
 export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
 
 /** Recursively omit deep properties */
-export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Primitive | Function | Date
+export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? ValueType extends DeepOmitModify<Filter>
     ? Map<KeyType, DeepOmit<ValueType, Filter>>
     : T
+  : T extends WeakMap<infer KeyType, infer ValueType>
+  ? ValueType extends DeepOmitModify<Filter>
+    ? WeakMap<KeyType, DeepOmit<ValueType, Filter>>
+    : T
   : T extends Set<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
     ? Set<DeepOmit<ItemType, Filter>>
     : T
+  : T extends WeakSet<infer ItemType>
+  ? ItemType extends DeepOmitModify<Filter>
+    ? WeakSet<DeepOmit<ItemType, Filter>>
+    : T
   : T extends Array<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
     ? Array<DeepOmit<ItemType, Filter>>
+    : T
+  : T extends Promise<infer ItemType>
+  ? ItemType extends DeepOmitModify<Filter>
+    ? Promise<DeepOmit<ItemType, Filter>>
     : T
   : { [K in Exclude<keyof T, keyof Filter>]: T[K] } &
       OmitProperties<
@@ -106,8 +148,11 @@ type DeepOmitModify<T> =
       [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
     }
   | Array<DeepOmitModify<T>>
+  | Promise<DeepOmitModify<T>>
   | Set<DeepOmitModify<T>>
-  | Map<any, DeepOmitModify<T>>;
+  | WeakSet<DeepOmitModify<T>>
+  | Map<any, DeepOmitModify<T>>
+  | WeakMap<any, DeepOmitModify<T>>;
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;

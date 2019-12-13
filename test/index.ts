@@ -39,6 +39,7 @@ type ComplexNestedPartial = {
         name?: string;
       }
     >;
+    promise?: Promise<{ foo?: string; bar?: number }>;
   };
 };
 
@@ -58,6 +59,7 @@ type ComplexNestedRequired = {
         name: string;
       }
     >;
+    promise: Promise<{ foo: string; bar: number }>;
   };
 };
 
@@ -92,6 +94,10 @@ type ComplexNestedNullable = {
         >
       | null
       | undefined;
+    promise:
+      | Promise<{ foo: string | null | undefined; bar: number | null | undefined } | null | undefined>
+      | null
+      | undefined;
   };
 };
 
@@ -111,6 +117,7 @@ type ComplexNestedReadonly = {
         readonly name: string;
       }
     >;
+    readonly promise: Promise<{ readonly foo: string; readonly bar: number }>;
   };
 };
 
