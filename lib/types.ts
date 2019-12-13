@@ -1,5 +1,6 @@
 /** Essentials */
-export type Builtin = string | number | boolean | bigint | symbol | undefined | null | Function | Date | Error | RegExp;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+export type Builtin = Primitive | Function | Date | Error | RegExp;
 
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
