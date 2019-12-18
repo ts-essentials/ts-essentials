@@ -17,6 +17,8 @@ export type DeepPartial<T> = T extends Builtin
   ? Set<DeepPartial<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepPartial<U>>
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
   : T extends Promise<infer U>
   ? Promise<DeepPartial<U>>
   : T extends {}

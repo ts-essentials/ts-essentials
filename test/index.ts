@@ -23,23 +23,33 @@ import {
   assert,
 } from "../lib";
 
+type NestedPartial = {
+  date?: Date;
+  func?: () => string;
+  array?: { bar?: number }[];
+  set?: Set<{
+    name?: string;
+  }>;
+  map?: Map<
+    string,
+    {
+      name?: string;
+    }
+  >;
+  promise?: Promise<{ foo?: string; bar?: number }>;
+};
+
 type ComplexNestedPartial = {
   simple?: number;
-  nested?: {
-    date?: Date;
-    func?: () => string;
-    array?: ({ bar?: number } | undefined)[];
+  nested?: NestedPartial & {
     tuple?: [string?, number?, { good?: boolean }?];
-    set?: Set<{
-      name?: string;
-    }>;
-    map?: Map<
-      string,
-      {
-        name?: string;
-      }
-    >;
-    promise?: Promise<{ foo?: string; bar?: number }>;
+  };
+};
+
+type ComplexNestedPartial2 = {
+  simple?: number;
+  nested?: NestedPartial & {
+    tuple?: (string | number | { good?: boolean })[];
   };
 };
 
@@ -122,7 +132,7 @@ type ComplexNestedReadonly = {
 };
 
 function testDeepPartial() {
-  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
+  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial2>>;
 }
 
 function testDeepReadonly1() {
@@ -298,7 +308,7 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
 }
 
 function testBuildable() {
-  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>;
+  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial2>>;
 }
 
 function testMarkRequired() {
