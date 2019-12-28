@@ -1,55 +1,45 @@
 /**
  * This file contains a lot of unused functions as it's only typechecked.
  */
-import { IsExact, AssertTrue as Assert } from "conditional-type-checks";
+import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
+
 import {
+  assert,
   Buildable,
   DeepNonNullable,
   DeepOmit,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
-  PickProperties,
-  Tuple,
-  NonNever,
-  NonEmptyObject,
-  Writable,
   DeepWritable,
+  MarkOptional,
   MarkRequired,
   Merge,
+  NonEmptyObject,
+  NonNever,
+  PickProperties,
   ReadonlyKeys,
+  Tuple,
+  Writable,
   WritableKeys,
-  MarkOptional,
-  assert,
 } from "../lib";
-
-type NestedPartial = {
-  date?: Date;
-  func?: () => string;
-  array?: { bar?: number }[];
-  set?: Set<{
-    name?: string;
-  }>;
-  map?: Map<
-    string,
-    {
-      name?: string;
-    }
-  >;
-  promise?: Promise<{ foo?: string; bar?: number }>;
-};
 
 type ComplexNestedPartial = {
   simple?: number;
-  nested?: NestedPartial & {
+  nested?: {
+    date?: Date;
+    func?: () => string;
+    array?: { bar?: number }[];
+    set?: Set<{ name?: string }>;
     tuple?: [string?, number?, { good?: boolean }?];
-  };
-};
 
-type ComplexNestedPartial2 = {
-  simple?: number;
-  nested?: NestedPartial & {
-    tuple?: (string | number | { good?: boolean })[];
+    map?: Map<
+      string,
+      {
+        name?: string;
+      }
+    >;
+    promise?: Promise<{ foo?: string; bar?: number }>;
   };
 };
 
@@ -60,9 +50,7 @@ type ComplexNestedRequired = {
     func: () => string;
     array: { bar: number }[];
     tuple: [string, number, { good: boolean }];
-    set: Set<{
-      name: string;
-    }>;
+    set: Set<{ name: string }>;
     map: Map<
       string,
       {
@@ -105,7 +93,14 @@ type ComplexNestedNullable = {
       | null
       | undefined;
     promise:
-      | Promise<{ foo: string | null | undefined; bar: number | null | undefined } | null | undefined>
+      | Promise<
+          | {
+              foo: string | null | undefined;
+              bar: number | null | undefined;
+            }
+          | null
+          | undefined
+        >
       | null
       | undefined;
   };
@@ -132,17 +127,14 @@ type ComplexNestedReadonly = {
 };
 
 function testDeepPartial() {
-  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial2>>;
+  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
 }
 
 function testDeepReadonly1() {
   type Test = Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>;
 }
 
-interface IDeepReadonlyTestHelperType
-  extends DeepReadonly<{
-    field: string[];
-  }> {}
+interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
 
 // Build-time test to ensure the fix for
 // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
@@ -177,47 +169,30 @@ function testPickProperties() {
 
 function testDeepOmit() {
   type Nested = {
-    a: {
-      b: string;
-      c: {
-        d: string;
-        e: boolean;
-      };
-      f: number;
-    };
+    a: { b: string; c: { d: string; e: boolean }; f: number };
     array: { a: string; b: boolean }[][];
     set: Set<{ a: string; b: boolean }>;
-    map: Map<number, { a: string; b: boolean }>;
+    map: Map<
+      number,
+      {
+        a: string;
+        b: boolean;
+      }
+    >;
   };
 
   type Omitted = {
-    a: {
-      c: {
-        e: boolean;
-      };
-      f: number;
-    };
+    a: { c: { e: boolean }; f: number };
     array: { b: boolean }[][];
     set: Set<{ b: boolean }>;
     map: Map<number, { b: boolean }>;
   };
 
   type Filter = {
-    a: {
-      b: never;
-      c: {
-        d: never;
-      };
-    };
-    array: {
-      a: never;
-    };
-    set: {
-      a: never;
-    };
-    map: {
-      a: never;
-    };
+    a: { b: never; c: { d: never } };
+    array: { a: never };
+    set: { a: never };
+    map: { a: never };
   };
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
@@ -244,24 +219,18 @@ function testParametrizedTuple() {
 }
 
 function testNonNever() {
-  type TypesMap = {
-    foo: string;
-    bar: number;
-    xyz: undefined;
-  };
+  type TypesMap = { foo: string; bar: number; xyz: undefined };
 
-  type Mapped = { [K in keyof TypesMap]: TypesMap[K] extends undefined ? never : TypesMap[K] };
+  type Mapped = {
+    [K in keyof TypesMap]: TypesMap[K] extends undefined ? never : TypesMap[K];
+  };
 
   type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
   type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
 }
 
 function testNonEmptyObject() {
-  type ObjectWithKeys = {
-    foo: string;
-    bar: number;
-    xyz: undefined;
-  };
+  type ObjectWithKeys = { foo: string; bar: number; xyz: undefined };
   type EmptyObject = {};
 
   type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
@@ -273,12 +242,7 @@ function testDeepWritable() {
 }
 
 function testDeepWritable2() {
-  type Foo = {
-    readonly foo: string;
-    bar: {
-      readonly x: number;
-    };
-  }[];
+  type Foo = { readonly foo: string; bar: { readonly x: number } }[];
 
   const test: DeepWritable<Foo> = [
     {
@@ -293,13 +257,12 @@ function testDeepWritable2() {
   test[0].bar.x = 2;
 }
 
-// Test whether for totally writable types, apply DeepReadonly then DeepWritable will yield the original type
+// Test whether for totally writable types, apply DeepReadonly then DeepWritable
+// will yield the original type
 function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
   type TotallyWritableType = {
     a: number[][];
-    nested: {
-      a: 1;
-    };
+    nested: { a: 1 };
     numberArray: number[];
   }[];
 
@@ -308,7 +271,7 @@ function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
 }
 
 function testBuildable() {
-  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial2>>;
+  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>;
 }
 
 function testMarkRequired() {
@@ -347,27 +310,18 @@ function testMarkOptional() {
 
 function testMerge() {
   {
-    type T = {
-      a: number;
-      b: string;
-    };
+    type T = { a: number; b: string };
 
     type Merged = Merge<T, { a: string }>;
 
-    type ExpectedMerged = {
-      a: string;
-      b: string;
-    };
+    type ExpectedMerged = { a: string; b: string };
 
     type Test = Assert<IsExact<Merged, ExpectedMerged>>;
   }
 }
 
 function testReadonlyKeys() {
-  type T = {
-    readonly a: number;
-    b: string;
-  };
+  type T = { readonly a: number; b: string };
 
   type Actual = ReadonlyKeys<T>;
 
@@ -377,10 +331,7 @@ function testReadonlyKeys() {
 }
 
 function testWritableKeys() {
-  type T = {
-    readonly a: number;
-    b: string;
-  };
+  type T = { readonly a: number; b: string };
 
   type Actual = WritableKeys<T>;
 

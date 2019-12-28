@@ -1,9 +1,22 @@
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
+export type IsTuple<T> = T extends [infer A]
+  ? T
+  : T extends [infer A, infer B]
+  ? T
+  : T extends [infer A, infer B, infer C]
+  ? T
+  : T extends [infer A, infer B, infer C, infer D]
+  ? T
+  : T extends [infer A, infer B, infer C, infer D, infer E]
+  ? T
+  : never;
 
 /** Dictionaries related */
-export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
+export type Dictionary<T, K extends string | number = string> = {
+  [key in K]: T;
+};
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 
 /** Like Partial but recursive */
@@ -18,7 +31,9 @@ export type DeepPartial<T> = T extends Builtin
   : T extends WeakSet<infer U>
   ? WeakSet<DeepPartial<U>>
   : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  ? T extends IsTuple<T>
+    ? { [K in keyof T]?: DeepPartial<T[K]> }
+    : Array<DeepPartial<U>>
   : T extends Promise<infer U>
   ? Promise<DeepPartial<U>>
   : T extends {}
@@ -77,7 +92,9 @@ export type DeepReadonly<T> = T extends Builtin
   : Readonly<T>;
 
 /** Make readonly object writable */
-export type Writable<T> = { -readonly [P in keyof T]: T[P] };
+export type Writable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
 
 /** Like Writable but recursive */
 export type DeepWritable<T> = T extends Builtin
@@ -162,7 +179,10 @@ export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends neve
 
 export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 
-/** Merge 2 types, properties types from the latter override the ones defined on the former type */
+/**
+ * Merge 2 types, properties types from the latter override the ones defined on
+ * the former type
+ */
 export type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
 
 /** Mark some properties as required, leaving others unchanged */
@@ -174,7 +194,10 @@ export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
-/** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
+/**
+ * Easy create opaque types ie. types that are subset of their original types
+ * (ex: positive numbers, uppercased string)
+ */
 export type Opaque<K, T> = T & { __TYPE__: K };
 
 /** Easily extract the type of a given object's values */
@@ -183,20 +206,25 @@ export type ValueOf<T> = T[keyof T];
 /** Type constraint for tuple inference */
 export type Tuple<T = any> = [T] | T[];
 
-/** Useful as a return type in interfaces or abstract classes with missing implementation */
+/**
+ * Useful as a return type in interfaces or abstract classes with missing
+ * implementation
+ */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
 
 // A helper for `ReadonlyKeys` & `WritableKeys`
-// This potentially abuses compiler some inconsistencies in checking type equality for generics,
-// because normally `readonly` doesn't affect whether types are assignable.
+// This potentially abuses compiler some inconsistencies in checking type
+// equality for generics, because normally `readonly` doesn't affect whether
+// types are assignable.
 // @see https://stackoverflow.com/a/52473108/1815209 with comments
 type IsEqualConsideringWritability<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
   ? true
   : false;
 
-// This also probably uses some inconsistencies -- even though it _should_ be the same to just use
-// `T, Writable<T>` for generic arguments, it stops working then, always evaluating to `false`.
-// Swapping `Writable` to `Readable` always returns false too, instead of yielding opposite results.
+// This also probably uses some inconsistencies -- even though it _should_ be
+// the same to just use `T, Writable<T>` for generic arguments, it stops working
+// then, always evaluating to `false`. Swapping `Writable` to `Readable` always
+// returns false too, instead of yielding opposite results.
 type IsFullyWritable<T extends object> = IsEqualConsideringWritability<
   { [Q in keyof T]: T[Q] },
   Writable<{ [Q in keyof T]: T[Q] }>
