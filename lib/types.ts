@@ -1,6 +1,17 @@
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
+export type IsTuple<T> = T extends [infer A]
+  ? T
+  : T extends [infer A, infer B]
+  ? T
+  : T extends [infer A, infer B, infer C]
+  ? T
+  : T extends [infer A, infer B, infer C, infer D]
+  ? T
+  : T extends [infer A, infer B, infer C, infer D, infer E]
+  ? T
+  : never;
 
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
@@ -17,6 +28,10 @@ export type DeepPartial<T> = T extends Builtin
   ? Set<DeepPartial<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepPartial<U>>
+  : T extends Array<infer U>
+  ? T extends IsTuple<T>
+    ? { [K in keyof T]?: DeepPartial<T[K]> }
+    : Array<DeepPartial<U>>
   : T extends Promise<infer U>
   ? Promise<DeepPartial<U>>
   : T extends {}
