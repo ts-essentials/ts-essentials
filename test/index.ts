@@ -257,8 +257,7 @@ function testDeepWritable2() {
   test[0].bar.x = 2;
 }
 
-// Test whether for totally writable types, apply DeepReadonly then DeepWritable
-// will yield the original type
+// Test whether for totally writable types, apply DeepReadonly then DeepWritable will yield the original type
 function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
   type TotallyWritableType = {
     a: number[][];
