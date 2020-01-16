@@ -47,6 +47,7 @@ npm install --save-dev ts-essentials
   - [ValueOf type](#ValueOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Assertions](#Assertions)
+  _ [XOR](#XOR)
 - [Contributors](#Contributors)
 
 ### Basic
@@ -568,6 +569,29 @@ assert(something, "Something has to be defined!")
 const anything = "abc" as any
 assert(anything instanceof String, "anything has to be a string!")
 // from now on `anything` is string
+```
+
+### XOR
+
+Gets the Exclusive-OR type which could make 2 types exclude each other
+```typescript
+  type A = {a: string}
+  type B = {a: number; b: boolean}
+  type C = {c: number}
+
+  let A_XOR_B: XOR<A, B>
+  let A_XOR_C: XOR<A, C>
+
+  // fail
+  A_XOR_B = {a: 0}
+  A_XOR_B = {b: true}
+  A_XOR_B = {a: '', b: true}
+  A_XOR_C = {a: '', c: 0}
+
+  // ok
+  A_XOR_B = {a: 0, b: true}
+  A_XOR_B = {a: ''}
+  A_XOR_C = {c: 0}
 ```
 
 ## Contributors
