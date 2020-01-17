@@ -573,7 +573,7 @@ assert(anything instanceof String, "anything has to be a string!")
 
 ### XOR
 
-Gets the XOR(Exclusive-OR) type which could make 2 types exclude each other
+Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
 ```typescript
   type A = {a: string}
   type B = {a: number; b: boolean}
