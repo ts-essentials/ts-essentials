@@ -586,7 +586,7 @@ Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
   A_XOR_B = {a: 0}
   A_XOR_B = {b: true}
   A_XOR_B = {a: '', b: true}
-  A_XOR_C = {a: '', c: 0}
+  A_XOR_C = {a: '', c: 0} // would be allowed with `A | C` type
 
   // ok
   A_XOR_B = {a: 0, b: true}
