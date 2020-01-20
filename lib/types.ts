@@ -224,3 +224,9 @@ export type ReadonlyKeys<T extends object> = {
 export type WritableKeys<T extends {}> = {
   [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? P : never;
 }[keyof T];
+
+/** Mark some properties which only the former including as optional and set the value to never */
+type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+/** get the XOR type which could make 2 types exclude each other */
+export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;

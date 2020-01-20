@@ -22,6 +22,7 @@ import {
   Tuple,
   Writable,
   WritableKeys,
+  XOR,
 } from "../lib";
 
 type ComplexNestedPartial = {
@@ -347,4 +348,19 @@ function testAssert() {
   assert(anything);
   type Actual = typeof anything;
   type Test = Assert<IsExact<Actual, string>>;
+}
+
+function testXOR() {
+  type TestType1 = { a: string };
+  type TestType2 = { a: number; b: boolean };
+  type TestType3 = { c: number; d: boolean };
+
+  type Actual1 = XOR<TestType1, TestType2>;
+  type Expected1 = { a: string; b?: never } | { a: number; b: boolean };
+
+  type Actual2 = XOR<TestType1, TestType3>;
+  type Expected2 = { a: string; c?: never; d?: never } | { a?: never; c: number; d: boolean };
+
+  type Test1 = Assert<IsExact<Actual1, Expected1>>;
+  type Test2 = Assert<IsExact<Actual2, Expected2>>;
 }
