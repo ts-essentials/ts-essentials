@@ -6,7 +6,7 @@ import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import {
   assert,
   Buildable,
-  DeepNonNullable,
+  DeepNonNullable, DeepNullable,
   DeepOmit,
   DeepPartial,
   DeepReadonly,
@@ -63,6 +63,48 @@ type ComplexNestedRequired = {
 };
 
 type ComplexNestedNullable = {
+  simple: number | null;
+  nested: {
+    date: Date | null;
+    func: (() => string) | null;
+    array: ({ bar: number | null } | null)[] | null;
+    tuple:
+      | [string | null, number | null, { good: boolean | null } | null]
+      | null
+     ;
+    set:
+      | Set<
+      | {
+      name: string | null;
+    }
+      | null
+      >
+      | null
+     ;
+    map:
+      | Map<
+      string | null,
+      | {
+      name: string | null;
+    }
+      | null
+      >
+      | null
+     ;
+    promise:
+      | Promise<
+      | {
+      foo: string | null;
+      bar: number | null;
+    }
+      | null
+      >
+      | null
+     ;
+  } | null;
+};
+
+type ComplexNestedNullableOrUndefined = {
   simple: number | null | undefined;
   nested: {
     date: Date | null | undefined;
@@ -155,8 +197,12 @@ function testNonNullable() {
   type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
 }
 
+function testDeepNullable() {
+  type Test = Assert<IsExact<DeepNullable<ComplexNestedRequired>, ComplexNestedNullable>>;
+}
+
 function testDeepNonNullable() {
-  type Test = Assert<IsExact<DeepNonNullable<ComplexNestedNullable>, ComplexNestedRequired>>;
+  type Test = Assert<IsExact<DeepNonNullable<ComplexNestedNullableOrUndefined>, ComplexNestedRequired>>;
 }
 
 function testDeepRequire() {

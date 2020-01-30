@@ -38,6 +38,27 @@ export type DeepPartial<T> = T extends Builtin
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
+/** Recursive nullable */
+export type DeepNullable<T> = T extends Builtin
+  ? T | null
+  : T extends Map<infer K, infer V>
+  ? Map<DeepNullable<K>, DeepNullable<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepNullable<K>, DeepNullable<V>>
+  : T extends Set<infer U>
+  ? Set<DeepNullable<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepNullable<U>>
+  : T extends Array<infer U>
+  ? T extends IsTuple<T>
+  ? { [K in keyof T]?: DeepNullable<T[K]> }
+  : Array<DeepNullable<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepNullable<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepNullable<T[K]> }
+  : T | null;
+
 /** Like NonNullable but recursive */
 export type DeepNonNullable<T> = T extends Builtin
   ? NonNullable<T>
