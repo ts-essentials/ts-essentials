@@ -81,6 +81,10 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 // and get dictionary values
 type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
+
+// When building a map using JS objects consider using SafeDictionary
+const safeDict: SafeDictionary<number> = {}
+const value: number | undefined = safeDict['foo']
 ```
 
 ### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable

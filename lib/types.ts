@@ -16,6 +16,9 @@ export type IsTuple<T> = T extends [infer A]
 /** Dictionaries related */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
+// SafeDictionary does not have a second argument, because
+// Dictionary<T, 'a' | 'b'> enforces the existence of those keys.
+export type SafeDictionary<T> = Dictionary<T | undefined>;
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin
