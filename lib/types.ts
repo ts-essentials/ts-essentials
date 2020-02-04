@@ -13,11 +13,15 @@ export type IsTuple<T> = T extends [infer A]
   ? T
   : never;
 
-/** Dictionaries related */
+/** Like Record, but can be used with only one argument */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
+/** Given Dictionary<T> returns T */
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
-// SafeDictionary does not have a second argument, because
-// Dictionary<T, 'a' | 'b'> enforces the existence of those keys.
+/**
+ * Like Dictionary, but ensures type safety of index access.
+ * Does not not have a second argument, because using Dictionary<T, 'a' | 'b'>
+ * already enforces that all of the keys are present.
+ */
 export type SafeDictionary<T> = Dictionary<T | undefined>;
 
 /** Like Partial but recursive */
