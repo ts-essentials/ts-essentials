@@ -12,6 +12,8 @@ import {
   DeepReadonly,
   DeepRequired,
   DeepWritable,
+  Dictionary,
+  DictionaryValues,
   MarkOptional,
   MarkRequired,
   Merge,
@@ -19,11 +21,39 @@ import {
   NonNever,
   PickProperties,
   ReadonlyKeys,
+  SafeDictionary,
   Tuple,
   Writable,
   WritableKeys,
   XOR,
 } from "../lib";
+
+function testDictionary() {
+  const dict: Dictionary<number> = null as any;
+  type Test = Assert<IsExact<typeof dict["foo"], number>>;
+}
+
+function testDictionaryTwoArguments() {
+  const dict: Dictionary<number, "a" | "b"> = null as any;
+  type Test = Assert<IsExact<typeof dict["a"], number>>;
+}
+
+function testDictionaryValues() {
+  type Test = Assert<IsExact<DictionaryValues<Dictionary<number>>, number>>;
+}
+
+function testDictionaryValuesTwoArguments() {
+  type Test = Assert<IsExact<DictionaryValues<Dictionary<number, "a" | "b">>, number>>;
+}
+
+function testSafeDictionary() {
+  const dict: SafeDictionary<number> = null as any;
+  type Test = Assert<IsExact<typeof dict["foo"], number | undefined>>;
+}
+
+function testSafeDictionaryValues() {
+  type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
+}
 
 type ComplexNestedPartial = {
   simple?: number;
