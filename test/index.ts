@@ -144,10 +144,10 @@ type ComplexNestedReadonly = {
     readonly func: () => string;
     readonly array: readonly { readonly bar: number }[];
     readonly tuple: readonly [string, number, { readonly good: boolean }];
-    readonly set: Set<{
+    readonly set: ReadonlySet<{
       readonly name: string;
     }>;
-    readonly map: Map<
+    readonly map: ReadonlyMap<
       string,
       {
         readonly name: string;
