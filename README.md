@@ -134,6 +134,42 @@ const sampleNonNullable: ComplexObjectNonNullable = {
     array: [{bar: null}], // Error: Type 'null' is not assignable to type 'number'
   }
 }
+
+type SimpleType = {
+  field1: string;
+  field2: {
+    field3: string;
+    field4: {
+      field5: number;
+    };
+  };
+};
+
+const myObj: SimpleType = {
+  field1: null,  // Error: Type 'null' is not assignable to type 'string'.
+  field2: {
+    field3: 'str',
+    field4: {
+      field5: null, // Error: Type 'null' is not assignable to type 'number'.
+    },
+  },
+};
+
+const myObj2: DeepNullable<SimpleType> = {
+  field1: null,
+  field2: {
+    field3: 'str',
+    field4: {
+      field5: null,
+    },
+  },
+};
+
+const myObj3: DeepNullable<SimpleType> = {
+  field1: null,
+  field2: null, // Error Type 'null' is not assignable to type '...'
+};
+
 ```
 
 ### Writable
