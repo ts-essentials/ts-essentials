@@ -51,12 +51,12 @@ export type DeepNullable<T> = T extends Builtin
   ? WeakSet<DeepNullable<U>>
   : T extends Array<infer U>
   ? T extends IsTuple<T>
-  ? { [K in keyof T]?: DeepNullable<T[K]> }
+  ? { [K in keyof T]: DeepNullable<T[K]> | null }
   : Array<DeepNullable<U>>
   : T extends Promise<infer U>
   ? Promise<DeepNullable<U>>
   : T extends {}
-  ? { [K in keyof T]?: DeepNullable<T[K]> }
+  ? { [K in keyof T]: DeepNullable<T[K]> | null }
   : T | null;
 
 /** Like NonNullable but recursive */

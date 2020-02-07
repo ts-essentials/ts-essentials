@@ -67,40 +67,11 @@ type ComplexNestedNullable = {
   nested: {
     date: Date | null;
     func: (() => string) | null;
-    array: ({ bar: number | null } | null)[] | null;
-    tuple:
-      | [string | null, number | null, { good: boolean | null } | null]
-      | null
-     ;
-    set:
-      | Set<
-      | {
-      name: string | null;
-    }
-      | null
-      >
-      | null
-     ;
-    map:
-      | Map<
-      string | null,
-      | {
-      name: string | null;
-    }
-      | null
-      >
-      | null
-     ;
-    promise:
-      | Promise<
-      | {
-      foo: string | null;
-      bar: number | null;
-    }
-      | null
-      >
-      | null
-     ;
+    array: { bar: number | null }[] | null;
+    tuple: [string | null, number | null, { good: boolean | null } | null] | null;
+    set: Set<{ name: string | null }> | null;
+    map: Map<string | null, { name: string | null }> | null;
+    promise: Promise<{ foo: string | null; bar: number | null }> | null;
   } | null;
 };
 
