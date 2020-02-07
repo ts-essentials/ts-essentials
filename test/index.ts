@@ -6,7 +6,8 @@ import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import {
   assert,
   Buildable,
-  DeepNonNullable, DeepNullable,
+  DeepNonNullable,
+  DeepNullable,
   DeepOmit,
   DeepPartial,
   DeepReadonly,
