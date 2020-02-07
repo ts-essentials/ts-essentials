@@ -182,9 +182,9 @@ type SimpleType = {
     field6: {
       field7: number;
       field8: string;
-    }
+    };
   };
-}
+};
 
 type SimpleTypeNullable = {
   field1: string | null;
@@ -195,9 +195,9 @@ type SimpleTypeNullable = {
     field6: {
       field7: number | null;
       field8: string | null;
-    }
+    };
   };
-}
+};
 
 function testDeepNullable2() {
   type Test = Assert<IsExact<DeepNullable<SimpleType>, SimpleTypeNullable>>;
