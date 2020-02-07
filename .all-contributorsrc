@@ -181,6 +181,37 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "sz-piotr",
+      "name": "Piotr Szlachciak",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17070569?v=4",
+      "profile": "https://github.com/sz-piotr",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "mikhailswift",
+      "name": "Mikhail Swift",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3218582?v=4",
+      "profile": "https://github.com/mikhailswift",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "DevilZh",
+      "name": "Ryan Zhang",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10295215?v=4",
+      "profile": "https://github.com/DevilZh",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -188,5 +219,6 @@
   "projectOwner": "krzkaczor",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "commitConvention": "none"
+  "commitConvention": "none",
+  "skipCi": true
 }

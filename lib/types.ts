@@ -13,19 +13,30 @@ export type IsTuple<T> = T extends [infer A]
   ? T
   : never;
 
-/** Dictionaries related */
+/** Like Record, but can be used with only one argument */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
+/** Given Dictionary<T> returns T */
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
+/**
+ * Like Dictionary, but ensures type safety of index access.
+ * Does not not have a second argument, because using Dictionary<T, 'a' | 'b'>
+ * already enforces that all of the keys are present.
+ */
+export type SafeDictionary<T> = Dictionary<T | undefined>;
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepPartial<K>, DeepPartial<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepPartial<K>, DeepPartial<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepPartial<K>, DeepPartial<V>>
   : T extends Set<infer U>
   ? Set<DeepPartial<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepPartial<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepPartial<U>>
   : T extends Array<infer U>
@@ -64,10 +75,14 @@ export type DeepNonNullable<T> = T extends Builtin
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? Map<DeepNonNullable<K>, DeepNonNullable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepNonNullable<K>, DeepNonNullable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepNonNullable<K>, DeepNonNullable<V>>
   : T extends Set<infer U>
   ? Set<DeepNonNullable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepNonNullable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepNonNullable<U>>
   : T extends Promise<infer U>
@@ -81,10 +96,14 @@ export type DeepRequired<T> = T extends Builtin
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
   ? Map<DeepRequired<K>, DeepRequired<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepRequired<K>, DeepRequired<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepRequired<K>, DeepRequired<V>>
   : T extends Set<infer U>
   ? Set<DeepRequired<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepRequired<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepRequired<U>>
   : T extends Promise<infer U>
@@ -97,11 +116,15 @@ export type DeepRequired<T> = T extends Builtin
 export type DeepReadonly<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
-  ? Map<DeepReadonly<K>, DeepReadonly<V>>
+  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepReadonly<K>, DeepReadonly<V>>
   : T extends Set<infer U>
-  ? Set<DeepReadonly<U>>
+  ? ReadonlySet<DeepReadonly<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepReadonly<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepReadonly<U>>
   : T extends Promise<infer U>
@@ -118,9 +141,13 @@ export type DeepWritable<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepWritable<K>, DeepWritable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? Map<DeepWritable<K>, DeepWritable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepWritable<K>, DeepWritable<V>>
   : T extends Set<infer U>
+  ? Set<DeepWritable<U>>
+  : T extends ReadonlySet<infer U>
   ? Set<DeepWritable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepWritable<U>>
@@ -149,6 +176,10 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   ? ValueType extends DeepOmitModify<Filter>
     ? Map<KeyType, DeepOmit<ValueType, Filter>>
     : T
+  : T extends ReadonlyMap<infer KeyType, infer ValueType>
+  ? ValueType extends DeepOmitModify<Filter>
+    ? ReadonlyMap<KeyType, DeepOmit<ValueType, Filter>>
+    : T
   : T extends WeakMap<infer KeyType, infer ValueType>
   ? ValueType extends DeepOmitModify<Filter>
     ? WeakMap<KeyType, DeepOmit<ValueType, Filter>>
@@ -156,6 +187,10 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   : T extends Set<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
     ? Set<DeepOmit<ItemType, Filter>>
+    : T
+  : T extends ReadonlySet<infer ItemType>
+  ? ItemType extends DeepOmitModify<Filter>
+    ? ReadonlySet<DeepOmit<ItemType, Filter>>
     : T
   : T extends WeakSet<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
@@ -187,6 +222,7 @@ type DeepOmitModify<T> =
   | Array<DeepOmitModify<T>>
   | Promise<DeepOmitModify<T>>
   | Set<DeepOmitModify<T>>
+  | ReadonlySet<DeepOmitModify<T>>
   | WeakSet<DeepOmitModify<T>>
   | Map<any, DeepOmitModify<T>>
   | WeakMap<any, DeepOmitModify<T>>;
