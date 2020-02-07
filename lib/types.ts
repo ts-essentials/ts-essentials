@@ -56,7 +56,7 @@ export type DeepNullable<T> = T extends Builtin
   : T extends Promise<infer U>
   ? Promise<DeepNullable<U>>
   : T extends {}
-  ? { [K in keyof T]: DeepNullable<T[K]> | null }
+  ? { [K in keyof T]: DeepNullable<T[K]> }
   : T | null;
 
 /** Like NonNullable but recursive */
