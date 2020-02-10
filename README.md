@@ -25,8 +25,13 @@ npm install --save-dev ts-essentials
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
-  - [Deep Partial & Deep Required & Deep Readonly & Deep NonNullable](#Deep-Partial--Deep-Required--Deep-Readonly--Deep-NonNullable)
-  - [Writable](#Writable)
+  - [Deep* wrapper types](#Deep*-wrapper-types)
+     - DeepPartial
+     - DeepRequired
+     - DeepReadonly
+     - DeepNonNullable
+     - DeepNullable
+  - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
@@ -87,9 +92,15 @@ const safeDict: SafeDictionary<number> = {}
 const value: number | undefined = safeDict['foo']
 ```
 
-### Deep Partial, Deep Required, Deep Readonly, Deep NonNullable & DeepNullable
+### Deep* wrapper types
 
-*keywords: nested, optional*
+- DeepPartial
+- DeepRequired
+- DeepReadonly
+- DeepNonNullable
+- DeepNullable
+
+*keywords: recursive, nested, optional*
 
 ```typescript
 type ComplexObject = {
@@ -112,7 +123,7 @@ const sampleRequired: ComplexObjectAgain = {
   simple: 5,
   nested: {
     a: "test",
-    array: [{bar: 1}],
+    array: [{ bar: 1 }],
   },
 };
 
@@ -131,45 +142,25 @@ const sampleNonNullable: ComplexObjectNonNullable = {
   simple: 5,
   nested: {
     a: "test",
-    array: [{bar: null}], // Error: Type 'null' is not assignable to type 'number'
+    array: [{ bar: null }], // Error: Type 'null' is not assignable to type 'number'
   }
 }
 
-type SimpleType = {
-  field1: string;
-  field2: {
-    field3: string;
-    field4: {
-      field5: number;
-    };
-  };
-};
-
-const myObj: SimpleType = {
-  field1: null,  // Error: Type 'null' is not assignable to type 'string'.
-  field2: {
-    field3: 'str',
-    field4: {
-      field5: null, // Error: Type 'null' is not assignable to type 'number'.
-    },
-  },
-};
-
-const myObj2: DeepNullable<SimpleType> = {
-  field1: null,
-  field2: {
-    field3: 'str',
-    field4: {
-      field5: null,
-    },
-  },
-};
-
-const myObj3: DeepNullable<SimpleType> = {
-  field1: null,
-  field2: null, // Error Type 'null' is not assignable to type '...'
-};
-
+type ComplexObjectNullable = DeepNullable<ComplexObject>;
+const sampleDeepNullable1: ComplexObjectNullable = {
+  simple: null,
+  nested: {
+    a: null,
+    array: [{ bar: null }]
+  }
+}
+const sampleDeepNullable2: ComplexObjectNullable = {
+  simple: 1,
+  nested: {
+    array: [null]  // OK
+    // error -- property `a` missing, should be `number | null`
+  }
+}
 ```
 
 ### Writable
