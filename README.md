@@ -87,7 +87,7 @@ const safeDict: SafeDictionary<number> = {}
 const value: number | undefined = safeDict['foo']
 ```
 
-### Deep Partial & Deep Required & Deep Readonly & Deep NonNullable
+### Deep Partial, Deep Required, Deep Readonly, Deep NonNullable & DeepNullable
 
 *keywords: nested, optional*
 
