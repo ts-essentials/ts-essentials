@@ -212,6 +212,16 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "FrancescoBorzi",
+      "name": "Francesco Borzì",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/75517?v=4",
+      "profile": "https://www.linkedin.com/in/francesco-borzi/",
+      "contributions": [
+        "doc",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
