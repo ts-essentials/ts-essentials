@@ -25,7 +25,7 @@ npm install --save-dev ts-essentials
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
-  - [Deep* wrapper types](#Deep*-wrapper-types)
+  - [Deep* wrapper types](#Deep-wrapper-types)
      - DeepPartial
      - DeepRequired
      - DeepReadonly
