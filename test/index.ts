@@ -52,6 +52,11 @@ function testSafeDictionary() {
   type Test = Assert<IsExact<typeof dict["foo"], number | undefined>>;
 }
 
+function testSafeDictionaryByNumber() {
+  const dict: SafeDictionary<boolean, number> = null as any;
+  type Test = Assert<IsExact<typeof dict[42], boolean | undefined>>;
+}
+
 function testSafeDictionaryValues() {
   type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
 }

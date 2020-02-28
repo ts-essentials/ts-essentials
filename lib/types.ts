@@ -19,10 +19,10 @@ export type Dictionary<T, K extends string | number = string> = { [key in K]: T 
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 /**
  * Like Dictionary, but ensures type safety of index access.
- * Does not not have a second argument, because using Dictionary<T, 'a' | 'b'>
- * already enforces that all of the keys are present.
+ * Note that only using an infinite type (`string` or `number`) as key type makes sense here,
+ * because using `Dictionary<T, 'a' | 'b'>` already enforces that all of the keys are present.
  */
-export type SafeDictionary<T> = Dictionary<T | undefined>;
+export type SafeDictionary<T, K extends string | number = string> = Dictionary<T | undefined, K>;
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin
