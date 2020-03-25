@@ -20,6 +20,7 @@ import {
   Merge,
   NonEmptyObject,
   NonNever,
+  noop,
   PickProperties,
   ReadonlyKeys,
   SafeDictionary,
@@ -446,4 +447,11 @@ function testXOR() {
 
   type Test1 = Assert<IsExact<Actual1, Expected1>>;
   type Test2 = Assert<IsExact<Actual2, Expected2>>;
+}
+
+function testNoop() {
+  const x: void = noop();
+  const y: void = noop(false, 0, "", {}, [], null, undefined, Promise.resolve(), new Error(), noop);
+  const z: Promise<void> = Promise.resolve("foo").then(noop);
+  const callback: (_: number) => void = noop;
 }

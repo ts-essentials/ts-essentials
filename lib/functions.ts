@@ -9,3 +9,5 @@ export function assert(condition: any, msg: string = "no additional info provide
     throw new Error("Assertion Error: " + msg);
   }
 }
+
+export function noop(..._args: unknown[]): void {}
