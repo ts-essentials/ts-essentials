@@ -6,7 +6,7 @@
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
     <img alt="Build status" src="https://circleci.com/gh/krzkaczor/ts-essentials.svg?style=svg">
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <img src="https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square" alt="All Contributors">
+    <img src="https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square" alt="All Contributors">
     <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
