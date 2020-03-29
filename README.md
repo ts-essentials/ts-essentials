@@ -661,6 +661,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/DevilZh"><img src="https://avatars1.githubusercontent.com/u/10295215?v=4" width="100px;" alt=""/><br /><sub><b>Ryan Zhang</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=DevilZh" title="Code">💻</a> <a href="#ideas-DevilZh" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=DevilZh" title="Documentation">📖</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/francesco-borzi/"><img src="https://avatars1.githubusercontent.com/u/75517?v=4" width="100px;" alt=""/><br /><sub><b>Francesco Borzì</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=FrancescoBorzi" title="Documentation">📖</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=FrancescoBorzi" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/leaumar"><img src="https://avatars2.githubusercontent.com/u/3950300?v=4" width="100px;" alt=""/><br /><sub><b>Marnick L'Eau</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=leaumar" title="Code">💻</a> <a href="#ideas-leaumar" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=leaumar" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
