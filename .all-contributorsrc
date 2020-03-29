@@ -222,6 +222,17 @@
         "doc",
         "code"
       ]
+    },
+    {
+      "login": "leaumar",
+      "name": "Marnick L'Eau",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3950300?v=4",
+      "profile": "https://github.com/leaumar",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
