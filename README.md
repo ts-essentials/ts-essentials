@@ -58,6 +58,7 @@ npm install --save-dev ts-essentials
 ### Basic
 
 - `Primitive` type matching all primitive values.
+- `noop` function that takes any arguments and returns nothing, as a placeholder for e.g. callbacks.
 
 ### Dictionaries
 
