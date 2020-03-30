@@ -12,6 +12,7 @@ export type IsTuple<T> = T extends [infer A]
   : T extends [infer A, infer B, infer C, infer D, infer E]
   ? T
   : never;
+export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 /** Like Record, but can be used with only one argument */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
@@ -287,3 +288,11 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
 /** get the XOR type which could make 2 types exclude each other */
 export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
+
+/** Functional programming essentials */
+export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
+export type Tail<T extends AnyArray> = T["length"] extends 0
+  ? never
+  : ((...t: T) => void) extends (first: any, ...rest: infer Rest) => void
+  ? Rest
+  : never;
