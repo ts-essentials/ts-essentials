@@ -632,7 +632,7 @@ Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
 
 ### Functional type essentials
 
-`Head` & `Tail`: useful for functional programming, or as as building blocks for more complex functional types.
+`Head` & `Tail`: useful for functional programming, or as building blocks for more complex functional types.
 
 ```typescript
 function tail<T extends any[]>(array: T): Tail<T> {
