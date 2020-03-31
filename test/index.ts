@@ -28,6 +28,8 @@ import {
   Writable,
   WritableKeys,
   XOR,
+  Head,
+  Tail,
 } from "../lib";
 
 function testDictionary() {
@@ -454,4 +456,15 @@ function testNoop() {
   const y: void = noop(false, 0, "", {}, [], null, undefined, Promise.resolve(), new Error(), noop);
   const z: Promise<void> = Promise.resolve("foo").then(noop);
   const callback: (_: number) => void = noop;
+}
+
+function testHeadTail() {
+  type List1 = [number, string, boolean, "a" | "b"];
+
+  type TestHead = Assert<IsExact<Head<List1>, number>>;
+  type TestHeadOnEmpty = Assert<IsExact<Head<[]>, never>>;
+
+  type TestTail = Assert<IsExact<Tail<List1>, [string, boolean, "a" | "b"]>>;
+  type TestTailOnEmpty = Assert<IsExact<Tail<[]>, never>>;
+  type TestTailOn1Elem = Assert<IsExact<Tail<[number]>, []>>;
 }

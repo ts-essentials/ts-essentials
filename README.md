@@ -26,11 +26,11 @@ npm install --save-dev ts-essentials
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
   - [Deep* wrapper types](#Deep-wrapper-types)
-     - DeepPartial
-     - DeepRequired
-     - DeepReadonly
-     - DeepNonNullable
-     - DeepNullable
+    - DeepPartial
+    - DeepRequired
+    - DeepReadonly
+    - DeepNonNullable
+    - DeepNullable
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -53,6 +53,9 @@ npm install --save-dev ts-essentials
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Assertions](#Assertions)
   - [XOR](#XOR)
+  - [Functional type essentials](#functional-type-essentials)
+    - Head
+    - Tail
 - [Contributors](#Contributors)
 
 ### Basic
@@ -606,6 +609,7 @@ assert(anything instanceof String, "anything has to be a string!")
 ### XOR
 
 Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
+
 ```typescript
   type A = {a: string}
   type B = {a: number; b: boolean}
@@ -624,6 +628,19 @@ Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
   A_XOR_B = {a: 0, b: true}
   A_XOR_B = {a: ''}
   A_XOR_C = {c: 0}
+```
+
+### Functional type essentials
+
+`Head` & `Tail`: useful for functional programming, or as as building blocks for more complex functional types.
+
+```typescript
+function tail<T extends any[]>(array: T): Tail<T> {
+  return array.slice(1) as Tail<T>;
+}
+
+type FirstParameter<FnT extends (...args: any) => any> =
+  FnT extends ((...args: infer ArgsT) => any) ? Head<ArgsT> : never;
 ```
 
 ## Contributors
