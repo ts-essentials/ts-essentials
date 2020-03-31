@@ -233,6 +233,15 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "kubk",
+      "name": "kubk",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/22447849?v=4",
+      "profile": "https://github.com/kubk",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
