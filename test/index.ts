@@ -30,6 +30,7 @@ import {
   XOR,
   Head,
   Tail,
+  Exact,
 } from "../lib";
 
 function testDictionary() {
@@ -467,4 +468,14 @@ function testHeadTail() {
   type TestTail = Assert<IsExact<Tail<List1>, [string, boolean, "a" | "b"]>>;
   type TestTailOnEmpty = Assert<IsExact<Tail<[]>, never>>;
   type TestTailOn1Elem = Assert<IsExact<Tail<[number]>, []>>;
+}
+
+function testExact() {
+  type ABC = { a: number; b: number; c: number };
+  type BC = { b: number; c: number };
+  type C = { c: number };
+
+  type a1 = Assert<IsExact<Exact<ABC, C>, never>>;
+  type a2 = Assert<IsExact<Exact<BC, C>, never>>;
+  type a3 = Assert<IsExact<Exact<C, C>, C>>;
 }

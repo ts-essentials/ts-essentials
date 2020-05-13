@@ -52,6 +52,7 @@ npm install --save-dev ts-essentials
   - [ValueOf type](#ValueOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Assertions](#Assertions)
+  - [Exact](#Exact)
   - [XOR](#XOR)
   - [Functional type essentials](#functional-type-essentials)
     - Head
@@ -604,6 +605,20 @@ assert(something, "Something has to be defined!")
 const anything = "abc" as any
 assert(anything instanceof String, "anything has to be a string!")
 // from now on `anything` is string
+```
+
+### Exact
+*keywords: same, equals, equality*
+
+`Exact<TYPE, SHAPE>` Checks if `TYPE` is exactly the same as `SHAPE`, if yes than `TYPE` is returned otherwise `never`.
+
+```typescript
+type ABC = { a: number; b: number; c: number }
+type BC = { b: number; c: number }
+type C = { c: number }
+
+Exact<ABC, C> // returns NEVER
+Exact<C, C> // returns C
 ```
 
 ### XOR
