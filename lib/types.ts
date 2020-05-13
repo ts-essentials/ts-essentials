@@ -296,3 +296,5 @@ export type Tail<T extends AnyArray> = T["length"] extends 0
   : ((...t: T) => void) extends (first: any, ...rest: infer Rest) => void
   ? Rest
   : never;
+
+export type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : never) : never;
