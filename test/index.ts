@@ -31,6 +31,7 @@ import {
   Head,
   Tail,
   Exact,
+  ElementOf,
 } from "../lib";
 
 function testDictionary() {
@@ -478,4 +479,9 @@ function testExact() {
   type a1 = Assert<IsExact<Exact<ABC, C>, never>>;
   type a2 = Assert<IsExact<Exact<BC, C>, never>>;
   type a3 = Assert<IsExact<Exact<C, C>, C>>;
+}
+
+function testElementOf() {
+  const t1 = [1, 2, true, false];
+  type testElementOf = Assert<IsExact<ElementOf<typeof t1>, number | boolean>>;
 }

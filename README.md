@@ -50,6 +50,7 @@ npm install --save-dev ts-essentials
   - [Tuple constraint](#Tuple-constraint)
   - [Exhaustive switch cases](#Exhaustive-switch-cases)
   - [ValueOf type](#ValueOf-type)
+  - [ElementOf type](#ElementOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
@@ -560,6 +561,14 @@ const obj = {
 
 type objKeys = ValueOf<typeof obj>;
 // Result: string | number
+```
+
+### ElementOf type
+
+```typescript
+const array = [1, 2, true, false];
+type arrayElement = ElementOf<typeof array>;
+// Result: number | boolean
 ```
 
 ### AsyncOrSync type
