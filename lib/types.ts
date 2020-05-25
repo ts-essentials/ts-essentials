@@ -251,6 +251,9 @@ export type Opaque<K, T> = T & { __TYPE__: K };
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T[keyof T];
 
+/** Easily extract the type of a given array's elements */
+export type ElementOf<T extends any[]> = T extends (infer ET)[] ? ET : never;
+
 /** Type constraint for tuple inference */
 export type Tuple<T = any> = [T] | T[];
 
