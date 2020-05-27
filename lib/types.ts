@@ -24,6 +24,8 @@ export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
  * because using `Dictionary<T, 'a' | 'b'>` already enforces that all of the keys are present.
  */
 export type SafeDictionary<T, K extends string | number = string> = Dictionary<T | undefined, K>;
+/** Like SafeDictionary, but not require key exhaustiveness */
+export type OptionalDictionary<T, K extends string | number = string> = { [key in K]?: T };
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin

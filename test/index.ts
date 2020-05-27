@@ -32,6 +32,7 @@ import {
   Tail,
   Exact,
   ElementOf,
+  OptionalDictionary,
 } from "../lib";
 
 function testDictionary() {
@@ -64,6 +65,11 @@ function testSafeDictionaryByNumber() {
 
 function testSafeDictionaryValues() {
   type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
+}
+
+function testOptionalDictionary() {
+  const dict: OptionalDictionary<number, "a" | "b"> = { a: 1 };
+  type Test = Assert<IsExact<typeof dict["b"], number | undefined>>;
 }
 
 type ComplexNestedPartial = {

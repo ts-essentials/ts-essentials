@@ -96,6 +96,13 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // When building a map using JS objects consider using SafeDictionary
 const safeDict: SafeDictionary<number> = {}
 const value: number | undefined = safeDict['foo']
+
+// ...or OptionalDictionary
+type ConfigKeys = 'LOGLEVEL' | 'PORT' | 'DEBUG';
+const optionalDict: OptionalDictionary<string, ConfigKeys> = {
+  LOGLEVEL: 'INFO',
+}
+const port: string | undefined = optionalDict['PORT'];
 ```
 
 ### Deep* wrapper types
