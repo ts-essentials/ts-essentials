@@ -31,6 +31,7 @@ npm install --save-dev ts-essentials
     - DeepReadonly
     - DeepNonNullable
     - DeepNullable
+    - DeepUndefinable
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -105,6 +106,7 @@ const value: number | undefined = safeDict['foo']
 - DeepReadonly
 - DeepNonNullable
 - DeepNullable
+- DeepUndefinable
 
 *keywords: recursive, nested, optional*
 
@@ -167,6 +169,23 @@ const sampleDeepNullable2: ComplexObjectNullable = {
     // error -- property `a` missing, should be `number | null`
   }
 }
+
+type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
+const sampleDeepUndefinable1: ComplexObjectUndefinable = {
+  simple: undefined,
+  nested: {
+    a: undefined,
+    array: [{ bar: undefined }]
+  }
+}
+const sampleDeepUndefinable2: ComplexObjectUndefinable = {
+  // error -- property `simple` missing, should be `number | undefined`
+  nested: {
+    array: [[{ bar: undefined }]]
+    // error -- property `a` missing, should be `string | undefined`
+  }
+}
+
 ```
 
 ### Writable
