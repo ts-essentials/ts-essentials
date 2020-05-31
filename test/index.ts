@@ -265,9 +265,9 @@ function testOptionalKeys() {
     opt2?: string;
     undef: string | undefined;
     nullable: string | null;
-  }
+  };
 
-  type Expected = 'opt' | 'opt2';
+  type Expected = "opt" | "opt2";
   type Actual = OptionalKeys<Input>;
 
   type Test = Assert<IsExact<Expected, Actual>>;
@@ -280,9 +280,9 @@ function testRequiredKeys() {
     opt2?: string;
     undef: string | undefined;
     nullable: string | null;
-  }
+  };
 
-  type Expected = 'req' | 'undef' | 'nullable';
+  type Expected = "req" | "undef" | "nullable";
   type Actual = RequiredKeys<Input>;
 
   type Test = Assert<IsExact<Expected, Actual>>;
@@ -318,18 +318,18 @@ function testDeepOmit() {
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
 }
 
-function testDeepOmit2(){
+function testDeepOmit2() {
   type OptionalProperty = {
     id: string;
     age: number;
-    name?: string
-  }
+    name?: string;
+  };
   type Omitted = {
     id: string;
-    name?: string
-  }
+    name?: string;
+  };
 
-  type Result = DeepOmit<OptionalProperty, {age: never}>;
+  type Result = DeepOmit<OptionalProperty, { age: never }>;
   type Test = Assert<IsExact<Result, Omitted>>;
 }
 

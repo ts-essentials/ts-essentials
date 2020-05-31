@@ -171,7 +171,7 @@ export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? ne
 export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
 
 export type OptionalKeys<T> = {
-  [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never
+  [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
@@ -212,26 +212,27 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
     ? Promise<DeepOmit<ItemType, Filter>>
     : T
   : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
-  OmitProperties<
-    {
-      [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
-        ? never
-        : T[K] extends DeepOmitModify<Filter[K]>
-        ? DeepOmit<T[K], Filter[K]>
-        : T[K];
-    },
-    never
-  > & { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } &
-  OmitProperties<
-    {
-      [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
-        ? never
-        : T[K] extends DeepOmitModify<Filter[K]>
-        ? DeepOmit<T[K], Filter[K]>
-        : T[K];
-    },
-    never
-  >;
+      OmitProperties<
+        {
+          [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
+            ? never
+            : T[K] extends DeepOmitModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
+            : T[K];
+        },
+        never
+      > &
+      { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } &
+      OmitProperties<
+        {
+          [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
+            ? never
+            : T[K] extends DeepOmitModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
+            : T[K];
+        },
+        never
+      >;
 type DeepOmitModify<T> =
   | {
       [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
