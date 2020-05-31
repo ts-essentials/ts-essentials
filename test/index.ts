@@ -32,6 +32,8 @@ import {
   Tail,
   Exact,
   ElementOf,
+  OptionalKeys,
+  RequiredKeys,
 } from "../lib";
 
 function testDictionary() {
@@ -256,6 +258,36 @@ function testPickProperties() {
   type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
 }
 
+function testOptionalKeys() {
+  type Input = {
+    req: string;
+    opt?: string;
+    opt2?: string;
+    undef: string | undefined;
+    nullable: string | null;
+  }
+
+  type Expected = 'opt' | 'opt2';
+  type Actual = OptionalKeys<Input>;
+
+  type Test = Assert<IsExact<Expected, Actual>>;
+}
+
+function testRequiredKeys() {
+  type Input = {
+    req: string;
+    opt?: string;
+    opt2?: string;
+    undef: string | undefined;
+    nullable: string | null;
+  }
+
+  type Expected = 'req' | 'undef' | 'nullable';
+  type Actual = RequiredKeys<Input>;
+
+  type Test = Assert<IsExact<Expected, Actual>>;
+}
+
 function testDeepOmit() {
   type Nested = {
     a: { b: string; c: { d: string; e: boolean }; f: number };
@@ -269,7 +301,6 @@ function testDeepOmit() {
       }
     >;
   };
-
   type Omitted = {
     a: { c: { e: boolean }; f: number };
     array: { b: boolean }[][];
@@ -285,6 +316,21 @@ function testDeepOmit() {
   };
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
+}
+
+function testDeepOmit2(){
+  type OptionalProperty = {
+    id: string;
+    age: number;
+    name?: string
+  }
+  type Omitted = {
+    id: string;
+    name?: string
+  }
+
+  type Result = DeepOmit<OptionalProperty, {age: never}>;
+  type Test = Assert<IsExact<Result, Omitted>>;
 }
 
 function testTupleInference() {
