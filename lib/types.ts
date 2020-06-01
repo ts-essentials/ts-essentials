@@ -170,10 +170,12 @@ export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? ne
 /** Pick all properties of given type in object type */
 export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
 
+/** Gets keys of an object which are optional */
 export type OptionalKeys<T> = {
   [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never;
 }[keyof T];
 
+/** Gets keys of an object which are required */
 export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 
 /** Recursively omit deep properties */
@@ -211,9 +213,9 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   ? ItemType extends DeepOmitModify<Filter>
     ? Promise<DeepOmit<ItemType, Filter>>
     : T
-  // explicitly mentioning optional properties, to work around TS making them required
-  // see https://github.com/krzkaczor/ts-essentials/issues/118
-  : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
+  : // explicitly mentioning optional properties, to work around TS making them required
+    // see https://github.com/krzkaczor/ts-essentials/issues/118
+    { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
       OmitProperties<
         {
           [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
