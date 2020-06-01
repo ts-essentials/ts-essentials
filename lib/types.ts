@@ -212,9 +212,8 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   : T extends Promise<infer ItemType>
   ? ItemType extends DeepOmitModify<Filter>
     ? Promise<DeepOmit<ItemType, Filter>>
-    : T
-  : // explicitly mentioning optional properties, to work around TS making them required
-    // see https://github.com/krzkaczor/ts-essentials/issues/118
+    : T // explicitly mentioning optional properties, to work around TS making them required
+  : // see https://github.com/krzkaczor/ts-essentials/issues/118
     { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
       OmitProperties<
         {
