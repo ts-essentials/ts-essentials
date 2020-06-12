@@ -170,12 +170,18 @@ const sampleDeepNullable2: ComplexObjectNullable = {
   }
 }
 
+// DeepUndefinable will come in handy if:
+//  - you want to explicitly assign values to all of the properties
+//  AND
+//  - the expression used for the assignment can return an `undefined` value
+// In most situations DeepPartial will suffice.
+declare function tryGet(name: string): string | undefined;
 type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
 const sampleDeepUndefinable1: ComplexObjectUndefinable = {
   simple: undefined,
   nested: {
-    a: undefined,
-    array: [{ bar: undefined }]
+    a: tryGet('a-value'),
+    array: [{ bar: tryGet('bar-value') }]
   }
 }
 const sampleDeepUndefinable2: ComplexObjectUndefinable = {
