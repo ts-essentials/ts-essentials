@@ -506,7 +506,7 @@ Gets keys of an object which are optional.
 type T = {
   a: number;
   b?: string;
-  c: string;
+  c: string | undefined;
   d?: string;
 };
 type Result = OptionalKeys<T>;
@@ -522,7 +522,7 @@ Gets keys of an object which are required.
 type T = {
   a: number;
   b?: string;
-  c: string;
+  c: string | undefined;
   d?: string;
 };
 type Result = OptionalKeys<T>;
