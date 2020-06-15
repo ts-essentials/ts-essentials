@@ -17,7 +17,8 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=3.7`. If you're looking for support for older TS versions use `ts-essentials@3` (for 3.6>=) or `ts-essentials@2` instead.
+👉 We require `typescript>=3.7`. If you're looking for support for older TS versions use `ts-essentials@3` (for 3.6>=)
+or `ts-essentials@2` instead.
 
 ## What's inside?
 
@@ -25,7 +26,7 @@ npm install --save-dev ts-essentials
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
-  - [Deep* wrapper types](#Deep-wrapper-types)
+  - [Deep\* wrapper types](#Deep-wrapper-types)
     - DeepPartial
     - DeepRequired
     - DeepReadonly
@@ -45,6 +46,8 @@ npm install --save-dev ts-essentials
   - [MarkOptional](#MarkOptional)
   - [ReadonlyKeys](#ReadonlyKeys)
   - [WritableKeys](#WritableKeys)
+  - [OptionalKeys](#OptionalKeys)
+  - [RequiredKeys](#RequiredKeys)
   - [UnionToIntersection](#UnionToIntersection)
   - [Opaque types](#Opaque-types)
   - [Tuple constraint](#Tuple-constraint)
@@ -67,7 +70,7 @@ npm install --save-dev ts-essentials
 
 ### Dictionaries
 
-*keywords: map*
+_keywords: map_
 
 ```typescript
 const stringDict: Dictionary<string> = {
@@ -94,11 +97,11 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 
 // When building a map using JS objects consider using SafeDictionary
-const safeDict: SafeDictionary<number> = {}
-const value: number | undefined = safeDict['foo']
+const safeDict: SafeDictionary<number> = {};
+const value: number | undefined = safeDict["foo"];
 ```
 
-### Deep* wrapper types
+### Deep\* wrapper types
 
 - DeepPartial
 - DeepRequired
@@ -106,7 +109,7 @@ const value: number | undefined = safeDict['foo']
 - DeepNonNullable
 - DeepNullable
 
-*keywords: recursive, nested, optional*
+_keywords: recursive, nested, optional_
 
 ```typescript
 type ComplexObject = {
@@ -149,24 +152,24 @@ const sampleNonNullable: ComplexObjectNonNullable = {
   nested: {
     a: "test",
     array: [{ bar: null }], // Error: Type 'null' is not assignable to type 'number'
-  }
-}
+  },
+};
 
 type ComplexObjectNullable = DeepNullable<ComplexObject>;
 const sampleDeepNullable1: ComplexObjectNullable = {
   simple: null,
   nested: {
     a: null,
-    array: [{ bar: null }]
-  }
-}
+    array: [{ bar: null }],
+  },
+};
 const sampleDeepNullable2: ComplexObjectNullable = {
   simple: 1,
   nested: {
-    array: [null]  // OK
+    array: [null], // OK
     // error -- property `a` missing, should be `number | null`
-  }
-}
+  },
+};
 ```
 
 ### Writable
@@ -206,24 +209,25 @@ test[0].bar.x = 2;
 
 ### Buildable
 
-*keywords: builder*
+_keywords: builder_
 
-A combination of both `DeepWritable` and `DeepPartial`.
-This type allows building an object step-by-step by assigning values to its attributes in multiple statements.
+A combination of both `DeepWritable` and `DeepPartial`. This type allows building an object step-by-step by assigning
+values to its attributes in multiple statements.
 
 ```typescript
-interface ReadonlyObject extends Readonly<{
-  simple: number;
-  nested: Readonly<{
-    a: string;
-    array: ReadonlyArray<Readonly<{ bar: number }>>;
-  }>;
-}> {}
+interface ReadonlyObject
+  extends Readonly<{
+    simple: number;
+    nested: Readonly<{
+      a: string;
+      array: ReadonlyArray<Readonly<{ bar: number }>>;
+    }>;
+  }> {}
 
 const buildable: Buildable<ReadonlyObject> = {};
 buildable.simple = 7;
 buildable.nested = {};
-buildable.nested.a = 'test';
+buildable.nested.a = "test";
 buildable.nested.array = [];
 buildable.nested.array.push({ bar: 1 });
 const finished = buildable as ReadonlyObject;
@@ -286,23 +290,28 @@ Here is the `Teacher` interface.
 
 ```typescript
 interface Teacher {
-  name: string,
-  gender: string,
-  students: {name: string, score: number}[]
+  name: string;
+  gender: string;
+  students: { name: string; score: number }[];
 }
 ```
 
-Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this with a simple type filter.
+Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this
+with a simple type filter.
 
-In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to partially omit, you should recursively define the sub-properties to be omitted.
+In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to
+partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
-type TeacherSimple = DeepOmit<Teacher, {
-  gender: never,
-  students: {
-    score: never,
+type TeacherSimple = DeepOmit<
+  Teacher,
+  {
+    gender: never;
+    students: {
+      score: never;
+    };
   }
-}>
+>;
 
 // The result will be:
 // {
@@ -318,7 +327,7 @@ NOTE
 
 ### OmitProperties
 
-*keywords: filter, props*
+_keywords: filter, props_
 
 Removes all properties extending type `P` in type `T`. NOTE: it works opposite to filtering.
 
@@ -340,7 +349,6 @@ type ExampleWithoutMethods = OmitProperties<Example, Function>;
 type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
 // Result:
 // { } (empty type)
-
 ```
 
 ### PickProperties
@@ -369,7 +377,6 @@ type ExampleOnlyMethodsAndString = PickProperties<Example, Function | string>;
 //   log(): void;
 //   version: string;
 // }
-
 ```
 
 ### NonNever
@@ -392,7 +399,7 @@ Useful for accepting only objects with keys, great after a filter like OmitPrope
 type NumberDictionary<T> = NonEmptyObject<PickProperties<T, number>>;
 
 // return { a: number }
-type SomeObject = NumberDictionary<{ a: number, b: string }>;
+type SomeObject = NumberDictionary<{ a: number; b: string }>;
 
 // return never
 type EmptyObject = NumberDictionary<{}>;
@@ -400,7 +407,7 @@ type EmptyObject = NumberDictionary<{}>;
 
 ### Merge
 
-*keywords: override*
+_keywords: override_
 
 ```typescript
 type Foo = {
@@ -422,8 +429,8 @@ const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
 
 ### MarkRequired
 
-Useful when you're sure some optional properties will be set. A real life example: when selecting
-an object with its related entities from an ORM.
+Useful when you're sure some optional properties will be set. A real life example: when selecting an object with its
+related entities from an ORM.
 
 ```typescript
 class User {
@@ -431,11 +438,11 @@ class User {
   posts?: Post[];
   photos?: Photo[];
 }
-type UserWithPosts = MarkRequired<User, 'posts'>;
+type UserWithPosts = MarkRequired<User, "posts">;
 
 // example usage with a TypeORM repository -- `posts` are now required, `photos` are still optional
 async function getUserWithPosts(id: number): Promise<UserWithPosts> {
-  return userRepo.findOneOrFail({ id }, { relations: ['posts'] }) as Promise<UserWithPosts>;
+  return userRepo.findOneOrFail({ id }, { relations: ["posts"] }) as Promise<UserWithPosts>;
 }
 ```
 
@@ -451,7 +458,7 @@ interface User {
   password: string;
 }
 
-type UserWithoutPassword = MarkOptional<User, 'password'>;
+type UserWithoutPassword = MarkOptional<User, "password">;
 
 // Result:
 
@@ -461,7 +468,6 @@ type UserWithoutPassword = MarkOptional<User, 'password'>;
 //   email: string;
 //   password?: string;
 // }
-
 ```
 
 ### ReadonlyKeys
@@ -473,7 +479,7 @@ type T = {
   readonly a: number;
   b: string;
 };
-type Result = ReadonlyKeys<T>
+type Result = ReadonlyKeys<T>;
 // Result:
 // "a"
 ```
@@ -487,9 +493,41 @@ type T = {
   readonly a: number;
   b: string;
 };
-type Result = WritableKeys<T>
+type Result = WritableKeys<T>;
 // Result:
 // "b"
+```
+
+### OptionalKeys
+
+Gets keys of an object which are optional.
+
+```typescript
+type T = {
+  a: number;
+  b?: string;
+  c: string | undefined;
+  d?: string;
+};
+type Result = OptionalKeys<T>;
+// Result:
+// "b" | "d"
+```
+
+### RequiredKeys
+
+Gets keys of an object which are required.
+
+```typescript
+type T = {
+  a: number;
+  b?: string;
+  c: string | undefined;
+  d?: string;
+};
+type Result = OptionalKeys<T>;
+// Result:
+// "a" | "c"
 ```
 
 ### UnionToIntersection
@@ -600,24 +638,26 @@ class Travis implements CiProvider {
 
 ### Assertions
 
-*keywords: invariant*
+_keywords: invariant_
 
-Simple runtime assertion that narrows involved types using [assertion functions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions).
+Simple runtime assertion that narrows involved types using
+[assertion functions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions).
 
 Note: This function is not purely type level and leaves minimal runtime trace in generated code.
 
 ```typescript
-const something: string | undefined = "abc" as any
-assert(something, "Something has to be defined!")
+const something: string | undefined = "abc" as any;
+assert(something, "Something has to be defined!");
 // from now on `something` is string, if this wouldn't be a case, assert would throw
 
-const anything = "abc" as any
-assert(anything instanceof String, "anything has to be a string!")
+const anything = "abc" as any;
+assert(anything instanceof String, "anything has to be a string!");
 // from now on `anything` is string
 ```
 
 ### Exact
-*keywords: same, equals, equality*
+
+_keywords: same, equals, equality_
 
 `Exact<TYPE, SHAPE>` Checks if `TYPE` is exactly the same as `SHAPE`, if yes than `TYPE` is returned otherwise `never`.
 
@@ -635,23 +675,23 @@ Exact<C, C> // returns C
 Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
 
 ```typescript
-  type A = {a: string}
-  type B = {a: number; b: boolean}
-  type C = {c: number}
+type A = { a: string };
+type B = { a: number; b: boolean };
+type C = { c: number };
 
-  let A_XOR_B: XOR<A, B>
-  let A_XOR_C: XOR<A, C>
+let A_XOR_B: XOR<A, B>;
+let A_XOR_C: XOR<A, C>;
 
-  // fail
-  A_XOR_B = {a: 0}
-  A_XOR_B = {b: true}
-  A_XOR_B = {a: '', b: true}
-  A_XOR_C = {a: '', c: 0} // would be allowed with `A | C` type
+// fail
+A_XOR_B = { a: 0 };
+A_XOR_B = { b: true };
+A_XOR_B = { a: "", b: true };
+A_XOR_C = { a: "", c: 0 }; // would be allowed with `A | C` type
 
-  // ok
-  A_XOR_B = {a: 0, b: true}
-  A_XOR_B = {a: ''}
-  A_XOR_C = {c: 0}
+// ok
+A_XOR_B = { a: 0, b: true };
+A_XOR_B = { a: "" };
+A_XOR_C = { c: 0 };
 ```
 
 ### Functional type essentials
@@ -663,8 +703,9 @@ function tail<T extends any[]>(array: T): Tail<T> {
   return array.slice(1) as Tail<T>;
 }
 
-type FirstParameter<FnT extends (...args: any) => any> =
-  FnT extends ((...args: infer ArgsT) => any) ? Head<ArgsT> : never;
+type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: infer ArgsT) => any
+  ? Head<ArgsT>
+  : never;
 ```
 
 ## Contributors
@@ -710,6 +751,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome! [Read more](./CONTRIBUTING.md)
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcome! [Read more](./CONTRIBUTING.md)
