@@ -1,7 +1,7 @@
 /**
  * This file contains a lot of unused functions as it's only typechecked.
  */
-import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
+import { AssertTrue as Assert, IsExact, AssertFalse } from "conditional-type-checks";
 
 import {
   assert,
@@ -32,6 +32,7 @@ import {
   Tail,
   Exact,
   ElementOf,
+  DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
 } from "../lib";
@@ -115,6 +116,19 @@ type ComplexNestedNullable = {
     set: Set<{ name: string | null }>;
     map: Map<string | null, { name: string | null }>;
     promise: Promise<{ foo: string | null; bar: number | null }>;
+  };
+};
+
+type ComplexNestedUndefinable = {
+  simple: number | undefined;
+  nested: {
+    date: Date | undefined;
+    func: (() => string) | undefined;
+    array: { bar: number | undefined }[];
+    tuple: [string | undefined, number | undefined, { good: boolean | undefined } | undefined];
+    set: Set<{ name: string | undefined }>;
+    map: Map<string | undefined, { name: string | undefined }>;
+    promise: Promise<{ foo: string | undefined; bar: number | undefined }>;
   };
 };
 
@@ -241,8 +255,27 @@ type SimpleTypeNullable = {
   };
 };
 
+type SimpleTypeUndefinable = {
+  field1: string | undefined;
+  field2: string | undefined;
+  field3: {
+    field4: string | undefined;
+    field5: number | undefined;
+    field6: {
+      field7: number | undefined;
+      field8: string | undefined;
+    };
+  };
+};
+
 function testDeepNullable2() {
   type Test = Assert<IsExact<DeepNullable<SimpleType>, SimpleTypeNullable>>;
+}
+
+function testDeepUndefinable() {
+  type Test1 = AssertFalse<IsExact<DeepUndefinable<SimpleType>, DeepPartial<SimpleType>>>;
+  type Test2 = Assert<IsExact<DeepUndefinable<SimpleType>, SimpleTypeUndefinable>>;
+  type Test3 = Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>;
 }
 
 function testDeepNonNullable() {

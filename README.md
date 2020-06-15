@@ -32,6 +32,7 @@ or `ts-essentials@2` instead.
     - DeepReadonly
     - DeepNonNullable
     - DeepNullable
+    - DeepUndefinable
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -108,6 +109,7 @@ const value: number | undefined = safeDict["foo"];
 - DeepReadonly
 - DeepNonNullable
 - DeepNullable
+- DeepUndefinable
 
 _keywords: recursive, nested, optional_
 
@@ -170,6 +172,29 @@ const sampleDeepNullable2: ComplexObjectNullable = {
     // error -- property `a` missing, should be `number | null`
   },
 };
+
+// DeepUndefinable will come in handy if:
+//  - you want to explicitly assign values to all of the properties
+//  AND
+//  - the expression used for the assignment can return an `undefined` value
+// In most situations DeepPartial will suffice.
+declare function tryGet(name: string): string | undefined;
+type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
+const sampleDeepUndefinable1: ComplexObjectUndefinable = {
+  simple: undefined,
+  nested: {
+    a: tryGet('a-value'),
+    array: [{ bar: tryGet('bar-value') }]
+  }
+}
+const sampleDeepUndefinable2: ComplexObjectUndefinable = {
+  // error -- property `simple` missing, should be `number | undefined`
+  nested: {
+    array: [[{ bar: undefined }]]
+    // error -- property `a` missing, should be `string | undefined`
+  }
+}
+
 ```
 
 ### Writable
