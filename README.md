@@ -699,6 +699,15 @@ class Travis implements CiProvider {
 }
 ```
 
+### Awaited type & AsyncOrSyncType
+
+Simple types to get promise types.
+
+```typescript
+Awaited<Promise<number>> // number
+AsyncOrSyncType<AsyncOrSync<number>> // number
+```
+
 ### Assertions
 
 _keywords: invariant_

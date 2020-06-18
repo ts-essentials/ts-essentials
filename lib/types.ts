@@ -292,7 +292,7 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 
 type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
 
-/** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
+/** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
 export type Opaque<TYPE, TOKEN extends string> = TOKEN extends StringLiteral<TOKEN>
   ? TYPE & { readonly __TYPE__: TOKEN }
   : never;
@@ -308,6 +308,9 @@ export type Tuple<T = any> = [T] | T[];
 
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
+
+export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
+export type AsyncOrSyncType<T> = T extends AsyncOrSync<infer PT> ? PT : never;
 
 // A helper for `ReadonlyKeys` & `WritableKeys`
 // This potentially abuses compiler some inconsistencies in checking type equality for generics,

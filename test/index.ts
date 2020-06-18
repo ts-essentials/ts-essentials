@@ -35,6 +35,9 @@ import {
   OptionalKeys,
   RequiredKeys,
   Opaque,
+  AsyncOrSyncType,
+  AsyncOrSync,
+  Awaited,
 } from "../lib";
 
 function testDictionary() {
@@ -573,4 +576,12 @@ function testElementOf() {
 function testOpaque() {
   type t1 = Assert<IsExact<Opaque<number, "a">, number & { __TYPE__: "a" }>>;
   type t2 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
+}
+
+function testAsyncOrSyncType() {
+  type t1 = Assert<IsExact<AsyncOrSyncType<AsyncOrSync<number>>, number>>;
+}
+
+function testAwaitedType() {
+  type t1 = Assert<IsExact<Awaited<Promise<number>>, number>>;
 }
