@@ -31,7 +31,6 @@ import {
   Tail,
   Exact,
   ElementOf,
-  OptionalDictionary,
   DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
@@ -55,6 +54,12 @@ function testDictionaryValuesTwoArguments() {
   type Test = Assert<IsExact<DictionaryValues<Dictionary<number, "a" | "b">>, number>>;
 }
 
+function testDictionaryFiniteTypeExhaustiveness() {
+  type TestType = 'A' | 'B';
+  // @ts-expect-error 
+  const dict: Dictionary<string, TestType> = { A: 'NOT-OK' }
+}
+
 function testSafeDictionary() {
   const dict: SafeDictionary<number> = null as any;
   type Test = Assert<IsExact<typeof dict["foo"], number | undefined>>;
@@ -69,9 +74,9 @@ function testSafeDictionaryValues() {
   type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
 }
 
-function testOptionalDictionary() {
-  const dict: OptionalDictionary<number, "a" | "b"> = { a: 1 };
-  type Test = Assert<IsExact<typeof dict["b"], number | undefined>>;
+function testSafeDictionaryFiniteTypeNonExhaustiveness() {
+  type TestType = 'A' | 'B';
+  const safeDict: SafeDictionary<string, TestType> = { A: 'OK' }
 }
 
 type ComplexNestedPartial = {
