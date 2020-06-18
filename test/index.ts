@@ -55,9 +55,9 @@ function testDictionaryValuesTwoArguments() {
 }
 
 function testDictionaryFiniteTypeExhaustiveness() {
-  type TestType = 'A' | 'B';
-  // @ts-expect-error 
-  const dict: Dictionary<string, TestType> = { A: 'NOT-OK' }
+  type TestType = "A" | "B";
+  // @ts-expect-error
+  const dict: Dictionary<string, TestType> = { A: "NOT-OK" };
 }
 
 function testSafeDictionary() {
@@ -75,8 +75,8 @@ function testSafeDictionaryValues() {
 }
 
 function testSafeDictionaryFiniteTypeNonExhaustiveness() {
-  type TestType = 'A' | 'B';
-  const safeDict: SafeDictionary<string, TestType> = { A: 'OK' }
+  type TestType = "A" | "B";
+  const safeDict: SafeDictionary<string, TestType> = { A: "OK" };
 }
 
 type ComplexNestedPartial = {

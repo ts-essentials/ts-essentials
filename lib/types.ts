@@ -14,7 +14,7 @@ export type IsTuple<T> = T extends [infer A]
   : never;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
-/** 
+/**
  * Like Record, but can be used with only one argument.
  * Useful, if you want to make sure that all of the keys of a finite type are used.
  */
