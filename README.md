@@ -56,6 +56,8 @@ or `ts-essentials@2` instead.
   - [ValueOf type](#ValueOf-type)
   - [ElementOf type](#ElementOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
+  - [Awaited type & AsyncOrSyncType](#awaited-type--asyncorsynctype)
+  - [Newable](#newable)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
   - [XOR](#XOR)
