@@ -550,7 +550,7 @@ type T = {
   c: string | undefined;
   d?: string;
 };
-type Result = OptionalKeys<T>;
+type Result = RequiredKeys<T>;
 // Result:
 // "a" | "c"
 ```
