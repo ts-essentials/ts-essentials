@@ -252,6 +252,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "akwodkiewicz",
+      "name": "Andrzej Wódkiewicz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22861194?v=4",
+      "profile": "https://github.com/akwodkiewicz",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
