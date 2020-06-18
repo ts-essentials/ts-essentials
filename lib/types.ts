@@ -14,16 +14,19 @@ export type IsTuple<T> = T extends [infer A]
   : never;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
-/** Like Record, but can be used with only one argument */
+/**
+ * Like Record, but can be used with only one argument.
+ * Useful, if you want to make sure that all of the keys of a finite type are used.
+ */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 /** Given Dictionary<T> returns T */
 export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
 /**
- * Like Dictionary, but ensures type safety of index access.
- * Note that only using an infinite type (`string` or `number`) as key type makes sense here,
- * because using `Dictionary<T, 'a' | 'b'>` already enforces that all of the keys are present.
+ * Like Dictionary, but:
+ *  - ensures type safety of index access
+ *  - does not enforce key exhaustiveness
  */
-export type SafeDictionary<T, K extends string | number = string> = Dictionary<T | undefined, K>;
+export type SafeDictionary<T, K extends string | number = string> = { [key in K]?: T };
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin

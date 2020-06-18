@@ -25,7 +25,6 @@ import {
   ReadonlyKeys,
   SafeDictionary,
   Tuple,
-  Writable,
   WritableKeys,
   XOR,
   Head,
@@ -67,6 +66,11 @@ function testSafeDictionaryByNumber() {
 
 function testSafeDictionaryValues() {
   type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
+}
+
+function testSafeDictionaryFiniteTypeNonExhaustiveness() {
+  type TestType = "A" | "B";
+  const safeDict: SafeDictionary<string, TestType> = { A: "OK" };
 }
 
 type ComplexNestedPartial = {

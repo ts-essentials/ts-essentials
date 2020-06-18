@@ -98,8 +98,23 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 
 // When building a map using JS objects consider using SafeDictionary
-const safeDict: SafeDictionary<number> = {};
-const value: number | undefined = safeDict["foo"];
+const safeDict: SafeDictionary<number> = {}
+const value: number | undefined = safeDict['foo']
+
+// With SafeDictionary you don't need to use all of the sub-types of a finite type.
+// If you care about the key exhaustiveness, use a regular Dictionary.
+type ConfigKeys = 'LOGLEVEL' | 'PORT' | 'DEBUG';
+const configSafeDict: SafeDictionary<number, ConfigKeys> = {
+  LOGLEVEL: 2,
+}
+const maybePort: number | undefined = configSafeDict['PORT'];
+
+const configDict: Dictionary<number, ConfigKeys> = {
+  LOGLEVEL: 2,
+  PORT: 8080,
+  DEBUG: 1,
+}
+const port: number = configDict['PORT'];
 ```
 
 ### Deep\* wrapper types
