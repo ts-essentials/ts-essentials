@@ -290,8 +290,12 @@ export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
+type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
+
 /** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
-export type Opaque<K, T> = T & { __TYPE__: K };
+export type Opaque<TYPE, TOKEN extends string> = TOKEN extends StringLiteral<TOKEN>
+  ? TYPE & { readonly __TYPE__: TOKEN }
+  : never;
 
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T[keyof T];

@@ -34,6 +34,7 @@ import {
   DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
+  Opaque,
 } from "../lib";
 
 function testDictionary() {
@@ -567,4 +568,9 @@ function testExact() {
 function testElementOf() {
   const t1 = [1, 2, true, false];
   type testElementOf = Assert<IsExact<ElementOf<typeof t1>, number | boolean>>;
+}
+
+function testOpaque() {
+  type t1 = Assert<IsExact<Opaque<number, "a">, number & { __TYPE__: "a" }>>;
+  type t2 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
 }

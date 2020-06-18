@@ -98,23 +98,23 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 
 // When building a map using JS objects consider using SafeDictionary
-const safeDict: SafeDictionary<number> = {}
-const value: number | undefined = safeDict['foo']
+const safeDict: SafeDictionary<number> = {};
+const value: number | undefined = safeDict["foo"];
 
 // With SafeDictionary you don't need to use all of the sub-types of a finite type.
 // If you care about the key exhaustiveness, use a regular Dictionary.
-type ConfigKeys = 'LOGLEVEL' | 'PORT' | 'DEBUG';
+type ConfigKeys = "LOGLEVEL" | "PORT" | "DEBUG";
 const configSafeDict: SafeDictionary<number, ConfigKeys> = {
   LOGLEVEL: 2,
-}
-const maybePort: number | undefined = configSafeDict['PORT'];
+};
+const maybePort: number | undefined = configSafeDict["PORT"];
 
 const configDict: Dictionary<number, ConfigKeys> = {
   LOGLEVEL: 2,
   PORT: 8080,
   DEBUG: 1,
-}
-const port: number = configDict['PORT'];
+};
+const port: number = configDict["PORT"];
 ```
 
 ### Deep\* wrapper types
@@ -198,18 +198,17 @@ type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
 const sampleDeepUndefinable1: ComplexObjectUndefinable = {
   simple: undefined,
   nested: {
-    a: tryGet('a-value'),
-    array: [{ bar: tryGet('bar-value') }]
-  }
-}
+    a: tryGet("a-value"),
+    array: [{ bar: tryGet("bar-value") }],
+  },
+};
 const sampleDeepUndefinable2: ComplexObjectUndefinable = {
   // error -- property `simple` missing, should be `number | undefined`
   nested: {
-    array: [[{ bar: undefined }]]
+    array: [[{ bar: undefined }]],
     // error -- property `a` missing, should be `string | undefined`
-  }
-}
-
+  },
+};
 ```
 
 ### Writable
@@ -585,15 +584,39 @@ type Fn = UnionToIntersection<{ [K in keyof Foo]: (type: K, arg: Foo[K]) => any 
 
 ### Opaque types
 
-```typescript
-type PositiveNumber = Opaque<number, "positive-number">;
+Opaque types allow you to create unique type that can't be assigned to base type by accident. Good examples of opaque
+types include:
 
+- JWT tokens - these are special kinds of string used for authorization purposes. If your app uses multiple different
+  JWTs each should be a separate opaque type to avoid confusion.
+- specific currencies - amount of different currencies shouldn't be mixed
+- bitcoin address - special kind of string
+
+It's **critical** to understand that each token (second argument to `Opaque`) has to be unique across your codebase.
+
+We encourage you to leverage a pattern where you have single function to validate base type and create opaque type.
+
+```typescript
+type PositiveNumber = Opaque<number, "PositiveNumber">;
 function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
-    throw new Error("Value not positive !!!");
+    throw new Error(`Value ${n} is not positive !`);
   }
   return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
+
+type NegativeNumber = Opaque<number, "NegativeNumber">;
+function makeNegativeNumber(n: number): NegativeNumber {
+  if (n >= 0) {
+    throw new Error(`Value ${n} is not negative !`);
+  }
+  return (n as any) as NegativeNumber; // this ugly cast is required but only when "producing" opaque types
+}
+
+let a = makePositiveNumber(5); // runtime check
+let b = makeNegativeNumber(-10); // runtime check
+
+a = b; //compile type check
 ```
 
 ### Tuple constraint
