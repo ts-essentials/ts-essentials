@@ -73,6 +73,27 @@ export type DeepNullable<T> = T extends Builtin
   ? { [K in keyof T]: DeepNullable<T[K]> }
   : T | null;
 
+/** Recursive undefinable */
+export type DeepUndefinable<T> = T extends Builtin
+  ? T | undefined
+  : T extends Map<infer K, infer V>
+  ? Map<DeepUndefinable<K>, DeepUndefinable<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepUndefinable<K>, DeepUndefinable<V>>
+  : T extends Set<infer U>
+  ? Set<DeepUndefinable<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepUndefinable<U>>
+  : T extends Array<infer U>
+  ? T extends IsTuple<T>
+    ? { [K in keyof T]: DeepUndefinable<T[K]> | undefined }
+    : Array<DeepUndefinable<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepUndefinable<U>>
+  : T extends {}
+  ? { [K in keyof T]: DeepUndefinable<T[K]> }
+  : T | undefined;
+
 /** Like NonNullable but recursive */
 export type DeepNonNullable<T> = T extends Builtin
   ? NonNullable<T>
@@ -172,7 +193,17 @@ export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? ne
 /** Pick all properties of given type in object type */
 export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
 
+/** Gets keys of an object which are optional */
+export type OptionalKeys<T> = {
+  [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never;
+}[keyof T];
+
+/** Gets keys of an object which are required */
+export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
+
 /** Recursively omit deep properties */
+// explicitly mentioning optional properties, to work around TS making them required
+// see https://github.com/krzkaczor/ts-essentials/issues/118
 export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
@@ -207,10 +238,21 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   ? ItemType extends DeepOmitModify<Filter>
     ? Promise<DeepOmit<ItemType, Filter>>
     : T
-  : { [K in Exclude<keyof T, keyof Filter>]: T[K] } &
+  : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
       OmitProperties<
         {
-          [K in Extract<keyof T, keyof Filter>]: Filter[K] extends true
+          [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
+            ? never
+            : T[K] extends DeepOmitModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
+            : T[K];
+        },
+        never
+      > &
+      { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } &
+      OmitProperties<
+        {
+          [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
             ? never
             : T[K] extends DeepOmitModify<Filter[K]>
             ? DeepOmit<T[K], Filter[K]>

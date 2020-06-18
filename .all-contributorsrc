@@ -242,6 +242,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "bbarry",
+      "name": "Bill Barry",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/84951?v=4",
+      "profile": "https://github.com/bbarry",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

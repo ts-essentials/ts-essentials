@@ -1,7 +1,7 @@
 /**
  * This file contains a lot of unused functions as it's only typechecked.
  */
-import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
+import { AssertTrue as Assert, IsExact, AssertFalse } from "conditional-type-checks";
 
 import {
   assert,
@@ -25,7 +25,6 @@ import {
   ReadonlyKeys,
   SafeDictionary,
   Tuple,
-  Writable,
   WritableKeys,
   XOR,
   Head,
@@ -33,6 +32,9 @@ import {
   Exact,
   ElementOf,
   OptionalDictionary,
+  DeepUndefinable,
+  OptionalKeys,
+  RequiredKeys,
 } from "../lib";
 
 function testDictionary() {
@@ -119,6 +121,19 @@ type ComplexNestedNullable = {
     set: Set<{ name: string | null }>;
     map: Map<string | null, { name: string | null }>;
     promise: Promise<{ foo: string | null; bar: number | null }>;
+  };
+};
+
+type ComplexNestedUndefinable = {
+  simple: number | undefined;
+  nested: {
+    date: Date | undefined;
+    func: (() => string) | undefined;
+    array: { bar: number | undefined }[];
+    tuple: [string | undefined, number | undefined, { good: boolean | undefined } | undefined];
+    set: Set<{ name: string | undefined }>;
+    map: Map<string | undefined, { name: string | undefined }>;
+    promise: Promise<{ foo: string | undefined; bar: number | undefined }>;
   };
 };
 
@@ -245,8 +260,27 @@ type SimpleTypeNullable = {
   };
 };
 
+type SimpleTypeUndefinable = {
+  field1: string | undefined;
+  field2: string | undefined;
+  field3: {
+    field4: string | undefined;
+    field5: number | undefined;
+    field6: {
+      field7: number | undefined;
+      field8: string | undefined;
+    };
+  };
+};
+
 function testDeepNullable2() {
   type Test = Assert<IsExact<DeepNullable<SimpleType>, SimpleTypeNullable>>;
+}
+
+function testDeepUndefinable() {
+  type Test1 = AssertFalse<IsExact<DeepUndefinable<SimpleType>, DeepPartial<SimpleType>>>;
+  type Test2 = Assert<IsExact<DeepUndefinable<SimpleType>, SimpleTypeUndefinable>>;
+  type Test3 = Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>;
 }
 
 function testDeepNonNullable() {
@@ -262,6 +296,36 @@ function testPickProperties() {
   type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
 }
 
+function testOptionalKeys() {
+  type Input = {
+    req: string;
+    opt?: string;
+    opt2?: string;
+    undef: string | undefined;
+    nullable: string | null;
+  };
+
+  type Expected = "opt" | "opt2";
+  type Actual = OptionalKeys<Input>;
+
+  type Test = Assert<IsExact<Expected, Actual>>;
+}
+
+function testRequiredKeys() {
+  type Input = {
+    req: string;
+    opt?: string;
+    opt2?: string;
+    undef: string | undefined;
+    nullable: string | null;
+  };
+
+  type Expected = "req" | "undef" | "nullable";
+  type Actual = RequiredKeys<Input>;
+
+  type Test = Assert<IsExact<Expected, Actual>>;
+}
+
 function testDeepOmit() {
   type Nested = {
     a: { b: string; c: { d: string; e: boolean }; f: number };
@@ -275,7 +339,6 @@ function testDeepOmit() {
       }
     >;
   };
-
   type Omitted = {
     a: { c: { e: boolean }; f: number };
     array: { b: boolean }[][];
@@ -291,6 +354,21 @@ function testDeepOmit() {
   };
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
+}
+
+function testDeepOmit2() {
+  type OptionalProperty = {
+    id: string;
+    age: number;
+    name?: string;
+  };
+  type Omitted = {
+    id: string;
+    name?: string;
+  };
+
+  type Result = DeepOmit<OptionalProperty, { age: never }>;
+  type Test = Assert<IsExact<Result, Omitted>>;
 }
 
 function testTupleInference() {
