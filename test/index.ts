@@ -54,12 +54,6 @@ function testDictionaryValuesTwoArguments() {
   type Test = Assert<IsExact<DictionaryValues<Dictionary<number, "a" | "b">>, number>>;
 }
 
-function testDictionaryFiniteTypeExhaustiveness() {
-  type TestType = "A" | "B";
-  // @ts-expect-error
-  const dict: Dictionary<string, TestType> = { A: "NOT-OK" };
-}
-
 function testSafeDictionary() {
   const dict: SafeDictionary<number> = null as any;
   type Test = Assert<IsExact<typeof dict["foo"], number | undefined>>;
