@@ -312,6 +312,10 @@ export type AsyncOrSync<T> = PromiseLike<T> | T;
 export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
 export type AsyncOrSyncType<T> = T extends AsyncOrSync<infer PT> ? PT : never;
 
+export interface Newable<T> {
+  new (...args: any[]): T;
+}
+
 // A helper for `ReadonlyKeys` & `WritableKeys`
 // This potentially abuses compiler some inconsistencies in checking type equality for generics,
 // because normally `readonly` doesn't affect whether types are assignable.

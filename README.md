@@ -708,6 +708,20 @@ Awaited<Promise<number>> // number
 AsyncOrSyncType<AsyncOrSync<number>> // number
 ```
 
+### Newable
+
+_keywords: constructor, class_
+
+Type useful when working with classes (not their instances).
+
+```typescript
+class TestCls {
+  constructor(arg1: string) {}
+}
+
+const t1: Newable<any> = TestCls;
+```
+
 ### Assertions
 
 _keywords: invariant_

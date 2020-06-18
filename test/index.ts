@@ -38,6 +38,7 @@ import {
   AsyncOrSyncType,
   AsyncOrSync,
   Awaited,
+  Newable,
 } from "../lib";
 
 function testDictionary() {
@@ -584,4 +585,12 @@ function testAsyncOrSyncType() {
 
 function testAwaitedType() {
   type t1 = Assert<IsExact<Awaited<Promise<number>>, number>>;
+}
+
+function testNewable() {
+  class TestCls {
+    constructor(arg1: string) {}
+  }
+
+  const t1: Newable<any> = TestCls;
 }
