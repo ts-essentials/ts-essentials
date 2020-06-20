@@ -293,8 +293,8 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
 
 /** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
-export type Opaque<TYPE, TOKEN extends string> = TOKEN extends StringLiteral<TOKEN>
-  ? TYPE & { readonly __TYPE__: TOKEN }
+export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
+  ? Type & { readonly __TYPE__: Token }
   : never;
 
 /** Easily extract the type of a given object's values */

@@ -56,7 +56,7 @@ or `ts-essentials@2` instead.
   - [ValueOf type](#ValueOf-type)
   - [ElementOf type](#ElementOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
-  - [Awaited type & AsyncOrSyncType](#awaited-type--asyncorsynctype)
+  - [Awaited type](#awaited-type)
   - [Newable](#newable)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
@@ -699,15 +699,17 @@ class Travis implements CiProvider {
     return "def";
   }
 }
+
+// to get original type use AsyncOrSyncType
+AsyncOrSyncType<AsyncOrSync<number>> // return 'number'
 ```
 
-### Awaited type & AsyncOrSyncType
+### Awaited type
 
-Simple types to get promise types.
+Unwrap promised type:
 
 ```typescript
 Awaited<Promise<number>> // number
-AsyncOrSyncType<AsyncOrSync<number>> // number
 ```
 
 ### Newable
