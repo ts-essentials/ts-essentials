@@ -263,6 +263,15 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "chjdev",
+      "name": "Christian",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/973941?v=4",
+      "profile": "http://chjdev.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
