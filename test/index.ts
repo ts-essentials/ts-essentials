@@ -25,7 +25,6 @@ import {
   ReadonlyKeys,
   SafeDictionary,
   Tuple,
-  Writable,
   WritableKeys,
   XOR,
   Head,
@@ -35,6 +34,11 @@ import {
   DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
+  Opaque,
+  AsyncOrSyncType,
+  AsyncOrSync,
+  Awaited,
+  Newable,
 } from "../lib";
 
 function testDictionary() {
@@ -67,6 +71,11 @@ function testSafeDictionaryByNumber() {
 
 function testSafeDictionaryValues() {
   type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
+}
+
+function testSafeDictionaryFiniteTypeNonExhaustiveness() {
+  type TestType = "A" | "B";
+  const safeDict: SafeDictionary<string, TestType> = { A: "OK" };
 }
 
 type ComplexNestedPartial = {
@@ -563,4 +572,25 @@ function testExact() {
 function testElementOf() {
   const t1 = [1, 2, true, false];
   type testElementOf = Assert<IsExact<ElementOf<typeof t1>, number | boolean>>;
+}
+
+function testOpaque() {
+  type t1 = Assert<IsExact<Opaque<number, "a">, number & { __TYPE__: "a" }>>;
+  type t2 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
+}
+
+function testAsyncOrSyncType() {
+  type t1 = Assert<IsExact<AsyncOrSyncType<AsyncOrSync<number>>, number>>;
+}
+
+function testAwaitedType() {
+  type t1 = Assert<IsExact<Awaited<Promise<number>>, number>>;
+}
+
+function testNewable() {
+  class TestCls {
+    constructor(arg1: string) {}
+  }
+
+  const t1: Newable<any> = TestCls;
 }
