@@ -618,7 +618,7 @@ function makeNegativeNumber(n: number): NegativeNumber {
 let a = makePositiveNumber(5); // runtime check
 let b = makeNegativeNumber(-10); // runtime check
 
-a = b; //compile type check
+a = b; // error at compile time
 ```
 
 ### Tuple constraint
