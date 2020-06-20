@@ -6,7 +6,7 @@
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
     <img alt="Build status" src="https://circleci.com/gh/krzkaczor/ts-essentials.svg?style=svg">
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <img src="https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square" alt="All Contributors">
+    <img src="https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square" alt="All Contributors">
     <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
@@ -56,6 +56,8 @@ or `ts-essentials@2` instead.
   - [ValueOf type](#ValueOf-type)
   - [ElementOf type](#ElementOf-type)
   - [AsyncOrSync type](#AsyncOrSync-type)
+  - [Awaited type](#awaited-type)
+  - [Newable](#newable)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
   - [XOR](#XOR)
@@ -98,23 +100,23 @@ type stringDictValues = DictionaryValues<typeof stringDict>;
 // Result: string
 
 // When building a map using JS objects consider using SafeDictionary
-const safeDict: SafeDictionary<number> = {}
-const value: number | undefined = safeDict['foo']
+const safeDict: SafeDictionary<number> = {};
+const value: number | undefined = safeDict["foo"];
 
 // With SafeDictionary you don't need to use all of the sub-types of a finite type.
 // If you care about the key exhaustiveness, use a regular Dictionary.
-type ConfigKeys = 'LOGLEVEL' | 'PORT' | 'DEBUG';
+type ConfigKeys = "LOGLEVEL" | "PORT" | "DEBUG";
 const configSafeDict: SafeDictionary<number, ConfigKeys> = {
   LOGLEVEL: 2,
-}
-const maybePort: number | undefined = configSafeDict['PORT'];
+};
+const maybePort: number | undefined = configSafeDict["PORT"];
 
 const configDict: Dictionary<number, ConfigKeys> = {
   LOGLEVEL: 2,
   PORT: 8080,
   DEBUG: 1,
-}
-const port: number = configDict['PORT'];
+};
+const port: number = configDict["PORT"];
 ```
 
 ### Deep\* wrapper types
@@ -198,18 +200,17 @@ type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
 const sampleDeepUndefinable1: ComplexObjectUndefinable = {
   simple: undefined,
   nested: {
-    a: tryGet('a-value'),
-    array: [{ bar: tryGet('bar-value') }]
-  }
-}
+    a: tryGet("a-value"),
+    array: [{ bar: tryGet("bar-value") }],
+  },
+};
 const sampleDeepUndefinable2: ComplexObjectUndefinable = {
   // error -- property `simple` missing, should be `number | undefined`
   nested: {
-    array: [[{ bar: undefined }]]
+    array: [[{ bar: undefined }]],
     // error -- property `a` missing, should be `string | undefined`
-  }
-}
-
+  },
+};
 ```
 
 ### Writable
@@ -585,15 +586,39 @@ type Fn = UnionToIntersection<{ [K in keyof Foo]: (type: K, arg: Foo[K]) => any 
 
 ### Opaque types
 
-```typescript
-type PositiveNumber = Opaque<number, "positive-number">;
+Opaque types allow you to create unique type that can't be assigned to base type by accident. Good examples of opaque
+types include:
 
+- JWTs or other tokens - these are special kinds of string used for authorization purposes. If your app uses multiple
+  types of tokens each should be a separate opaque type to avoid confusion.
+- specific currencies - amount of different currencies shouldn't be mixed
+- bitcoin address - special kind of string
+
+It's **critical** to understand that each token (second argument to `Opaque`) has to be unique across your codebase.
+
+We encourage you to leverage a pattern where you have single function to validate base type and create opaque type.
+
+```typescript
+type PositiveNumber = Opaque<number, "PositiveNumber">;
 function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
-    throw new Error("Value not positive !!!");
+    throw new Error(`Value ${n} is not positive !`);
   }
   return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
+
+type NegativeNumber = Opaque<number, "NegativeNumber">;
+function makeNegativeNumber(n: number): NegativeNumber {
+  if (n >= 0) {
+    throw new Error(`Value ${n} is not negative !`);
+  }
+  return (n as any) as NegativeNumber; // this ugly cast is required but only when "producing" opaque types
+}
+
+let a = makePositiveNumber(5); // runtime check
+let b = makeNegativeNumber(-10); // runtime check
+
+a = b; // error at compile time
 ```
 
 ### Tuple constraint
@@ -674,6 +699,31 @@ class Travis implements CiProvider {
     return "def";
   }
 }
+
+// to get original type use AsyncOrSyncType
+AsyncOrSyncType<AsyncOrSync<number>> // return 'number'
+```
+
+### Awaited type
+
+Unwrap promised type:
+
+```typescript
+Awaited<Promise<number>> // number
+```
+
+### Newable
+
+_keywords: constructor, class_
+
+Type useful when working with classes (not their instances).
+
+```typescript
+class TestCls {
+  constructor(arg1: string) {}
+}
+
+const t1: Newable<any> = TestCls;
 ```
 
 ### Assertions

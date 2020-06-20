@@ -290,8 +290,12 @@ export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
-/** Easy create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
-export type Opaque<K, T> = T & { __TYPE__: K };
+type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
+
+/** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
+export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
+  ? Type & { readonly __TYPE__: Token }
+  : never;
 
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T[keyof T];
@@ -304,6 +308,13 @@ export type Tuple<T = any> = [T] | T[];
 
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
+
+export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
+export type AsyncOrSyncType<T> = T extends AsyncOrSync<infer PT> ? PT : never;
+
+export interface Newable<T> {
+  new (...args: any[]): T;
+}
 
 // A helper for `ReadonlyKeys` & `WritableKeys`
 // This potentially abuses compiler some inconsistencies in checking type equality for generics,

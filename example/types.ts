@@ -63,14 +63,24 @@ type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
 type SimplifiedComplexObject = Omit<ComplexObject, "nested">;
 
 // opaque types
-type PositiveNumber = Opaque<number, "positive-number">;
-
+type PositiveNumber = Opaque<number, "PositiveNumber">;
 function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
-    throw new Error("Value not positive !!!");
+    throw new Error(`Value ${n} is not positive !`);
   }
   return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
 }
+
+type NegativeNumber = Opaque<number, "NegativeNumber">;
+function makeNegativeNumber(n: number): NegativeNumber {
+  if (n >= 0) {
+    throw new Error(`Value ${n} is not negative !`);
+  }
+  return (n as any) as NegativeNumber; // this ugly cast is required but only when "producing" opaque types
+}
+
+let a = makePositiveNumber(5); // runtime check
+let b = makeNegativeNumber(-10); // runtime check
 
 interface CiProvider {
   getSHA(): AsyncOrSync<string>;
