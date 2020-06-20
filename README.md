@@ -589,8 +589,8 @@ type Fn = UnionToIntersection<{ [K in keyof Foo]: (type: K, arg: Foo[K]) => any 
 Opaque types allow you to create unique type that can't be assigned to base type by accident. Good examples of opaque
 types include:
 
-- JWT tokens - these are special kinds of string used for authorization purposes. If your app uses multiple different
-  JWTs each should be a separate opaque type to avoid confusion.
+- JWTs or other tokens - these are special kinds of string used for authorization purposes. If your app uses multiple
+  types of tokens each should be a separate opaque type to avoid confusion.
 - specific currencies - amount of different currencies shouldn't be mixed
 - bitcoin address - special kind of string
 
