@@ -18,7 +18,7 @@ npm install --save-dev ts-essentials
 ```
 
 👉 We require `typescript>=3.7`. If you're looking for support for older TS versions use `ts-essentials@3` (for 3.6>=)
-or `ts-essentials@2` instead.
+or `ts-essentials@2` instead. If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
 
 ## What's inside?
 
