@@ -318,7 +318,7 @@ export declare type DeepPick<T extends FilterModify<F>, F> = T extends Builtin
         never
       >;
 
-export type FilterModify<T> =
+type FilterModify<T> =
   | {
       [K in keyof T]: T[K] extends never ? any : T[K] extends object ? FilterModify<T[K]> : never;
     }
