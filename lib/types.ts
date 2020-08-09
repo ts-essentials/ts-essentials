@@ -262,7 +262,6 @@ export type DeepOmit<T extends FilterModify<F>, F> = T extends Builtin
         never
       >;
 
-
 /** Recursively pick deep properties */
 export declare type DeepPick<T extends FilterModify<F>, F> = T extends Builtin
   ? T
@@ -307,25 +306,21 @@ export declare type DeepPick<T extends FilterModify<F>, F> = T extends Builtin
           : never;
       },
       never
-    >
-    & OmitProperties<
-      {
-        [K in Extract<RequiredKeys<T>, keyof F>]: F[K] extends never
-          ? T[K]
-          : T[K] extends FilterModify<F[K]>
-          ? DeepPick<T[K], F[K]>
-          : never;
-      },
-      never
-    >;
+    > &
+      OmitProperties<
+        {
+          [K in Extract<RequiredKeys<T>, keyof F>]: F[K] extends never
+            ? T[K]
+            : T[K] extends FilterModify<F[K]>
+            ? DeepPick<T[K], F[K]>
+            : never;
+        },
+        never
+      >;
 
 export type FilterModify<T> =
   | {
-      [K in keyof T]: T[K] extends never
-        ? any
-        : T[K] extends object
-          ? FilterModify<T[K]>
-          : never;
+      [K in keyof T]: T[K] extends never ? any : T[K] extends object ? FilterModify<T[K]> : never;
     }
   | Array<FilterModify<T>>
   | Promise<FilterModify<T>>
