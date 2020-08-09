@@ -9,6 +9,7 @@ import {
   DeepNonNullable,
   DeepNullable,
   DeepOmit,
+  DeepPick,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -350,6 +351,13 @@ function testDeepOmit() {
     map: Map<number, { b: boolean }>;
   };
 
+  type Picked = {
+    a: { c: { d: string }; b: string };
+    array: { a: string }[][];
+    set: Set<{ a: string }>;
+    map: Map<number, { a: string }>;
+  };
+
   type Filter = {
     a: { b: never; c: { d: never } };
     array: { a: never };
@@ -358,6 +366,7 @@ function testDeepOmit() {
   };
 
   type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
+  type PickTest = Assert<IsExact<DeepPick<Nested, Filter>, Picked>>;
 }
 
 function testDeepOmit2() {
@@ -372,6 +381,22 @@ function testDeepOmit2() {
   };
 
   type Result = DeepOmit<OptionalProperty, { age: never }>;
+  type Test = Assert<IsExact<Result, Omitted>>;
+}
+
+function testDeepPick() {
+  type OptionalProperty = {
+    id: string;
+    age: number;
+    name?: string;
+  };
+  type Omitted = {
+    id: string;
+    name?: string;
+  };
+
+  type Result = DeepOmit<OptionalProperty, { age: never }>;
+
   type Test = Assert<IsExact<Result, Omitted>>;
 }
 
