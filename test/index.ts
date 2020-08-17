@@ -356,7 +356,7 @@ function testDeepOmitAndDeepPick() {
   };
 
   type Picked = {
-    a: { b: string, c: { d: string }; };
+    a: { b: string; c: { d: string } };
     array: { a: string }[][];
     set: Set<{ a: string }>;
     map: Map<number, { a: string }>;
