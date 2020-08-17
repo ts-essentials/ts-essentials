@@ -331,8 +331,8 @@ function testRequiredKeys() {
   type Test = Assert<IsExact<Expected, Actual>>;
 }
 
-function testDeepOmit() {
-  type Nested = {
+function testDeepOmitAndDeepPick() {
+  type Whole = {
     a: { b: string; c: { d: string; e: boolean }; f: number };
     array: { a: string; b: boolean }[][];
     set: Set<{ a: string; b: boolean }>;
@@ -343,19 +343,24 @@ function testDeepOmit() {
         b: boolean;
       }
     >;
+    optionalProp?: number;
+    // filteredOptionalProp?: number;
   };
+
   type Omitted = {
     a: { c: { e: boolean }; f: number };
     array: { b: boolean }[][];
     set: Set<{ b: boolean }>;
     map: Map<number, { b: boolean }>;
+    optionalProp?: number;
   };
 
   type Picked = {
-    a: { c: { d: string }; b: string };
+    a: { b: string, c: { d: string }; };
     array: { a: string }[][];
     set: Set<{ a: string }>;
     map: Map<number, { a: string }>;
+    // filteredOptionalProp?: number;
   };
 
   type Filter = {
@@ -363,41 +368,11 @@ function testDeepOmit() {
     array: { a: never };
     set: { a: never };
     map: { a: never };
+    // filteredOptionalProp?: never;
   };
 
-  type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
-  type PickTest = Assert<IsExact<DeepPick<Nested, Filter>, Picked>>;
-}
-
-function testDeepOmit2() {
-  type OptionalProperty = {
-    id: string;
-    age: number;
-    name?: string;
-  };
-  type Omitted = {
-    id: string;
-    name?: string;
-  };
-
-  type Result = DeepOmit<OptionalProperty, { age: never }>;
-  type Test = Assert<IsExact<Result, Omitted>>;
-}
-
-function testDeepPick() {
-  type OptionalProperty = {
-    id: string;
-    age: number;
-    name?: string;
-  };
-  type Omitted = {
-    id: string;
-    name?: string;
-  };
-
-  type Result = DeepOmit<OptionalProperty, { age: never }>;
-
-  type Test = Assert<IsExact<Result, Omitted>>;
+  type OmitTest = Assert<IsExact<DeepOmit<Whole, Filter>, Omitted>>;
+  type PickTest = Assert<IsExact<DeepPick<Whole, Filter>, Picked>>;
 }
 
 function testTupleInference() {
