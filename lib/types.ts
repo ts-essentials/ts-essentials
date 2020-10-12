@@ -301,7 +301,7 @@ export type Opaque<Type, Token extends string> = Token extends StringLiteral<Tok
 export type ValueOf<T> = T[keyof T];
 
 /** Easily extract the type of a given array's elements */
-export type ElementOf<T extends any[]> = T extends (infer ET)[] ? ET : never;
+export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
 
 /** Type constraint for tuple inference */
 export type Tuple<T = any> = [T] | T[];
