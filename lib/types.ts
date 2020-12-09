@@ -1,5 +1,5 @@
 /** Essentials */
-export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null | unknown;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends [infer A]
   ? T
