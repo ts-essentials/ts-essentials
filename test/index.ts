@@ -95,6 +95,7 @@ type ComplexNestedPartial = {
     >;
     promise?: Promise<{ foo?: string; bar?: number }>;
   };
+  unknown?: unknown;
 };
 
 type ComplexNestedRequired = {
@@ -113,6 +114,7 @@ type ComplexNestedRequired = {
     >;
     promise: Promise<{ foo: string; bar: number }>;
   };
+  unknown: unknown;
 };
 
 type ComplexNestedNullable = {
@@ -126,6 +128,7 @@ type ComplexNestedNullable = {
     map: Map<string | null, { name: string | null }>;
     promise: Promise<{ foo: string | null; bar: number | null }>;
   };
+  unknown: unknown | null;
 };
 
 type ComplexNestedUndefinable = {
@@ -139,6 +142,7 @@ type ComplexNestedUndefinable = {
     map: Map<string | undefined, { name: string | undefined }>;
     promise: Promise<{ foo: string | undefined; bar: number | undefined }>;
   };
+  unknown: unknown | undefined;
 };
 
 type ComplexNestedNullableOrUndefined = {
@@ -184,6 +188,7 @@ type ComplexNestedNullableOrUndefined = {
       | null
       | undefined;
   };
+  unknown: unknown | null | undefined;
 };
 
 type ComplexNestedReadonly = {
@@ -204,6 +209,7 @@ type ComplexNestedReadonly = {
     >;
     readonly promise: Promise<{ readonly foo: string; readonly bar: number }>;
   };
+  readonly unknown: unknown;
 };
 
 function testDeepPartial() {

@@ -1,5 +1,5 @@
 /** Essentials */
-export type Primitive = string | number | boolean | bigint | symbol | undefined | null | unknown;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends [infer A]
   ? T
@@ -156,7 +156,9 @@ export type DeepReadonly<T> = T extends Builtin
   ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : Readonly<T>;
+  : // : T extends unknown
+    // ? unknown
+    Readonly<T>;
 
 /** Make readonly object writable */
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
