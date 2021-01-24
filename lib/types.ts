@@ -202,6 +202,9 @@ export type OptionalKeys<T> = {
 /** Gets keys of an object which are required */
 export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 
+/** Gets keys of properties of given type in object type */
+export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
+
 /** Recursively omit deep properties */
 // explicitly mentioning optional properties, to work around TS making them required
 // see https://github.com/krzkaczor/ts-essentials/issues/118
