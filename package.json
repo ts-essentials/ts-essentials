@@ -18,7 +18,7 @@
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
+    "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
     "test": "prettier -c **/*.ts && tsc --noEmit",
@@ -35,6 +35,7 @@
     "@codechecks/client": "^0.1.10",
     "conditional-type-checks": "^1.0.4",
     "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
     "typescript": "^3.7.2"
   }
 }
