@@ -223,7 +223,7 @@ type Foo = {
   readonly b: string;
 };
 
-const foo: Foo = ({ a: 1, b: "b" };
+const foo: Foo = { a: 1, b: "b" };
 (foo as Writable<typeof foo>).a = 42;
 ```
 
