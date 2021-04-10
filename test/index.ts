@@ -363,15 +363,26 @@ function testDeepOmitAndDeepPick() {
     // filteredOptionalProp?: number;
   };
 
-  type Filter = {
+  // to demonstrate that types in filter can be defined either way (as 'true' or 'never')
+  type NeverFilter = {
+    a: { b: never; c: { d: never } };
+    array: { a: never };
+    set: { a: never };
+    map: { a: never };
+  };
+
+  type TrueFilter = {
     a: { b: true; c: { d: true } };
     array: { a: true };
     set: { a: true };
     map: { a: true };
   };
 
-  type OmitTest = Assert<IsExact<DeepOmit<Whole, Filter>, Omitted>>;
-  type PickTest = Assert<IsExact<DeepPick<Whole, Filter>, Picked>>;
+  type TestDeepOmitNeverFilter = Assert<IsExact<DeepOmit<Whole, NeverFilter>, Omitted>>;
+  type TestDeepPickNeverFilter = Assert<IsExact<DeepPick<Whole, NeverFilter>, Picked>>;
+
+  type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
+  type TestDeepPickTrueFilter = Assert<IsExact<DeepPick<Whole, TrueFilter>, Picked>>;
 }
 
 function testTupleInference() {
