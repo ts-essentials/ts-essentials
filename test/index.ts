@@ -364,11 +364,10 @@ function testDeepOmitAndDeepPick() {
   };
 
   type Filter = {
-    a: { b: never; c: { d: never } };
-    array: { a: never };
-    set: { a: never };
-    map: { a: never };
-    // filteredOptionalProp?: never;
+    a: { b: true; c: { d: true } };
+    array: { a: true };
+    set: { a: true };
+    map: { a: true };
   };
 
   type OmitTest = Assert<IsExact<DeepOmit<Whole, Filter>, Omitted>>;
