@@ -49,6 +49,7 @@ or `ts-essentials@2` instead. If you use any [functions](https://github.com/krzk
   - [WritableKeys](#WritableKeys)
   - [OptionalKeys](#OptionalKeys)
   - [RequiredKeys](#RequiredKeys)
+  - [PickKeys](#pickkeys)
   - [UnionToIntersection](#UnionToIntersection)
   - [Opaque types](#Opaque-types)
   - [Tuple constraint](#Tuple-constraint)
@@ -570,6 +571,25 @@ type T = {
 type Result = RequiredKeys<T>;
 // Result:
 // "a" | "c"
+```
+
+### PickKeys
+
+Gets keys of properties of given type in object type.
+
+```typescript
+type T = {
+  a: number;
+  b?: string;
+  c: string | undefined;
+  d: string;
+};
+type Result1 = PickKeys<T, string>;
+// Result1:
+// "d"
+type Result2 = PickKeys<T, string | undefined>;
+// Result2:
+// "b" | "c" | "d"
 ```
 
 ### UnionToIntersection

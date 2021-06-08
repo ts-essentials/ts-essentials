@@ -39,6 +39,7 @@ import {
   AsyncOrSync,
   Awaited,
   Newable,
+  PickKeys,
 } from "../lib";
 
 function testDictionary() {
@@ -328,6 +329,24 @@ function testRequiredKeys() {
   type Actual = RequiredKeys<Input>;
 
   type Test = Assert<IsExact<Expected, Actual>>;
+}
+
+function testPickKeys() {
+  type Input = {
+    req: number;
+    opt?: string;
+    opt2: string;
+    undef: string | undefined;
+    nullable: string | null;
+  };
+
+  type Expected1 = "opt2";
+  type Actual1 = PickKeys<Input, string>;
+  type Test1 = Assert<IsExact<Expected1, Actual1>>;
+
+  type Expected2 = "opt" | "opt2" | "undef";
+  type Actual2 = PickKeys<Input, string | undefined>;
+  type Test2 = Assert<IsExact<Expected2, Actual2>>;
 }
 
 function testDeepOmit() {
