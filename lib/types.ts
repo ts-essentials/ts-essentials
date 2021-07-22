@@ -157,7 +157,7 @@ export type DeepReadonly<T> = T extends Builtin
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : T extends unknown
-  ? readonly unknown
+  ? unknown
   : Readonly<T>;
 
 /** Make readonly object writable */
