@@ -22,6 +22,8 @@ or `ts-essentials@2` instead. If you use any [functions](https://github.com/krzk
 
 ## What's inside?
 
+`ts-essentials` is a set of high-quality, useful TypeScript types that make writing type-safe code easier.
+
 - [Install](#Install)
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
