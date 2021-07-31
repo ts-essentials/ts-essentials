@@ -33,6 +33,8 @@ jobs:
       - run: yarn test
       - run: yarn build
       - run: yarn codechecks
+        env:
+          CC_SECRET: ${{ secrets.CC_SECRET }}
 
 # Few tips github actions
 # - name: Setup SSH debug session
