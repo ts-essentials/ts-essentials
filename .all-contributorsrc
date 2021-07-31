@@ -290,6 +290,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Beraliv",
+      "name": "Alex Berezin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2991847?v=4",
+      "profile": "https://github.com/Beraliv",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
