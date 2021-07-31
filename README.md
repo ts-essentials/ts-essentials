@@ -4,7 +4,7 @@
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
-    <img alt="Build status" src="https://circleci.com/gh/krzkaczor/ts-essentials.svg?style=svg">
+    <img alt="Build status" src="https://github.com/krzkaczor/ts-essentials/actions/workflows/ci.yml/badge.svg">
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
     <img src="https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square" alt="All Contributors">
     <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
