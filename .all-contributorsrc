@@ -299,6 +299,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "vitonsky",
+      "name": "vitonsky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86191922?v=4",
+      "profile": "https://github.com/vitonsky",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
