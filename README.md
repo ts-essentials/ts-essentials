@@ -627,7 +627,7 @@ function makePositiveNumber(n: number): PositiveNumber {
   if (n <= 0) {
     throw new Error(`Value ${n} is not positive !`);
   }
-  return (n as any) as PositiveNumber; // this ugly cast is required but only when "producing" opaque types
+  return n as PositiveNumber; // you can cast it directly without unknown and any
 }
 
 type NegativeNumber = Opaque<number, "NegativeNumber">;
@@ -635,7 +635,7 @@ function makeNegativeNumber(n: number): NegativeNumber {
   if (n >= 0) {
     throw new Error(`Value ${n} is not negative !`);
   }
-  return (n as any) as NegativeNumber; // this ugly cast is required but only when "producing" opaque types
+  return n as NegativeNumber; // you can cast it directly without unknown and any
 }
 
 let a = makePositiveNumber(5); // runtime check
