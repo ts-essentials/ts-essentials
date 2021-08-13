@@ -504,15 +504,11 @@ function testMarkOptional() {
 }
 
 function testMerge() {
-  {
-    type T = { a: number; b: string };
-
-    type Merged = Merge<T, { a: string }>;
-
-    type ExpectedMerged = { a: string; b: string };
-
-    type Test = Assert<IsExact<Merged, ExpectedMerged>>;
-  }
+  type cases = [
+    Assert<IsExact<Merge<{}, { a: string }>, { a: string }>>,
+    Assert<IsExact<Merge<{ a: string }, {}>, { a: string }>>,
+    Assert<IsExact<Merge<{ a: number; b: string }, { a: string }>, { a: string; b: string }>>,
+  ];
 }
 
 function testReadonlyKeys() {
