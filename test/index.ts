@@ -18,6 +18,7 @@ import {
   MarkOptional,
   MarkRequired,
   Merge,
+  MergeN,
   NonEmptyObject,
   NonNever,
   noop,
@@ -508,6 +509,19 @@ function testMerge() {
     Assert<IsExact<Merge<{}, { a: string }>, { a: string }>>,
     Assert<IsExact<Merge<{ a: string }, {}>, { a: string }>>,
     Assert<IsExact<Merge<{ a: number; b: string }, { a: string }>, { a: string; b: string }>>,
+  ];
+}
+
+function testMergeN() {
+  type cases = [
+    Assert<IsExact<MergeN<[{ a: number; b: string; c: boolean }]>, { a: number; b: string; c: boolean }>>,
+    Assert<
+      IsExact<
+        MergeN<[{ a: number; b: string; c: boolean }, { b: number; c: string; d: boolean }]>,
+        { a: number; b: number; c: string; d: boolean }
+      >
+    >,
+    Assert<IsExact<MergeN<[{ a: number }, { a: string }, { a: boolean }]>, { a: boolean }>>,
   ];
 }
 
