@@ -40,6 +40,7 @@ import {
   Awaited,
   Newable,
   PickKeys,
+  IsTuple,
 } from "../lib";
 
 function testDictionary() {
@@ -620,4 +621,27 @@ function testNewable() {
   }
 
   const t1: Newable<any> = TestCls;
+}
+
+function testIsTuple() {
+  type cases = [
+    Assert<IsExact<IsTuple<string>, never>>,
+    Assert<IsExact<IsTuple<number>, never>>,
+    Assert<IsExact<IsTuple<boolean>, never>>,
+    Assert<IsExact<IsTuple<undefined>, never>>,
+    Assert<IsExact<IsTuple<null>, never>>,
+    Assert<IsExact<IsTuple<{ a: 1 }>, never>>,
+    Assert<IsExact<IsTuple<[1]>, [1]>>,
+    Assert<IsExact<IsTuple<[1, 2]>, [1, 2]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3]>, [1, 2, 3]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4]>, [1, 2, 3, 4]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5]>, [1, 2, 3, 4, 5]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6]>, never>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7]>, never>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8]>, never>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9]>, never>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, never>>,
+    Assert<IsExact<IsTuple<readonly number[]>, never>>,
+    Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
+  ];
 }
