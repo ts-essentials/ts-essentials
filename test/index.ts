@@ -231,6 +231,17 @@ function testDeepReadonly2() {
   b = a;
 }
 
+function testDeepReadonlyWithUnknown() {
+  interface MyInterface {
+    myObject: unknown;
+    myArray: unknown[]
+  }
+  const myObject: MyInterface = null!;
+  let myReadonlyObject: DeepReadonly<MyInterface>;
+
+  myReadonlyObject = myObject;
+}
+  
 function testNonNullable() {
   type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
 }
