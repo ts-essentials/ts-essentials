@@ -371,13 +371,13 @@ type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
 Following the code above, we can compare the behavior of `Extract` and `StrictExtract`.
 
 ```typescript
-type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" }>;
+type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" | "horse" }>;
 
 // Result: error
 // Type '"dog" | "cat" | "horse"' is not assignable to type '"mouse" | undefined'
 // Type '"dog"' is not assignable to type '"mouse" | undefined'.
 
-type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" }>;
+type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" | "horse" }>;
 
 // Result: no error
 ```
