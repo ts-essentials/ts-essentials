@@ -89,7 +89,6 @@ type ComplexNestedPartial = {
     array?: { bar?: number }[];
     set?: Set<{ name?: string }>;
     tuple?: [string?, number?, { good?: boolean }?];
-
     map?: Map<
       string,
       {
@@ -646,11 +645,11 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1, 2, 3]>, [1, 2, 3]>>,
     Assert<IsExact<IsTuple<[1, 2, 3, 4]>, [1, 2, 3, 4]>>,
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5]>, [1, 2, 3, 4, 5]>>,
-    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6]>, never>>,
-    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7]>, never>>,
-    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8]>, never>>,
-    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9]>, never>>,
-    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, never>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6]>, [1, 2, 3, 4, 5, 6]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7]>, [1, 2, 3, 4, 5, 6, 7]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8]>, [1, 2, 3, 4, 5, 6, 7, 8]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9]>, [1, 2, 3, 4, 5, 6, 7, 8, 9]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
   ];
