@@ -1,7 +1,7 @@
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
-export type IsTuple<T> = T extends [] ? T : T extends [...(infer _)] ? T : never;
+export type IsTuple<T> = T extends [...(infer _)] ? T : never;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 /**
