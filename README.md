@@ -42,6 +42,8 @@ your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
+  - [StrictExtract](#StrictExtract)
+    - [Comparison between `Extract` and `StrictExtract`](#Comparison-between-Extract-and-StrictExtract)
   - [DeepOmit](#DeepOmit)
   - [OmitProperties](#OmitProperties)
   - [PickProperties](#PickProperties)
@@ -329,6 +331,56 @@ type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" |
 ```
 
 As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
+
+### StrictExtract
+
+Usage is similar to the builtin version, but checks the filter type more strictly.
+
+```typescript
+interface Dog {
+  type: "dog";
+  woof(): void;
+}
+
+interface Cat {
+  type: "cat";
+  meow(): void;
+}
+
+interface Mouse {
+  type: "mouse";
+  squaek(): void;
+}
+
+type Animal = Dog | Cat | Mouse;
+
+type DogAnimal = StrictExtract<Animal, { type: "dog" }>;
+
+// Result:
+// Dog
+
+// if you want to Extract multiple properties just use union type:
+type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
+
+// Result:
+// Cat | Dog
+```
+
+#### Comparison between `Extract` and `StrictExtract`
+
+Following the code above, we can compare the behavior of `Extract` and `StrictExtract`.
+
+```typescript
+type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" }>;
+
+// Result: error
+// Type '"dog" | "cat" | "horse"' is not assignable to type '"mouse" | undefined'
+// Type '"dog"' is not assignable to type '"mouse" | undefined'.
+
+type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" }>;
+
+// Result: no error
+```
 
 ### DeepOmit
 
