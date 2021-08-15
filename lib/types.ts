@@ -284,6 +284,13 @@ export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
 
+type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...(infer Tail)]
+  ? _MergeN<Tail, Merge<Result, Head>>
+  : Result;
+
+/** Merge N types, properties types from the latter override the ones defined on the former type */
+export type MergeN<T extends readonly any[]> = _MergeN<T, {}>;
+
 /** Mark some properties as required, leaving others unchanged */
 export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick<T, RK>>;
 

@@ -18,7 +18,9 @@ npm install --save-dev ts-essentials
 ```
 
 👉 We require `typescript>=3.7`. If you're looking for support for older TS versions use `ts-essentials@3` (for 3.6>=)
-or `ts-essentials@2` instead. If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
+or `ts-essentials@2` instead. If you use any
+[functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add `ts-essentials` to
+your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
 
 ## What's inside?
 
@@ -45,6 +47,7 @@ or `ts-essentials@2` instead. If you use any [functions](https://github.com/krzk
   - [PickProperties](#PickProperties)
   - [NonNever](#NonNever)
   - [Merge](#Merge)
+  - [MergeN](#MergeN)
   - [MarkRequired](#MarkRequired)
   - [MarkOptional](#MarkOptional)
   - [ReadonlyKeys](#ReadonlyKeys)
@@ -465,6 +468,29 @@ type Bar = {
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
+// Result:
+// {
+//   a: number,
+//   b: number,
+// }
+```
+
+### MergeN
+
+_keywords: override_
+
+```typescript
+type Tuple = [
+  {
+    a: number;
+    b: string;
+  },
+  {
+    b: number;
+  },
+];
+
+const xyz: MergeN<Tuple> = { a: 4, b: 2 };
 // Result:
 // {
 //   a: number,
