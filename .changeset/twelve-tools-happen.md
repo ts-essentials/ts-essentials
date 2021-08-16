@@ -2,4 +2,4 @@
 "ts-essentials": major
 ---
 
-Use typescript@^4.0.0
+Use `typescript@^4.0.0`

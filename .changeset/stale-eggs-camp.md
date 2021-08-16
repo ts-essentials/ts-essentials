@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Update readme description of Opaque
+Update readme description of `Opaque`

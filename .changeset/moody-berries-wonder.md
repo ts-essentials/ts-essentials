@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Add DeepReadonly support for unknown type
+Add `DeepReadonly` support for `unknown` type
