@@ -13,6 +13,7 @@ import {
   DeepReadonly,
   DeepRequired,
   DeepWritable,
+  StrictExtract,
   Dictionary,
   DictionaryValues,
   MarkOptional,
@@ -729,5 +730,34 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
+  ];
+}
+
+function testStrictExtract() {
+  interface Dog {
+    type: "dog";
+    woof(): void;
+  }
+
+  interface Cat {
+    type: "cat";
+    meow(): void;
+  }
+
+  interface Mouse {
+    type: "mouse";
+    squeak(): void;
+  }
+
+  type Animal = Dog | Cat | Mouse;
+
+  type cases = [
+    Assert<IsExact<StrictExtract<Animal, { type: undefined }>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: never }>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "dog" }>, Dog>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" }>, Cat>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "mouse" }>, Mouse>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" }>, Cat | Dog>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
   ];
 }
