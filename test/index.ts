@@ -213,24 +213,52 @@ function testDeepPartial() {
   type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
 }
 
-function testDeepReadonly1() {
-  type Test = Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>;
-}
+function testDeepReadonly() {
+  type cases = [
+    Assert<IsExact<DeepReadonly<number>, number>>,
+    Assert<IsExact<DeepReadonly<string>, string>>,
+    Assert<IsExact<DeepReadonly<boolean>, boolean>>,
+    Assert<IsExact<DeepReadonly<bigint>, bigint>>,
+    Assert<IsExact<DeepReadonly<symbol>, symbol>>,
+    Assert<IsExact<DeepReadonly<undefined>, undefined>>,
+    Assert<IsExact<DeepReadonly<null>, null>>,
+    Assert<IsExact<DeepReadonly<Function>, Function>>,
+    Assert<IsExact<DeepReadonly<Date>, Date>>,
+    Assert<IsExact<DeepReadonly<Error>, Error>>,
+    Assert<IsExact<DeepReadonly<RegExp>, RegExp>>,
+    Assert<IsExact<DeepReadonly<Map<string, boolean>>, ReadonlyMap<string, boolean>>>,
+    Assert<IsExact<DeepReadonly<ReadonlyMap<string, boolean>>, ReadonlyMap<string, boolean>>>,
+    Assert<IsExact<DeepReadonly<WeakMap<{ key: string }, boolean>>, WeakMap<{ key: string }, boolean>>>,
+    Assert<
+      IsExact<DeepReadonly<WeakMap<{ key: string }, { value: boolean }>>, WeakMap<{ key: string }, { value: boolean }>>
+    >,
+    Assert<IsExact<DeepReadonly<Set<string>>, ReadonlySet<string>>>,
+    Assert<IsExact<DeepReadonly<ReadonlySet<string>>, ReadonlySet<string>>>,
+    Assert<IsExact<DeepReadonly<[]>, readonly []>>,
+    Assert<IsExact<DeepReadonly<[1, 2, 3]>, readonly [1, 2, 3]>>,
+    Assert<IsExact<DeepReadonly<readonly number[]>, readonly number[]>>,
+    Assert<IsExact<DeepReadonly<Array<number>>, ReadonlyArray<number>>>,
+    Assert<IsExact<DeepReadonly<Promise<number>>, Promise<number>>>,
+    Assert<IsExact<DeepReadonly<{ a: 1; b: 2; c: 3 }>, { a: 1; b: 2; c: 3 }>>,
+    Assert<IsExact<DeepReadonly<{ foo: () => void }>, { foo: () => void }>>,
+    Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
+  ];
 
-interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
+  // Build-time test to ensure the fix for
+  // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
+  {
+    interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
 
-// Build-time test to ensure the fix for
-// https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
-function testDeepReadonly2() {
-  const a: DeepReadonly<IDeepReadonlyTestHelperType> = {
-    field: ["lala"],
-  };
+    let a: DeepReadonly<IDeepReadonlyTestHelperType> = {
+      field: ["lala"],
+    };
 
-  let b: IDeepReadonlyTestHelperType = {
-    field: ["lala"],
-  };
+    let b: IDeepReadonlyTestHelperType = {
+      field: ["lala"],
+    };
 
-  b = a;
+    b = a;
+  }
 }
 
 function testDeepReadonlyWithUnknown() {
