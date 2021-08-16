@@ -670,7 +670,7 @@ function testStrictExtract() {
 
   interface Mouse {
     type: "mouse";
-    squaek(): void;
+    squeak(): void;
   }
 
   type Animal = Dog | Cat | Mouse;
