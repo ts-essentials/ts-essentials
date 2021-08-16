@@ -17,8 +17,8 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=4.0`. If you're looking for support for older TS versions, please have a look at the support
-table –
+👉 We require `typescript>=4.0`. If you're looking for support for older TS versions, please have a look at the
+[TypeScript dependency table](https://github.com/krzkaczor/ts-essentials/tree/docs/typescript#TypeScript-dependency-table)
 
 If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add
 `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
@@ -71,7 +71,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Functional type essentials](#functional-type-essentials)
     - Head
     - Tail
-- [TypeScript dependency](#TypeScript-dependency)
+- [TypeScript dependency table](#TypeScript-dependency-table)
 - [Contributors](#Contributors)
 
 ### Basic
@@ -849,7 +849,7 @@ type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: i
   : never;
 ```
 
-## TypeScript dependency
+## TypeScript dependency table
 
 | `ts-essentials` | `typescript` / type of dependency |
 | --------------- | --------------------------------- |
