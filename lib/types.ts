@@ -1,17 +1,7 @@
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
-export type IsTuple<T> = T extends [infer A]
-  ? T
-  : T extends [infer A, infer B]
-  ? T
-  : T extends [infer A, infer B, infer C]
-  ? T
-  : T extends [infer A, infer B, infer C, infer D]
-  ? T
-  : T extends [infer A, infer B, infer C, infer D, infer E]
-  ? T
-  : never;
+export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 /**
@@ -156,6 +146,8 @@ export type DeepReadonly<T> = T extends Builtin
   ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+  : unknown extends T
+  ? unknown
   : Readonly<T>;
 
 /** Make readonly object writable */
@@ -188,6 +180,9 @@ export type Buildable<T> = DeepPartial<DeepWritable<T>>;
 /** Similar to the builtin Omit, but checks the filter strictly. */
 export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+/** Similar to the builtin Extract, but checks the filter strictly */
+export type StrictExtract<T, U extends Partial<T>> = Extract<T, U>;
+
 /** Omit all properties of given type in object type */
 export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
 
@@ -201,6 +196,9 @@ export type OptionalKeys<T> = {
 
 /** Gets keys of an object which are required */
 export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
+
+/** Gets keys of properties of given type in object type */
+export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
 
 /** Recursively omit deep properties */
 // explicitly mentioning optional properties, to work around TS making them required
@@ -338,6 +336,13 @@ export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
 
+type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...(infer Tail)]
+  ? _MergeN<Tail, Merge<Result, Head>>
+  : Result;
+
+/** Merge N types, properties types from the latter override the ones defined on the former type */
+export type MergeN<T extends readonly any[]> = _MergeN<T, {}>;
+
 /** Mark some properties as required, leaving others unchanged */
 export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick<T, RK>>;
 
@@ -349,16 +354,18 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 
 type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
 
+declare const __OPAQUE_TYPE__: unique symbol;
+
 /** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
 export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
-  ? Type & { readonly __TYPE__: Token }
+  ? Type & { readonly [__OPAQUE_TYPE__]: Token }
   : never;
 
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T[keyof T];
 
 /** Easily extract the type of a given array's elements */
-export type ElementOf<T extends any[]> = T extends (infer ET)[] ? ET : never;
+export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
 
 /** Type constraint for tuple inference */
 export type Tuple<T = any> = [T] | T[];

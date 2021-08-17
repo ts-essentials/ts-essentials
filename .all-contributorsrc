@@ -281,6 +281,43 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "studds",
+      "name": "studds",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3046407?v=4",
+      "profile": "https://github.com/studds",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Beraliv",
+      "name": "Alex Berezin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2991847?v=4",
+      "profile": "https://github.com/Beraliv",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "vitonsky",
+      "name": "vitonsky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86191922?v=4",
+      "profile": "https://github.com/vitonsky",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "itayronen",
+      "name": "Itay Ronen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21139000?v=4",
+      "profile": "https://github.com/itayronen",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

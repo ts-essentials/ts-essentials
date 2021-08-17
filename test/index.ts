@@ -14,11 +14,13 @@ import {
   DeepReadonly,
   DeepRequired,
   DeepWritable,
+  StrictExtract,
   Dictionary,
   DictionaryValues,
   MarkOptional,
   MarkRequired,
   Merge,
+  MergeN,
   NonEmptyObject,
   NonNever,
   noop,
@@ -40,6 +42,8 @@ import {
   AsyncOrSync,
   Awaited,
   Newable,
+  PickKeys,
+  IsTuple,
 } from "../lib";
 
 function testDictionary() {
@@ -87,7 +91,6 @@ type ComplexNestedPartial = {
     array?: { bar?: number }[];
     set?: Set<{ name?: string }>;
     tuple?: [string?, number?, { good?: boolean }?];
-
     map?: Map<
       string,
       {
@@ -208,27 +211,104 @@ type ComplexNestedReadonly = {
 };
 
 function testDeepPartial() {
-  type Test = Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>;
+  type cases = [
+    Assert<IsExact<DeepPartial<number>, number>>,
+    Assert<IsExact<DeepPartial<string>, string>>,
+    Assert<IsExact<DeepPartial<boolean>, boolean>>,
+    Assert<IsExact<DeepPartial<bigint>, bigint>>,
+    Assert<IsExact<DeepPartial<symbol>, symbol>>,
+    Assert<IsExact<DeepPartial<undefined>, undefined>>,
+    Assert<IsExact<DeepPartial<null>, null>>,
+    Assert<IsExact<DeepPartial<Function>, Function>>,
+    Assert<IsExact<DeepPartial<Date>, Date>>,
+    Assert<IsExact<DeepPartial<Error>, Error>>,
+    Assert<IsExact<DeepPartial<RegExp>, RegExp>>,
+    Assert<IsExact<DeepPartial<Map<string, boolean>>, Map<string, boolean>>>,
+    Assert<IsExact<DeepPartial<Map<string, { a: number }>>, Map<string, { a?: number }>>>,
+    Assert<IsExact<DeepPartial<ReadonlyMap<string, boolean>>, ReadonlyMap<string, boolean>>>,
+    Assert<IsExact<DeepPartial<ReadonlyMap<string, { checked: boolean }>>, ReadonlyMap<string, { checked?: boolean }>>>,
+    Assert<IsExact<DeepPartial<WeakMap<{ key: string }, boolean>>, WeakMap<{ key?: string }, boolean>>>,
+    Assert<
+      IsExact<DeepPartial<WeakMap<{ key: string }, { value: boolean }>>, WeakMap<{ key?: string }, { value?: boolean }>>
+    >,
+    Assert<IsExact<DeepPartial<Set<string>>, Set<string>>>,
+    Assert<IsExact<DeepPartial<Set<number[]>>, Set<number[]>>>,
+    Assert<IsExact<DeepPartial<ReadonlySet<string>>, ReadonlySet<string>>>,
+    Assert<IsExact<DeepPartial<[]>, []>>,
+    Assert<IsExact<DeepPartial<never[]>, undefined[]>>,
+    Assert<IsExact<DeepPartial<[1, 2, 3]>, [(1 | undefined)?, (2 | undefined)?, (3 | undefined)?]>>,
+    Assert<IsExact<DeepPartial<readonly number[]>, readonly (number | undefined)[]>>,
+    Assert<IsExact<DeepPartial<Array<number>>, Array<number>>>,
+    Assert<IsExact<DeepPartial<Promise<number>>, Promise<number>>>,
+    Assert<
+      IsExact<
+        DeepPartial<Promise<{ api: () => { play: () => void; pause: () => void } }>>,
+        Promise<{ api?: () => { play: () => void; pause: () => void } }>
+      >
+    >,
+    Assert<IsExact<DeepPartial<{ a: 1; b: 2; c: 3 }>, { a?: 1; b?: 2; c?: 3 }>>,
+    Assert<IsExact<DeepPartial<{ foo: () => void }>, { foo?: () => void }>>,
+    Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>,
+  ];
 }
 
-function testDeepReadonly1() {
-  type Test = Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>;
+function testDeepReadonly() {
+  type cases = [
+    Assert<IsExact<DeepReadonly<number>, number>>,
+    Assert<IsExact<DeepReadonly<string>, string>>,
+    Assert<IsExact<DeepReadonly<boolean>, boolean>>,
+    Assert<IsExact<DeepReadonly<bigint>, bigint>>,
+    Assert<IsExact<DeepReadonly<symbol>, symbol>>,
+    Assert<IsExact<DeepReadonly<undefined>, undefined>>,
+    Assert<IsExact<DeepReadonly<null>, null>>,
+    Assert<IsExact<DeepReadonly<Function>, Function>>,
+    Assert<IsExact<DeepReadonly<Date>, Date>>,
+    Assert<IsExact<DeepReadonly<Error>, Error>>,
+    Assert<IsExact<DeepReadonly<RegExp>, RegExp>>,
+    Assert<IsExact<DeepReadonly<Map<string, boolean>>, ReadonlyMap<string, boolean>>>,
+    Assert<IsExact<DeepReadonly<ReadonlyMap<string, boolean>>, ReadonlyMap<string, boolean>>>,
+    Assert<IsExact<DeepReadonly<WeakMap<{ key: string }, boolean>>, WeakMap<{ key: string }, boolean>>>,
+    Assert<
+      IsExact<DeepReadonly<WeakMap<{ key: string }, { value: boolean }>>, WeakMap<{ key: string }, { value: boolean }>>
+    >,
+    Assert<IsExact<DeepReadonly<Set<string>>, ReadonlySet<string>>>,
+    Assert<IsExact<DeepReadonly<ReadonlySet<string>>, ReadonlySet<string>>>,
+    Assert<IsExact<DeepReadonly<[]>, readonly []>>,
+    Assert<IsExact<DeepReadonly<[1, 2, 3]>, readonly [1, 2, 3]>>,
+    Assert<IsExact<DeepReadonly<readonly number[]>, readonly number[]>>,
+    Assert<IsExact<DeepReadonly<Array<number>>, ReadonlyArray<number>>>,
+    Assert<IsExact<DeepReadonly<Promise<number>>, Promise<number>>>,
+    Assert<IsExact<DeepReadonly<{ a: 1; b: 2; c: 3 }>, { a: 1; b: 2; c: 3 }>>,
+    Assert<IsExact<DeepReadonly<{ foo: () => void }>, { foo: () => void }>>,
+    Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
+  ];
+
+  // Build-time test to ensure the fix for
+  // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
+  {
+    interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
+
+    let a: DeepReadonly<IDeepReadonlyTestHelperType> = {
+      field: ["lala"],
+    };
+
+    let b: IDeepReadonlyTestHelperType = {
+      field: ["lala"],
+    };
+
+    b = a;
+  }
 }
 
-interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
+function testDeepReadonlyWithUnknown() {
+  interface MyInterface {
+    myObject: unknown;
+    myArray: unknown[];
+  }
+  const myObject: MyInterface = null!;
+  let myReadonlyObject: DeepReadonly<MyInterface>;
 
-// Build-time test to ensure the fix for
-// https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
-function testDeepReadonly2() {
-  const a: DeepReadonly<IDeepReadonlyTestHelperType> = {
-    field: ["lala"],
-  };
-
-  let b: IDeepReadonlyTestHelperType = {
-    field: ["lala"],
-  };
-
-  b = a;
+  myReadonlyObject = myObject;
 }
 
 function testNonNullable() {
@@ -495,15 +575,24 @@ function testMarkOptional() {
 }
 
 function testMerge() {
-  {
-    type T = { a: number; b: string };
+  type cases = [
+    Assert<IsExact<Merge<{}, { a: string }>, { a: string }>>,
+    Assert<IsExact<Merge<{ a: string }, {}>, { a: string }>>,
+    Assert<IsExact<Merge<{ a: number; b: string }, { a: string }>, { a: string; b: string }>>,
+  ];
+}
 
-    type Merged = Merge<T, { a: string }>;
-
-    type ExpectedMerged = { a: string; b: string };
-
-    type Test = Assert<IsExact<Merged, ExpectedMerged>>;
-  }
+function testMergeN() {
+  type cases = [
+    Assert<IsExact<MergeN<[{ a: number; b: string; c: boolean }]>, { a: number; b: string; c: boolean }>>,
+    Assert<
+      IsExact<
+        MergeN<[{ a: number; b: string; c: boolean }, { b: number; c: string; d: boolean }]>,
+        { a: number; b: number; c: string; d: boolean }
+      >
+    >,
+    Assert<IsExact<MergeN<[{ a: number }, { a: string }, { a: boolean }]>, { a: boolean }>>,
+  ];
 }
 
 function testReadonlyKeys() {
@@ -581,12 +670,20 @@ function testExact() {
 
 function testElementOf() {
   const t1 = [1, 2, true, false];
-  type testElementOf = Assert<IsExact<ElementOf<typeof t1>, number | boolean>>;
+  type a1 = Assert<IsExact<ElementOf<typeof t1>, number | boolean>>;
+  const t2 = ["one"] as const;
+  type a2 = Assert<IsExact<ElementOf<typeof t2>, "one">>;
 }
 
+// T = U
+type Assignable<T, U> = U extends T ? true : false;
+
 function testOpaque() {
-  type t1 = Assert<IsExact<Opaque<number, "a">, number & { __TYPE__: "a" }>>;
-  type t2 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
+  type t1 = Assert<IsExact<Assignable<number, Opaque<number, "a">>, true>>;
+  type t2 = Assert<IsExact<Assignable<Opaque<number, "a">, number>, false>>;
+  type t3 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "b">>, false>>;
+  type t4 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "a">>, true>>;
+  type t5 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
 }
 
 function testAsyncOrSyncType() {
@@ -603,4 +700,56 @@ function testNewable() {
   }
 
   const t1: Newable<any> = TestCls;
+}
+
+function testIsTuple() {
+  type cases = [
+    Assert<IsExact<IsTuple<string>, never>>,
+    Assert<IsExact<IsTuple<number>, never>>,
+    Assert<IsExact<IsTuple<boolean>, never>>,
+    Assert<IsExact<IsTuple<undefined>, never>>,
+    Assert<IsExact<IsTuple<null>, never>>,
+    Assert<IsExact<IsTuple<{ a: 1 }>, never>>,
+    Assert<IsExact<IsTuple<[1]>, [1]>>,
+    Assert<IsExact<IsTuple<[1, 2]>, [1, 2]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3]>, [1, 2, 3]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4]>, [1, 2, 3, 4]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5]>, [1, 2, 3, 4, 5]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6]>, [1, 2, 3, 4, 5, 6]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7]>, [1, 2, 3, 4, 5, 6, 7]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8]>, [1, 2, 3, 4, 5, 6, 7, 8]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9]>, [1, 2, 3, 4, 5, 6, 7, 8, 9]>>,
+    Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
+    Assert<IsExact<IsTuple<readonly number[]>, never>>,
+    Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
+  ];
+}
+
+function testStrictExtract() {
+  interface Dog {
+    type: "dog";
+    woof(): void;
+  }
+
+  interface Cat {
+    type: "cat";
+    meow(): void;
+  }
+
+  interface Mouse {
+    type: "mouse";
+    squeak(): void;
+  }
+
+  type Animal = Dog | Cat | Mouse;
+
+  type cases = [
+    Assert<IsExact<StrictExtract<Animal, { type: undefined }>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: never }>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "dog" }>, Dog>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" }>, Cat>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "mouse" }>, Mouse>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" }>, Cat | Dog>>,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
+  ];
 }
