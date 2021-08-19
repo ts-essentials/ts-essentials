@@ -203,114 +203,114 @@ export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
 /** Recursively omit deep properties */
 // explicitly mentioning optional properties, to work around TS making them required
 // see https://github.com/krzkaczor/ts-essentials/issues/118
-export type DeepOmit<T extends DeepModify<F>, F> = T extends Builtin
+export type DeepOmit<T extends DeepModify<Filter>, Filter> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? Map<KeyType, DeepOmit<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? Map<KeyType, DeepOmit<ValueType, Filter>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? ReadonlyMap<KeyType, DeepOmit<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? ReadonlyMap<KeyType, DeepOmit<ValueType, Filter>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? WeakMap<KeyType, DeepOmit<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? WeakMap<KeyType, DeepOmit<ValueType, Filter>>
     : T
   : T extends Set<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Set<DeepOmit<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Set<DeepOmit<ItemType, Filter>>
     : T
   : T extends ReadonlySet<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? ReadonlySet<DeepOmit<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? ReadonlySet<DeepOmit<ItemType, Filter>>
     : T
   : T extends WeakSet<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? WeakSet<DeepOmit<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? WeakSet<DeepOmit<ItemType, Filter>>
     : T
   : T extends Array<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Array<DeepOmit<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Array<DeepOmit<ItemType, Filter>>
     : T
   : T extends Promise<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Promise<DeepOmit<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Promise<DeepOmit<ItemType, Filter>>
     : T
-  : { [K in Exclude<OptionalKeys<T>, keyof F>]+?: T[K] } &
+  : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
       OmitProperties<
         {
-          [K in Extract<OptionalKeys<T>, keyof F>]+?: F[K] extends true
+          [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
             ? never
-            : T[K] extends DeepModify<F[K]>
-            ? DeepOmit<T[K], F[K]>
+            : T[K] extends DeepModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
             : T[K];
         },
         never
       > &
-      { [K in Exclude<RequiredKeys<T>, keyof F>]: T[K] } &
+      { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } &
       OmitProperties<
         {
-          [K in Extract<RequiredKeys<T>, keyof F>]: F[K] extends true
+          [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
             ? never
-            : T[K] extends DeepModify<F[K]>
-            ? DeepOmit<T[K], F[K]>
+            : T[K] extends DeepModify<Filter[K]>
+            ? DeepOmit<T[K], Filter[K]>
             : T[K];
         },
         never
       >;
 
 /** Recursively pick deep properties */
-export declare type DeepPick<T extends DeepModify<F>, F> = T extends Builtin
+export declare type DeepPick<T extends DeepModify<Filter>, Filter> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? Map<KeyType, DeepPick<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? Map<KeyType, DeepPick<ValueType, Filter>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? ReadonlyMap<KeyType, DeepPick<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? ReadonlyMap<KeyType, DeepPick<ValueType, Filter>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
-  ? ValueType extends DeepModify<F>
-    ? WeakMap<KeyType, DeepPick<ValueType, F>>
+  ? ValueType extends DeepModify<Filter>
+    ? WeakMap<KeyType, DeepPick<ValueType, Filter>>
     : T
   : T extends Set<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Set<DeepPick<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Set<DeepPick<ItemType, Filter>>
     : T
   : T extends ReadonlySet<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? ReadonlySet<DeepPick<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? ReadonlySet<DeepPick<ItemType, Filter>>
     : T
   : T extends WeakSet<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? WeakSet<DeepPick<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? WeakSet<DeepPick<ItemType, Filter>>
     : T
   : T extends Array<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Array<DeepPick<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Array<DeepPick<ItemType, Filter>>
     : T
   : T extends Promise<infer ItemType>
-  ? ItemType extends DeepModify<F>
-    ? Promise<DeepPick<ItemType, F>>
+  ? ItemType extends DeepModify<Filter>
+    ? Promise<DeepPick<ItemType, Filter>>
     : T
   : OmitProperties<
       {
-        [K in Extract<OptionalKeys<T>, keyof F>]+?: F[K] extends true
+        [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
           ? T[K]
-          : T[K] extends DeepModify<F[K]>
-          ? DeepPick<T[K], F[K]>
+          : T[K] extends DeepModify<Filter[K]>
+          ? DeepPick<T[K], Filter[K]>
           : never;
       },
       never
     > &
       OmitProperties<
         {
-          [K in Extract<RequiredKeys<T>, keyof F>]: F[K] extends true
+          [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
             ? T[K]
-            : T[K] extends DeepModify<F[K]>
-            ? DeepPick<T[K], F[K]>
+            : T[K] extends DeepModify<Filter[K]>
+            ? DeepPick<T[K], Filter[K]>
             : never;
         },
         never
