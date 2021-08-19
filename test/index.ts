@@ -45,7 +45,7 @@ import {
   PickKeys,
   IsTuple,
 } from "../lib";
-import { ComplexNestedRequired } from "./types";
+import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDictionary() {
   const dict: Dictionary<number> = null as any;
@@ -83,24 +83,6 @@ function testSafeDictionaryFiniteTypeNonExhaustiveness() {
   type TestType = "A" | "B";
   const safeDict: SafeDictionary<string, TestType> = { A: "OK" };
 }
-
-type ComplexNestedPartial = {
-  simple?: number;
-  nested?: {
-    date?: Date;
-    func?: () => string;
-    array?: { bar?: number }[];
-    set?: Set<{ name?: string }>;
-    tuple?: [string?, number?, { good?: boolean }?];
-    map?: Map<
-      string,
-      {
-        name?: string;
-      }
-    >;
-    promise?: Promise<{ foo?: string; bar?: number }>;
-  };
-};
 
 type ComplexNestedNullable = {
   simple: number | null;
