@@ -45,6 +45,7 @@ import {
   PickKeys,
   IsTuple,
 } from "../lib";
+import { ComplexNestedRequired } from "./types";
 
 function testDictionary() {
   const dict: Dictionary<number> = null as any;
@@ -98,24 +99,6 @@ type ComplexNestedPartial = {
       }
     >;
     promise?: Promise<{ foo?: string; bar?: number }>;
-  };
-};
-
-type ComplexNestedRequired = {
-  simple: number;
-  nested: {
-    date: Date;
-    func: () => string;
-    array: { bar: number }[];
-    tuple: [string, number, { good: boolean }];
-    set: Set<{ name: string }>;
-    map: Map<
-      string,
-      {
-        name: string;
-      }
-    >;
-    promise: Promise<{ foo: string; bar: number }>;
   };
 };
 
