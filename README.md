@@ -402,8 +402,8 @@ interface Teacher {
 Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this
 with a simple type filter.
 
-In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to
-partially omit, you should recursively define the sub-properties to be omitted.
+In the filter, the properties to be omitted completely should be defined as either `never` or `true`. For the properties
+you want to partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
 type TeacherSimple = DeepOmit<
