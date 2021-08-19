@@ -318,6 +318,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cyberbiont",
+      "name": "Yaroslav Larin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59398323?v=4",
+      "profile": "https://github.com/cyberbiont",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
