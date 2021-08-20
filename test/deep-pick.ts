@@ -7,14 +7,14 @@ function testDeepPickInRequiredObject() {
   // can still assign anything that is not from {}
   obj1 = { simple: 1 };
 
-  let obj2: DeepPick<ComplexNestedRequired, { simple: true }>;
+  let obj2: DeepPick<ComplexNestedRequired, { simple: never }>;
   // @ts-expect-error
   obj2 = {};
   // @ts-expect-error
   obj2 = { simple: undefined };
   obj2 = { simple: 2 };
 
-  let obj3: DeepPick<ComplexNestedRequired, { nested: { date: true } }>;
+  let obj3: DeepPick<ComplexNestedRequired, { nested: { date: never } }>;
   // @ts-expect-error
   obj3 = {};
   // @ts-expect-error
@@ -23,7 +23,7 @@ function testDeepPickInRequiredObject() {
   obj3 = { nested: { date: undefined } };
   obj3 = { nested: { date: new Date() } };
 
-  let obj4: DeepPick<ComplexNestedRequired, { nested: { func: true } }>;
+  let obj4: DeepPick<ComplexNestedRequired, { nested: { func: never } }>;
   // @ts-expect-error
   obj4 = {};
   // @ts-expect-error
@@ -32,7 +32,7 @@ function testDeepPickInRequiredObject() {
   obj4 = { nested: { func: undefined } };
   obj4 = { nested: { func: () => "123" } };
 
-  let obj5: DeepPick<ComplexNestedRequired, { nested: { array: true } }>;
+  let obj5: DeepPick<ComplexNestedRequired, { nested: { array: never } }>;
   // @ts-expect-error
   obj5 = {};
   // @ts-expect-error
@@ -48,7 +48,7 @@ function testDeepPickInRequiredObject() {
   obj5 = { nested: { array: [{ bar: "1" }] } };
   obj5 = { nested: { array: [{ bar: 1 }] } };
 
-  let obj6: DeepPick<ComplexNestedRequired, { nested: { tuple: true } }>;
+  let obj6: DeepPick<ComplexNestedRequired, { nested: { tuple: never } }>;
   // @ts-expect-error
   obj6 = {};
   // @ts-expect-error
@@ -63,7 +63,7 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
-  let obj7: DeepPick<ComplexNestedRequired, { nested: { set: true } }>;
+  let obj7: DeepPick<ComplexNestedRequired, { nested: { set: never } }>;
   // @ts-expect-error
   obj7 = {};
   // @ts-expect-error
@@ -74,7 +74,7 @@ function testDeepPickInRequiredObject() {
   obj7 = { nested: { set: new Set<number>() } };
   obj7 = { nested: { set: new Set<{ name: string }>() } };
 
-  let obj8: DeepPick<ComplexNestedRequired, { nested: { map: true } }>;
+  let obj8: DeepPick<ComplexNestedRequired, { nested: { map: never } }>;
   // @ts-expect-error
   obj8 = {};
   // @ts-expect-error
@@ -85,7 +85,7 @@ function testDeepPickInRequiredObject() {
   obj8 = { nested: { map: new Map<number, boolean>() } };
   obj8 = { nested: { map: new Map<string, { name: string }>() } };
 
-  let obj9: DeepPick<ComplexNestedRequired, { nested: { promise: true } }>;
+  let obj9: DeepPick<ComplexNestedRequired, { nested: { promise: never } }>;
   // @ts-expect-error
   obj9 = {};
   // @ts-expect-error
@@ -103,24 +103,24 @@ function testDeepPickInPartialObject() {
   // can still assign anything that is not from {}
   obj1 = { simple: 1 };
 
-  let obj2: DeepPick<ComplexNestedPartial, { simple: true }>;
+  let obj2: DeepPick<ComplexNestedPartial, { simple?: never }>;
   obj2 = {};
   obj2 = { simple: undefined };
   obj2 = { simple: 2 };
 
-  let obj3: DeepPick<ComplexNestedPartial, { nested: { date: true } }>;
+  let obj3: DeepPick<ComplexNestedPartial, { nested?: { date?: never } }>;
   obj3 = {};
   obj3 = { nested: undefined };
   obj3 = { nested: { date: undefined } };
   obj3 = { nested: { date: new Date() } };
 
-  let obj4: DeepPick<ComplexNestedPartial, { nested: { func: true } }>;
+  let obj4: DeepPick<ComplexNestedPartial, { nested?: { func?: never } }>;
   obj4 = {};
   obj4 = { nested: undefined };
   obj4 = { nested: { func: undefined } };
   obj4 = { nested: { func: () => "123" } };
 
-  let obj5: DeepPick<ComplexNestedPartial, { nested: { array: true } }>;
+  let obj5: DeepPick<ComplexNestedPartial, { nested?: { array?: never } }>;
   obj5 = {};
   obj5 = { nested: undefined };
   obj5 = { nested: { array: undefined } };
@@ -133,7 +133,7 @@ function testDeepPickInPartialObject() {
   obj5 = { nested: { array: [{ bar: "1" }] } };
   obj5 = { nested: { array: [{ bar: 1 }] } };
 
-  let obj6: DeepPick<ComplexNestedPartial, { nested: { tuple: true } }>;
+  let obj6: DeepPick<ComplexNestedPartial, { nested: { tuple: never } }>;
   obj6 = {};
   obj6 = { nested: undefined };
   obj6 = { nested: { tuple: undefined } };
@@ -145,7 +145,7 @@ function testDeepPickInPartialObject() {
   // @ts-expect-error
   obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
-  let obj7: DeepPick<ComplexNestedPartial, { nested: { set: true } }>;
+  let obj7: DeepPick<ComplexNestedPartial, { nested: { set: never } }>;
   obj7 = {};
   obj7 = { nested: undefined };
   obj7 = { nested: { set: undefined } };
@@ -153,7 +153,7 @@ function testDeepPickInPartialObject() {
   obj7 = { nested: { set: new Set<number>() } };
   obj7 = { nested: { set: new Set<{ name: string }>() } };
 
-  let obj8: DeepPick<ComplexNestedPartial, { nested: { map: true } }>;
+  let obj8: DeepPick<ComplexNestedPartial, { nested: { map: never } }>;
   obj8 = {};
   obj8 = { nested: undefined };
   obj8 = { nested: { map: undefined } };
@@ -161,7 +161,7 @@ function testDeepPickInPartialObject() {
   obj8 = { nested: { map: new Map<number, boolean>() } };
   obj8 = { nested: { map: new Map<string, { name: string }>() } };
 
-  let obj9: DeepPick<ComplexNestedPartial, { nested: { promise: true } }>;
+  let obj9: DeepPick<ComplexNestedPartial, { nested: { promise: never } }>;
   obj9 = {};
   obj9 = { nested: undefined };
   obj9 = { nested: { promise: undefined } };

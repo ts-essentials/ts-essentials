@@ -389,6 +389,12 @@ function testDeepOmitAndDeepPick() {
       }
     >;
     optionalProp?: number;
+    nested: {
+      optionalProp?: number;
+    };
+    nestedOptional?: {
+      optionalProp?: number;
+    }
     // filteredOptionalProp?: number;
   };
 
@@ -398,6 +404,12 @@ function testDeepOmitAndDeepPick() {
     set: Set<{ b: boolean }>;
     map: Map<number, { b: boolean }>;
     optionalProp?: number;
+    nested: {
+      optionalProp?: number;
+    };
+    nestedOptional?: {
+      optionalProp?: number;
+    }
   };
 
   type Picked = {
@@ -423,11 +435,22 @@ function testDeepOmitAndDeepPick() {
     map: { a: true };
   };
 
+  function testDeepOmit3() {
   type TestDeepOmitNeverFilter = Assert<IsExact<DeepOmit<Whole, NeverFilter>, Omitted>>;
   type TestDeepPickNeverFilter = Assert<IsExact<DeepPick<Whole, NeverFilter>, Picked>>;
 
-  type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
-  type TestDeepPickTrueFilter = Assert<IsExact<DeepPick<Whole, TrueFilter>, Picked>>;
+  type OptionalPropTest = Assert<IsExact<DeepPick<Whole, { optionalProp ?: never }>, { optionalProp?: number|undefined }>>;
+  type PickedOptionalProp = DeepPick<Whole, { optionalProp?: never }>;
+  const number: PickedOptionalProp = { optionalProp: 1 };
+  // @ts-expect-error
+  const numb: PickedOptionalProp = { optionalProp: '1' };
+
+  type PickedOptionalPr = DeepPick<Whole, {nested: { optionalProp?: never }}>;
+  type PickedOptionalP = DeepPick<Whole, {nestedOptional?: { optionalProp?: never }}>;
+
+  // TrueFilter won't't work after undefined properties test
+  // type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
+  // type TestDeepPickTrueFilter = Assert<IsExact<DeepPick<Whole, TrueFilter>, Picked>>;
 }
 
 function testTupleInference() {

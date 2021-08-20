@@ -19,6 +19,7 @@ export type ComplexNestedRequired = {
 export type ComplexNestedPartial = {
   simple?: number;
   nested?: {
+    simple?: number;
     date?: Date;
     func?: () => string;
     array?: { bar?: number }[];
