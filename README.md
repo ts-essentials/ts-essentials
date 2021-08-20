@@ -395,8 +395,8 @@ interface Teacher {
 Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this
 with a simple type filter.
 
-In the filter, the properties to be omitted completely should be defined as `never`. For the properties you want to
-partially omit, you should recursively define the sub-properties to be omitted.
+In the filter, the properties to be omitted completely should be defined as either `never` or `true`. For the properties
+you want to partially omit, you should recursively define the sub-properties to be omitted.
 
 ```typescript
 type TeacherSimple = DeepOmit<
@@ -425,11 +425,14 @@ NOTE
 
 Recursively pick deep properties according to key names.
 
-This type works as complementary type to DeepOmit, in the similar way like Exclude and Extract types complement each other.
+This type works as complementary type to DeepOmit, in the similar way like Exclude and Extract types complement each
+other.
 
-The filter syntax is the same as for the DeepPick, so one filter can be used to obtain both DeepPick and DeepOmit types from it.
+The filter syntax is the same as for the DeepPick, so one filter can be used to obtain both DeepPick and DeepOmit types
+from it.
 
-The properties to be picked completely should be defined as `never`. For the properties you want to partially pick, you should recursively define the sub-properties to be picked.
+The properties to be picked completely should be defined as `never`. For the properties you want to partially pick, you
+should recursively define the sub-properties to be picked.
 
 ```typescript
 interface Teacher {
