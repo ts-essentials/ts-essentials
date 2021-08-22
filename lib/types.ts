@@ -69,6 +69,8 @@ export type DeepUndefinable<T> = T extends Builtin
   ? T | undefined
   : T extends Map<infer K, infer V>
   ? Map<DeepUndefinable<K>, DeepUndefinable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends Set<infer U>
