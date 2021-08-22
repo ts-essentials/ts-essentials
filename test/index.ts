@@ -362,9 +362,61 @@ function testDeepNullable2() {
 }
 
 function testDeepUndefinable() {
-  type Test1 = AssertFalse<IsExact<DeepUndefinable<SimpleType>, DeepPartial<SimpleType>>>;
-  type Test2 = Assert<IsExact<DeepUndefinable<SimpleType>, SimpleTypeUndefinable>>;
-  type Test3 = Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>;
+  type cases = [
+    Assert<IsExact<DeepUndefinable<number>, number | undefined>>,
+    Assert<IsExact<DeepUndefinable<string>, string | undefined>>,
+    Assert<IsExact<DeepUndefinable<boolean>, boolean | undefined>>,
+    Assert<IsExact<DeepUndefinable<bigint>, bigint | undefined>>,
+    Assert<IsExact<DeepUndefinable<symbol>, symbol | undefined>>,
+    Assert<IsExact<DeepUndefinable<undefined>, undefined>>,
+    Assert<IsExact<DeepUndefinable<null>, null | undefined>>,
+    Assert<IsExact<DeepUndefinable<Function>, Function | undefined>>,
+    Assert<IsExact<DeepUndefinable<Date>, Date | undefined>>,
+    Assert<IsExact<DeepUndefinable<Error>, Error | undefined>>,
+    Assert<IsExact<DeepUndefinable<RegExp>, RegExp | undefined>>,
+    Assert<IsExact<DeepUndefinable<Map<string, boolean>>, Map<string | undefined, boolean | undefined>>>,
+    Assert<IsExact<DeepUndefinable<Map<string, { a: number }>>, Map<string | undefined, { a: number | undefined }>>>,
+    Assert<
+      IsExact<DeepUndefinable<ReadonlyMap<string, boolean>>, ReadonlyMap<string | undefined, boolean | undefined>>
+    >,
+    Assert<
+      IsExact<
+        DeepUndefinable<ReadonlyMap<string, { checked: boolean }>>,
+        ReadonlyMap<string | undefined, { checked: boolean | undefined }>
+      >
+    >,
+    Assert<
+      IsExact<
+        DeepUndefinable<WeakMap<{ key: string }, boolean>>,
+        WeakMap<{ key: string | undefined }, boolean | undefined>
+      >
+    >,
+    Assert<
+      IsExact<
+        DeepUndefinable<WeakMap<{ key: string }, { value: boolean }>>,
+        WeakMap<{ key: string | undefined }, { value: boolean | undefined }>
+      >
+    >,
+    Assert<IsExact<DeepUndefinable<Set<string>>, Set<string | undefined>>>,
+    Assert<IsExact<DeepUndefinable<Set<number[]>>, Set<(number | undefined)[]>>>,
+    Assert<IsExact<DeepUndefinable<ReadonlySet<string>>, ReadonlySet<string | undefined>>>,
+    Assert<IsExact<DeepUndefinable<[]>, []>>,
+    Assert<IsExact<DeepUndefinable<never[]>, undefined[]>>,
+    Assert<IsExact<DeepUndefinable<[1, 2, 3]>, [1 | undefined, 2 | undefined, 3 | undefined]>>,
+    Assert<IsExact<DeepUndefinable<readonly number[]>, readonly (number | undefined)[]>>,
+    Assert<IsExact<DeepUndefinable<Array<number>>, Array<number | undefined>>>,
+    Assert<IsExact<DeepUndefinable<Promise<number>>, Promise<number | undefined>>>,
+    Assert<
+      IsExact<
+        DeepUndefinable<Promise<{ api: () => { play: () => void; pause: () => void } }>>,
+        Promise<{ api: (() => { play: () => void; pause: () => void }) | undefined }>
+      >
+    >,
+    Assert<IsExact<DeepUndefinable<{ a: 1; b: 2; c: 3 }>, { a: 1 | undefined; b: 2 | undefined; c: 3 | undefined }>>,
+    Assert<IsExact<DeepUndefinable<{ foo: () => void }>, { foo: (() => void) | undefined }>>,
+    Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>,
+    Assert<IsExact<DeepUndefinable<SimpleType>, SimpleTypeUndefinable>>,
+  ];
 }
 
 function testDeepNonNullable() {
