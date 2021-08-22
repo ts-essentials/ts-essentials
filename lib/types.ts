@@ -75,6 +75,8 @@ export type DeepUndefinable<T> = T extends Builtin
   ? WeakMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends Set<infer U>
   ? Set<DeepUndefinable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepUndefinable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepUndefinable<U>>
   : T extends Array<infer U>
