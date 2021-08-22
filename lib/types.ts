@@ -48,6 +48,8 @@ export type DeepNullable<T> = T extends Builtin
   ? T | null
   : T extends Map<infer K, infer V>
   ? Map<DeepNullable<K>, DeepNullable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepNullable<K>, DeepNullable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepNullable<K>, DeepNullable<V>>
   : T extends Set<infer U>
