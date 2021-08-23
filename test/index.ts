@@ -46,8 +46,20 @@ import {
 } from "../lib";
 
 function testDictionary() {
-  const dict: Dictionary<number> = null as any;
-  type Test = Assert<IsExact<typeof dict["foo"], number>>;
+  type cases = [
+    Assert<IsExact<Dictionary<number>[string], number>>,
+    Assert<IsExact<Dictionary<number>[number], number>>,
+    // @ts-expect-error cannot use boolean as dictionary key
+    Dictionary<number>[boolean],
+    // @ts-expect-error cannot use bigint as dictionary key
+    Dictionary<number>[bigint],
+    // @ts-expect-error cannot use symbol as dictionary key
+    Dictionary<number>[symbol],
+    // @ts-expect-error cannot use undefined as dictionary key
+    Dictionary<number>[undefined],
+    // @ts-expect-error cannot use null as dictionary key
+    Dictionary<number>[null],
+  ];
 }
 
 function testDictionaryTwoArguments() {
