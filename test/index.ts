@@ -67,11 +67,22 @@ function testDictionary() {
 }
 
 function testDictionaryValues() {
-  type Test = Assert<IsExact<DictionaryValues<Dictionary<number>>, number>>;
-}
-
-function testDictionaryValuesTwoArguments() {
-  type Test = Assert<IsExact<DictionaryValues<Dictionary<number, "a" | "b">>, number>>;
+  type cases = [
+    Assert<IsExact<DictionaryValues<Dictionary<string>>, string>>,
+    Assert<IsExact<DictionaryValues<Dictionary<number>>, number>>,
+    Assert<IsExact<DictionaryValues<Dictionary<boolean>>, boolean>>,
+    Assert<IsExact<DictionaryValues<Dictionary<bigint>>, bigint>>,
+    Assert<IsExact<DictionaryValues<Dictionary<symbol>>, symbol>>,
+    Assert<IsExact<DictionaryValues<Dictionary<undefined>>, undefined>>,
+    Assert<IsExact<DictionaryValues<Dictionary<null>>, null>>,
+    Assert<IsExact<DictionaryValues<Dictionary<string, "a" | "b">>, string>>,
+    Assert<IsExact<DictionaryValues<Dictionary<number, "a" | "b">>, number>>,
+    Assert<IsExact<DictionaryValues<Dictionary<boolean, "a" | "b">>, boolean>>,
+    Assert<IsExact<DictionaryValues<Dictionary<bigint, "a" | "b">>, bigint>>,
+    Assert<IsExact<DictionaryValues<Dictionary<symbol, "a" | "b">>, symbol>>,
+    Assert<IsExact<DictionaryValues<Dictionary<undefined, "a" | "b">>, undefined>>,
+    Assert<IsExact<DictionaryValues<Dictionary<null, "a" | "b">>, null>>,
+  ];
 }
 
 function testSafeDictionary() {
