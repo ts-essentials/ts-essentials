@@ -48,10 +48,14 @@ export type DeepNullable<T> = T extends Builtin
   ? T | null
   : T extends Map<infer K, infer V>
   ? Map<DeepNullable<K>, DeepNullable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepNullable<K>, DeepNullable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepNullable<K>, DeepNullable<V>>
   : T extends Set<infer U>
   ? Set<DeepNullable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepNullable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepNullable<U>>
   : T extends Array<infer U>
@@ -69,10 +73,14 @@ export type DeepUndefinable<T> = T extends Builtin
   ? T | undefined
   : T extends Map<infer K, infer V>
   ? Map<DeepUndefinable<K>, DeepUndefinable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends Set<infer U>
   ? Set<DeepUndefinable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepUndefinable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepUndefinable<U>>
   : T extends Array<infer U>
