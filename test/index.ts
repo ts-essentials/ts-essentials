@@ -59,12 +59,11 @@ function testDictionary() {
     Dictionary<number>[undefined],
     // @ts-expect-error cannot use null as dictionary key
     Dictionary<number>[null],
+    // @ts-expect-error cannot use string as only 'a' | 'b' allowed
+    Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
+    Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
+    Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
   ];
-}
-
-function testDictionaryTwoArguments() {
-  const dict: Dictionary<number, "a" | "b"> = null as any;
-  type Test = Assert<IsExact<typeof dict["a"], number>>;
 }
 
 function testDictionaryValues() {
