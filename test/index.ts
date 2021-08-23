@@ -364,45 +364,6 @@ function testNonNullable() {
   type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
 }
 
-type SimpleType = {
-  field1: string;
-  field2: string;
-  field3: {
-    field4: string;
-    field5: number;
-    field6: {
-      field7: number;
-      field8: string;
-    };
-  };
-};
-
-type SimpleTypeNullable = {
-  field1: string | null;
-  field2: string | null;
-  field3: {
-    field4: string | null;
-    field5: number | null;
-    field6: {
-      field7: number | null;
-      field8: string | null;
-    };
-  };
-};
-
-type SimpleTypeUndefinable = {
-  field1: string | undefined;
-  field2: string | undefined;
-  field3: {
-    field4: string | undefined;
-    field5: number | undefined;
-    field6: {
-      field7: number | undefined;
-      field8: string | undefined;
-    };
-  };
-};
-
 function testDeepUndefinable() {
   type cases = [
     Assert<IsExact<DeepUndefinable<number>, number | undefined>>,
@@ -457,7 +418,6 @@ function testDeepUndefinable() {
     Assert<IsExact<DeepUndefinable<{ a: 1; b: 2; c: 3 }>, { a: 1 | undefined; b: 2 | undefined; c: 3 | undefined }>>,
     Assert<IsExact<DeepUndefinable<{ foo: () => void }>, { foo: (() => void) | undefined }>>,
     Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>,
-    Assert<IsExact<DeepUndefinable<SimpleType>, SimpleTypeUndefinable>>,
   ];
 }
 
