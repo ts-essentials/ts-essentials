@@ -82,26 +82,52 @@ function testDictionaryValues() {
     Assert<IsExact<DictionaryValues<Dictionary<symbol, "a" | "b">>, symbol>>,
     Assert<IsExact<DictionaryValues<Dictionary<undefined, "a" | "b">>, undefined>>,
     Assert<IsExact<DictionaryValues<Dictionary<null, "a" | "b">>, null>>,
+    Assert<IsExact<DictionaryValues<Dictionary<string, 1 | 2>>, string>>,
+    Assert<IsExact<DictionaryValues<Dictionary<number, 1 | 2>>, number>>,
+    Assert<IsExact<DictionaryValues<Dictionary<boolean, 1 | 2>>, boolean>>,
+    Assert<IsExact<DictionaryValues<Dictionary<bigint, 1 | 2>>, bigint>>,
+    Assert<IsExact<DictionaryValues<Dictionary<symbol, 1 | 2>>, symbol>>,
+    Assert<IsExact<DictionaryValues<Dictionary<undefined, 1 | 2>>, undefined>>,
+    Assert<IsExact<DictionaryValues<Dictionary<null, 1 | 2>>, null>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<string>>, string | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<boolean>>, boolean | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<bigint>>, bigint | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<symbol>>, symbol | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<undefined>>, undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<null>>, null | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<string, "a" | "b">>, string | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<number, "a" | "b">>, number | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<boolean, "a" | "b">>, boolean | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<bigint, "a" | "b">>, bigint | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<symbol, "a" | "b">>, symbol | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<undefined, "a" | "b">>, undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<null, "a" | "b">>, null | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<string, 1 | 2>>, string | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<number, 1 | 2>>, number | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<boolean, 1 | 2>>, boolean | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<bigint, 1 | 2>>, bigint | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<symbol, 1 | 2>>, symbol | undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<undefined, 1 | 2>>, undefined>>,
+    Assert<IsExact<DictionaryValues<SafeDictionary<null, 1 | 2>>, null | undefined>>,
   ];
 }
 
 function testSafeDictionary() {
-  const dict: SafeDictionary<number> = null as any;
-  type Test = Assert<IsExact<typeof dict["foo"], number | undefined>>;
-}
+  type cases = [
+    Assert<IsExact<SafeDictionary<number>, { [x: string]: number | undefined }>>,
+    Assert<IsExact<Pick<SafeDictionary<number>, "foo">, { foo: number | undefined }>>,
+    Assert<IsExact<SafeDictionary<number>["foo"], number | undefined>>,
+    Assert<IsExact<SafeDictionary<boolean, number>[42], boolean | undefined>>,
+  ];
 
-function testSafeDictionaryByNumber() {
-  const dict: SafeDictionary<boolean, number> = null as any;
-  type Test = Assert<IsExact<typeof dict[42], boolean | undefined>>;
-}
+  const testingSafeDictionary: SafeDictionary<number> = {};
+  delete testingSafeDictionary.unexistingField;
+  testingSafeDictionary.existingField = 1;
+  delete testingSafeDictionary.existingField;
 
-function testSafeDictionaryValues() {
-  type Test = Assert<IsExact<DictionaryValues<SafeDictionary<number>>, number | undefined>>;
-}
-
-function testSafeDictionaryFiniteTypeNonExhaustiveness() {
-  type TestType = "A" | "B";
-  const safeDict: SafeDictionary<string, TestType> = { A: "OK" };
+  // non exhaustiveness
+  const safeDict: SafeDictionary<string, "A" | "B"> = { A: "OK" };
 }
 
 type ComplexNestedPartial = {
