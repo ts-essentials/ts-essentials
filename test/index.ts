@@ -534,6 +534,7 @@ function testDeepNonNullable() {
       >
     >,
     Assert<IsExact<DeepNonNullable<{ foo: (() => void) | null | undefined }>, { foo: () => void }>>,
+    Assert<IsExact<DeepNonNullable<{ a?: 1; b?: 2 }>, { a?: 1 | undefined; b?: 2 | undefined }>>,
     Assert<IsExact<DeepNonNullable<ComplexNestedNullableOrUndefined>, ComplexNestedRequired>>,
   ];
 }
@@ -603,6 +604,7 @@ function testDeepRequire() {
       >
     >,
     Assert<IsExact<DeepRequired<{ foo: (() => void) | null | undefined }>, { foo: () => void }>>,
+    Assert<IsExact<DeepRequired<{ a?: 1; b?: 2 }>, { a: 1; b: 2 }>>,
     Assert<IsExact<DeepRequired<ComplexNestedNullableOrUndefined>, ComplexNestedRequired>>,
     Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>,
   ];
