@@ -10,7 +10,7 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
  */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 /** Given Dictionary<T> returns T */
-export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
+export type DictionaryValues<T> = T[keyof T];
 /**
  * Like Dictionary, but:
  *  - ensures type safety of index access
