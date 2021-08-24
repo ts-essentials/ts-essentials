@@ -115,8 +115,10 @@ export type DeepNonNullable<T> = T extends Builtin
   : NonNullable<T>;
 
 /** Like Required but recursive */
-export type DeepRequired<T> = T extends Builtin
-  ? NonNullable<T>
+export type DeepRequired<T> = T extends Error
+  ? Required<T>
+  : T extends Builtin
+  ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepRequired<K>, DeepRequired<V>>
   : T extends ReadonlyMap<infer K, infer V>
@@ -133,7 +135,7 @@ export type DeepRequired<T> = T extends Builtin
   ? Promise<DeepRequired<U>>
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<T[K]> }
-  : NonNullable<T>;
+  : Required<T>;
 
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Builtin
