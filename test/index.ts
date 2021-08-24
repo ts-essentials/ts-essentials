@@ -476,8 +476,7 @@ function testDeepNonNullable() {
     Assert<IsExact<DeepNonNullable<boolean | null | undefined>, boolean>>,
     Assert<IsExact<DeepNonNullable<bigint | null | undefined>, bigint>>,
     Assert<IsExact<DeepNonNullable<symbol | null | undefined>, symbol>>,
-    Assert<IsExact<DeepNonNullable<undefined | null | undefined>, never>>,
-    Assert<IsExact<DeepNonNullable<null | null | undefined>, never>>,
+    Assert<IsExact<DeepNonNullable<undefined | null>, never>>,
     Assert<IsExact<DeepNonNullable<Function | null | undefined>, Function>>,
     Assert<IsExact<DeepNonNullable<Date | null | undefined>, Date>>,
     Assert<IsExact<DeepNonNullable<Error | null | undefined>, Error>>,
@@ -537,10 +536,6 @@ function testDeepNonNullable() {
     Assert<IsExact<DeepNonNullable<{ foo: (() => void) | null | undefined }>, { foo: () => void }>>,
     Assert<IsExact<DeepNonNullable<ComplexNestedNullableOrUndefined>, ComplexNestedRequired>>,
   ];
-}
-
-function testDeepRequire() {
-  type Test = Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>;
 }
 
 function testPickProperties() {
