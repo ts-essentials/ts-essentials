@@ -41,7 +41,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - DeepNonNullable
     - DeepNullable
     - DeepUndefinable
-    - [Difference between `DeepRequired` and `DeepNonNullable`](#todo)
+    - [Difference between `DeepRequired` and `DeepNonNullable`](#difference-between-deeprequired-and-deepnonnullable)
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
