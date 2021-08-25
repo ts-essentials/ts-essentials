@@ -232,7 +232,7 @@ const sampleDeepUndefinable2: ComplexObjectUndefinable = {
 `DeepRequired` is closer to `Required` but `DeepNonNullable` on the other hand is closer to `NonNullable`
 
 It means that `DeepRequired` doesn't remove `null` and `undefined` but only makes fields required. On the other hand,
-`DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to optional.
+`DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to be optional.
 
 Let's have a look at the optional field:
 
