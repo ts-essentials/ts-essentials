@@ -539,7 +539,7 @@ function testDeepNonNullable() {
   ];
 }
 
-function testDeepRequire() {
+function testDeepRequired() {
   type cases = [
     Assert<IsExact<DeepRequired<number | null | undefined>, number | null | undefined>>,
     Assert<IsExact<DeepRequired<string | null | undefined>, string | null | undefined>>,
