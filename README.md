@@ -41,6 +41,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - DeepNonNullable
     - DeepNullable
     - DeepUndefinable
+    - [Difference between `DeepRequired` and `DeepNonNullable`](#todo)
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -225,6 +226,41 @@ const sampleDeepUndefinable2: ComplexObjectUndefinable = {
   },
 };
 ```
+
+#### Difference between `DeepRequired` and `DeepNonNullable`
+
+`DeepRequired` is closer to `Required` but `DeepNonNullable` on the other hand is closer to `NonNullable`
+
+It means that `DeepRequired` doesn't remove `null` and `undefined` but only makes fields required. On the other hand,
+`DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to optional.
+
+Let's have a look at the optional field:
+
+```typescript
+type Person = {
+  name?: string | null | undefined;
+};
+
+type NonNullablePerson = DeepNonNullable<Person>;
+// { name?: string | undefined; }
+type RequiredPerson = DeepRequired<Person>;
+// { name: string | null; }
+```
+
+Let's have a look at the required nullable field:
+
+```typescript
+type FullName = {
+  first: string | null | undefined;
+};
+
+type NonNullableFullName = DeepNonNullable<FullName>;
+// { first: string; }
+type RequiredFullName = DeepRequired<FullName>;
+// { first: string | null | undefined; }
+```
+
+And there's no difference between `DeepNonNullable` and `DeepRequired` if the property is non nullable and required
 
 ### Writable
 
