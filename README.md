@@ -234,7 +234,7 @@ const sampleDeepUndefinable2: ComplexObjectUndefinable = {
 It means that `DeepRequired` doesn't remove `null` and `undefined` but only makes fields required. On the other hand,
 `DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to be optional.
 
-Let's have a look at the optional field:
+Let's have a look at the optional nullable field:
 
 ```typescript
 type Person = {
