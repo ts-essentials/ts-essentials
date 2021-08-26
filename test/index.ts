@@ -377,39 +377,45 @@ function testDeepReadonly() {
     Assert<IsExact<DeepReadonly<Promise<number>>, Promise<number>>>,
     Assert<IsExact<DeepReadonly<{ a: 1; b: 2; c: 3 }>, { a: 1; b: 2; c: 3 }>>,
     Assert<IsExact<DeepReadonly<{ foo: () => void }>, { foo: () => void }>>,
+    Assert<
+      IsExact<
+        DeepReadonly<{ obj: unknown; arr: unknown[] }>,
+        { readonly obj: unknown; readonly arr: readonly unknown[] }
+      >
+    >,
     Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
   ];
 
   // Build-time test to ensure the fix for
   // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
   {
-    interface IDeepReadonlyTestHelperType extends DeepReadonly<{ field: string[] }> {}
+    interface TestObject extends DeepReadonly<{ field: string[] }> {}
 
-    let a: DeepReadonly<IDeepReadonlyTestHelperType> = {
+    let a: DeepReadonly<TestObject> = {
       field: ["lala"],
     };
 
-    let b: IDeepReadonlyTestHelperType = {
+    let b: TestObject = {
       field: ["lala"],
     };
 
     b = a;
   }
-}
 
-function testDeepReadonlyWithUnknown() {
-  interface MyInterface {
-    myObject: unknown;
-    myArray: unknown[];
+  {
+    interface TestObject {
+      obj: unknown;
+      arr: unknown[];
+    }
+
+    // @ts-expect-error
+    const obj: TestObject = null;
+
+    let readonlyObj: DeepReadonly<TestObject>;
+    readonlyObj = obj;
+
+    const readonlyObj2: DeepReadonly<TestObject> = obj;
   }
-  const myObject: MyInterface = null!;
-  let myReadonlyObject: DeepReadonly<MyInterface>;
-
-  myReadonlyObject = myObject;
-}
-
-function testNonNullable() {
-  type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
 }
 
 function testDeepUndefinable() {
