@@ -43,6 +43,7 @@ import {
   Newable,
   PickKeys,
   IsTuple,
+  Writable,
 } from "../lib";
 
 function testDictionary() {
@@ -636,6 +637,16 @@ function testDeepRequired() {
     Assert<IsExact<DeepRequired<{ foo: (() => void) | null | undefined }>, { foo: (() => void) | null | undefined }>>,
     Assert<IsExact<DeepRequired<{ a?: 1; b?: 2 }>, { a: 1; b: 2 }>>,
     Assert<IsExact<DeepRequired<ComplexNestedPartial>, ComplexNestedRequired>>,
+  ];
+}
+
+function testWritable() {
+  type cases = [
+    Assert<IsExact<Writable<{}>, {}>>,
+    Assert<IsExact<Writable<{ readonly a: number }>, { a: number }>>,
+    Assert<IsExact<Writable<[1, 2, 3]>, [1, 2, 3]>>,
+    Assert<IsExact<Writable<readonly [1, 2, 3]>, [1, 2, 3]>>,
+    Assert<IsExact<Writable<readonly number[]>, number[]>>,
   ];
 }
 
