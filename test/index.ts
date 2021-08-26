@@ -639,6 +639,38 @@ function testDeepRequired() {
   ];
 }
 
+function testDeepWritable() {
+  type Test = Assert<IsExact<DeepWritable<ComplexNestedReadonly>, ComplexNestedRequired>>;
+}
+
+function testDeepWritable2() {
+  type Foo = { readonly foo: string; bar: { readonly x: number } }[];
+
+  const test: DeepWritable<Foo> = [
+    {
+      foo: "a",
+      bar: {
+        x: 5,
+      },
+    },
+  ];
+
+  test[0].foo = "b";
+  test[0].bar.x = 2;
+}
+
+// Test whether for totally writable types, apply DeepReadonly then DeepWritable will yield the original type
+function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
+  type TotallyWritableType = {
+    a: number[][];
+    nested: { a: 1 };
+    numberArray: number[];
+  }[];
+
+  type Test_Indeed_Obj_Totally_Writable = Assert<IsExact<TotallyWritableType, DeepWritable<TotallyWritableType>>>;
+  type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
+}
+
 function testPickProperties() {
   type Test1 = Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>;
   type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
@@ -774,38 +806,6 @@ function testNonEmptyObject() {
 
   type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
   type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
-}
-
-function testDeepWritable() {
-  type Test = Assert<IsExact<DeepWritable<ComplexNestedReadonly>, ComplexNestedRequired>>;
-}
-
-function testDeepWritable2() {
-  type Foo = { readonly foo: string; bar: { readonly x: number } }[];
-
-  const test: DeepWritable<Foo> = [
-    {
-      foo: "a",
-      bar: {
-        x: 5,
-      },
-    },
-  ];
-
-  test[0].foo = "b";
-  test[0].bar.x = 2;
-}
-
-// Test whether for totally writable types, apply DeepReadonly then DeepWritable will yield the original type
-function testDeepWritableReverseIsDeepReadonlyForTotallyWritableType() {
-  type TotallyWritableType = {
-    a: number[][];
-    nested: { a: 1 };
-    numberArray: number[];
-  }[];
-
-  type Test_Indeed_Obj_Totally_Writable = Assert<IsExact<TotallyWritableType, DeepWritable<TotallyWritableType>>>;
-  type Test = Assert<IsExact<DeepWritable<DeepReadonly<TotallyWritableType>>, TotallyWritableType>>;
 }
 
 function testBuildable() {
