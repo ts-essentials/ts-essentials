@@ -418,10 +418,6 @@ function testDeepReadonly() {
   }
 }
 
-function testNonNullable() {
-  type Test = Assert<IsExact<NonNullable<"abc" | null | undefined>, "abc">>;
-}
-
 function testDeepUndefinable() {
   type cases = [
     Assert<IsExact<DeepUndefinable<number>, number | undefined>>,
