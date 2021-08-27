@@ -44,6 +44,8 @@ export type DeepPartial<T> = T extends Builtin
   ? Promise<DeepPartial<U>>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : IsUnknown<T> extends true
+  ? unknown
   : Partial<T>;
 
 /** Recursive nullable */
@@ -159,7 +161,7 @@ export type DeepReadonly<T> = T extends Builtin
   ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : unknown extends T
+  : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
 

@@ -298,8 +298,8 @@ function testDeepPartial() {
       IsExact<
         DeepPartial<{ readonly obj: unknown; readonly arr: readonly unknown[] }>,
         {
-          obj?: unknown | undefined;
-          arr?: unknown[] | undefined;
+          readonly obj?: unknown | undefined;
+          readonly arr?: readonly unknown[] | undefined;
         }
       >
     >,
