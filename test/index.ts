@@ -708,6 +708,10 @@ function testDeepWritable() {
   }
 }
 
+function testBuildable() {
+  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>;
+}
+
 function testPickProperties() {
   type Test1 = Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>;
   type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
@@ -843,10 +847,6 @@ function testNonEmptyObject() {
 
   type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
   type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
-}
-
-function testBuildable() {
-  type Test = Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>;
 }
 
 function testMarkRequired() {
