@@ -294,6 +294,15 @@ function testDeepPartial() {
         Promise<{ api?: () => { play: () => void; pause: () => void } }>
       >
     >,
+    Assert<
+      IsExact<
+        DeepPartial<{ readonly obj: unknown; readonly arr: readonly unknown[] }>,
+        {
+          obj?: unknown | undefined;
+          arr?: unknown[] | undefined;
+        }
+      >
+    >,
     Assert<IsExact<DeepPartial<{ a: 1; b: 2; c: 3 }>, { a?: 1; b?: 2; c?: 3 }>>,
     Assert<IsExact<DeepPartial<{ foo: () => void }>, { foo?: () => void }>>,
     Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>,
@@ -740,8 +749,8 @@ function testBuildable() {
       IsExact<
         Buildable<{ readonly obj: unknown; readonly arr: readonly unknown[] }>,
         {
-          obj?: Partial<unknown> | undefined;
-          arr?: Partial<unknown>[] | undefined;
+          obj?: unknown | undefined;
+          arr?: unknown[] | undefined;
         }
       >
     >,
