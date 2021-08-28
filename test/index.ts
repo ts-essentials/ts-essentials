@@ -760,6 +760,48 @@ function testBuildable() {
   ];
 }
 
+function testStrictExtract() {
+  interface Dog {
+    type: "dog";
+    woof(): void;
+  }
+
+  interface Cat {
+    type: "cat";
+    meow(): void;
+  }
+
+  interface Mouse {
+    type: "mouse";
+    squeak(): void;
+  }
+
+  type Animal = Dog | Cat | Mouse;
+
+  type cases = [
+    // @ts-expect-error
+    StrictExtract<Animal, undefined>,
+    Assert<IsExact<StrictExtract<Animal, never>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: undefined }>, never>>,
+    Assert<IsExact<StrictExtract<Animal, { type: never }>, never>>,
+    // @ts-expect-error
+    StrictExtract<Animal, "dog">,
+    Assert<IsExact<StrictExtract<Animal, { type: "dog" }>, Dog>>,
+    // @ts-expect-error
+    StrictExtract<Animal, "cat">,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" }>, Cat>>,
+    // @ts-expect-error
+    StrictExtract<Animal, "mouse">,
+    Assert<IsExact<StrictExtract<Animal, { type: "mouse" }>, Mouse>>,
+    // @ts-expect-error
+    StrictExtract<Animal, "cat" | "dog">,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" }>, Cat | Dog>>,
+    // @ts-expect-error
+    StrictExtract<Animal, "cat" | "dog" | "mouse">,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
+  ];
+}
+
 function testPickProperties() {
   type Test1 = Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>;
   type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
@@ -1079,34 +1121,5 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
-  ];
-}
-
-function testStrictExtract() {
-  interface Dog {
-    type: "dog";
-    woof(): void;
-  }
-
-  interface Cat {
-    type: "cat";
-    meow(): void;
-  }
-
-  interface Mouse {
-    type: "mouse";
-    squeak(): void;
-  }
-
-  type Animal = Dog | Cat | Mouse;
-
-  type cases = [
-    Assert<IsExact<StrictExtract<Animal, { type: undefined }>, never>>,
-    Assert<IsExact<StrictExtract<Animal, { type: never }>, never>>,
-    Assert<IsExact<StrictExtract<Animal, { type: "dog" }>, Dog>>,
-    Assert<IsExact<StrictExtract<Animal, { type: "cat" }>, Cat>>,
-    Assert<IsExact<StrictExtract<Animal, { type: "mouse" }>, Mouse>>,
-    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" }>, Cat | Dog>>,
-    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
   ];
 }
