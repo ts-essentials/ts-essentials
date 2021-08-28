@@ -1219,21 +1219,21 @@ function testIsExact() {
   let c2 = { c: 3 } as const;
 
   // @ts-expect-error has different structure from BC (excessive property a)
-  isExact<typeof abc, BC>(abc);
+  isExact<BC>()(abc);
   // @ts-expect-error has different structure from BC (excessive property a)
-  isExact<typeof abc2, BC>(abc2);
+  isExact<BC>()(abc2);
 
   // has the same structure as BC
-  isExact<typeof bc, BC>(bc);
+  isExact<BC>()(bc);
   // @ts-expect-error has different structure from BC (c has different type)
-  isExact<typeof bc2, BC>(bc2);
+  isExact<BC>()(bc2);
   // has the same structure as BC
-  isExact<typeof bc3, BC>(bc3);
+  isExact<BC>()(bc3);
   // @ts-expect-error has different structure from BC (c has different type)
-  isExact<typeof bc4, BC>(bc4);
+  isExact<BC>()(bc4);
 
   // @ts-expect-error has different structure from BC (missing property b)
-  isExact<typeof c, BC>(c);
+  isExact<BC>()(c);
   // @ts-expect-error has different structure from BC (missing property b)
-  isExact<typeof c, BC>(c2);
+  isExact<BC>()(c2);
 }
