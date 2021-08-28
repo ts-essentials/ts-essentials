@@ -199,7 +199,7 @@ type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyo
 export type OmitProperties<T, P> = Omit<T, PickKeysByValue<T, P>>;
 
 /** Pick all properties of given type in object type */
-export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
+export type PickProperties<T, P> = Pick<T, PickKeysByValue<T, P>>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = {
