@@ -45,6 +45,7 @@ import {
   IsTuple,
   Writable,
   StrictOmit,
+  OmitProperties,
 } from "../lib";
 
 function testDictionary() {
@@ -835,9 +836,44 @@ function testStrictExtract() {
   ];
 }
 
+function testOmitProperties() {
+  type cases = [
+    Assert<IsExact<OmitProperties<{}, never>, {}>>,
+    Assert<IsExact<OmitProperties<{ a: 1 }, never>, { a: 1 }>>,
+    Assert<IsExact<OmitProperties<{ a?: 1 }, never>, { a?: 1 }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number>, { b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | undefined>, { b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, string>, { a: 1; b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, string | undefined>, { a: 1; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean | undefined>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, undefined>, { a: 1; b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean | string>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | boolean>, { b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | string>, { b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: string; b: number[] }, any[]>, { a: string }>>,
+    Assert<IsExact<OmitProperties<{ a: string; b: number }, any[]>, { a: string; b: number }>>,
+  ];
+}
+
 function testPickProperties() {
-  type Test1 = Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>;
-  type Test2 = Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>;
+  type cases = [
+    Assert<IsExact<PickProperties<{}, never>, {}>>,
+    Assert<IsExact<PickProperties<{ a: 1 }, never>, {}>>,
+    Assert<IsExact<PickProperties<{ a?: 1 }, never>, {}>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, number>, { a: 1 }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, number | undefined>, { a: 1 }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, string>, {}>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, string | undefined>, { b?: "2" }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, boolean>, { c: false }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, boolean | undefined>, { c: false }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, undefined>, {}>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, boolean | string>, { c: false }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, number | boolean>, { a: 1; c: false }>>,
+    Assert<IsExact<PickProperties<{ a: 1; b?: "2"; c: false }, number | string>, { a: 1 }>>,
+    Assert<IsExact<PickProperties<{ a: string; b: number[] }, any[]>, { b: number[] }>>,
+    Assert<IsExact<PickProperties<{ a: string; b: number }, any[]>, {}>>,
+  ];
 }
 
 function testOptionalKeys() {
