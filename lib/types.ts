@@ -198,11 +198,13 @@ export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Similar to the builtin Extract, but checks the filter strictly */
 export type StrictExtract<T, U extends Partial<T>> = Extract<T, U>;
 
+type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T];
+
 /** Omit all properties of given type in object type */
-export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
+export type OmitProperties<T, P> = Omit<T, PickKeysByValue<T, P>>;
 
 /** Pick all properties of given type in object type */
-export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
+export type PickProperties<T, P> = Pick<T, PickKeysByValue<T, P>>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = {
