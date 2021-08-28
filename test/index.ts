@@ -44,6 +44,7 @@ import {
   PickKeys,
   IsTuple,
   Writable,
+  OmitProperties,
 } from "../lib";
 
 function testDictionary() {
@@ -790,6 +791,24 @@ function testStrictExtract() {
     // @ts-expect-error
     StrictExtract<Animal, "cat" | "dog" | "mouse">,
     Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
+  ];
+}
+
+function testOmitProperties() {
+  type cases = [
+    Assert<IsExact<OmitProperties<{}, never>, {}>>,
+    Assert<IsExact<OmitProperties<{ a: 1 }, never>, { a: 1 }>>,
+    Assert<IsExact<OmitProperties<{ a?: 1 }, never>, { a?: 1 }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number>, { b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | undefined>, { b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, string>, { a: 1; b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, string | undefined>, { a: 1; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean | undefined>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, undefined>, { a: 1; b?: "2"; c: false }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, boolean | string>, { a: 1; b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | boolean>, { b?: "2" }>>,
+    Assert<IsExact<OmitProperties<{ a: 1; b?: "2"; c: false }, number | string>, { b?: "2"; c: false }>>,
   ];
 }
 
