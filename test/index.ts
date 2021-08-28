@@ -1209,19 +1209,30 @@ function testIsExact() {
   type BC2 = { b: number; c: string };
   type C = { c: number };
 
-  const abc: ABC = { a: 1, b: 2, c: 3 };
-  const bc: BC = { b: 2, c: 3 };
-  const bc2: BC2 = { b: 2, c: "3" };
-  const c: C = { c: 3 };
+  let abc: ABC = { a: 1, b: 2, c: 3 };
+  let abc2 = { a: 1, b: 2, c: 3 } as const;
+  let bc: BC = { b: 2, c: 3 };
+  let bc2: BC2 = { b: 2, c: "3" };
+  let bc3 = { b: 2, c: 3 } as const;
+  let bc4 = { b: 2, c: "3" } as const;
+  let c: C = { c: 3 };
+  let c2 = { c: 3 } as const;
 
   // @ts-expect-error ABC is not exactly BC (excessive property A)
   isExact<typeof abc, BC>(abc);
+  // @ts-expect-error ABC is not exactly BC (excessive property A)
+  isExact<typeof abc2, BC>(abc2);
 
   // BC is exactly BC
   isExact<typeof bc, BC>(bc);
   // @ts-expect-error BC2 is not exactly BC (C has different type)
   isExact<typeof bc2, BC>(bc2);
+  isExact<typeof bc3, BC>(bc3);
+  // @ts-expect-error C has different type (string literal instead of number)
+  isExact<typeof bc4, BC>(bc4);
 
   // @ts-expect-error C is not exactly BC (missing property B)
   isExact<typeof c, BC>(c);
+  // @ts-expect-error missing property B
+  isExact<typeof c, BC>(c2);
 }
