@@ -1214,7 +1214,7 @@ function testIsExact() {
   const bc2: BC2 = { b: 2, c: "3" };
   const c: C = { c: 3 };
 
-  // @ts-expect-error ABC is not exactly BC (excessive properties A)
+  // @ts-expect-error ABC is not exactly BC (excessive property A)
   isExact<typeof abc, BC>(abc);
 
   // BC is exactly BC
