@@ -1,5 +1,21 @@
 # ts-essentials
 
+## 8.1.0
+
+### Minor Changes
+
+- 7bf4fdb: Make `DeepRequired` as recursive `Required` without removing `null` and `undefined`
+
+### Patch Changes
+
+- c463c70: Align `ReadonlySet` and `ReadonlyMap` in `DeepUndefinable` with other sets and maps
+- 374431f: Fix `DeepPartial` and `Buildable` for `unknown`
+- 83458c0: Align `ReadonlySet` and `ReadonlyMap` in `DeepNullable` with other sets and maps
+- 7bf4fdb: Add difference between `DeepRequired` and `DeepNonNullable` in README
+- ec8d796: Allow only objects to be used in `StrictOmit`
+- f045817: Fix `DictionaryValues` for `SafeDictionary` with number and string literals keys
+- ec8d796: `StrictOmit` returns `never` for arrays and tuples
+
 ## 8.0.0
 
 ### Major Changes
