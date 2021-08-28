@@ -44,6 +44,7 @@ import {
   PickKeys,
   IsTuple,
   Writable,
+  StrictOmit,
 } from "../lib";
 
 function testDictionary() {
@@ -748,6 +749,17 @@ function testBuildable() {
     Assert<IsExact<Buildable<DeepReadonly<ComplexNestedRequired>>, ComplexNestedPartial>>,
     Assert<IsExact<Buildable<ComplexNestedRequired>, ComplexNestedPartial>>,
     Assert<IsExact<Buildable<ComplexNestedReadonly>, ComplexNestedPartial>>,
+  ];
+}
+
+function testStrictOmit() {
+  type cases = [
+    Assert<IsExact<StrictOmit<{}, never>, {}>>,
+    Assert<IsExact<StrictOmit<{ a: 1 }, never>, { a: 1 }>>,
+    Assert<IsExact<StrictOmit<{ a?: 1 }, never>, { a?: 1 }>>,
+    Assert<IsExact<StrictOmit<{ a: 1 }, "a">, {}>>,
+    Assert<IsExact<StrictOmit<{ a?: 1 }, "a">, {}>>,
+    Assert<IsExact<StrictOmit<{ a?: 1 }, "a">, {}>>,
   ];
 }
 
