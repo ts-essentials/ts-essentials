@@ -2,6 +2,7 @@
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
+type AnyRecord<T = any> = Record<PropertyKey, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
 type IsAny<T> = 0 extends 1 & T ? true : false;
 type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
@@ -193,7 +194,7 @@ export type DeepWritable<T> = T extends Builtin
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
 
 /** Similar to the builtin Omit, but checks the filter strictly. */
-export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type StrictOmit<T extends AnyRecord, K extends keyof T> = T extends AnyArray ? never : Omit<T, K>;
 
 /** Similar to the builtin Extract, but checks the filter strictly */
 export type StrictExtract<T, U extends Partial<T>> = Extract<T, U>;
