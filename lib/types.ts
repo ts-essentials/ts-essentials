@@ -3,6 +3,9 @@ export type Primitive = string | number | boolean | bigint | symbol | undefined 
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
 type AnyRecord<T = any> = Record<PropertyKey, T>;
+// https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
+type IsAny<T> = 0 extends 1 & T ? true : false;
+type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 /**
@@ -42,6 +45,8 @@ export type DeepPartial<T> = T extends Builtin
   ? Promise<DeepPartial<U>>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : IsUnknown<T> extends true
+  ? unknown
   : Partial<T>;
 
 /** Recursive nullable */
@@ -157,7 +162,7 @@ export type DeepReadonly<T> = T extends Builtin
   ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : unknown extends T
+  : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
 
