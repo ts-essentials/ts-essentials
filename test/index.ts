@@ -46,6 +46,7 @@ import {
   Writable,
   StrictOmit,
   OmitProperties,
+  isExact,
 } from "../lib";
 
 function testDictionary() {
@@ -1200,4 +1201,27 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
   ];
+}
+
+function testIsExact() {
+  type ABC = { a: number; b: number; c: number };
+  type BC = { b: number; c: number };
+  type BC2 = { b: number; c: string };
+  type C = { c: number };
+
+  const abc: ABC = { a: 1, b: 2, c: 3 };
+  const bc: BC = { b: 2, c: 3 };
+  const bc2: BC2 = { b: 2, c: "3" };
+  const c: C = { c: 3 };
+
+  // @ts-expect-error ABC is not exactly BC (excessive properties A)
+  isExact<typeof abc, BC>(abc);
+
+  // BC is exactly BC
+  isExact<typeof bc, BC>(bc);
+  // @ts-expect-error BC2 is not exactly BC (C has different type)
+  isExact<typeof bc2, BC>(bc2);
+
+  // @ts-expect-error C is not exactly BC (missing property B)
+  isExact<typeof c, BC>(c);
 }
