@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Allow objects to be used in `StrictOmit`
+Allow only objects to be used in `StrictOmit`
