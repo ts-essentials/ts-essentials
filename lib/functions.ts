@@ -14,6 +14,6 @@ export function assert(condition: any, msg: string = "no additional info provide
 
 export function noop(..._args: unknown[]): void {}
 
-export function isExact<T, EXACT_SHAPE>(x: Exact<T, EXACT_SHAPE>): EXACT_SHAPE {
+export const isExact = <ExpectedShape>() => <ActualShape>(x: Exact<ActualShape, ExpectedShape>): ExpectedShape => {
   return x;
-}
+};
