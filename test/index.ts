@@ -261,6 +261,22 @@ type ComplexNestedReadonly = {
 };
 
 function testDeepPartial() {
+  interface ExtendedFunction extends Function {
+    args: 0;
+  }
+
+  interface ExtendedDate extends Date {
+    today(): number;
+  }
+
+  interface ExtendedError extends Error {
+    code: string;
+  }
+
+  interface ExtendedRegExp extends RegExp {
+    caseSensitive: true;
+  }
+
   type cases = [
     Assert<IsExact<DeepPartial<number>, number>>,
     Assert<IsExact<DeepPartial<string>, string>>,
@@ -270,9 +286,13 @@ function testDeepPartial() {
     Assert<IsExact<DeepPartial<undefined>, undefined>>,
     Assert<IsExact<DeepPartial<null>, null>>,
     Assert<IsExact<DeepPartial<Function>, Function>>,
+    Assert<IsExact<DeepPartial<ExtendedFunction>, Function & { args: 0 }>>,
     Assert<IsExact<DeepPartial<Date>, Date>>,
+    Assert<IsExact<DeepPartial<ExtendedDate>, Date & { today(): number }>>,
     Assert<IsExact<DeepPartial<Error>, Error>>,
+    Assert<IsExact<DeepPartial<ExtendedError>, ExtendedError>>,
     Assert<IsExact<DeepPartial<RegExp>, RegExp>>,
+    Assert<IsExact<DeepPartial<ExtendedRegExp>, ExtendedRegExp>>,
     Assert<IsExact<DeepPartial<Map<string, boolean>>, Map<string, boolean>>>,
     Assert<IsExact<DeepPartial<Map<string, { a: number }>>, Map<string, { a?: number }>>>,
     Assert<IsExact<DeepPartial<ReadonlyMap<string, boolean>>, ReadonlyMap<string, boolean>>>,
