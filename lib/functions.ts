@@ -14,6 +14,6 @@ export function assert(condition: any, msg: string = "no additional info provide
 
 export function noop(..._args: unknown[]): void {}
 
-export const isExact = <U>() => <T>(object: Exact<T, U>) => {
-  return object;
+export const isExact = <U>() => <T>(x: Exact<T, U>) => {
+  return x;
 };
