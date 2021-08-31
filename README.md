@@ -6,7 +6,7 @@
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
     <img alt="Build status" src="https://github.com/krzkaczor/ts-essentials/actions/workflows/ci.yml/badge.svg">
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <img src="https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square" alt="All Contributors">
+    <img src="https://img.shields.io/badge/all_contributors-32-orange.svg?style=flat-square" alt="All Contributors">
     <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
@@ -19,6 +19,9 @@ npm install --save-dev ts-essentials
 
 👉 We require `typescript>=4.0`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/krzkaczor/ts-essentials/tree/master#TypeScript-dependency-table)
+
+👉 As we really want types to be stricter, we require enabled
+[strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
 
 If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add
 `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
@@ -38,6 +41,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - DeepNonNullable
     - DeepNullable
     - DeepUndefinable
+    - [Difference between `DeepRequired` and `DeepNonNullable`](#difference-between-deeprequired-and-deepnonnullable)
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -223,6 +227,41 @@ const sampleDeepUndefinable2: ComplexObjectUndefinable = {
   },
 };
 ```
+
+#### Difference between `DeepRequired` and `DeepNonNullable`
+
+`DeepRequired` is closer to `Required` but `DeepNonNullable` on the other hand is closer to `NonNullable`
+
+It means that `DeepRequired` doesn't remove `null` and `undefined` but only makes fields required. On the other hand,
+`DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to be optional.
+
+Let's have a look at the optional nullable field:
+
+```typescript
+type Person = {
+  name?: string | null | undefined;
+};
+
+type NonNullablePerson = DeepNonNullable<Person>;
+// { name?: string | undefined; }
+type RequiredPerson = DeepRequired<Person>;
+// { name: string | null; }
+```
+
+Let's have a look at the required nullable field:
+
+```typescript
+type FullName = {
+  first: string | null | undefined;
+};
+
+type NonNullableFullName = DeepNonNullable<FullName>;
+// { first: string; }
+type RequiredFullName = DeepRequired<FullName>;
+// { first: string | null | undefined; }
+```
+
+And there's no difference between `DeepNonNullable` and `DeepRequired` if the property is non nullable and required
 
 ### Writable
 
@@ -999,6 +1038,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Beraliv"><img src="https://avatars.githubusercontent.com/u/2991847?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Berezin</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=Beraliv" title="Code">💻</a> <a href="https://github.com/krzkaczor/ts-essentials/commits?author=Beraliv" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/vitonsky"><img src="https://avatars.githubusercontent.com/u/86191922?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vitonsky</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=vitonsky" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/itayronen"><img src="https://avatars.githubusercontent.com/u/21139000?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Itay Ronen</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=itayronen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/cyberbiont"><img src="https://avatars.githubusercontent.com/u/59398323?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yaroslav Larin</b></sub></a><br /><a href="https://github.com/krzkaczor/ts-essentials/commits?author=cyberbiont" title="Code">💻</a></td>
   </tr>
 </table>
 

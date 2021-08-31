@@ -2,6 +2,10 @@
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
+type AnyRecord<T = any> = Record<PropertyKey, T>;
+// https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
+type IsAny<T> = 0 extends 1 & T ? true : false;
+type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 /**
@@ -10,7 +14,7 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
  */
 export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
 /** Given Dictionary<T> returns T */
-export type DictionaryValues<T> = T extends Dictionary<infer U> ? U : never;
+export type DictionaryValues<T> = T[keyof T];
 /**
  * Like Dictionary, but:
  *  - ensures type safety of index access
@@ -41,6 +45,8 @@ export type DeepPartial<T> = T extends Builtin
   ? Promise<DeepPartial<U>>
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : IsUnknown<T> extends true
+  ? unknown
   : Partial<T>;
 
 /** Recursive nullable */
@@ -48,10 +54,14 @@ export type DeepNullable<T> = T extends Builtin
   ? T | null
   : T extends Map<infer K, infer V>
   ? Map<DeepNullable<K>, DeepNullable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepNullable<K>, DeepNullable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepNullable<K>, DeepNullable<V>>
   : T extends Set<infer U>
   ? Set<DeepNullable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepNullable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepNullable<U>>
   : T extends Array<infer U>
@@ -69,10 +79,14 @@ export type DeepUndefinable<T> = T extends Builtin
   ? T | undefined
   : T extends Map<infer K, infer V>
   ? Map<DeepUndefinable<K>, DeepUndefinable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends WeakMap<infer K, infer V>
   ? WeakMap<DeepUndefinable<K>, DeepUndefinable<V>>
   : T extends Set<infer U>
   ? Set<DeepUndefinable<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepUndefinable<U>>
   : T extends WeakSet<infer U>
   ? WeakSet<DeepUndefinable<U>>
   : T extends Array<infer U>
@@ -107,8 +121,10 @@ export type DeepNonNullable<T> = T extends Builtin
   : NonNullable<T>;
 
 /** Like Required but recursive */
-export type DeepRequired<T> = T extends Builtin
-  ? NonNullable<T>
+export type DeepRequired<T> = T extends Error
+  ? Required<T>
+  : T extends Builtin
+  ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepRequired<K>, DeepRequired<V>>
   : T extends ReadonlyMap<infer K, infer V>
@@ -125,7 +141,7 @@ export type DeepRequired<T> = T extends Builtin
   ? Promise<DeepRequired<U>>
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<T[K]> }
-  : NonNullable<T>;
+  : Required<T>;
 
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Builtin
@@ -146,7 +162,7 @@ export type DeepReadonly<T> = T extends Builtin
   ? Promise<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : unknown extends T
+  : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
 
@@ -178,16 +194,18 @@ export type DeepWritable<T> = T extends Builtin
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
 
 /** Similar to the builtin Omit, but checks the filter strictly. */
-export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type StrictOmit<T extends AnyRecord, K extends keyof T> = T extends AnyArray ? never : Omit<T, K>;
 
 /** Similar to the builtin Extract, but checks the filter strictly */
 export type StrictExtract<T, U extends Partial<T>> = Extract<T, U>;
 
+type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T];
+
 /** Omit all properties of given type in object type */
-export type OmitProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? never : K }[keyof T]>;
+export type OmitProperties<T, P> = Omit<T, PickKeysByValue<T, P>>;
 
 /** Pick all properties of given type in object type */
-export type PickProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
+export type PickProperties<T, P> = Pick<T, PickKeysByValue<T, P>>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = {
