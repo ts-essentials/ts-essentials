@@ -902,6 +902,28 @@ Exact<ABC, C> // returns NEVER
 Exact<C, C> // returns C
 ```
 
+### isExact
+
+`isExact<SHAPE>()(value)` is a runtime function that returns (on the type level) value if value is exactly of type
+`SHAPE` or `never` otherwise.
+
+```typescript
+type ABC = { a: number; b: number; c: number };
+type BC = { b: number; c: number };
+type C = { c: number };
+let abc: ABC = { a: 1, b: 2, c: 3 };
+let bc: BC = { b: 2, c: 3 };
+
+// due to TS limitations, isExact has to be a curried function
+const isBC = isExact<BC>();
+
+isBC(abc); // returns NEVER -- abc has different structure from BC (excessive property a)
+isBC(bc); // works fine
+
+// note: that isExact can be used inline too
+isExact<BC>()(abc); // returns NEVER
+```
+
 ### XOR
 
 Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
