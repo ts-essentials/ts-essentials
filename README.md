@@ -34,6 +34,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
+  - [Type checkers](#type-checkers)
+    - `IsUnknown`
   - [Deep\* wrapper types](#Deep-wrapper-types)
     - DeepPartial
     - DeepRequired
@@ -131,6 +133,17 @@ const configDict: Dictionary<number, ConfigKeys> = {
   DEBUG: 1,
 };
 const port: number = configDict["PORT"];
+```
+
+### Type checkers
+
+- `IsUnknown` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
+
+```typescript
+// ✅ true
+type Test1 = IsUnknown<unknown>;
+// ❌ false
+type Test2 = IsUnknown<{ name: "Alexey" }>;
 ```
 
 ### Deep\* wrapper types
