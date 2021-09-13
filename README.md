@@ -137,7 +137,7 @@ const port: number = configDict["PORT"];
 
 ### Type checkers
 
-- `IsUnknown` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
+- `IsUnknown` checks whether we get `unknown` or not. If so, we get `true`. Otherwise, `false`
 
 ```typescript
 // ✅ true
