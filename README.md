@@ -147,7 +147,7 @@ type Test1 = IsUnknown<unknown>;
 type Test2 = IsUnknown<{ name: "Alexey" }>;
 ```
 
-– `IsNever` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
+- `IsNever` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
 
 ```typescript
 // ✅ true
