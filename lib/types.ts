@@ -342,15 +342,6 @@ type DeepModify<T> =
   | Map<any, DeepModify<T>>
   | WeakMap<any, DeepModify<T>>;
 
-type A = {
-  simple?: number;
-};
-type B = DeepModify<A>;
-let b: B = {
-  simple: true,
-};
-let c: DeepPick<A, { simple: true }>;
-
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
