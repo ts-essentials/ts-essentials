@@ -73,6 +73,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Newable](#newable)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
+  - [isExact](#isExact)
   - [XOR](#XOR)
   - [Functional type essentials](#functional-type-essentials)
     - Head
