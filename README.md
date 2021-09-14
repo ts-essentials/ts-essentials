@@ -34,6 +34,9 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [What's inside?](#Whats-inside)
   - [Basic](#Basic)
   - [Dictionaries](#Dictionaries)
+  - [Type checkers](#type-checkers)
+    - `IsUnknown`
+    - `IsNever`
   - [Deep\* wrapper types](#Deep-wrapper-types)
     - DeepPartial
     - DeepRequired
@@ -74,6 +77,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Newable](#newable)
   - [Assertions](#Assertions)
   - [Exact](#Exact)
+  - [isExact](#isExact)
   - [XOR](#XOR)
   - [Functional type essentials](#functional-type-essentials)
     - Head
@@ -132,6 +136,26 @@ const configDict: Dictionary<number, ConfigKeys> = {
   DEBUG: 1,
 };
 const port: number = configDict["PORT"];
+```
+
+### Type checkers
+
+- `IsUnknown` checks whether we get `unknown` or not. If so, we get `true`. Otherwise, `false`
+
+```typescript
+// ✅ true
+type Test1 = IsUnknown<unknown>;
+// ❌ false
+type Test2 = IsUnknown<{ name: "Alexey" }>;
+```
+
+- `IsNever` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
+
+```typescript
+// ✅ true
+type Test1 = IsNever<never>;
+// ❌ false
+type Test2 = IsNever<{ name: "Alexey" }>;
 ```
 
 ### Deep\* wrapper types
@@ -940,6 +964,28 @@ type C = { c: number }
 
 Exact<ABC, C> // returns NEVER
 Exact<C, C> // returns C
+```
+
+### isExact
+
+`isExact<SHAPE>()(value)` is a runtime function that returns (on the type level) value if value is exactly of type
+`SHAPE` or `never` otherwise.
+
+```typescript
+type ABC = { a: number; b: number; c: number };
+type BC = { b: number; c: number };
+type C = { c: number };
+let abc: ABC = { a: 1, b: 2, c: 3 };
+let bc: BC = { b: 2, c: 3 };
+
+// due to TS limitations, isExact has to be a curried function
+const isBC = isExact<BC>();
+
+isBC(abc); // returns NEVER -- abc has different structure from BC (excessive property a)
+isBC(bc); // works fine
+
+// note: that isExact can be used inline too
+isExact<BC>()(abc); // returns NEVER
 ```
 
 ### XOR

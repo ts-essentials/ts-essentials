@@ -47,6 +47,9 @@ import {
   Writable,
   StrictOmit,
   OmitProperties,
+  isExact,
+  IsUnknown,
+  IsNever,
 } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
@@ -1176,5 +1179,106 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
+  ];
+}
+
+function testIsExact() {
+  type ABC = { a: number; b: number; c: number };
+  type BC = { b: number; c: number };
+  type BC2 = { b: number; c: string };
+  type C = { c: number };
+
+  let abc: ABC = { a: 1, b: 2, c: 3 };
+  let abc2 = { a: 1, b: 2, c: 3 } as const;
+  let bc: BC = { b: 2, c: 3 };
+  let bc2: BC2 = { b: 2, c: "3" };
+  let bc3 = { b: 2, c: 3 } as const;
+  let bc4 = { b: 2, c: "3" } as const;
+  let c: C = { c: 3 };
+  let c2 = { c: 3 } as const;
+
+  const isBC = isExact<BC>();
+
+  // @ts-expect-error has different structure from BC (excessive property a)
+  isBC(abc);
+  // @ts-expect-error has different structure from BC (excessive property a)
+  isBC(abc2);
+
+  // has the same structure as BC
+  isBC(bc);
+  // @ts-expect-error has different structure from BC (c has different type)
+  isBC(bc2);
+  // has the same structure as BC
+  isBC(bc3);
+  // @ts-expect-error has different structure from BC (c has different type)
+  isBC(bc4);
+
+  // @ts-expect-error has different structure from BC (missing property b)
+  isBC(c);
+  // @ts-expect-error has different structure from BC (missing property b)
+  isBC(c2);
+}
+
+function testIsUnknown() {
+  type cases = [
+    Assert<IsExact<IsUnknown<string>, false>>,
+    Assert<IsExact<IsUnknown<number>, false>>,
+    Assert<IsExact<IsUnknown<boolean>, false>>,
+    Assert<IsExact<IsUnknown<bigint>, false>>,
+    Assert<IsExact<IsUnknown<symbol>, false>>,
+    Assert<IsExact<IsUnknown<undefined>, false>>,
+    Assert<IsExact<IsUnknown<null>, false>>,
+    Assert<IsExact<IsUnknown<Function>, false>>,
+    Assert<IsExact<IsUnknown<Date>, false>>,
+    Assert<IsExact<IsUnknown<Error>, false>>,
+    Assert<IsExact<IsUnknown<RegExp>, false>>,
+    Assert<IsExact<IsUnknown<Map<string, unknown>>, false>>,
+    Assert<IsExact<IsUnknown<ReadonlyMap<string, unknown>>, false>>,
+    Assert<IsExact<IsUnknown<WeakMap<{ a: 1 }, unknown>>, false>>,
+    Assert<IsExact<IsUnknown<Set<string>>, false>>,
+    Assert<IsExact<IsUnknown<ReadonlySet<string>>, false>>,
+    Assert<IsExact<IsUnknown<WeakSet<{ a: 1 }>>, false>>,
+    Assert<IsExact<IsUnknown<{ a: 1 }>, false>>,
+    Assert<IsExact<IsUnknown<[]>, false>>,
+    Assert<IsExact<IsUnknown<[1]>, false>>,
+    Assert<IsExact<IsUnknown<readonly [1]>, false>>,
+    Assert<IsExact<IsUnknown<readonly number[]>, false>>,
+    Assert<IsExact<IsUnknown<number[]>, false>>,
+    Assert<IsExact<IsUnknown<Promise<number>>, false>>,
+    Assert<IsExact<IsUnknown<unknown>, true>>,
+    Assert<IsExact<IsUnknown<never>, false>>,
+    Assert<IsExact<IsUnknown<any>, false>>,
+  ];
+}
+
+function testIsNever() {
+  type cases = [
+    Assert<IsExact<IsNever<string>, false>>,
+    Assert<IsExact<IsNever<number>, false>>,
+    Assert<IsExact<IsNever<boolean>, false>>,
+    Assert<IsExact<IsNever<bigint>, false>>,
+    Assert<IsExact<IsNever<symbol>, false>>,
+    Assert<IsExact<IsNever<undefined>, false>>,
+    Assert<IsExact<IsNever<null>, false>>,
+    Assert<IsExact<IsNever<Function>, false>>,
+    Assert<IsExact<IsNever<Date>, false>>,
+    Assert<IsExact<IsNever<Error>, false>>,
+    Assert<IsExact<IsNever<RegExp>, false>>,
+    Assert<IsExact<IsNever<Map<string, unknown>>, false>>,
+    Assert<IsExact<IsNever<ReadonlyMap<string, unknown>>, false>>,
+    Assert<IsExact<IsNever<WeakMap<{ a: 1 }, unknown>>, false>>,
+    Assert<IsExact<IsNever<Set<string>>, false>>,
+    Assert<IsExact<IsNever<ReadonlySet<string>>, false>>,
+    Assert<IsExact<IsNever<WeakSet<{ a: 1 }>>, false>>,
+    Assert<IsExact<IsNever<{ a: 1 }>, false>>,
+    Assert<IsExact<IsNever<[]>, false>>,
+    Assert<IsExact<IsNever<[1]>, false>>,
+    Assert<IsExact<IsNever<readonly [1]>, false>>,
+    Assert<IsExact<IsNever<readonly number[]>, false>>,
+    Assert<IsExact<IsNever<number[]>, false>>,
+    Assert<IsExact<IsNever<Promise<number>>, false>>,
+    Assert<IsExact<IsNever<unknown>, false>>,
+    Assert<IsExact<IsNever<never>, true>>,
+    Assert<IsExact<IsNever<any>, false>>,
   ];
 }
