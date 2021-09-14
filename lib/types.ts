@@ -5,6 +5,7 @@ export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never
 type AnyRecord<T = any> = Record<PropertyKey, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
 type IsAny<T> = 0 extends 1 & T ? true : false;
+export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 

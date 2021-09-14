@@ -36,6 +36,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Dictionaries](#Dictionaries)
   - [Type checkers](#type-checkers)
     - `IsUnknown`
+    - `IsNever`
   - [Deep\* wrapper types](#Deep-wrapper-types)
     - DeepPartial
     - DeepRequired
@@ -145,6 +146,15 @@ const port: number = configDict["PORT"];
 type Test1 = IsUnknown<unknown>;
 // ❌ false
 type Test2 = IsUnknown<{ name: "Alexey" }>;
+```
+
+- `IsNever` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
+
+```typescript
+// ✅ true
+type Test1 = IsNever<never>;
+// ❌ false
+type Test2 = IsNever<{ name: "Alexey" }>;
 ```
 
 ### Deep\* wrapper types
