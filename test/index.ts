@@ -936,13 +936,11 @@ function testOptionalKeys() {
 
 function testRequiredKeys() {
   type cases = [
-    // @ts-expect-error converts to Number and gets its required keys
-    Assert<IsExact<RequiredKeys<number>, never>>,
+    Assert<IsExact<RequiredKeys<number>, keyof Number>>,
     // @ts-expect-error converts to String and gets its required keys
     Assert<IsExact<RequiredKeys<string>, never>>,
-    Assert<IsExact<RequiredKeys<boolean>, "valueOf">>,
-    // @ts-expect-error converts to BigInt and gets its required keys
-    Assert<IsExact<RequiredKeys<bigint>, never>>,
+    Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
+    Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
     Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
     Assert<IsExact<RequiredKeys<null>, never>>,
