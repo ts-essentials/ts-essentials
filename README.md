@@ -17,7 +17,7 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=4.0`. If you're looking for support for older TS versions, please have a look at the
+👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/krzkaczor/ts-essentials/tree/master#TypeScript-dependency-table)
 
 👉 As we really want types to be stricter, we require enabled
@@ -990,7 +990,7 @@ type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: i
 
 | `ts-essentials` | `typescript` / type of dependency |
 | --------------- | --------------------------------- |
-| `^8.0.0`        | `^4.0.0` / peer                   |
+| `^8.0.0`        | `^4.1.0` / peer                   |
 | `^5.0.0`        | `^3.7.0` / peer                   |
 | `^3.0.1`        | `^3.5.0` / peer                   |
 | `^1.0.1`        | `^3.2.2` / dev                    |
