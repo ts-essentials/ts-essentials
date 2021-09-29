@@ -1,5 +1,17 @@
 # ts-essentials
 
+## 9.0.0
+
+### Major Changes
+
+- aa879ca: Use TypeScript@^4.1.0 because of introduced recursive conditional types
+
+### Minor Changes
+
+- e39426b: Add `IsUnknown` which returns true if it's `unknown`, otherwise false
+- 6d10f69: Add `IsNever` which returns true if it's `never`, otherwise false
+- b580ac1: Add `isExact` function
+
 ## 8.1.0
 
 ### Minor Changes
