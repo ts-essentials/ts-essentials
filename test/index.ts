@@ -934,8 +934,6 @@ function testOptionalKeys() {
   ];
 }
 
-type A = RequiredKeys<Date>;
-
 function testRequiredKeys() {
   type cases = [
     // @ts-expect-error converts to Number and gets its required keys
