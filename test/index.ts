@@ -934,19 +934,30 @@ function testOptionalKeys() {
   ];
 }
 
+type A = RequiredKeys<Date>;
+
 function testRequiredKeys() {
-  type Input = {
-    req: string;
-    opt?: string;
-    opt2?: string;
-    undef: string | undefined;
-    nullable: string | null;
-  };
-
-  type Expected = "req" | "undef" | "nullable";
-  type Actual = RequiredKeys<Input>;
-
-  type Test = Assert<IsExact<Expected, Actual>>;
+  type cases = [
+    // @ts-expect-error converts to Number and gets its required keys
+    Assert<IsExact<RequiredKeys<number>, never>>,
+    // @ts-expect-error converts to String and gets its required keys
+    Assert<IsExact<RequiredKeys<string>, never>>,
+    Assert<IsExact<RequiredKeys<boolean>, "valueOf">>,
+    // @ts-expect-error converts to BigInt and gets its required keys
+    Assert<IsExact<RequiredKeys<bigint>, never>>,
+    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<IsExact<RequiredKeys<undefined>, never>>,
+    Assert<IsExact<RequiredKeys<null>, never>>,
+    Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
+    Assert<IsExact<RequiredKeys<Date>, keyof Date>>,
+    Assert<IsExact<RequiredKeys<Error>, "name" | "message">>,
+    Assert<IsExact<RequiredKeys<RegExp>, keyof RegExp>>,
+    Assert<IsExact<RequiredKeys<{}>, never>>,
+    Assert<IsExact<RequiredKeys<{ a: 1 }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
+    Assert<IsExact<RequiredKeys<{ a: 1 | undefined }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 | null }>, "a">>,
+  ];
 }
 
 function testPickKeys() {
