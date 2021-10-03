@@ -81,6 +81,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Functional type essentials](#functional-type-essentials)
     - Head
     - Tail
+  - [HomogeneousArray](#HomogeneousArray)
 - [TypeScript dependency table](#TypeScript-dependency-table)
 - [Contributors](#Contributors)
 
@@ -984,6 +985,17 @@ function tail<T extends any[]>(array: T): Tail<T> {
 type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: infer ArgsT) => any
   ? Head<ArgsT>
   : never;
+```
+
+### HomogeneousArray
+
+Gets the union type of array elements and returns the union type of arrays
+
+```typescript
+type Element = string | number;
+
+// string[] | number[]
+type Arr = HomogeneousArray<Element>;
 ```
 
 ## TypeScript dependency table
