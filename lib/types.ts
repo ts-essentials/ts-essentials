@@ -9,7 +9,13 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
-export type HomogeneousArray<ElementType> = ElementType extends unknown ? ElementType[] : never;
+export type HomogeneousArray<ElementType> = IsNever<ElementType> extends true
+  ? never[]
+  : ElementType extends boolean
+  ? boolean[]
+  : ElementType extends unknown
+  ? ElementType[]
+  : never;
 
 /**
  * Like Record, but can be used with only one argument.
