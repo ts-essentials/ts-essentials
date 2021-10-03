@@ -49,6 +49,7 @@ import {
   isExact,
   IsUnknown,
   IsNever,
+  HomogeneousArray,
 } from "../lib";
 
 function testDictionary() {
@@ -1341,5 +1342,19 @@ function testIsNever() {
     Assert<IsExact<IsNever<unknown>, false>>,
     Assert<IsExact<IsNever<never>, true>>,
     Assert<IsExact<IsNever<any>, false>>,
+  ];
+}
+
+function testHomogeneousArray() {
+  type cases = [
+    Assert<IsExact<HomogeneousArray<never>, never[]>>,
+    Assert<IsExact<HomogeneousArray<string>, string[]>>,
+    Assert<IsExact<HomogeneousArray<number>, number[]>>,
+    Assert<IsExact<HomogeneousArray<boolean>, boolean[]>>,
+    Assert<IsExact<HomogeneousArray<string | number>, string[] | number[]>>,
+    Assert<IsExact<HomogeneousArray<string | boolean>, string[] | boolean[]>>,
+    Assert<IsExact<HomogeneousArray<number | boolean>, number[] | boolean[]>>,
+    Assert<IsExact<HomogeneousArray<0 | 1>, 0[] | 1[]>>,
+    Assert<IsExact<HomogeneousArray<"0" | "1">, "0"[] | "1"[]>>,
   ];
 }
