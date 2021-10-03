@@ -9,6 +9,8 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
+export type HomogeneousArray<ElementType> = ElementType extends unknown ? ElementType[] : never;
+
 /**
  * Like Record, but can be used with only one argument.
  * Useful, if you want to make sure that all of the keys of a finite type are used.
