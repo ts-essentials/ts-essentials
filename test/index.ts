@@ -931,6 +931,14 @@ function testOptionalKeys() {
     Assert<IsExact<OptionalKeys<{ a?: 1 }>, "a">>,
     Assert<IsExact<OptionalKeys<{ a: 1 | undefined }>, never>>,
     Assert<IsExact<OptionalKeys<{ a: 1 | null }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b?: 2 }>, "a" | "b">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 | undefined }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 | null }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b?: 2 }>, "b">>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 | undefined }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 | null }>, never>>,
   ];
 }
 
@@ -953,6 +961,14 @@ function testRequiredKeys() {
     Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
     Assert<IsExact<RequiredKeys<{ a: 1 | undefined }>, "a">>,
     Assert<IsExact<RequiredKeys<{ a: 1 | null }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b?: 2 }>, never>>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 | undefined }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 | null }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 }>, "a" | "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b?: 2 }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | undefined }>, "a" | "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | null }>, "a" | "b">>,
   ];
 }
 
