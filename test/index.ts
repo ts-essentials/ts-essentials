@@ -49,6 +49,7 @@ import {
   isExact,
   IsUnknown,
   IsNever,
+  ArrayOrSingle,
 } from "../lib";
 
 function testDictionary() {
@@ -1341,5 +1342,16 @@ function testIsNever() {
     Assert<IsExact<IsNever<unknown>, false>>,
     Assert<IsExact<IsNever<never>, true>>,
     Assert<IsExact<IsNever<any>, false>>,
+  ];
+}
+
+function testArrayOrSingle() {
+  type cases = [
+    Assert<IsExact<ArrayOrSingle<never>, never | never[]>>,
+    Assert<IsExact<ArrayOrSingle<string>, string | string[]>>,
+    Assert<IsExact<ArrayOrSingle<1>, 1 | 1[]>>,
+    Assert<IsExact<ArrayOrSingle<"1">, "1" | "1"[]>>,
+    Assert<IsExact<ArrayOrSingle<string | number>, string | number | (string | number)[]>>,
+    Assert<IsExact<ArrayOrSingle<{ a: number }>, { a: number } | { a: number }[]>>,
   ];
 }
