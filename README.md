@@ -71,6 +71,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Exhaustive switch cases](#Exhaustive-switch-cases)
   - [ValueOf type](#ValueOf-type)
   - [ElementOf type](#ElementOf-type)
+  - [ArrayOrSingle](#ArrayOrSingle)
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Awaited type](#awaited-type)
   - [Newable](#newable)
@@ -838,6 +839,25 @@ type objKeys = ValueOf<typeof obj>;
 const array = [1, 2, true, false];
 type arrayElement = ElementOf<typeof array>;
 // Result: number | boolean
+```
+
+### ArrayOrSingle
+
+Useful for the functions where data can be passed as a value or an array
+
+```typescript
+const castArray = <T extends any>(value: ArrayOrSingle<T>): T[] => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return [value];
+};
+
+// number[]
+const numbers = castArray(1);
+// string[]
+const strings = castArray(["a", "b", "c"]);
 ```
 
 ### AsyncOrSync type
