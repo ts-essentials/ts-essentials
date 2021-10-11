@@ -17,7 +17,7 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=4.0`. If you're looking for support for older TS versions, please have a look at the
+👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/krzkaczor/ts-essentials/tree/master#TypeScript-dependency-table)
 
 👉 As we really want types to be stricter, we require enabled
@@ -72,6 +72,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Exhaustive switch cases](#Exhaustive-switch-cases)
   - [ValueOf type](#ValueOf-type)
   - [ElementOf type](#ElementOf-type)
+  - [ArrayOrSingle](#ArrayOrSingle)
   - [AsyncOrSync type](#AsyncOrSync-type)
   - [Awaited type](#awaited-type)
   - [Newable](#newable)
@@ -880,6 +881,25 @@ type arrayElement = ElementOf<typeof array>;
 // Result: number | boolean
 ```
 
+### ArrayOrSingle
+
+Useful for the functions where data can be passed as a value or an array
+
+```typescript
+const castArray = <T extends any>(value: ArrayOrSingle<T>): T[] => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return [value];
+};
+
+// number[]
+const numbers = castArray(1);
+// string[]
+const strings = castArray(["a", "b", "c"]);
+```
+
 ### AsyncOrSync type
 
 Useful as a return type in interfaces or abstract classes with missing implementation
@@ -1030,7 +1050,7 @@ type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: i
 
 | `ts-essentials` | `typescript` / type of dependency |
 | --------------- | --------------------------------- |
-| `^8.0.0`        | `^4.0.0` / peer                   |
+| `^8.0.0`        | `^4.1.0` / peer                   |
 | `^5.0.0`        | `^3.7.0` / peer                   |
 | `^3.0.1`        | `^3.5.0` / peer                   |
 | `^1.0.1`        | `^3.2.2` / dev                    |

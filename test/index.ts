@@ -50,6 +50,7 @@ import {
   isExact,
   IsUnknown,
   IsNever,
+  ArrayOrSingle,
 } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
@@ -875,33 +876,67 @@ function testPickProperties() {
 }
 
 function testOptionalKeys() {
-  type Input = {
-    req: string;
-    opt?: string;
-    opt2?: string;
-    undef: string | undefined;
-    nullable: string | null;
-  };
-
-  type Expected = "opt" | "opt2";
-  type Actual = OptionalKeys<Input>;
-
-  type Test = Assert<IsExact<Expected, Actual>>;
+  type cases = [
+    // @ts-expect-error converts to Number and gets its optional keys
+    Assert<IsExact<OptionalKeys<number>, never>>,
+    // @ts-expect-error converts to String and gets its optional keys
+    Assert<IsExact<OptionalKeys<string>, never>>,
+    // wtf?
+    Assert<IsExact<OptionalKeys<boolean>, () => boolean>>,
+    // @ts-expect-error converts to BigInt and gets its optional keys
+    Assert<IsExact<OptionalKeys<bigint>, never>>,
+    // wtf?
+    Assert<IsExact<OptionalKeys<symbol>, string | ((hint: string) => symbol) | (() => string) | (() => symbol)>>,
+    Assert<IsExact<OptionalKeys<undefined>, never>>,
+    Assert<IsExact<OptionalKeys<null>, never>>,
+    Assert<IsExact<OptionalKeys<Function>, never>>,
+    Assert<IsExact<OptionalKeys<Date>, never>>,
+    Assert<IsExact<OptionalKeys<Error>, "stack">>,
+    Assert<IsExact<OptionalKeys<RegExp>, never>>,
+    Assert<IsExact<OptionalKeys<{}>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a: 1 | undefined }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 | null }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b?: 2 }>, "a" | "b">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 | undefined }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a?: 1 } | { b: 2 | null }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b?: 2 }>, "b">>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 | undefined }>, never>>,
+    Assert<IsExact<OptionalKeys<{ a: 1 } | { b: 2 | null }>, never>>,
+  ];
 }
 
 function testRequiredKeys() {
-  type Input = {
-    req: string;
-    opt?: string;
-    opt2?: string;
-    undef: string | undefined;
-    nullable: string | null;
-  };
-
-  type Expected = "req" | "undef" | "nullable";
-  type Actual = RequiredKeys<Input>;
-
-  type Test = Assert<IsExact<Expected, Actual>>;
+  type cases = [
+    Assert<IsExact<RequiredKeys<number>, keyof Number>>,
+    // @ts-expect-error converts to String and gets its required keys
+    Assert<IsExact<RequiredKeys<string>, never>>,
+    Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
+    Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
+    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<IsExact<RequiredKeys<undefined>, never>>,
+    Assert<IsExact<RequiredKeys<null>, never>>,
+    Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
+    Assert<IsExact<RequiredKeys<Date>, keyof Date>>,
+    Assert<IsExact<RequiredKeys<Error>, "name" | "message">>,
+    Assert<IsExact<RequiredKeys<RegExp>, keyof RegExp>>,
+    Assert<IsExact<RequiredKeys<{}>, never>>,
+    Assert<IsExact<RequiredKeys<{ a: 1 }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
+    Assert<IsExact<RequiredKeys<{ a: 1 | undefined }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 | null }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b?: 2 }>, never>>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 | undefined }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a?: 1 } | { b: 2 | null }>, "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 }>, "a" | "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b?: 2 }>, "a">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | undefined }>, "a" | "b">>,
+    Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | null }>, "a" | "b">>,
+  ];
 }
 
 function testDeepOmitAndDeepPick() {
@@ -1280,5 +1315,45 @@ function testIsNever() {
     Assert<IsExact<IsNever<unknown>, false>>,
     Assert<IsExact<IsNever<never>, true>>,
     Assert<IsExact<IsNever<any>, false>>,
+  ];
+}
+
+function testArrayOrSingle() {
+  const castArray = <T extends any>(value: ArrayOrSingle<T>): T[] => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    return [value];
+  };
+
+  const numbers1 = castArray(1);
+  const numbers2 = castArray([1]);
+  const strings1 = castArray("hello");
+  const strings2 = castArray(["hello"]);
+  const booleans1 = castArray(false);
+  const booleans2 = castArray([false]);
+  const nulls1 = castArray(null);
+  const nulls2 = castArray([null]);
+  const undefined1 = castArray(undefined);
+  const undefined2 = castArray([undefined]);
+
+  type cases = [
+    Assert<IsExact<ArrayOrSingle<never>, never | never[]>>,
+    Assert<IsExact<ArrayOrSingle<string>, string | string[]>>,
+    Assert<IsExact<ArrayOrSingle<1>, 1 | 1[]>>,
+    Assert<IsExact<ArrayOrSingle<"1">, "1" | "1"[]>>,
+    Assert<IsExact<ArrayOrSingle<string | number>, string | number | (string | number)[]>>,
+    Assert<IsExact<ArrayOrSingle<{ a: number }>, { a: number } | { a: number }[]>>,
+    Assert<IsExact<typeof numbers1, number[]>>,
+    Assert<IsExact<typeof numbers2, number[]>>,
+    Assert<IsExact<typeof strings1, string[]>>,
+    Assert<IsExact<typeof strings2, string[]>>,
+    Assert<IsExact<typeof booleans1, boolean[]>>,
+    Assert<IsExact<typeof booleans2, boolean[]>>,
+    Assert<IsExact<typeof nulls1, null[]>>,
+    Assert<IsExact<typeof nulls2, null[]>>,
+    Assert<IsExact<typeof undefined1, undefined[]>>,
+    Assert<IsExact<typeof undefined2, undefined[]>>,
   ];
 }

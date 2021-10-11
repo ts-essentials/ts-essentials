@@ -9,6 +9,8 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
+export type ArrayOrSingle<T> = T | T[];
+
 type NonUndefinable<T> = T extends undefined ? never : T;
 
 /**
@@ -211,12 +213,14 @@ export type OmitProperties<T, P> = Omit<T, PickKeysByValue<T, P>>;
 export type PickProperties<T, P> = Pick<T, PickKeysByValue<T, P>>;
 
 /** Gets keys of an object which are optional */
-export type OptionalKeys<T> = {
-  [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never;
-}[keyof T];
+export type OptionalKeys<T> = T extends unknown
+  ? {
+      [K in keyof T]-?: undefined extends { [K2 in keyof T]: K2 }[K] ? K : never;
+    }[keyof T]
+  : never;
 
 /** Gets keys of an object which are required */
-export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
+export type RequiredKeys<T> = T extends unknown ? Exclude<keyof T, OptionalKeys<T>> : never;
 
 /** Gets keys of properties of given type in object type */
 export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
