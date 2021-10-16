@@ -37,6 +37,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [Type checkers](#type-checkers)
     - `IsUnknown`
     - `IsNever`
+    - `IsAny`
   - [Deep\* wrapper types](#Deep-wrapper-types)
     - DeepPartial
     - DeepRequired
@@ -156,6 +157,15 @@ type Test2 = IsUnknown<{ name: "Alexey" }>;
 type Test1 = IsNever<never>;
 // ❌ false
 type Test2 = IsNever<{ name: "Alexey" }>;
+```
+
+- `IsAny` checks whether we get `any` or not. If so, we get `true`. Otherwise, `false`
+
+```typescript
+// ✅ true
+type Test1 = IsAny<any>;
+// ❌ false
+type Test2 = IsAny<{ name: "Alexey" }>;
 ```
 
 ### Deep\* wrapper types
