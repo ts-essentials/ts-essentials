@@ -72,6 +72,8 @@ function testDeepPickInRequiredObject() {
   obj7 = { nested: { set: undefined } };
   // @ts-expect-error
   obj7 = { nested: { set: new Set<number>() } };
+  // @ts-expect-error
+  obj7 = { nested: { set: new Set<{}>() } };
   obj7 = { nested: { set: new Set<{ name: string }>() } };
 
   let obj8: DeepPick<ComplexNestedRequired, { nested: { map: true } }>;
@@ -83,6 +85,8 @@ function testDeepPickInRequiredObject() {
   obj8 = { nested: { map: undefined } };
   // @ts-expect-error
   obj8 = { nested: { map: new Map<number, boolean>() } };
+  // @ts-expect-error
+  obj8 = { nested: { map: new Map<string, {}>() } };
   obj8 = { nested: { map: new Map<string, { name: string }>() } };
 
   let obj9: DeepPick<ComplexNestedRequired, { nested: { promise: true } }>;
@@ -94,6 +98,12 @@ function testDeepPickInRequiredObject() {
   obj9 = { nested: { promise: undefined } };
   // @ts-expect-error
   obj9 = { nested: { promise: new Promise<boolean>(() => {}) } };
+  // @ts-expect-error
+  obj9 = { nested: { promise: new Promise<{}>(() => {}) } };
+  // @ts-expect-error
+  obj9 = { nested: { promise: new Promise<{ bar: number }>(() => {}) } };
+  // @ts-expect-error
+  obj9 = { nested: { promise: new Promise<{ foo: string }>(() => {}) } };
   obj9 = { nested: { promise: new Promise<{ foo: string; bar: number }>(() => {}) } };
 }
 
@@ -150,6 +160,8 @@ function testDeepPickInPartialObject() {
   obj7 = { nested: { set: undefined } };
   // @ts-expect-error
   obj7 = { nested: { set: new Set<number>() } };
+  obj7 = { nested: { set: new Set<{}>() } };
+  obj7 = { nested: { set: new Set<{ name?: string }>() } };
   obj7 = { nested: { set: new Set<{ name: string }>() } };
 
   let obj8: DeepPick<ComplexNestedPartial, { nested: { map: true } }>;
@@ -158,6 +170,8 @@ function testDeepPickInPartialObject() {
   obj8 = { nested: { map: undefined } };
   // @ts-expect-error
   obj8 = { nested: { map: new Map<number, boolean>() } };
+  obj8 = { nested: { map: new Map<string, {}>() } };
+  obj8 = { nested: { map: new Map<string, { name?: string }>() } };
   obj8 = { nested: { map: new Map<string, { name: string }>() } };
 
   let obj9: DeepPick<ComplexNestedPartial, { nested: { promise: true } }>;
@@ -166,5 +180,11 @@ function testDeepPickInPartialObject() {
   obj9 = { nested: { promise: undefined } };
   // @ts-expect-error
   obj9 = { nested: { promise: new Promise<boolean>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{}>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{ foo: string }>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{ bar: number }>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{ foo?: string }>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{ bar?: number }>(() => {}) } };
+  obj9 = { nested: { promise: new Promise<{ foo?: string; bar?: number }>(() => {}) } };
   obj9 = { nested: { promise: new Promise<{ foo: string; bar: number }>(() => {}) } };
 }
