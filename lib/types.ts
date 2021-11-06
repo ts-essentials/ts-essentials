@@ -322,11 +322,9 @@ export declare type DeepPick<T, Filter extends DeepModify<T>> = T extends Builti
     : T
   : Filter extends Record<string, unknown>
   ? {
-      [K in keyof Filter & OptionalKeys<T>]?: Filter[K] extends true ? T[K] : DeepPick<T[K], Filter[K]>;
-    } &
-      {
-        [K in keyof Filter & RequiredKeys<T>]: Filter[K] extends true ? T[K] : DeepPick<T[K], Filter[K]>;
-      }
+      // iterate over keys of T, which keeps the information about keys: optional, required or readonly
+      [K in keyof T as K extends keyof Filter ? K : never]: Filter[K & keyof Filter] extends true ? T[K & keyof T] : DeepPick<T[K & keyof T], Filter[K & keyof Filter]>;
+    }
   : never;
 
 type DeepModify<T> =

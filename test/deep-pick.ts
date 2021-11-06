@@ -137,7 +137,6 @@ function testDeepPickInPartialObject() {
   obj6 = {};
   obj6 = { nested: undefined };
   obj6 = { nested: { tuple: undefined } };
-  // @ts-expect-error
   obj6 = { nested: { tuple: [] } };
   // @ts-expect-error
   obj6 = { nested: { tuple: [] as const } };
