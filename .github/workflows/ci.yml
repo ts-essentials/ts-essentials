@@ -28,7 +28,7 @@ jobs:
           key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
           restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
 
-      - run: yarn install --immutable --immutable-cache --check-cache
+      - run: yarn install --immutable
 
       - run: yarn test
       - run: yarn build
