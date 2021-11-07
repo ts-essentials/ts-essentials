@@ -4,7 +4,7 @@ export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
 type AnyRecord<T = any> = Record<PropertyKey, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
-type IsAny<T> = 0 extends 1 & T ? true : false;
+export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
@@ -353,7 +353,7 @@ export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
 
-type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...(infer Tail)]
+type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...infer Tail]
   ? _MergeN<Tail, Merge<Result, Head>>
   : Result;
 
