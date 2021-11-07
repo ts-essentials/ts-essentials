@@ -20,6 +20,9 @@ npm install --save-dev ts-essentials
 👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/krzkaczor/ts-essentials/tree/master#TypeScript-dependency-table)
 
+👉 We also require `node>=12`. If you're looking for support for older node versions, please have a look at the
+[Node dependency table](https://github.com/krzkaczor/ts-essentials/tree/master#Node-dependency-table)
+
 👉 As we really want types to be stricter, we require enabled
 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
 
@@ -1025,6 +1028,13 @@ type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: i
 | `^3.0.1`        | `^3.5.0` / peer                   |
 | `^1.0.1`        | `^3.2.2` / dev                    |
 | `^1.0.0`        | `^3.0.3` / dev                    |
+
+## Node dependency table
+
+| `ts-essentials` | `node`    |
+| --------------- | --------- |
+| next version    | `^12.0.0` |
+| `^1.0.0`        | `^10.0.0` |
 
 ## Contributors
 
