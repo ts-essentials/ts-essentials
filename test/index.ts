@@ -9,7 +9,6 @@ import {
   DeepNonNullable,
   DeepNullable,
   DeepOmit,
-  DeepPick,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -940,7 +939,7 @@ function testRequiredKeys() {
   ];
 }
 
-function testDeepOmitAndDeepPick() {
+function testDeepOmit() {
   type Whole = {
     a: { b: string; c: { d: string; e: boolean }; f: number };
     array: { a: string; b: boolean }[][];
@@ -964,14 +963,6 @@ function testDeepOmitAndDeepPick() {
     optionalProp?: number;
   };
 
-  type Picked = {
-    a: { b: string; c: { d: string } };
-    array: { a: string }[][];
-    set: Set<{ a: string }>;
-    map: Map<number, { a: string }>;
-    // filteredOptionalProp?: number;
-  };
-
   // to demonstrate that types in filter can be defined either way (as 'true' or 'never')
   type NeverFilter = {
     a: { b: never; c: { d: never } };
@@ -988,10 +979,8 @@ function testDeepOmitAndDeepPick() {
   };
 
   type TestDeepOmitNeverFilter = Assert<IsExact<DeepOmit<Whole, NeverFilter>, Omitted>>;
-  type TestDeepPickNeverFilter = Assert<IsExact<DeepPick<Whole, NeverFilter>, Picked>>;
 
   type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
-  type TestDeepPickTrueFilter = Assert<IsExact<DeepPick<Whole, TrueFilter>, Picked>>;
 }
 
 function testTupleInference() {
