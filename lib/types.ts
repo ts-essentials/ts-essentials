@@ -260,19 +260,16 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
   ? ItemType extends DeepOmitModify<Filter>
     ? Promise<DeepOmit<ItemType, Filter>>
     : T
-  : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } &
-      OmitProperties<
-        {
-          [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
-            ? never
-            : T[K] extends DeepOmitModify<Filter[K]>
-            ? DeepOmit<T[K], Filter[K]>
-            : T[K];
-        },
-        never
-      > &
-      { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } &
-      OmitProperties<
+  : { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } & OmitProperties<
+      {
+        [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
+          ? never
+          : T[K] extends DeepOmitModify<Filter[K]>
+          ? DeepOmit<T[K], Filter[K]>
+          : T[K];
+      },
+      never
+    > & { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } & OmitProperties<
         {
           [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
             ? never
@@ -302,7 +299,7 @@ export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
 
-type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...(infer Tail)]
+type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...infer Tail]
   ? _MergeN<Tail, Merge<Result, Head>>
   : Result;
 
