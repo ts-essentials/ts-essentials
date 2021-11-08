@@ -1,3 +1,5 @@
+import { ComplexNestedPartial, ComplexNestedRequired } from "../test/types";
+
 /** Essentials */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
@@ -261,25 +263,17 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
     ? Promise<DeepPick<ItemType, Filter>>
     : T
   : Filter extends Record<string, unknown>
-  ? { [K in Exclude<OptionalKeys<T>, keyof Filter>]+?: T[K] } & OmitProperties<
-      {
-        [K in Extract<OptionalKeys<T>, keyof Filter>]+?: Filter[K] extends true
-          ? never
-          : Filter[K] extends DeepModify<T[K]>
-          ? DeepOmit<T[K], Filter[K]>
-          : T[K];
-      },
-      never
-    > & { [K in Exclude<RequiredKeys<T>, keyof Filter>]: T[K] } & OmitProperties<
-        {
-          [K in Extract<RequiredKeys<T>, keyof Filter>]: Filter[K] extends true
-            ? never
-            : Filter[K] extends DeepModify<T[K]>
-            ? DeepOmit<T[K], Filter[K]>
-            : T[K];
-        },
-        never
-      >
+  ? {
+      [K in keyof T as K extends keyof Filter ? never : K]: T[K];
+    } & {
+      [K in Extract<OptionalKeys<T>, keyof Filter> as [Filter[K]] extends [true] | [never]
+        ? never
+        : K]+?: Filter[K] extends DeepModify<T[K]> ? DeepOmit<T[K], Filter[K]> : T[K];
+    } & {
+      [K in Extract<RequiredKeys<T>, keyof Filter> as [Filter[K]] extends [true] | [never]
+        ? never
+        : K]: Filter[K] extends DeepModify<T[K]> ? DeepOmit<T[K], Filter[K]> : T[K];
+    }
   : never;
 
 /** Recursively pick deep properties */
