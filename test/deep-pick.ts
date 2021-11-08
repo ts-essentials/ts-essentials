@@ -204,6 +204,23 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj9_1 = { nested: { promise: new Promise<{ foo: string }>(() => {}) } };
   obj9_1 = { nested: { promise: new Promise<{ foo: string; bar: number }>(() => {}) } };
+
+  let obj10: DeepPick<ComplexNestedRequired, { nested: { date: true; array: true } }>;
+  // @ts-expect-error
+  obj10 = {};
+  // @ts-expect-error
+  obj10 = { nested: undefined };
+  // @ts-expect-error
+  obj10 = { nested: { date: undefined } };
+  // @ts-expect-error
+  obj10 = { nested: { array: undefined } };
+  // @ts-expect-error
+  obj10 = { nested: { array: undefined, date: undefined } };
+  // @ts-expect-error
+  obj10 = { nested: { array: [{ bar: 1 }], date: undefined } };
+  // @ts-expect-error
+  obj10 = { nested: { array: undefined, date: new Date() } };
+  obj10 = { nested: { array: [{ bar: 1 }], date: new Date() } };
 }
 
 function testDeepPickInPartialObject() {
@@ -361,4 +378,14 @@ function testDeepPickInPartialObject() {
   obj9_1 = { nested: { promise: new Promise<{ bar?: number }>(() => {}) } };
   obj9_1 = { nested: { promise: new Promise<{ foo?: string; bar?: number }>(() => {}) } };
   obj9_1 = { nested: { promise: new Promise<{ foo: string; bar: number }>(() => {}) } };
+
+  let obj10: DeepPick<ComplexNestedPartial, { nested: { date: true; array: true } }>;
+  obj10 = {};
+  obj10 = { nested: undefined };
+  obj10 = { nested: { date: undefined } };
+  obj10 = { nested: { array: undefined } };
+  obj10 = { nested: { array: undefined, date: undefined } };
+  obj10 = { nested: { array: [{ bar: 1 }], date: undefined } };
+  obj10 = { nested: { array: undefined, date: new Date() } };
+  obj10 = { nested: { array: [{ bar: 1 }], date: new Date() } };
 }
