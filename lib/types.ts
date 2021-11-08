@@ -326,22 +326,6 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
     }
   : never;
 
-/**
- * @deprecated replace with DeepModify
- * @see DeepModify
- */
-type DeepOmitModify<T> =
-  | {
-      [K in keyof T]: [T[K]] extends [never] | [true] ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
-    }
-  | Array<DeepOmitModify<T>>
-  | Promise<DeepOmitModify<T>>
-  | Set<DeepOmitModify<T>>
-  | ReadonlySet<DeepOmitModify<T>>
-  | WeakSet<DeepOmitModify<T>>
-  | Map<any, DeepOmitModify<T>>
-  | WeakMap<any, DeepOmitModify<T>>;
-
 type DeepModify<T> =
   | {
       [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
