@@ -11,6 +11,8 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 export type ArrayOrSingle<T> = T | T[];
 
+type NonUndefinable<T> = T extends undefined ? never : T;
+
 /**
  * Like Record, but can be used with only one argument.
  * Useful, if you want to make sure that all of the keys of a finite type are used.
@@ -279,9 +281,58 @@ export type DeepOmit<T extends DeepOmitModify<Filter>, Filter> = T extends Built
         },
         never
       >;
+
+/** Recursively pick deep properties */
+export declare type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
+  ? T
+  : T extends Map<infer KeyType, infer ValueType>
+  ? Filter extends DeepModify<ValueType>
+    ? Map<KeyType, DeepPick<ValueType, Filter>>
+    : T
+  : T extends ReadonlyMap<infer KeyType, infer ValueType>
+  ? Filter extends DeepModify<ValueType>
+    ? ReadonlyMap<KeyType, DeepPick<ValueType, Filter>>
+    : T
+  : T extends WeakMap<infer KeyType, infer ValueType>
+  ? Filter extends DeepModify<ValueType>
+    ? WeakMap<KeyType, DeepPick<ValueType, Filter>>
+    : T
+  : T extends Set<infer ItemType>
+  ? Filter extends DeepModify<ItemType>
+    ? Set<DeepPick<ItemType, Filter>>
+    : T
+  : T extends ReadonlySet<infer ItemType>
+  ? Filter extends DeepModify<ItemType>
+    ? ReadonlySet<DeepPick<ItemType, Filter>>
+    : T
+  : T extends WeakSet<infer ItemType>
+  ? Filter extends DeepModify<ItemType>
+    ? WeakSet<DeepPick<ItemType, Filter>>
+    : T
+  : T extends Array<infer ItemType>
+  ? Filter extends DeepModify<ItemType>
+    ? Array<DeepPick<ItemType, Filter>>
+    : T
+  : T extends Promise<infer ItemType>
+  ? Filter extends DeepModify<ItemType>
+    ? Promise<DeepPick<ItemType, Filter>>
+    : T
+  : Filter extends Record<string, unknown>
+  ? {
+      // iterate over keys of T, which keeps the information about keys: optional, required or readonly
+      [K in keyof T as K extends keyof Filter ? K : never]: Filter[K & keyof Filter] extends true
+        ? T[K & keyof T]
+        : DeepPick<T[K & keyof T], Filter[K & keyof Filter]>;
+    }
+  : never;
+
+/**
+ * @deprecated replace with DeepModify
+ * @see DeepModify
+ */
 type DeepOmitModify<T> =
   | {
-      [K in keyof T]: T[K] extends never ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
+      [K in keyof T]: [T[K]] extends [never] | [true] ? any : T[K] extends object ? DeepOmitModify<T[K]> : never;
     }
   | Array<DeepOmitModify<T>>
   | Promise<DeepOmitModify<T>>
@@ -290,6 +341,24 @@ type DeepOmitModify<T> =
   | WeakSet<DeepOmitModify<T>>
   | Map<any, DeepOmitModify<T>>
   | WeakMap<any, DeepOmitModify<T>>;
+
+type DeepModify<T> =
+  | {
+      [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
+        ? NonUndefinable<T[K]> extends object
+          ? true | DeepModify<NonUndefinable<T[K]>>
+          : true
+        : T[K] extends object
+        ? true | DeepModify<T[K]>
+        : true;
+    }
+  | Array<DeepModify<T>>
+  | Promise<DeepModify<T>>
+  | Set<DeepModify<T>>
+  | ReadonlySet<DeepModify<T>>
+  | WeakSet<DeepModify<T>>
+  | Map<any, DeepModify<T>>
+  | WeakMap<any, DeepModify<T>>;
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;

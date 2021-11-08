@@ -52,6 +52,7 @@ import {
   ArrayOrSingle,
   IsAny,
 } from "../lib";
+import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDictionary() {
   type cases = [
@@ -137,42 +138,6 @@ function testSafeDictionary() {
   // non exhaustiveness
   const safeDict: SafeDictionary<string, "A" | "B"> = { A: "OK" };
 }
-
-type ComplexNestedPartial = {
-  simple?: number;
-  nested?: {
-    date?: Date;
-    func?: () => string;
-    array?: { bar?: number }[];
-    set?: Set<{ name?: string }>;
-    tuple?: [string?, number?, { good?: boolean }?];
-    map?: Map<
-      string,
-      {
-        name?: string;
-      }
-    >;
-    promise?: Promise<{ foo?: string; bar?: number }>;
-  };
-};
-
-type ComplexNestedRequired = {
-  simple: number;
-  nested: {
-    date: Date;
-    func: () => string;
-    array: { bar: number }[];
-    tuple: [string, number, { good: boolean }];
-    set: Set<{ name: string }>;
-    map: Map<
-      string,
-      {
-        name: string;
-      }
-    >;
-    promise: Promise<{ foo: string; bar: number }>;
-  };
-};
 
 type ComplexNestedNullable = {
   simple: number | null;
@@ -974,26 +939,8 @@ function testRequiredKeys() {
   ];
 }
 
-function testPickKeys() {
-  type Input = {
-    req: number;
-    opt?: string;
-    opt2: string;
-    undef: string | undefined;
-    nullable: string | null;
-  };
-
-  type Expected1 = "opt2";
-  type Actual1 = PickKeys<Input, string>;
-  type Test1 = Assert<IsExact<Expected1, Actual1>>;
-
-  type Expected2 = "opt" | "opt2" | "undef";
-  type Actual2 = PickKeys<Input, string | undefined>;
-  type Test2 = Assert<IsExact<Expected2, Actual2>>;
-}
-
 function testDeepOmit() {
-  type Nested = {
+  type Whole = {
     a: { b: string; c: { d: string; e: boolean }; f: number };
     array: { a: string; b: boolean }[][];
     set: Set<{ a: string; b: boolean }>;
@@ -1004,37 +951,36 @@ function testDeepOmit() {
         b: boolean;
       }
     >;
+    optionalProp?: number;
+    // filteredOptionalProp?: number;
   };
+
   type Omitted = {
     a: { c: { e: boolean }; f: number };
     array: { b: boolean }[][];
     set: Set<{ b: boolean }>;
     map: Map<number, { b: boolean }>;
+    optionalProp?: number;
   };
 
-  type Filter = {
+  // to demonstrate that types in filter can be defined either way (as 'true' or 'never')
+  type NeverFilter = {
     a: { b: never; c: { d: never } };
     array: { a: never };
     set: { a: never };
     map: { a: never };
   };
 
-  type Test = Assert<IsExact<DeepOmit<Nested, Filter>, Omitted>>;
-}
-
-function testDeepOmit2() {
-  type OptionalProperty = {
-    id: string;
-    age: number;
-    name?: string;
-  };
-  type Omitted = {
-    id: string;
-    name?: string;
+  type TrueFilter = {
+    a: { b: true; c: { d: true } };
+    array: { a: true };
+    set: { a: true };
+    map: { a: true };
   };
 
-  type Result = DeepOmit<OptionalProperty, { age: never }>;
-  type Test = Assert<IsExact<Result, Omitted>>;
+  type TestDeepOmitNeverFilter = Assert<IsExact<DeepOmit<Whole, NeverFilter>, Omitted>>;
+
+  type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
 }
 
 function testTupleInference() {
