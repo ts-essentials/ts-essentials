@@ -1154,7 +1154,7 @@ function testWritableKeys() {
 function testAssert() {
   type TestType1 = string | undefined;
   type Expected = string;
-  const anything = (undefined as any) as TestType1;
+  const anything = undefined as any as TestType1;
 
   assert(anything);
   type Actual = typeof anything;
