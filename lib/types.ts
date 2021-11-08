@@ -266,13 +266,10 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
   ? {
       [K in keyof T as K extends keyof Filter ? never : K]: T[K];
     } & {
-      [K in Extract<OptionalKeys<T>, keyof Filter> as [Filter[K]] extends [true] | [never]
-        ? never
-        : K]+?: Filter[K] extends DeepModify<T[K]> ? DeepOmit<T[K], Filter[K]> : T[K];
-    } & {
-      [K in Extract<RequiredKeys<T>, keyof Filter> as [Filter[K]] extends [true] | [never]
-        ? never
-        : K]: Filter[K] extends DeepModify<T[K]> ? DeepOmit<T[K], Filter[K]> : T[K];
+      [K in keyof T as K extends keyof Filter ? ([Filter[K]] extends [true] | [never] ? never : K) : never]: Filter[K &
+        keyof Filter] extends DeepModify<T[K]>
+        ? DeepOmit<T[K], Filter[K & keyof Filter]>
+        : T[K];
     }
   : never;
 
