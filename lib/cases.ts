@@ -18,4 +18,6 @@ type Join<T> = T extends [infer Head, ...infer Tail] ? (Head extends string ? `$
 
 export type CamelCase<T> = Join<CamelCapitalizer<SplitSnakeCase<T>>>;
 
-export type CamelCaseProperties<T> = T extends Record<string, unknown> ? { [K in keyof T as CamelCase<K>]: T[K] } : T;
+export type DeepCamelCaseProperties<T> = T extends Record<string, unknown>
+  ? { [K in keyof T as CamelCase<K>]: T[K] }
+  : T;

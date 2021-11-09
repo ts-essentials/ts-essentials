@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { CamelCase, CamelCaseProperties } from "../lib";
+import { CamelCase, DeepCamelCaseProperties } from "../lib";
 
 type SnakeCaseExample = {
   oneword: 1;
@@ -33,8 +33,8 @@ function testSnakeCase() {
 
 function testSnakeToCamelCase() {
   type cases = [
-    Assert<IsExact<CamelCaseProperties<SnakeCaseExample>, CamelCaseExample>>,
+    Assert<IsExact<DeepCamelCaseProperties<SnakeCaseExample>, CamelCaseExample>>,
     // doesn't hurt calling it twice
-    Assert<IsExact<CamelCaseProperties<CamelCaseExample>, CamelCaseExample>>,
+    Assert<IsExact<DeepCamelCaseProperties<CamelCaseExample>, CamelCaseExample>>,
   ];
 }
