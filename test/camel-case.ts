@@ -29,17 +29,39 @@ type CamelCaseExample = {
   };
 };
 
-function testSnakeCase() {
+function testCamelCase() {
   type cases = [
+    // all possible key types
     Assert<IsExact<CamelCase<symbol>, symbol>>,
     Assert<IsExact<CamelCase<number>, number>>,
     Assert<IsExact<CamelCase<string>, string>>,
+    // empty string
     Assert<IsExact<CamelCase<"">, "">>,
+    // oneword
     Assert<IsExact<CamelCase<"oneword">, "oneword">>,
+    Assert<IsExact<CamelCase<"ONEWORD">, "oneword">>,
+    // snake_case
     Assert<IsExact<CamelCase<"two_words">, "twoWords">>,
     Assert<IsExact<CamelCase<"here_three_words">, "hereThreeWords">>,
+    // CONSTANT_CASE
+    Assert<IsExact<CamelCase<"TWO_WORDS">, "twoWords">>,
+    Assert<IsExact<CamelCase<"HERE_THREE_WORDS">, "hereThreeWords">>,
+    // kebab-case
+    Assert<IsExact<CamelCase<"two-words">, "twoWords">>,
+    Assert<IsExact<CamelCase<"here-three-words">, "hereThreeWords">>,
+    // COBOL-CASE
+    Assert<IsExact<CamelCase<"TWO-WORDS">, "twoWords">>,
+    Assert<IsExact<CamelCase<"HERE-THREE-WORDS">, "hereThreeWords">>,
+    // camelCase
+    Assert<IsExact<CamelCase<"twoWords">, "twoWords">>,
+    Assert<IsExact<CamelCase<"hereThreeWords">, "hereThreeWords">>,
+    // PascalCase
+    Assert<IsExact<CamelCase<"TwoWords">, "twoWords">>,
+    Assert<IsExact<CamelCase<"HereThreeWords">, "hereThreeWords">>,
   ];
 }
+
+type A = DeepCamelCaseProperties<CamelCaseExample>;
 
 function testSnakeToCamelCase() {
   type cases = [
