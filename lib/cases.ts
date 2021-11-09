@@ -41,9 +41,7 @@ type PascalCaseParser<T> = T extends ""
     : never
   : never;
 
-type SplitAnyCase<T> = T extends ""
-  ? []
-  : IncludesSeparator<T> extends true
+type SplitAnyCase<T> = IncludesSeparator<T> extends true
   ? SeparatorCaseParser<T>
   : IsOneWord<T> extends true
   ? [Lowercase<T & string>]
