@@ -6,8 +6,9 @@ type SnakeCaseExample = {
   two_words: "123";
   here_three_words: false;
   nested: {
-    snake_case: {};
-    camelCase: [1, 2, 3];
+    oneword: {};
+    two_words: [1, 2, 3];
+    here_three_words: Set<number>;
   };
 };
 
@@ -16,8 +17,9 @@ type CamelCaseExample = {
   twoWords: "123";
   hereThreeWords: false;
   nested: {
-    snake_case: {};
-    camelCase: [1, 2, 3];
+    oneword: {};
+    twoWords: [1, 2, 3];
+    hereThreeWords: Set<number>;
   };
 };
 
