@@ -1,3 +1,5 @@
+type IsStringLiteral<T> = T extends string ? (string extends T ? false : true) : false;
+
 type SplitSnakeCase<T> = T extends `${infer Word}_${infer Tail}`
   ? [Word, ...SplitSnakeCase<Tail>]
   : T extends `${infer Word}`
@@ -16,7 +18,7 @@ type CamelCapitalizer<T extends string[]> = T extends [infer First, ...infer Tai
 
 type Join<T> = T extends [infer Head, ...infer Tail] ? (Head extends string ? `${Head}${Join<Tail>}` : Join<Tail>) : "";
 
-export type CamelCase<T> = Join<CamelCapitalizer<SplitSnakeCase<T>>>;
+export type CamelCase<T> = IsStringLiteral<T> extends true ? Join<CamelCapitalizer<SplitSnakeCase<T>>> : T;
 
 export type DeepCamelCaseProperties<T> = T extends Record<string, unknown>
   ? { [K in keyof T as CamelCase<K>]: DeepCamelCaseProperties<T[K]> }

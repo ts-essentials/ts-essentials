@@ -1,10 +1,14 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import { CamelCase, DeepCamelCaseProperties } from "../lib";
 
+declare const symbol: unique symbol;
+
 type SnakeCaseExample = {
   oneword: 1;
   two_words: "123";
   here_three_words: false;
+  1: undefined;
+  [symbol]: null;
   nested: {
     oneword: {};
     two_words: [1, 2, 3];
@@ -16,6 +20,8 @@ type CamelCaseExample = {
   oneword: 1;
   twoWords: "123";
   hereThreeWords: false;
+  1: undefined;
+  [symbol]: null;
   nested: {
     oneword: {};
     twoWords: [1, 2, 3];
@@ -25,7 +31,9 @@ type CamelCaseExample = {
 
 function testSnakeCase() {
   type cases = [
-    Assert<IsExact<CamelCase<string>, "">>,
+    Assert<IsExact<CamelCase<symbol>, symbol>>,
+    Assert<IsExact<CamelCase<number>, number>>,
+    Assert<IsExact<CamelCase<string>, string>>,
     Assert<IsExact<CamelCase<"">, "">>,
     Assert<IsExact<CamelCase<"oneword">, "oneword">>,
     Assert<IsExact<CamelCase<"two_words">, "twoWords">>,
