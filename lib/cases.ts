@@ -19,25 +19,25 @@ type IsCamelCase<T> = T extends Uncapitalize<T & string> ? true : false;
 type IsPascalCase<T> = T extends Capitalize<T & string> ? true : false;
 
 /** snake_case, CONSTANT_CASE, kebab-case or COBOL-CASE */
-type SeparatorCaseParser<T> = T extends `${infer Word}${Separator}${infer Tail}`
-  ? [Lowercase<Word>, ...SeparatorCaseParser<Tail>]
+type SeparatorCaseParser<T, Result extends readonly any[] = []> = T extends `${infer Word}${Separator}${infer Tail}`
+  ? SeparatorCaseParser<Tail, [...Result, Lowercase<Word>]>
   : T extends `${infer Word}`
-  ? [Lowercase<Word>]
-  : [];
+  ? [...Result, Lowercase<Word>]
+  : Result;
 
-type CamelCaseParser<T> = T extends ""
-  ? []
+type CamelCaseParser<T, Result extends readonly any[] = []> = T extends ""
+  ? Result
   : T extends `${WordInCamelCase<T & string>}${infer Tail}`
   ? T extends `${infer Word}${Tail}`
-    ? [Lowercase<Word>, ...CamelCaseParser<Uncapitalize<Tail>>]
+    ? CamelCaseParser<Uncapitalize<Tail>, [...Result, Lowercase<Word>]>
     : never
   : never;
 
-type PascalCaseParser<T> = T extends ""
-  ? []
+type PascalCaseParser<T, Result extends readonly any[] = []> = T extends ""
+  ? Result
   : T extends `${WordInPascalCase<T & string>}${infer Tail}`
   ? T extends `${infer Word}${Tail}`
-    ? [Lowercase<Word>, ...PascalCaseParser<Tail>]
+    ? PascalCaseParser<Tail, [...Result, Lowercase<Word>]>
     : never
   : never;
 
@@ -51,17 +51,19 @@ type SplitAnyCase<T> = IncludesSeparator<T> extends true
   ? PascalCaseParser<T>
   : [];
 
-type PascalCapitalizer<T> = T extends [infer Head, ...infer Tail]
+type PascalCapitalizer<T, Result extends readonly any[] = []> = T extends [infer Head, ...infer Tail]
   ? Head extends string
-    ? [Capitalize<Head>, ...PascalCapitalizer<Tail>]
-    : PascalCapitalizer<Tail>
-  : [];
+    ? PascalCapitalizer<Tail, [...Result, Capitalize<Head>]>
+    : PascalCapitalizer<Tail, Result>
+  : Result;
 
-type CamelCapitalizer<T extends string[]> = T extends [infer First, ...infer Tail]
-  ? [First, ...PascalCapitalizer<Tail>]
-  : [];
+type CamelCapitalizer<T> = T extends [infer First, ...infer Tail] ? PascalCapitalizer<Tail, [First]> : [];
 
-type Join<T> = T extends [infer Head, ...infer Tail] ? (Head extends string ? `${Head}${Join<Tail>}` : Join<Tail>) : "";
+type Join<T, Result extends string = ""> = T extends [infer Head, ...infer Tail]
+  ? Head extends string
+    ? Join<Tail, `${Result}${Head}`>
+    : Join<Tail>
+  : Result;
 
 export type CamelCase<T> = IsStringLiteral<T> extends true ? Join<CamelCapitalizer<SplitAnyCase<T>>> : T;
 
