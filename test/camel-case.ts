@@ -61,8 +61,6 @@ function testCamelCase() {
   ];
 }
 
-type A = DeepCamelCaseProperties<CamelCaseExample>;
-
 function testSnakeToCamelCase() {
   type cases = [
     Assert<IsExact<DeepCamelCaseProperties<SnakeCaseExample>, CamelCaseExample>>,
