@@ -8,7 +8,6 @@ import {
   Buildable,
   DeepNonNullable,
   DeepNullable,
-  DeepOmit,
   DeepPartial,
   DeepReadonly,
   DeepRequired,
@@ -937,50 +936,6 @@ function testRequiredKeys() {
     Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | undefined }>, "a" | "b">>,
     Assert<IsExact<RequiredKeys<{ a: 1 } | { b: 2 | null }>, "a" | "b">>,
   ];
-}
-
-function testDeepOmit() {
-  type Whole = {
-    a: { b: string; c: { d: string; e: boolean }; f: number };
-    array: { a: string; b: boolean }[][];
-    set: Set<{ a: string; b: boolean }>;
-    map: Map<
-      number,
-      {
-        a: string;
-        b: boolean;
-      }
-    >;
-    optionalProp?: number;
-    // filteredOptionalProp?: number;
-  };
-
-  type Omitted = {
-    a: { c: { e: boolean }; f: number };
-    array: { b: boolean }[][];
-    set: Set<{ b: boolean }>;
-    map: Map<number, { b: boolean }>;
-    optionalProp?: number;
-  };
-
-  // to demonstrate that types in filter can be defined either way (as 'true' or 'never')
-  type NeverFilter = {
-    a: { b: never; c: { d: never } };
-    array: { a: never };
-    set: { a: never };
-    map: { a: never };
-  };
-
-  type TrueFilter = {
-    a: { b: true; c: { d: true } };
-    array: { a: true };
-    set: { a: true };
-    map: { a: true };
-  };
-
-  type TestDeepOmitNeverFilter = Assert<IsExact<DeepOmit<Whole, NeverFilter>, Omitted>>;
-
-  type TestDeepOmitFilter = Assert<IsExact<DeepOmit<Whole, TrueFilter>, Omitted>>;
 }
 
 function testTupleInference() {
