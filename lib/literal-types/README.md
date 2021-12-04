@@ -22,3 +22,17 @@ type Example3 = CamelCase<"HERE-THREE-WORDS">;
 ```
 
 ## DeepCamelCaseProperties
+
+Given an object, converts all keys to camel case:
+
+```typescript
+type Input = {
+  ONEWORD: 1;
+  two_words: {
+    "HERE-THREE-WORDS": false;
+  };
+};
+
+// { oneword: 1; twoWords: { hereThreeWords: false } }
+type Example = DeepCamelCaseProperties<Input>;
+```

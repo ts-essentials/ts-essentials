@@ -11,8 +11,8 @@ type SnakeCaseExample = {
   [symbol]: null;
   nested: {
     oneword: {};
-    two_words: [1, 2, 3];
-    here_three_words: Set<number>;
+    "TWO-WORDS": [1, 2, 3];
+    "HERE-THREE-WORDS": Set<number>;
   };
 };
 
