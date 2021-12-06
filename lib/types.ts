@@ -280,36 +280,36 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
 export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? Map<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends Map<KeyType, infer FilterValueType>
+    ? Map<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? ReadonlyMap<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
+    ? ReadonlyMap<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? WeakMap<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends WeakMap<KeyType, infer FilterValueType>
+    ? WeakMap<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends Set<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Set<DeepPick<ItemType, Filter>>
+  ? Filter extends Set<infer FilterItemType>
+    ? Set<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends ReadonlySet<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? ReadonlySet<DeepPick<ItemType, Filter>>
+  ? Filter extends ReadonlySet<infer FilterItemType>
+    ? ReadonlySet<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends WeakSet<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? WeakSet<DeepPick<ItemType, Filter>>
+  ? Filter extends WeakSet<infer FilterItemType>
+    ? WeakSet<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends Array<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Array<DeepPick<ItemType, Filter>>
+  ? Filter extends Array<infer FilterItemType>
+    ? Array<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends Promise<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Promise<DeepPick<ItemType, Filter>>
+  ? Filter extends Promise<infer FilterItemType>
+    ? Promise<DeepPick<ItemType, FilterItemType>>
     : T
   : Filter extends Record<string, unknown>
   ? {

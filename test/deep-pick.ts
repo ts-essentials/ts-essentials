@@ -388,4 +388,191 @@ function testDeepPickInPartialObject() {
   obj10 = { nested: { array: [{ bar: 1 }], date: undefined } };
   obj10 = { nested: { array: undefined, date: new Date() } };
   obj10 = { nested: { array: [{ bar: 1 }], date: new Date() } };
+
+  {
+    type MapType = Map<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
+    let map: DeepPick<MapType, Map<string, { age: true }>>;
+
+    map = new Map<string, { age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    map = new Map<string, { name: string }>();
+    // we still can extend value type
+    map = new Map<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >();
+    // @ts-expect-error Type 'number' is not assignable to type 'string'
+    map = new Map<number, {}>();
+    map.set("key", { age: 1 });
+  }
+
+  {
+    type MapType = ReadonlyMap<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
+    let map: DeepPick<MapType, ReadonlyMap<string, { age: true }>>;
+
+    map = new Map<string, { age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    map = new Map<string, { name: string }>();
+    // we still can extend value type
+    map = new Map<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >();
+    // @ts-expect-error Type 'number' is not assignable to type 'string'
+    map = new Map<number, {}>();
+    // @ts-expect-error Property 'set' does not exist on type 'ReadonlyMap<string, { age: number; }>'
+    map.set("key", { age: 1 });
+  }
+
+  {
+    type MapType = WeakMap<
+      { a: string },
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
+    let map: DeepPick<MapType, WeakMap<{ a: string }, { age: true }>>;
+
+    map = new WeakMap<{ a: string }, { age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    map = new Map<{ a: string }, { name: string }>();
+    // we still can extend value type
+    map = new Map<
+      { a: string },
+      {
+        name: string;
+        age: number;
+      }
+    >();
+    // @ts-expect-error Type 'number' is not assignable to type 'string'
+    map = new Map<{ a: number }, {}>();
+    map.set({ a: "key" }, { age: 1 });
+  }
+
+  {
+    type SetType = Set<{
+      name: string;
+      age: number;
+    }>;
+
+    let set: DeepPick<SetType, Set<{ age: true }>>;
+
+    set = new Set<{ age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    set = new Set<{ name: string }>();
+    // we still can extend value type
+    set = new Set<{
+      name: string;
+      age: number;
+    }>();
+    // @ts-expect-error Type 'number' is not assignable to type 'string'
+    set = new Set<{}>();
+    set.add({ age: 1 });
+  }
+
+  {
+    type ReadonlySetType = ReadonlySet<{
+      name: string;
+      age: number;
+    }>;
+
+    let set: DeepPick<ReadonlySetType, ReadonlySet<{ age: true }>>;
+
+    set = new Set<{ age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    set = new Set<{ name: string }>();
+    // we still can extend value type
+    set = new Set<{
+      name: string;
+      age: number;
+    }>();
+    // @ts-expect-error Type 'number' is not assignable to type 'string'
+    set = new Set<{}>();
+    // @ts-expect-error Property 'add' does not exist on type 'ReadonlySet<{ age: number; }>'
+    set.add({ age: 1 });
+  }
+
+  {
+    type WeakSetType = WeakSet<{
+      name: string;
+      age: number;
+    }>;
+
+    let set: DeepPick<WeakSetType, WeakSet<{ age: true }>>;
+
+    set = new WeakSet<{ age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    set = new WeakSet<{ name: string }>();
+    // we still can extend value type
+    set = new WeakSet<{
+      name: string;
+      age: number;
+    }>();
+    // we even can use it that way for WeekSet
+    set = new WeakSet<{}>();
+    set.add({ age: 1 });
+  }
+
+  {
+    type ArrayType = Array<{
+      name: string;
+      age: number;
+    }>;
+
+    let arr: DeepPick<ArrayType, Array<{ age: true }>>;
+
+    arr = new Array<{ age: number }>();
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    arr = new Array<{ name: string }>();
+    // we still can extend value type
+    arr = new Array<{
+      name: string;
+      age: number;
+    }>();
+    // @ts-expect-error Property 'age' is missing in type '{}' but required in type '{ age: number; }'
+    arr = new Array<{}>();
+    arr.push({ age: 1 });
+  }
+
+  {
+    type PromiseType = Promise<{
+      name: string;
+      age: number;
+    }>;
+
+    let promise: DeepPick<PromiseType, Promise<{ age: true }>>;
+
+    promise = new Promise<{ age: number }>(() => {});
+    // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
+    promise = new Promise<{ name: string }>(() => {});
+    // we still can extend value type
+    promise = new Promise<{
+      name: string;
+      age: number;
+    }>(() => {});
+    // @ts-expect-error Property 'age' is missing in type '{}' but required in type '{ age: number; }'
+    promise = new Promise<{}>(() => {});
+  }
 }
