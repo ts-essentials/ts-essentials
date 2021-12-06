@@ -46,7 +46,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - DeepNullable
     - DeepUndefinable
     - [Difference between `DeepRequired` and `DeepNonNullable`](#difference-between-deeprequired-and-deepnonnullable)
-  - [Literal types](https://github.com/krzkaczor/ts-essentials/tree/feat/camel-case/lib/literal-types#literal-types)
+  - [Literal types](https://github.com/krzkaczor/ts-essentials/tree/master/lib/literal-types#literal-types)
     - CamelCase
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
