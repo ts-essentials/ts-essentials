@@ -231,36 +231,36 @@ export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
 export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? Map<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends Map<KeyType, infer FilterValueType>
+    ? Map<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? ReadonlyMap<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
+    ? ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
-  ? Filter extends DeepModify<ValueType>
-    ? WeakMap<KeyType, DeepPick<ValueType, Filter>>
+  ? Filter extends WeakMap<KeyType, infer FilterValueType>
+    ? WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends Set<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Set<DeepPick<ItemType, Filter>>
+  ? Filter extends Set<infer FilterItemType>
+    ? Set<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends ReadonlySet<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? ReadonlySet<DeepPick<ItemType, Filter>>
+  ? Filter extends ReadonlySet<infer FilterItemType>
+    ? ReadonlySet<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends WeakSet<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? WeakSet<DeepPick<ItemType, Filter>>
+  ? Filter extends WeakSet<infer FilterItemType>
+    ? WeakSet<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends Array<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Array<DeepPick<ItemType, Filter>>
+  ? Filter extends Array<infer FilterItemType>
+    ? Array<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends Promise<infer ItemType>
-  ? Filter extends DeepModify<ItemType>
-    ? Promise<DeepPick<ItemType, Filter>>
+  ? Filter extends Promise<infer FilterItemType>
+    ? Promise<DeepOmit<ItemType, FilterItemType>>
     : T
   : Filter extends Record<string, unknown>
   ? {
@@ -330,13 +330,13 @@ type DeepModify<T> =
         ? true | DeepModify<T[K]>
         : true;
     }
-  | Array<DeepModify<T>>
-  | Promise<DeepModify<T>>
-  | Set<DeepModify<T>>
-  | ReadonlySet<DeepModify<T>>
-  | WeakSet<DeepModify<T>>
-  | Map<any, DeepModify<T>>
-  | WeakMap<any, DeepModify<T>>;
+  | (T extends Array<infer E> ? Array<DeepModify<E>> : never)
+  | (T extends Promise<infer E> ? Promise<DeepModify<E>> : never)
+  | (T extends Set<infer E> ? Set<DeepModify<E>> : never)
+  | (T extends ReadonlySet<infer E> ? ReadonlySet<DeepModify<E>> : never)
+  | (T extends WeakSet<infer E> ? WeakSet<DeepModify<E>> : never)
+  | (T extends Map<any, infer E> ? Map<any, DeepModify<E>> : never)
+  | (T extends WeakMap<any, infer E> ? WeakMap<any, DeepModify<E>> : never);
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
