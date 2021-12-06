@@ -46,6 +46,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - DeepNullable
     - DeepUndefinable
     - [Difference between `DeepRequired` and `DeepNonNullable`](#difference-between-deeprequired-and-deepnonnullable)
+  - [Literal types](https://github.com/krzkaczor/ts-essentials/tree/master/lib/literal-types#literal-types)
+    - CamelCase
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
   - [Omit](#Omit)
@@ -601,9 +603,9 @@ Useful for purifying object types. It improves intellisense but also allows for 
 type.
 
 ```typescript
-type GetDefined<TypesMap extends { [key: string]: any }> = keyof NonNever<
-  { [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T] }
->;
+type GetDefined<TypesMap extends { [key: string]: any }> = keyof NonNever<{
+  [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T];
+}>;
 ```
 
 ### NonEmptyObject
