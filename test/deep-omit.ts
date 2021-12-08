@@ -601,6 +601,19 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
+    // @ts-expect-error ❌ Type 'number' is not assignable to type 'string'
+    let map: DeepOmit<MapType, Map<number, { age: true }>>;
+  }
+
+  {
+    type MapType = Map<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
     let map: DeepOmit<MapType, Map<string, { name: true }>>;
 
     map = new Map<string, { age: number }>();
@@ -617,6 +630,19 @@ function testDeepOmitInPartialObject() {
     // @ts-expect-error Type 'number' is not assignable to type 'string'
     map = new Map<number, {}>();
     map.set("key", { age: 1 });
+  }
+
+  {
+    type MapType = ReadonlyMap<
+      string,
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
+    // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
+    let map: DeepOmit<MapType, ReadonlyMap<number, { age: true }>>;
   }
 
   {
@@ -645,6 +671,19 @@ function testDeepOmitInPartialObject() {
     map = new Map<number, {}>();
     // @ts-expect-error Property 'set' does not exist on type 'ReadonlyMap<string, { age: number; }>'
     map.set("key", { age: 1 });
+  }
+
+  {
+    type MapType = WeakMap<
+      { a: string },
+      {
+        name: string;
+        age: number;
+      }
+    >;
+
+    // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
+    let map: DeepOmit<MapType, WeakMap<{ a: number }, { age: true }>>;
   }
 
   {
