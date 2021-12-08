@@ -1,5 +1,20 @@
 # ts-essentials
 
+## 9.1.0
+
+### Minor Changes
+
+- c231fa5: Add `IsAny` which returns true if it's `any`, otherwise false
+- 003dc3c: Add `ArrayOrSingle`
+- 831ba8b: Add `DeepPick` with the validation of the filter
+- f592ca9: Add `CamelCase` and `DeepCamelCaseProperties` for converting it from other cases
+
+### Patch Changes
+
+- 758338c: Properly infer required fields for set, map, array and promise in `DeepOmit` and `DeepPick`
+- ef534e3: Improve `DeepOmit` by removing 4 intersections for objects and applying generic restriction for Filter
+- fb7f733: Adapt `OptionalKeys` and `RequiredKeys` for union of objects
+
 ## 9.0.0
 
 ### Major Changes
