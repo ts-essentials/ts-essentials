@@ -335,8 +335,9 @@ type DeepModify<T> =
   | (T extends Set<infer E> ? Set<DeepModify<E>> : never)
   | (T extends ReadonlySet<infer E> ? ReadonlySet<DeepModify<E>> : never)
   | (T extends WeakSet<infer E> ? WeakSet<DeepModify<E>> : never)
-  | (T extends Map<any, infer E> ? Map<any, DeepModify<E>> : never)
-  | (T extends WeakMap<any, infer E> ? WeakMap<any, DeepModify<E>> : never);
+  | (T extends Map<infer K, infer E> ? Map<K, DeepModify<E>> : never)
+  | (T extends ReadonlyMap<infer K, infer E> ? ReadonlyMap<K, DeepModify<E>> : never)
+  | (T extends WeakMap<infer K, infer E> ? WeakMap<K, DeepModify<E>> : never);
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
