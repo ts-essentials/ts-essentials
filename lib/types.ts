@@ -1,10 +1,11 @@
 import { ComplexNestedPartial, ComplexNestedRequired } from "../test/types";
 
 /** Essentials */
+export type KeyofBase = keyof any;
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
-type AnyRecord<T = any> = Record<PropertyKey, T>;
+type AnyRecord<T = any> = Record<KeyofBase, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
 export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
@@ -19,7 +20,7 @@ type NonUndefinable<T> = T extends undefined ? never : T;
  * Like Record, but can be used with only one argument.
  * Useful, if you want to make sure that all of the keys of a finite type are used.
  */
-export type Dictionary<T, K extends string | number = string> = { [key in K]: T };
+export type Dictionary<T, K extends KeyofBase = string> = { [key in K]: T };
 /** Given Dictionary<T> returns T */
 export type DictionaryValues<T> = T[keyof T];
 /**
@@ -27,7 +28,7 @@ export type DictionaryValues<T> = T[keyof T];
  *  - ensures type safety of index access
  *  - does not enforce key exhaustiveness
  */
-export type SafeDictionary<T, K extends string | number = string> = { [key in K]?: T };
+export type SafeDictionary<T, K extends KeyofBase = string> = { [key in K]?: T };
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin
