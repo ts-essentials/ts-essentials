@@ -1,6 +1,7 @@
 import { ComplexNestedPartial, ComplexNestedRequired } from "../test/types";
 
 /** Essentials */
+// https://devblogs.microsoft.com/typescript/announcing-typescript-2-9-2/#support-for-symbols-and-numeric-literals-in-keyof-and-mapped-object-types
 export type KeyofBase = keyof any;
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 export type Builtin = Primitive | Function | Date | Error | RegExp;
