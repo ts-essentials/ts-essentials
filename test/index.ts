@@ -51,6 +51,7 @@ import {
   ArrayOrSingle,
   IsAny,
 } from "../lib";
+import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDictionary() {
@@ -767,16 +768,26 @@ function testStrictOmit() {
     StrictOmit<undefined, never>,
     // @ts-expect-error works only with records
     StrictOmit<null, never>,
-    Assert<IsExact<StrictOmit<Function, never>, Function>>,
-    Assert<IsExact<StrictOmit<Date, never>, Date>>,
-    Assert<IsExact<StrictOmit<Error, never>, Error>>,
-    Assert<IsExact<StrictOmit<RegExp, never>, RegExp>>,
-    Assert<IsExact<StrictOmit<Map<string, boolean>, never>, Map<string, boolean>>>,
-    Assert<IsExact<StrictOmit<ReadonlyMap<string, boolean>, never>, ReadonlyMap<string, boolean>>>,
-    Assert<IsExact<StrictOmit<WeakMap<{ key: string }, boolean>, never>, WeakMap<{ key: string }, boolean>>>,
-    Assert<IsExact<StrictOmit<Set<string>, never>, Set<string>>>,
-    Assert<IsExact<StrictOmit<ReadonlySet<string>, never>, ReadonlySet<string>>>,
-    Assert<IsExact<StrictOmit<Promise<number>, never>, Promise<number>>>,
+    Assert<IsExact<StrictOmit<Function, never> & Function, Function>>,
+    Assert<IsExact<StrictOmit<Date, never> & Date, Date>>,
+    Assert<IsExact<StrictOmit<Error, never> & Error, Error>>,
+    Assert<IsExact<StrictOmit<RegExp, never> & RegExp, RegExp>>,
+    Assert<IsExact<StrictOmit<Map<string, boolean>, never> & Map<string, boolean>, Map<string, boolean>>>,
+    Assert<
+      IsExact<
+        StrictOmit<ReadonlyMap<string, boolean>, never> & ReadonlyMap<string, boolean>,
+        ReadonlyMap<string, boolean>
+      >
+    >,
+    Assert<
+      IsExact<
+        StrictOmit<WeakMap<{ key: string }, boolean>, never> & WeakMap<{ key: string }, boolean>,
+        WeakMap<{ key: string }, boolean>
+      >
+    >,
+    Assert<IsExact<StrictOmit<Set<string>, never> & Set<string>, Set<string>>>,
+    Assert<IsExact<StrictOmit<ReadonlySet<string>, never> & ReadonlySet<string>, ReadonlySet<string>>>,
+    Assert<IsExact<StrictOmit<Promise<number>, never> & Promise<number>, Promise<number>>>,
     Assert<IsExact<StrictOmit<{}, never>, {}>>,
     Assert<IsExact<StrictOmit<{ a: 1 }, never>, { a: 1 }>>,
     Assert<IsExact<StrictOmit<{ a?: 1 }, never>, { a?: 1 }>>,
@@ -885,7 +896,14 @@ function testOptionalKeys() {
     // @ts-expect-error converts to BigInt and gets its optional keys
     Assert<IsExact<OptionalKeys<bigint>, never>>,
     // wtf?
-    Assert<IsExact<OptionalKeys<symbol>, string | ((hint: string) => symbol) | (() => string) | (() => symbol)>>,
+    Assert<
+      IsExact<
+        OptionalKeys<symbol>,
+        TsVersion extends "4.1"
+          ? (() => string) | (() => symbol)
+          : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
+      >
+    >,
     Assert<IsExact<OptionalKeys<undefined>, never>>,
     Assert<IsExact<OptionalKeys<null>, never>>,
     Assert<IsExact<OptionalKeys<Function>, never>>,
@@ -911,11 +929,15 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    // @ts-expect-error converts to String and gets its required keys
-    Assert<IsExact<RequiredKeys<string>, never>>,
+    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" ? never : SymbolConstructor["iterator"]>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
-    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<
+      IsExact<
+        RequiredKeys<symbol>,
+        TsVersion extends "4.1" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
+      >
+    >,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
     Assert<IsExact<RequiredKeys<null>, never>>,
     Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
