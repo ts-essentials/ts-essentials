@@ -270,7 +270,8 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
           : K
         : K]: K extends keyof Filter
         ? Filter[K & keyof Filter] extends DeepModify<T[K]>
-          ? DeepOmit<T[K], Filter[K & keyof Filter]>
+          ? // @ts-ignore typescript breaks here starting from 4.5.2
+            DeepOmit<T[K], Filter[K & keyof Filter]>
           : T[K]
         : T[K];
     }
@@ -316,7 +317,8 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
       // iterate over keys of T, which keeps the information about keys: optional, required or readonly
       [K in keyof T as K extends keyof Filter ? K : never]: Filter[K & keyof Filter] extends true
         ? T[K & keyof T]
-        : DeepPick<T[K & keyof T], Filter[K & keyof Filter]>;
+        : // @ts-ignore typescript breaks here starting from 4.5.2
+          DeepPick<T[K & keyof T], Filter[K & keyof Filter]>;
     }
   : never;
 
