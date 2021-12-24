@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  typecheck:
+    name: Type Checks
+    strategy:
+      matrix:
+        node: ['10.x']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cache YARN dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
+
+      - run: yarn --no-progress --non-interactive --frozen-lockfile
+
+      # TypeScript 4.1
+      - run: yarn add typescript@4.1.5
+      - run: yarn test
+
+      # TypeScript 4.2
+      - run: yarn add @typescript@4.2.4
+      - run: yarn test
+
+      # TypeScript 4.3
+      - run: yarn add @typescript@4.3.5
+      - run: yarn test
+
+      # TypeScript 4.4
+      - run: yarn add @typescript@4.4.4
+      - run: yarn test
+
+      # TypeScript 4.5
+      - run: yarn add @typescript@4.5.4
+      - run: yarn test
