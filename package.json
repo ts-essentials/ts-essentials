@@ -18,13 +18,15 @@
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "yarn setTsVersion",
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
     "test": "prettier -c **/*.ts && tsc --noEmit",
     "test:fix": "prettier --write **/*.ts && tsc --noEmit",
     "prerelease": "yarn test",
-    "release": "yarn build && yarn formatDeclarations && yarn changeset publish"
+    "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
+    "setTsVersion": "node scripts/sync-ts-version.js"
   },
   "files": [
     "dist"
