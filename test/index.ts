@@ -899,7 +899,7 @@ function testOptionalKeys() {
     Assert<
       IsExact<
         OptionalKeys<symbol>,
-        TsVersion extends "4.1"
+        TsVersion extends "4.1" | "4.2"
           ? (() => string) | (() => symbol)
           : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
       >
@@ -929,13 +929,13 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" ? never : SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" | "4.2" ? never : SymbolConstructor["iterator"]>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
     Assert<
       IsExact<
         RequiredKeys<symbol>,
-        TsVersion extends "4.1" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
+        TsVersion extends "4.1" | "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
       >
     >,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
