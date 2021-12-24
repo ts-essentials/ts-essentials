@@ -31,7 +31,7 @@ const findTsVersion = (filename) => {
  * @param {string} tsVersion
  */
 const writeTsVersion = (tsVersion, filename) => {
-  fs.writeFileSync(filename, `export type TsVersion = "${tsVersion}";`);
+  fs.writeFileSync(filename, `export type TsVersion = "${tsVersion}";\n`);
 };
 
 const tsVersion = findTsVersion("yarn.lock");
