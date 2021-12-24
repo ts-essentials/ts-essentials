@@ -60,7 +60,7 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
 
       # TypeScript 4.2
-      - run: yarn add @typescript@4.2.4
+      - run: yarn add typescript@4.2.4
       - run: yarn test
 
   typecheck4_3:
@@ -88,7 +88,7 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
 
       # TypeScript 4.3
-      - run: yarn add @typescript@4.3.5
+      - run: yarn add typescript@4.3.5
       - run: yarn test
 
   typecheck4_4:
@@ -116,7 +116,7 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
 
       # TypeScript 4.4
-      - run: yarn add @typescript@4.4.4
+      - run: yarn add typescript@4.4.4
       - run: yarn test
 
   typecheck4_5:
@@ -144,5 +144,5 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
 
       # TypeScript 4.5
-      - run: yarn add @typescript@4.5.4
+      - run: yarn add typescript@4.5.4
       - run: yarn test
