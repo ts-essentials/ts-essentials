@@ -232,35 +232,43 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? Filter extends Map<KeyType, infer FilterValueType>
-    ? Map<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      Map<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
   ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
-    ? ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
   ? Filter extends WeakMap<KeyType, infer FilterValueType>
-    ? WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
     : T
   : T extends Set<infer ItemType>
   ? Filter extends Set<infer FilterItemType>
-    ? Set<DeepOmit<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Set<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends ReadonlySet<infer ItemType>
   ? Filter extends ReadonlySet<infer FilterItemType>
-    ? ReadonlySet<DeepOmit<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      ReadonlySet<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends WeakSet<infer ItemType>
   ? Filter extends WeakSet<infer FilterItemType>
-    ? WeakSet<DeepOmit<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      WeakSet<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends Array<infer ItemType>
   ? Filter extends Array<infer FilterItemType>
-    ? Array<DeepOmit<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Array<DeepOmit<ItemType, FilterItemType>>
     : T
   : T extends Promise<infer ItemType>
   ? Filter extends Promise<infer FilterItemType>
-    ? Promise<DeepOmit<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Promise<DeepOmit<ItemType, FilterItemType>>
     : T
   : Filter extends Record<string, unknown>
   ? {
@@ -282,35 +290,43 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? Filter extends Map<KeyType, infer FilterValueType>
-    ? Map<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      Map<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
   ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
-    ? ReadonlyMap<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      ReadonlyMap<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
   ? Filter extends WeakMap<KeyType, infer FilterValueType>
-    ? WeakMap<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? // @ts-ignore
+      WeakMap<KeyType, DeepPick<ValueType, FilterValueType>>
     : T
   : T extends Set<infer ItemType>
   ? Filter extends Set<infer FilterItemType>
-    ? Set<DeepPick<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Set<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends ReadonlySet<infer ItemType>
   ? Filter extends ReadonlySet<infer FilterItemType>
-    ? ReadonlySet<DeepPick<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      ReadonlySet<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends WeakSet<infer ItemType>
   ? Filter extends WeakSet<infer FilterItemType>
-    ? WeakSet<DeepPick<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      WeakSet<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends Array<infer ItemType>
   ? Filter extends Array<infer FilterItemType>
-    ? Array<DeepPick<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Array<DeepPick<ItemType, FilterItemType>>
     : T
   : T extends Promise<infer ItemType>
   ? Filter extends Promise<infer FilterItemType>
-    ? Promise<DeepPick<ItemType, FilterItemType>>
+    ? // @ts-ignore
+      Promise<DeepPick<ItemType, FilterItemType>>
     : T
   : Filter extends Record<string, unknown>
   ? {
@@ -323,15 +339,17 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   : never;
 
 type DeepModify<T> =
-  | {
-      [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
-        ? NonUndefinable<T[K]> extends object
-          ? true | DeepModify<NonUndefinable<T[K]>>
-          : true
-        : T[K] extends object
-        ? true | DeepModify<T[K]>
-        : true;
-    }
+  | (T extends Record<string, unknown>
+      ? {
+          [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
+            ? NonUndefinable<T[K]> extends object
+              ? true | DeepModify<NonUndefinable<T[K]>>
+              : true
+            : T[K] extends object
+            ? true | DeepModify<T[K]>
+            : true;
+        }
+      : never)
   | (T extends Array<infer E> ? Array<DeepModify<E>> : never)
   | (T extends Promise<infer E> ? Promise<DeepModify<E>> : never)
   | (T extends Set<infer E> ? Set<DeepModify<E>> : never)
