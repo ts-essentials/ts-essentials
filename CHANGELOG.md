@@ -1,5 +1,12 @@
 # ts-essentials
 
+## 9.1.1
+
+### Patch Changes
+
+- bf05a7e: Fix `DeepPick` and `DeepOmit` for project with TypeScript 4.5 or newer
+- c338a99: Fix `DeepOmit` and `DeepPick` for WeakMap in TypeScript 4.1 and 4.2
+
 ## 9.1.0
 
 ### Minor Changes
