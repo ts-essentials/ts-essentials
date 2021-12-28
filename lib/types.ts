@@ -278,13 +278,13 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
       ? Promise<DeepOmit<ItemType, FilterItemType>>
       : T
     : T
-  : Filter extends Record<string, unknown>
+  : Filter extends AnyRecord
   ? {
-      [K in keyof T as K extends keyof Filter
-        ? [Filter[K]] extends [true] | [never]
-          ? never
-          : K
-        : K]: K extends keyof Filter ? (Filter[K] extends DeepModify<T[K]> ? DeepOmit<T[K], Filter[K]> : T[K]) : T[K];
+      [K in keyof T as K extends keyof Filter ? (Filter[K] extends true ? never : K) : K]: K extends keyof Filter
+        ? Filter[K] extends DeepModify<T[K]>
+          ? DeepOmit<T[K], Filter[K]>
+          : T[K]
+        : T[K];
     }
   : never;
 
@@ -339,7 +339,7 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
       ? Promise<DeepPick<ItemType, FilterItemType>>
       : T
     : T
-  : Filter extends Record<string, unknown>
+  : Filter extends AnyRecord
   ? {
       // iterate over keys of T, which keeps the information about keys: optional, required or readonly
       [K in keyof T as K extends keyof Filter ? K : never]: Filter[K & keyof Filter] extends true
