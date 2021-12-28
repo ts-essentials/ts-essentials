@@ -353,7 +353,7 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   : never;
 
 type DeepModify<T> =
-  | (T extends Record<string, unknown>
+  | (T extends AnyRecord
       ? {
           [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
             ? NonUndefinable<T[K]> extends object
