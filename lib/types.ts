@@ -232,54 +232,57 @@ export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? Filter extends Map<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      Map<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? Map<KeyType, DeepOmit<ValueType, FilterValueType>>
+      : T
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
   ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+      : T
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
   ? Filter extends WeakMap<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
+      : T
     : T
   : T extends Set<infer ItemType>
   ? Filter extends Set<infer FilterItemType>
-    ? // @ts-ignore
-      Set<DeepOmit<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Set<DeepOmit<ItemType, FilterItemType>>
+      : T
     : T
   : T extends ReadonlySet<infer ItemType>
   ? Filter extends ReadonlySet<infer FilterItemType>
-    ? // @ts-ignore
-      ReadonlySet<DeepOmit<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? ReadonlySet<DeepOmit<ItemType, FilterItemType>>
+      : T
     : T
   : T extends WeakSet<infer ItemType>
   ? Filter extends WeakSet<infer FilterItemType>
-    ? // @ts-ignore
-      WeakSet<DeepOmit<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? WeakSet<DeepOmit<ItemType, FilterItemType>>
+      : T
     : T
   : T extends Array<infer ItemType>
   ? Filter extends Array<infer FilterItemType>
-    ? // @ts-ignore
-      Array<DeepOmit<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Array<DeepOmit<ItemType, FilterItemType>>
+      : T
     : T
   : T extends Promise<infer ItemType>
   ? Filter extends Promise<infer FilterItemType>
-    ? // @ts-ignore
-      Promise<DeepOmit<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Promise<DeepOmit<ItemType, FilterItemType>>
+      : T
     : T
-  : Filter extends Record<string, unknown>
+  : Filter extends AnyRecord
   ? {
-      [K in keyof T as K extends keyof Filter
-        ? [Filter[K]] extends [true] | [never]
-          ? never
-          : K
-        : K]: K extends keyof Filter
-        ? Filter[K & keyof Filter] extends DeepModify<T[K]>
-          ? // @ts-ignore typescript breaks here starting from 4.5.2
-            DeepOmit<T[K], Filter[K & keyof Filter]>
+      [K in keyof T as K extends keyof Filter ? (Filter[K] extends true ? never : K) : K]: K extends keyof Filter
+        ? Filter[K] extends DeepModify<T[K]>
+          ? DeepOmit<T[K], Filter[K]>
           : T[K]
         : T[K];
     }
@@ -290,56 +293,67 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? Filter extends Map<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      Map<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? Map<KeyType, DeepPick<ValueType, FilterValueType>>
+      : T
     : T
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
   ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      ReadonlyMap<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? ReadonlyMap<KeyType, DeepPick<ValueType, FilterValueType>>
+      : T
     : T
   : T extends WeakMap<infer KeyType, infer ValueType>
   ? Filter extends WeakMap<KeyType, infer FilterValueType>
-    ? // @ts-ignore
-      WeakMap<KeyType, DeepPick<ValueType, FilterValueType>>
+    ? FilterValueType extends DeepModify<ValueType>
+      ? WeakMap<KeyType, DeepPick<ValueType, FilterValueType>>
+      : T
     : T
   : T extends Set<infer ItemType>
   ? Filter extends Set<infer FilterItemType>
-    ? // @ts-ignore
-      Set<DeepPick<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Set<DeepPick<ItemType, FilterItemType>>
+      : T
     : T
   : T extends ReadonlySet<infer ItemType>
   ? Filter extends ReadonlySet<infer FilterItemType>
-    ? // @ts-ignore
-      ReadonlySet<DeepPick<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? ReadonlySet<DeepPick<ItemType, FilterItemType>>
+      : T
     : T
   : T extends WeakSet<infer ItemType>
   ? Filter extends WeakSet<infer FilterItemType>
-    ? // @ts-ignore
-      WeakSet<DeepPick<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? WeakSet<DeepPick<ItemType, FilterItemType>>
+      : T
     : T
   : T extends Array<infer ItemType>
   ? Filter extends Array<infer FilterItemType>
-    ? // @ts-ignore
-      Array<DeepPick<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Array<DeepPick<ItemType, FilterItemType>>
+      : T
     : T
   : T extends Promise<infer ItemType>
   ? Filter extends Promise<infer FilterItemType>
-    ? // @ts-ignore
-      Promise<DeepPick<ItemType, FilterItemType>>
+    ? FilterItemType extends DeepModify<ItemType>
+      ? Promise<DeepPick<ItemType, FilterItemType>>
+      : T
     : T
-  : Filter extends Record<string, unknown>
+  : Filter extends AnyRecord
   ? {
       // iterate over keys of T, which keeps the information about keys: optional, required or readonly
       [K in keyof T as K extends keyof Filter ? K : never]: Filter[K & keyof Filter] extends true
-        ? T[K & keyof T]
-        : // @ts-ignore typescript breaks here starting from 4.5.2
-          DeepPick<T[K & keyof T], Filter[K & keyof Filter]>;
+        ? T[K]
+        : K extends keyof Filter
+        ? Filter[K] extends DeepModify<T[K]>
+          ? DeepPick<T[K], Filter[K]>
+          : never
+        : never;
     }
   : never;
 
 type DeepModify<T> =
-  | (T extends Record<string, unknown>
+  | (T extends AnyRecord
       ? {
           [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
             ? NonUndefinable<T[K]> extends object
