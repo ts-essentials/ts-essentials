@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 9.1.2
+
+### Patch Changes
+
+- 08adddd: Remove `postinstall` script
+
 ## 9.1.1
 
 ### Patch Changes
