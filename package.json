@@ -18,7 +18,6 @@
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn setTsVersion",
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
