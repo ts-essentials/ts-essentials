@@ -12,6 +12,7 @@ function testMarkRequired() {
   };
 
   type cases = [
+    Assert<IsExact<MarkRequired<Example, never>, Example>>,
     Assert<IsExact<MarkRequired<Example, RequiredKeys<Example>>, Example>>,
     Assert<IsExact<MarkRequired<Example, OptionalKeys<Example>>, Required<Example>>>,
     Assert<
@@ -27,5 +28,7 @@ function testMarkRequired() {
         }
       >
     >,
+    // @ts-expect-error do NOT support union types
+    MarkRequired<Example | { a: 1 }, "readonly1">,
   ];
 }
