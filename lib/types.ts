@@ -400,6 +400,9 @@ export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>
 /** Mark some properties as readonly, leaving others unchanged */
 export type MarkReadonly<T, K extends keyof T> = Omit<T, K> & Readonly<Pick<T, K>>;
 
+/** Mark some properties as writable, leaving others unchanged */
+export type MarkWritable<T, K extends keyof T> = Omit<T, K> & Writable<Pick<T, K>>;
+
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
