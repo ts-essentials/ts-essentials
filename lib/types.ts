@@ -389,7 +389,7 @@ type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head,
 export type MergeN<T extends readonly any[]> = _MergeN<T, {}>;
 
 /** Mark some properties as required, leaving others unchanged */
-export type MarkRequired<T, RK extends keyof T> = Exclude<T, RK> & Required<Pick<T, RK>>;
+export type MarkRequired<T, RK extends keyof T> = Omit<T, RK> & Required<Pick<T, RK>>;
 
 /** Mark some properties as optional, leaving others unchanged */
 export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
