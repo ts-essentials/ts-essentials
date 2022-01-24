@@ -42,7 +42,6 @@ function testStrictOmit() {
     Assert<IsExact<StrictOmit<{ a?: 1 }, never>, { a?: 1 }>>,
     Assert<IsExact<StrictOmit<{ a: 1 }, "a">, {}>>,
     Assert<IsExact<StrictOmit<{ a?: 1 }, "a">, {}>>,
-    Assert<IsExact<StrictOmit<{ a?: 1 }, "a">, {}>>,
     // we don't prohibit arrays and tuples, but return never for them
     Assert<IsExact<StrictOmit<readonly [], never>, never>>,
     Assert<IsExact<StrictOmit<readonly [1, 2, 3], never>, never>>,
