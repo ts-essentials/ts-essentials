@@ -21,7 +21,7 @@ export type ComplexNestedPartial = {
   nested?: {
     date?: Date;
     func?: () => string;
-    array?: { bar?: number }[];
+    array?: ({ bar?: number } | undefined)[];
     set?: Set<{ name?: string }>;
     tuple?: [string?, number?, { good?: boolean }?];
     map?: Map<

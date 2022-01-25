@@ -44,13 +44,14 @@ function testDeepPartial() {
       IsExact<DeepPartial<WeakMap<{ key: string }, { value: boolean }>>, WeakMap<{ key?: string }, { value?: boolean }>>
     >,
     Assert<IsExact<DeepPartial<Set<string>>, Set<string>>>,
-    Assert<IsExact<DeepPartial<Set<number[]>>, Set<number[]>>>,
+    Assert<IsExact<DeepPartial<Set<number[]>>, Set<(number | undefined)[]>>>,
     Assert<IsExact<DeepPartial<ReadonlySet<string>>, ReadonlySet<string>>>,
     Assert<IsExact<DeepPartial<[]>, []>>,
     Assert<IsExact<DeepPartial<never[]>, undefined[]>>,
     Assert<IsExact<DeepPartial<[1, 2, 3]>, [(1 | undefined)?, (2 | undefined)?, (3 | undefined)?]>>,
     Assert<IsExact<DeepPartial<readonly number[]>, readonly (number | undefined)[]>>,
-    Assert<IsExact<DeepPartial<Array<number>>, Array<number>>>,
+    Assert<IsExact<DeepPartial<number[]>, (number | undefined)[]>>,
+    Assert<IsExact<DeepPartial<Array<number>>, Array<number | undefined>>>,
     Assert<IsExact<DeepPartial<Promise<number>>, Promise<number>>>,
     Assert<
       IsExact<
