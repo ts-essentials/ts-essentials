@@ -49,5 +49,14 @@ function testStrictOmit() {
     Assert<IsExact<StrictOmit<readonly number[], never>, never>>,
     Assert<IsExact<StrictOmit<Array<number>, never>, never>>,
     Assert<IsExact<StrictOmit<ReadonlyArray<number>, never>, never>>,
+    // support of unions
+    Assert<
+      IsExact<
+        StrictOmit<{ a?: 1; b: number } | { a?: 2; b: number }, never>,
+        { a?: 1; b: number } | { a?: 2; b: number }
+      >
+    >,
+    Assert<IsExact<StrictOmit<{ a?: 1; b: number } | { a?: 2; b: number }, "b">, { a?: 1 } | { a?: 2 }>>,
+    Assert<IsExact<StrictOmit<{ a?: 1; b: number } | { a?: 2; b: number }, "a" | "b">, {}>>,
   ];
 }
