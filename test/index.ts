@@ -999,23 +999,6 @@ function testNonEmptyObject() {
   type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
 }
 
-function testMarkRequired() {
-  type TestType = {
-    required1: number;
-    required2: string;
-    optional1?: null;
-    optional2?: boolean;
-  };
-  type ExpectedType = {
-    required1: number;
-    required2: string;
-    optional1: null;
-    optional2?: boolean;
-  };
-
-  type Test = Assert<IsExact<MarkRequired<TestType, "required2" | "optional1">, ExpectedType>>;
-}
-
 function testMarkOptional() {
   type TestType = {
     required1: number;
