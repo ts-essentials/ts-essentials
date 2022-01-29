@@ -776,7 +776,7 @@ type UserThatCannotChangeName = MarkReadonly<User, "name">;
 
 ### MarkWritable
 
-Useful when you want to make some properties writable (or unset from `readonly`) without creating a separate type.
+Useful when you want to make some properties writable (or unset `readonly`) without creating a separate type.
 
 ```typescript
 interface User {
