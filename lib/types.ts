@@ -47,7 +47,7 @@ export type DeepPartial<T> = T extends Builtin
   : T extends Array<infer U>
   ? T extends IsTuple<T>
     ? { [K in keyof T]?: DeepPartial<T[K]> }
-    : Array<DeepPartial<U>>
+    : Array<DeepPartial<U> | undefined>
   : T extends Promise<infer U>
   ? Promise<DeepPartial<U>>
   : T extends {}
