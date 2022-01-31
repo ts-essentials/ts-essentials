@@ -67,6 +67,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [MarkRequired](#MarkRequired)
   - [MarkOptional](#MarkOptional)
   - [MarkReadonly](#MarkReadonly)
+  - [MarkWritable](#MarkWritable)
   - [ReadonlyKeys](#ReadonlyKeys)
   - [WritableKeys](#WritableKeys)
   - [OptionalKeys](#OptionalKeys)
@@ -770,6 +771,30 @@ type UserThatCannotChangeName = MarkReadonly<User, "name">;
 //   readonly name: string;
 //   email: string;
 //   password: string;
+// }
+```
+
+### MarkWritable
+
+Useful when you want to make some properties writable (or unset `readonly`) without creating a separate type.
+
+```typescript
+interface User {
+  readonly id: number;
+  readonly name: string;
+  readonly email: string;
+  readonly password: string;
+}
+
+type UserThatCanChangeName = MarkWritable<User, "name">;
+
+// Result:
+
+// {
+//   readonly id: number;
+//   name: string;
+//   readonly email: string;
+//   readonly password: string;
 // }
 ```
 
