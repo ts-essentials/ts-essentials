@@ -487,3 +487,7 @@ type SafeObjectKeyExtractor<O, K> = K extends keyof O
   : undefined;
 
 type Integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+type IntegerStrings = {
+  [K in keyof Integers & string as `${K}`]: Integers[K];
+};
