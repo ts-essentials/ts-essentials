@@ -491,3 +491,9 @@ type Integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 type IntegerStrings = {
   [K in keyof Integers & string as `${K}`]: Integers[K];
 };
+
+type ArrayElement<A, K extends keyof IntegerStrings | void = void> = K extends keyof A
+  ? A[K]
+  : A extends readonly (infer T)[]
+  ? T | undefined
+  : undefined;
