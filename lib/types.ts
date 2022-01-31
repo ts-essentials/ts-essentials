@@ -14,6 +14,7 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 export type ArrayOrSingle<T> = T | T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
+type NonNullable<T> = T extends null ? never : T;
 
 /**
  * Like Record, but can be used with only one argument.
