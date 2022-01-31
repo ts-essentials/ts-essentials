@@ -55,6 +55,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
   - [StrictExtract](#StrictExtract)
     - [Comparison between `Extract` and `StrictExtract`](#Comparison-between-Extract-and-StrictExtract)
+  - [StrictExclude](#StrictExclude)
+    - [Comparison between `Exclude` and `StrictExclude`](#Comparison-between-Exclude-and-StrictExclude)
   - [DeepOmit](#DeepOmit)
   - [DeepPick](#DeepPick)
   - [OmitProperties](#OmitProperties)
@@ -458,6 +460,41 @@ type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" 
 // Type '"dog"' is not assignable to type '"mouse" | undefined'.
 
 type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" | "horse" }>;
+
+// Result: no error
+```
+
+### StrictExclude
+
+Usage is similar to the builtin version, but checks the filter type more strictly.
+
+```typescript
+type Animal = "dog" | "cat" | "mouse";
+
+type DogAnimal = StrictExclude<Animal, "dog">;
+
+// Result:
+// 'cat' | 'mouse'
+
+// if you want to Exclude multiple properties just use union type:
+type HouseAnimal = StrictExclude<Animal, "dog" | "cat">;
+
+// Result:
+// 'mouse'
+```
+
+#### Comparison between `Exclude` and `StrictExclude`
+
+Following the code above, we can compare the behavior of `Exclude` and `StrictExclude`.
+
+```typescript
+type HouseAnimalWithStrictExclude = StrictExclude<Animal, "dog" | "cat" | "horse">;
+
+// Result: error
+// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
+// Type '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
+
+type HouseAnimalWithExclude = Exclude<Animal, "dog" | "cat" | "horse">;
 
 // Result: no error
 ```
