@@ -2,4 +2,4 @@
 "ts-essentials": minor
 ---
 
-Add `MarkWritable` which unsets readonly mark for specified keys
+Add `MarkWritable` which unsets readonly for specified keys
