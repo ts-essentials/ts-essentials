@@ -477,3 +477,5 @@ export type Tail<T extends AnyArray> = T["length"] extends 0
   : never;
 
 export type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : never) : never;
+
+type Path<T> = T extends `${infer P}.${infer Rest}` ? [P, ...Path<Rest>] : [T];
