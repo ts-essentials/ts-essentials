@@ -15,6 +15,7 @@ export type ArrayOrSingle<T> = T | T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
 type NonNullable<T> = T extends null ? never : T;
+type NonUndefinableAndNullable<T> = NonUndefinable<NonNullable<T>>;
 
 /**
  * Like Record, but can be used with only one argument.
