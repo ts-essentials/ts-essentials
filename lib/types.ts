@@ -507,3 +507,12 @@ type SafeKeyExtractor<O, K> = O extends readonly any[] | undefined | null
   : O extends Record<any, any> | undefined | null
   ? SafeObjectKeyExtractor<O, K>
   : undefined;
+
+// GetWithArray<{ a?: { b?: 123; }; }, ['a', 'b']> = 123 | undefined
+type GetWithArray<O, K extends readonly any[]> = K extends readonly [infer Head, ...infer Tail]
+  ? GetWithArray<SafeKeyExtractor<O, Head>, Tail>
+  : K extends readonly [infer Head]
+  ? SafeKeyExtractor<O, Head>
+  : K extends readonly []
+  ? O
+  : never;
