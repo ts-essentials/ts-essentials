@@ -64,6 +64,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [MergeN](#MergeN)
   - [MarkRequired](#MarkRequired)
   - [MarkOptional](#MarkOptional)
+  - [MarkReadonly](#MarkReadonly)
   - [ReadonlyKeys](#ReadonlyKeys)
   - [WritableKeys](#WritableKeys)
   - [OptionalKeys](#OptionalKeys)
@@ -708,6 +709,30 @@ type UserWithoutPassword = MarkOptional<User, "password">;
 //   name: string;
 //   email: string;
 //   password?: string;
+// }
+```
+
+### MarkReadonly
+
+Useful when you want to make some properties readonly without creating a separate type.
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
+type UserThatCannotChangeName = MarkReadonly<User, "name">;
+
+// Result:
+
+// {
+//   id: number;
+//   readonly name: string;
+//   email: string;
+//   password: string;
 // }
 ```
 
