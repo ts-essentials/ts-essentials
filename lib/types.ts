@@ -516,3 +516,6 @@ type GetWithArray<O, K extends readonly any[]> = K extends readonly [infer Head,
   : K extends readonly []
   ? O
   : never;
+
+/** Extract values of object having a specified path */
+export type Get<O extends Record<any, any>, T extends string> = GetWithArray<O, Path<T>>;
