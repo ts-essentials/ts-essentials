@@ -500,3 +500,10 @@ type ArrayElement<A, K extends keyof IntegerStrings | void = void> = K extends k
 
 // SafeArrayKeyExtractor<{ a: 1; }[], '4'> = { a: 1; } | undefined
 type SafeArrayKeyExtractor<A, K> = K extends keyof IntegerStrings ? ArrayElement<A, K> : undefined;
+
+// SafeKeyExtractor<{ a?: 123; }, 'a'> => 123 | undefined
+type SafeKeyExtractor<O, K> = O extends readonly any[] | undefined | null
+  ? SafeArrayKeyExtractor<O, K>
+  : O extends Record<any, any> | undefined | null
+  ? SafeObjectKeyExtractor<O, K>
+  : undefined;
