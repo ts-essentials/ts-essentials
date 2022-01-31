@@ -485,3 +485,5 @@ type SafeObjectKeyExtractor<O, K> = K extends keyof O
   : K extends keyof NonUndefinableAndNullable<O>
   ? NonUndefinableAndNullable<O>[K] | undefined
   : undefined;
+
+type Integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
