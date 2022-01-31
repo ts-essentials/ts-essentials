@@ -14,8 +14,6 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 export type ArrayOrSingle<T> = T | T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
-type NonNullable<T> = T extends null ? never : T;
-type NonUndefinableAndNullable<T> = NonUndefinable<NonNullable<T>>;
 
 /**
  * Like Record, but can be used with only one argument.
@@ -482,8 +480,8 @@ type Path<T> = T extends `${infer P}.${infer Rest}` ? [P, ...Path<Rest>] : [T];
 
 type SafeObjectKeyExtractor<O, K> = K extends keyof O
   ? O[K]
-  : K extends keyof NonUndefinableAndNullable<O>
-  ? NonUndefinableAndNullable<O>[K] | undefined
+  : K extends keyof NonNullable<O>
+  ? NonNullable<O>[K] | undefined
   : undefined;
 
 type Integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
