@@ -497,3 +497,6 @@ type ArrayElement<A, K extends keyof IntegerStrings | void = void> = K extends k
   : A extends readonly (infer T)[]
   ? T | undefined
   : undefined;
+
+// SafeArrayKeyExtractor<{ a: 1; }[], '4'> = { a: 1; } | undefined
+type SafeArrayKeyExtractor<A, K> = K extends keyof IntegerStrings ? ArrayElement<A, K> : undefined;
