@@ -484,20 +484,14 @@ type SafeObjectKeyExtractor<O, K> = K extends keyof O
   ? NonNullable<O>[K] | undefined
   : undefined;
 
-type Integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-type IntegerStrings = {
-  [K in keyof Integers & string as `${K}`]: Integers[K];
-};
-
-type ArrayElement<A, K extends keyof IntegerStrings | void = void> = K extends keyof A
+type ArrayElement<A, K extends `${bigint}` | void = void> = K extends keyof A
   ? A[K]
   : A extends readonly (infer T)[]
   ? T | undefined
   : undefined;
 
 // SafeArrayKeyExtractor<{ a: 1; }[], '4'> = { a: 1; } | undefined
-type SafeArrayKeyExtractor<A, K> = K extends keyof IntegerStrings ? ArrayElement<A, K> : undefined;
+type SafeArrayKeyExtractor<A, K> = K extends `${bigint}` ? ArrayElement<A, K> : undefined;
 
 // SafeKeyExtractor<{ a?: 123; }, 'a'> => 123 | undefined
 type SafeKeyExtractor<O, K> = O extends readonly any[] | undefined | null
