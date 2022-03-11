@@ -33,10 +33,7 @@ function testPredicateType() {
 
   // Chainability tests
   const chainingTestArray = ["some", 1, true, 2, "u"];
-  const isArrayOf = <T extends PredicateFunction>(
-    thing: unknown,
-    validator: T,
-  ): thing is Array<PredicateType<T>> => {
+  const isArrayOf = <T extends PredicateFunction>(thing: unknown, validator: T): thing is Array<PredicateType<T>> => {
     return Array.isArray(thing) && thing.every(validator);
   };
 
