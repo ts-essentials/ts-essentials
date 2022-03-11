@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { PredicateType } from "../lib/types";
+import { PredicateFunction, PredicateType } from "../lib/types";
 
 function testPredicateType() {
   type GeneralCases = [
@@ -33,7 +33,7 @@ function testPredicateType() {
 
   // Chainability tests
   const chainingTestArray = ["some", 1, true, 2, "u"];
-  const isArrayOf = <T extends (x: any, ..._z: any[]) => x is any>(
+  const isArrayOf = <T extends PredicateFunction>(
     thing: unknown,
     validator: T,
   ): thing is Array<PredicateType<T>> => {
