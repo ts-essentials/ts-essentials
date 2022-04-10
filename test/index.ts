@@ -47,6 +47,7 @@ import {
   IsNever,
   ArrayOrSingle,
   IsAny,
+  NonEmptyArray,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -830,6 +831,16 @@ function testNonEmptyObject() {
 
   type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
   type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
+}
+
+function testNonEmptyArray() {
+  type TestA<T> = Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>;
+  type TestB<T> = AssertFalse<IsExact<NonEmptyArray<T>, []>>;
+
+  type TestEmptyArrayNotAssignable<T> = AssertFalse<Assignable<NonEmptyArray<T>, []>>;
+  type TestArrayOneElementAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T]>>;
+  type TestArrayTwoElementsAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T, T]>>;
+  type TestArrayMoreThanOneElementsAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>;
 }
 
 function testMarkOptional() {
