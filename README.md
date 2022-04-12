@@ -669,7 +669,7 @@ type EmptyObject = NumberDictionary<{}>;
 Useful for accepting only arrays containing at least one element.
 
 ```typescript
-type NonEmptyRestParameters = NonEmptyArray<number>;
+type NonEmptyRestParameters<T> = NonEmptyArray<T>;
 // Result: [number, ...number[]]
 
 // declare function expression type accepting some rest parameters, but at least one element for the rest parameters is required
@@ -678,7 +678,8 @@ type FunctionAcceptingRestParameters = (someString: string, ...args: NonEmptyRes
 // declare some non-empty array variables
 const okay: NonEmptyArray<number> = [1, 2];
 const alsoOkay: NonEmptyArray<number> = [1];
-const error: NonEmptyArray<number> = []; // Type '[]' is not assignable to type 'NonEmptyArray<number>'. Source has 0 element(s) but target requires 1.
+// @ts-expect-error: Type '[]' is not assignable to type 'NonEmptyArray<number>'. Source has 0 element(s) but target requires 1.
+const error: NonEmptyArray<number> = [];
 ```
 
 ### Merge

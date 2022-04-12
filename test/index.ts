@@ -834,13 +834,14 @@ function testNonEmptyObject() {
 }
 
 function testNonEmptyArray() {
-  type TestA<T> = Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>;
-  type TestB<T> = AssertFalse<IsExact<NonEmptyArray<T>, []>>;
+  type Cases<T> = [
+    Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>,
+    AssertFalse<IsExact<NonEmptyArray<T>, []>>,
 
-  type TestEmptyArrayNotAssignable<T> = AssertFalse<Assignable<NonEmptyArray<T>, []>>;
-  type TestArrayOneElementAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T]>>;
-  type TestArrayTwoElementsAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T, T]>>;
-  type TestArrayMoreThanOneElementsAssignable<T> = Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>;
+    AssertFalse<Assignable<NonEmptyArray<T>, []>>,
+    Assert<Assignable<NonEmptyArray<T>, [T]>>,
+    Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
+  ];
 }
 
 function testMarkOptional() {
