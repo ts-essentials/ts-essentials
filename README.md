@@ -670,7 +670,7 @@ Useful for accepting only arrays containing at least one element.
 
 ```typescript
 type NonEmptyRestParameters<T> = NonEmptyArray<T>;
-// Result: [number, ...number[]]
+// Result: [T, ...T[]]
 
 // declare function expression type accepting some rest parameters, but at least one element for the rest parameters is required
 type FunctionAcceptingRestParameters = (someString: string, ...args: NonEmptyRestParameters<number>) => void;
