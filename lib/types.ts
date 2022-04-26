@@ -168,7 +168,7 @@ export type DeepReadonly<T> = T extends Builtin
   : T extends Promise<infer U>
   ? Promise<DeepReadonly<U>>
   : T extends AnyArray<infer U>
-  ? readonly DeepReadonly<U>[] 
+  ? readonly DeepReadonly<U>[]
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : IsUnknown<T> extends true
