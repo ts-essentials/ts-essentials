@@ -1070,6 +1070,24 @@ assert(anything instanceof String, "anything has to be a string!");
 // from now on `anything` is string
 ```
 
+### PredicateType
+_keywords: narrow, guard, validate_
+
+Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
+
+```typescript
+// Without PredicateType you can never use a set of functions like this together; how can you resolve ???
+// You would need a specific instance of isArrayOf for each type you want to narrow
+const isArrayOf = (thing: unknown, validator: (...x: any[]) => boolean): thing is ???[] => {
+  return Array.isArray(thing) && thing.every(validator)
+}
+
+// With PredicateType you can pull the predicate of the validator into the higher level guard
+const isArrayOf = <T extends (...x: any[]) => boolean>(thing: unknown, validator: T): thing is Array<PredicateType<T>> => {
+  return Array.isArray(thing) && thing.every(validator)
+}
+```
+
 ### Exact
 
 _keywords: same, equals, equality_
