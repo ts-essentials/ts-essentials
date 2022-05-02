@@ -527,7 +527,7 @@ type TeacherSimple = DeepOmit<
     gender: never;
     students: {
       score: never;
-    };
+    }[];
   }
 >;
 
@@ -571,7 +571,7 @@ type TeacherSimple = DeepPick<
     gender: never;
     students: {
       score: never;
-    };
+    }[];
   }
 >;
 
