@@ -381,6 +381,8 @@ export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends neve
 
 export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
 
+export type NonEmptyArray<T> = [T, ...T[]];
+
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
 
