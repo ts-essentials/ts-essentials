@@ -302,7 +302,6 @@ function testDeepReadonly() {
     Assert<IsExact<DeepReadonly<[1, 2, 3]>, readonly [1, 2, 3]>>,
     Assert<IsExact<DeepReadonly<readonly number[]>, readonly number[]>>,
     Assert<IsExact<DeepReadonly<Array<number>>, ReadonlyArray<number>>>,
-    Assert<IsExact<DeepReadonly<Array<TestUnion>>, ReadonlyTestUnion>>,
     Assert<IsExact<DeepReadonly<Promise<number>>, Promise<number>>>,
     Assert<IsExact<DeepReadonly<{ a: 1; b: 2; c: 3 }>, { a: 1; b: 2; c: 3 }>>,
     Assert<IsExact<DeepReadonly<{ foo: () => void }>, { foo: () => void }>>,
@@ -315,8 +314,16 @@ function testDeepReadonly() {
     Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
   ];
 
-  type TestUnion = { value: string } | TestUnion[];
-  type ReadonlyTestUnion = { readonly value: string } | readonly TestUnion[];
+  // Build-time test to ensure the fix for
+  // https://github.com/ts-essentials/ts-essentials/pull/310
+  // because IsExact<> is unable to text it. 
+  {
+    type TestUnion = { value: string } | TestUnion[];
+    type ReadonlyTestUnion = { readonly value: string } | readonly ReadonlyTestUnion[];
+  
+    const a: DeepReadonly<TestUnion> = [];
+    const b: ReadonlyTestUnion = a;
+  }
 
   // Build-time test to ensure the fix for
   // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
