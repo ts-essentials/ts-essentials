@@ -31,7 +31,7 @@ jobs:
         run: yarn --no-progress --non-interactive --frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
-        uses: changesets/action@master
+        uses: changesets/action@main
         with:
           publish: yarn release
         env:
