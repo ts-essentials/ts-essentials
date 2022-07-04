@@ -11,7 +11,7 @@
     "lodash",
     "underscore"
   ],
-  "version": "9.1.2",
+  "version": "9.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
