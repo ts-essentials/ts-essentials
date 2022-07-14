@@ -167,6 +167,10 @@ export type DeepReadonly<T> = T extends Builtin
   ? WeakSet<DeepReadonly<U>>
   : T extends Promise<infer U>
   ? Promise<DeepReadonly<U>>
+  : T extends AnyArray<infer U>
+  ? T extends IsTuple<T>
+    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+    : ReadonlyArray<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : IsUnknown<T> extends true

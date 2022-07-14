@@ -316,6 +316,17 @@ function testDeepReadonly() {
   ];
 
   // Build-time test to ensure the fix for
+  // https://github.com/ts-essentials/ts-essentials/pull/310
+  // because IsExact<> is unable to text it.
+  {
+    type TestUnion = { value: string } | TestUnion[];
+    type ReadonlyTestUnion = { readonly value: string } | readonly ReadonlyTestUnion[];
+
+    const a: DeepReadonly<TestUnion> = [];
+    const b: ReadonlyTestUnion = a;
+  }
+
+  // Build-time test to ensure the fix for
   // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
   {
     interface TestObject extends DeepReadonly<{ field: string[] }> {}
