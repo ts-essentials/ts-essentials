@@ -470,7 +470,7 @@ export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U,
 
 /** Functional programming essentials */
 export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
-export type Tail<T extends AnyArray> = T["length"] extends 0 ? never : T extends [any, ...infer Rest] ? Rest : never;
+export type Tail<T extends AnyArray> = T extends [any, ...infer Rest] ? Rest : never;
 
 export type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : never) : never;
 
