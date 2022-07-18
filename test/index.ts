@@ -11,11 +11,8 @@ import {
   DeepReadonly,
   DeepRequired,
   DeepWritable,
-  StrictExtract,
   Dictionary,
   DictionaryValues,
-  MarkOptional,
-  MarkRequired,
   Merge,
   MergeN,
   NonEmptyObject,
@@ -853,23 +850,6 @@ function testNonEmptyArray() {
     Assert<Assignable<NonEmptyArray<T>, [T]>>,
     Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
   ];
-}
-
-function testMarkOptional() {
-  type TestType = {
-    required1: number;
-    required2: string;
-    optional1?: null;
-    optional2?: boolean;
-  };
-  type ExpectedType = {
-    required1?: number;
-    required2: string;
-    optional1?: null;
-    optional2?: boolean;
-  };
-
-  type Test = Assert<IsExact<MarkOptional<TestType, "required1">, ExpectedType>>;
 }
 
 function testMerge() {
