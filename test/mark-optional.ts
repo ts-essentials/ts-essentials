@@ -9,6 +9,21 @@ function testMarkOptional() {
     optional2?: boolean;
   };
 
+  type UnionExample = MarkOptional<
+    Pick<Example, "required1" | "optional1"> | Pick<Example, "required2" | "optional1">,
+    "optional1"
+  >;
+
+  let unionElementFields: UnionExample = {
+    required1: 1,
+    optional1: null,
+  };
+
+  unionElementFields = {
+    required2: "2",
+    optional1: null,
+  };
+
   type cases = [
     Assert<IsExact<MarkOptional<Example, never>, Example>>,
     Assert<IsExact<MarkOptional<Example, OptionalKeys<Example>>, Example>>,

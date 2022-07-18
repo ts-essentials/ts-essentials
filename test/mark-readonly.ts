@@ -11,6 +11,21 @@ function testMarkReadonly() {
     optional2?: boolean;
   };
 
+  type UnionExample = MarkReadonly<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">,
+    "optional1"
+  >;
+
+  let unionElementFields: UnionExample = {
+    readonly2: /\w+/g,
+    optional1: null,
+  };
+
+  unionElementFields = {
+    readonly1: new Date(),
+    optional1: null,
+  };
+
   type cases = [
     Assert<IsExact<MarkReadonly<Example, never>, Example>>,
     Assert<IsExact<MarkReadonly<Example, ReadonlyKeys<Example>>, Example>>,
