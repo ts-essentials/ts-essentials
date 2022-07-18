@@ -398,16 +398,16 @@ type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head,
 export type MergeN<T extends readonly any[]> = _MergeN<T, {}>;
 
 /** Mark some properties as required, leaving others unchanged */
-export type MarkRequired<T, RK extends keyof T> = Omit<T, RK> & Required<Pick<T, RK>>;
+export type MarkRequired<T, RK extends keyof T> = T extends T ? Omit<T, RK> & Required<Pick<T, RK>> : never;
 
 /** Mark some properties as optional, leaving others unchanged */
-export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type MarkOptional<T, K extends keyof T> = T extends T ? Omit<T, K> & Partial<Pick<T, K>> : never;
 
 /** Mark some properties as readonly, leaving others unchanged */
-export type MarkReadonly<T, K extends keyof T> = Omit<T, K> & Readonly<Pick<T, K>>;
+export type MarkReadonly<T, K extends keyof T> = T extends T ? Omit<T, K> & Readonly<Pick<T, K>> : never;
 
 /** Mark some properties as writable, leaving others unchanged */
-export type MarkWritable<T, K extends keyof T> = Omit<T, K> & Writable<Pick<T, K>>;
+export type MarkWritable<T, K extends keyof T> = T extends T ? Omit<T, K> & Writable<Pick<T, K>> : never;
 
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
