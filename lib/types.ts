@@ -13,6 +13,8 @@ export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
 
 export type ArrayOrSingle<T> = T | T[];
 
+export type ReadonlyArrayOrSingle<T> = T | readonly T[];
+
 type NonUndefinable<T> = T extends undefined ? never : T;
 
 /**
