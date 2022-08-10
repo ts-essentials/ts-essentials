@@ -1088,21 +1088,27 @@ assert(anything instanceof String, "anything has to be a string!");
 ```
 
 ### PredicateType
+
 _keywords: narrow, guard, validate_
 
-Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
+Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will
+return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated
+with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
 
 ```typescript
 // Without PredicateType you can never use a set of functions like this together; how can you resolve ???
 // You would need a specific instance of isArrayOf for each type you want to narrow
 const isArrayOf = (thing: unknown, validator: (...x: any[]) => boolean): thing is ???[] => {
-  return Array.isArray(thing) && thing.every(validator)
-}
+  return Array.isArray(thing) && thing.every(validator);
+};
 
 // With PredicateType you can pull the predicate of the validator into the higher level guard
-const isArrayOf = <T extends (...x: any[]) => boolean>(thing: unknown, validator: T): thing is Array<PredicateType<T>> => {
-  return Array.isArray(thing) && thing.every(validator)
-}
+const isArrayOf = <T extends (...x: any[]) => boolean>(
+  thing: unknown,
+  validator: T,
+): thing is Array<PredicateType<T>> => {
+  return Array.isArray(thing) && thing.every(validator);
+};
 ```
 
 ### Exact
@@ -1128,7 +1134,7 @@ Exact<C, C> // returns C
 ```typescript
 type ABC = { a: number; b: number; c: number };
 type BC = { b: number; c: number };
-type C = { c: number };
+
 let abc: ABC = { a: 1, b: 2, c: 3 };
 let bc: BC = { b: 2, c: 3 };
 
@@ -1140,6 +1146,24 @@ isBC(bc); // works fine
 
 // note: that isExact can be used inline too
 isExact<BC>()(abc); // returns NEVER
+```
+
+### createFactoryWithConstraint
+
+`createFactoryWithConstraint<Constraint>()(value)` is a runtime function that returns (on the type level) value,
+narrowed within constraint type `Constraint`, or throws type error otherwise
+
+```typescript
+type NumericDictionary = Dictionary<number>;
+
+// due to TS limitations, isExact has to be a curried function
+const createNumericDictionary = createFactoryWithConstraint<NumericDictionary>();
+
+const abNumber = createNumericDictionary({ a: 1, b: 2 });
+//    ^? { a: number; b: number }
+
+// @ts-expect-error: Type 'string' is not assignable to type 'number'
+createNumericDictionary({ a: "1", b: "2" });
 ```
 
 ### XOR
