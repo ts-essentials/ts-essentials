@@ -1138,7 +1138,7 @@ type BC = { b: number; c: number };
 let abc: ABC = { a: 1, b: 2, c: 3 };
 let bc: BC = { b: 2, c: 3 };
 
-// due to TS limitations, isExact has to be a curried function
+// due to TS limitations, `isExact` has to be a curried function
 const isBC = isExact<BC>();
 
 isBC(abc); // returns NEVER -- abc has different structure from BC (excessive property a)
@@ -1156,7 +1156,7 @@ narrowed within constraint type `Constraint`, or throws type error otherwise
 ```typescript
 type NumericDictionary = Dictionary<number>;
 
-// due to TS limitations, isExact has to be a curried function
+// due to TS limitations, `createFactoryWithConstraint` has to be a curried function
 const createNumericDictionary = createFactoryWithConstraint<NumericDictionary>();
 
 const abNumber = createNumericDictionary({ a: 1, b: 2 });
