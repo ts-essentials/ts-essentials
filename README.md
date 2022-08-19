@@ -50,6 +50,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - CamelCase
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
+  - [Pick](#Pick)
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
@@ -366,6 +367,24 @@ buildable.nested.a = "test";
 buildable.nested.array = [];
 buildable.nested.array.push({ bar: 1 });
 const finished = buildable as ReadonlyObject;
+```
+
+### Pick
+
+There's no need for own implementation of `Pick`, as it's already strict:
+
+```typescript
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+//           ^^^^^^^^^^^^^^^^^
+
+interface Person {
+  age: number;
+  name: string;
+}
+
+// @ts-expect-error: Type '"job"' does not satisfy the constraint 'keyof Person'
+type WithJob = Pick<Person, "job">;
+//                          ^^^^^
 ```
 
 ### Omit
@@ -1088,21 +1107,27 @@ assert(anything instanceof String, "anything has to be a string!");
 ```
 
 ### PredicateType
+
 _keywords: narrow, guard, validate_
 
-Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
+Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will
+return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated
+with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
 
 ```typescript
 // Without PredicateType you can never use a set of functions like this together; how can you resolve ???
 // You would need a specific instance of isArrayOf for each type you want to narrow
 const isArrayOf = (thing: unknown, validator: (...x: any[]) => boolean): thing is ???[] => {
-  return Array.isArray(thing) && thing.every(validator)
-}
+  return Array.isArray(thing) && thing.every(validator);
+};
 
 // With PredicateType you can pull the predicate of the validator into the higher level guard
-const isArrayOf = <T extends (...x: any[]) => boolean>(thing: unknown, validator: T): thing is Array<PredicateType<T>> => {
-  return Array.isArray(thing) && thing.every(validator)
-}
+const isArrayOf = <T extends (...x: any[]) => boolean>(
+  thing: unknown,
+  validator: T,
+): thing is Array<PredicateType<T>> => {
+  return Array.isArray(thing) && thing.every(validator);
+};
 ```
 
 ### Exact
