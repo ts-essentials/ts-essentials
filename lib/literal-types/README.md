@@ -13,12 +13,14 @@
 - PascalCase
 
 ```typescript
-// 'oneword'
-type Example1 = CamelCase<"ONEWORD">;
-// 'twoWords'
-type Example2 = CamelCase<"two_words">;
-// 'hereThreeWords'
-type Example3 = CamelCase<"HERE-THREE-WORDS">;
+type OneWordExample = CamelCase<"ONEWORD">;
+//   ^? 'oneword'
+
+type TwoWordsExample = CamelCase<"two_words">;
+//   ^? 'twoWords'
+
+type ThreeWordsExample = CamelCase<"HERE-THREE-WORDS">;
+//   ^? 'hereThreeWords'
 ```
 
 ## DeepCamelCaseProperties
@@ -33,6 +35,6 @@ type Input = {
   };
 };
 
-// { oneword: 1; twoWords: { hereThreeWords: false } }
 type Example = DeepCamelCaseProperties<Input>;
+//   ^? { oneword: 1; twoWords: { hereThreeWords: false } }
 ```
