@@ -129,29 +129,6 @@ export type DeepNonNullable<T> = T extends Builtin
   ? { [K in keyof T]: DeepNonNullable<T[K]> }
   : NonNullable<T>;
 
-/** Like Required but recursive */
-export type DeepRequired<T> = T extends Error
-  ? Required<T>
-  : T extends Builtin
-  ? T
-  : T extends Map<infer K, infer V>
-  ? Map<DeepRequired<K>, DeepRequired<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<DeepRequired<K>, DeepRequired<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<DeepRequired<K>, DeepRequired<V>>
-  : T extends Set<infer U>
-  ? Set<DeepRequired<U>>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<DeepRequired<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<DeepRequired<U>>
-  : T extends Promise<infer U>
-  ? Promise<DeepRequired<U>>
-  : T extends {}
-  ? { [K in keyof T]-?: DeepRequired<T[K]> }
-  : Required<T>;
-
 /** Like Readonly but recursive */
 export type DeepReadonly<T> = T extends Builtin
   ? T
@@ -381,6 +358,29 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
         : never;
     }
   : never;
+
+/** Like Required but recursive */
+export type DeepRequired<T> = T extends Error
+  ? Required<T>
+  : T extends Builtin
+  ? T
+  : T extends Map<infer K, infer V>
+  ? Map<DeepRequired<K>, DeepRequired<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? ReadonlyMap<DeepRequired<K>, DeepRequired<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepRequired<K>, DeepRequired<V>>
+  : T extends Set<infer U>
+  ? Set<DeepRequired<U>>
+  : T extends ReadonlySet<infer U>
+  ? ReadonlySet<DeepRequired<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepRequired<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepRequired<U>>
+  : T extends {}
+  ? { [K in keyof T]-?: DeepRequired<T[K]> }
+  : Required<T>;
 
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
