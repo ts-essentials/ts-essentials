@@ -19,3 +19,8 @@ export const isExact =
   <ActualShape>(x: Exact<ActualShape, ExpectedShape>): ExpectedShape => {
     return x;
   };
+
+export const createFactoryWithConstraint =
+  <Constraint>() =>
+  <Value extends Constraint>(value: Value): Value =>
+    value;
