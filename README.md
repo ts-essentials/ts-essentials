@@ -50,6 +50,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - CamelCase
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
+  - [Pick](#Pick)
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
@@ -366,6 +367,24 @@ buildable.nested.a = "test";
 buildable.nested.array = [];
 buildable.nested.array.push({ bar: 1 });
 const finished = buildable as ReadonlyObject;
+```
+
+### Pick
+
+There's no need for own implementation of `Pick`, as it's already strict:
+
+```typescript
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+//           ^^^^^^^^^^^^^^^^^
+
+interface Person {
+  age: number;
+  name: string;
+}
+
+// @ts-expect-error: Type '"job"' does not satisfy the constraint 'keyof Person'
+type WithJob = Pick<Person, "job">;
+//                          ^^^^^
 ```
 
 ### Omit
