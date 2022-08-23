@@ -474,8 +474,8 @@ Following the code above, we can compare the behavior of `Extract` and `StrictEx
 //     Type '{ type: "horse"; }' is not assignable to type 'Partial<Mouse>'
 //       Types of property 'type' are incompatible
 // @ts-expect-error: Type '"horse"' is not assignable to type '"mouse"'.
-type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" | "horse" }>;
-//                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
+//                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // no error
 type HouseAnimalWithExtract = Extract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
