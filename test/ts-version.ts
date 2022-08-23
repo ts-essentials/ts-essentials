@@ -1,1 +1,1 @@
-export type TsVersion = "4.4";
+export type TsVersion = "4.7";

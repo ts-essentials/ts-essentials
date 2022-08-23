@@ -148,6 +148,64 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
 
       # TypeScript 4.5
-      - run: yarn add typescript@4.5.4
+      - run: yarn add typescript@4.5.5
+      - run: yarn setTsVersion
+      - run: yarn test
+
+  typecheck4_6:
+    name: TypeScript 4.6
+    strategy:
+      matrix:
+        node: ['10.x']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cache YARN dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
+
+      - run: yarn --no-progress --non-interactive --frozen-lockfile
+
+      # TypeScript 4.6
+      - run: yarn add typescript@4.6.4
+      - run: yarn setTsVersion
+      - run: yarn test
+
+  typecheck4_7:
+    name: TypeScript 4.7
+    strategy:
+      matrix:
+        node: ['10.x']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cache YARN dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
+
+      - run: yarn --no-progress --non-interactive --frozen-lockfile
+
+      # TypeScript 4.7
+      - run: yarn add typescript@4.7.4
       - run: yarn setTsVersion
       - run: yarn test

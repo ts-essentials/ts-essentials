@@ -1,5 +1,6 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import { StrictExtract } from "../lib";
+import { TsVersion } from "./ts-version";
 
 function testStrictExtract() {
   interface Dog {
@@ -36,9 +37,31 @@ function testStrictExtract() {
     Assert<IsExact<StrictExtract<Animal, { type: "mouse" }>, Mouse>>,
     // @ts-expect-error
     StrictExtract<Animal, "cat" | "dog">,
-    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" }>, Cat | Dog>>,
+    Assert<
+      IsExact<
+        StrictExtract<
+          Animal,
+          TsVersion extends "4.1" | "4.2" | "4.3" | "4.4" | "4.5"
+            ? { type: "cat" | "dog" }
+            : { type: "cat" } | { type: "dog" }
+        >,
+        Cat | Dog
+      >
+    >,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" } | { type: "dog" }>, Cat | Dog>>,
     // @ts-expect-error
     StrictExtract<Animal, "cat" | "dog" | "mouse">,
-    Assert<IsExact<StrictExtract<Animal, { type: "cat" | "dog" | "mouse" }>, Animal>>,
+    Assert<
+      IsExact<
+        StrictExtract<
+          Animal,
+          TsVersion extends "4.1" | "4.2" | "4.3" | "4.4" | "4.5"
+            ? { type: "cat" | "dog" | "mouse" }
+            : { type: "cat" } | { type: "dog" } | { type: "mouse" }
+        >,
+        Animal
+      >
+    >,
+    Assert<IsExact<StrictExtract<Animal, { type: "cat" } | { type: "dog" } | { type: "mouse" }>, Animal>>,
   ];
 }

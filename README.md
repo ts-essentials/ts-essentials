@@ -126,8 +126,8 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 };
 
 // and get dictionary values
-type stringDictValues = DictionaryValues<typeof stringDict>;
-// Result: string
+type StringDictionaryValueType = DictionaryValues<typeof stringDict>;
+//   ^? string
 
 // When building a map using JS objects consider using SafeDictionary
 const safeDict: SafeDictionary<number> = {};
@@ -405,17 +405,11 @@ type ComplexObject = {
 };
 
 type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
-
-// Result:
-// {
-//  simple: number
-// }
+//   ^? { simple: number }
 
 // if you want to Omit multiple properties just use union type:
 type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
-
-// Result:
-// { } (empty type)
+//   ^? {}
 ```
 
 #### Comparison between `Omit` and `StrictOmit`
@@ -423,15 +417,13 @@ type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
 Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
 
 ```typescript
+// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'
+// @ts-expect-error: Type '"nonexistent"' is not assignable to type '"simple" | "nested"'
 type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
-
-// Result: error
-// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'.
-// Type '"nonexistent"' is not assignable to type '"simple" | "nested"'.
+//                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
-
-// Result: no error
+//   ^? {}
 ```
 
 As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
@@ -459,15 +451,17 @@ interface Mouse {
 type Animal = Dog | Cat | Mouse;
 
 type DogAnimal = StrictExtract<Animal, { type: "dog" }>;
-
-// Result:
-// Dog
+//   ^? Dog
 
 // if you want to Extract multiple properties just use union type:
-type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
 
-// Result:
-// Cat | Dog
+// 1. if you use typescript up to version 4.5
+type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
+//   ^? Cat | Dog
+
+// 2. otherwise use
+type HouseAnimal = StrictExtract<Animal, { type: "dog" } | { type: "cat" }>;
+//   ^? Cat | Dog
 ```
 
 #### Comparison between `Extract` and `StrictExtract`
@@ -475,15 +469,17 @@ type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
 Following the code above, we can compare the behavior of `Extract` and `StrictExtract`.
 
 ```typescript
-type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" | "horse" }>;
+// Type '{ type: "dog"; } | { type: "cat"; } | { type: "horse"; }' does not satisfy the constraint 'Partial<Animal>'
+//   Type '{ type: "horse"; }' is not assignable to type 'Partial<Animal>'
+//     Type '{ type: "horse"; }' is not assignable to type 'Partial<Mouse>'
+//       Types of property 'type' are incompatible
+// @ts-expect-error: Type '"horse"' is not assignable to type '"mouse"'.
+type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
+//                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// Result: error
-// Type '"dog" | "cat" | "horse"' is not assignable to type '"mouse" | undefined'
-// Type '"dog"' is not assignable to type '"mouse" | undefined'.
-
-type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" | "horse" }>;
-
-// Result: no error
+// no error
+type HouseAnimalWithExtract = Extract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
+//   ^? Dog | Cat
 ```
 
 ### StrictExclude
@@ -494,15 +490,11 @@ Usage is similar to the builtin version, but checks the filter type more strictl
 type Animal = "dog" | "cat" | "mouse";
 
 type DogAnimal = StrictExclude<Animal, "dog">;
-
-// Result:
-// 'cat' | 'mouse'
+//   ^? 'cat' | 'mouse'
 
 // if you want to Exclude multiple properties just use union type:
-type HouseAnimal = StrictExclude<Animal, "dog" | "cat">;
-
-// Result:
-// 'mouse'
+type MouseAnimal = StrictExclude<Animal, "dog" | "cat">;
+//   ^? 'mouse'
 ```
 
 #### Comparison between `Exclude` and `StrictExclude`
@@ -510,15 +502,12 @@ type HouseAnimal = StrictExclude<Animal, "dog" | "cat">;
 Following the code above, we can compare the behavior of `Exclude` and `StrictExclude`.
 
 ```typescript
+// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
+// @ts-expect-error: '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
 type HouseAnimalWithStrictExclude = StrictExclude<Animal, "dog" | "cat" | "horse">;
 
-// Result: error
-// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
-// Type '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
-
+// no error
 type HouseAnimalWithExclude = Exclude<Animal, "dog" | "cat" | "horse">;
-
-// Result: no error
 ```
 
 ### DeepOmit
@@ -551,12 +540,7 @@ type TeacherSimple = DeepOmit<
     }[];
   }
 >;
-
-// The result will be:
-// {
-//  name: string,
-//  students: {name: string}[]
-// }
+// ^? { name: string; students: { name: string }[] }
 ```
 
 NOTE
@@ -595,12 +579,7 @@ type TeacherSimple = DeepPick<
     }[];
   }
 >;
-
-// The result will be:
-// {
-//  gender: string;
-//  students: { score: number }[]
-// }
+// ^? { gender: string; students: { score: number }[] }
 ```
 
 ### OmitProperties
@@ -616,17 +595,11 @@ interface Example {
 }
 
 type ExampleWithoutMethods = OmitProperties<Example, Function>;
+//   ^? { version: string }
 
-// Result:
-// {
-//   version: string;
-// }
-
-// if you want to Omit multiple properties just use union type like
-
+// if you want to Omit multiple properties just use union type like:
 type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
-// Result:
-// { } (empty type)
+//   ^? {}
 ```
 
 ### PickProperties
@@ -641,20 +614,11 @@ interface Example {
 }
 
 type ExampleOnlyMethods = PickProperties<Example, Function>;
+//   ^? { log(): void }
 
-// Result:
-// {
-//   log(): void;
-// }
-
-// if you want to pick multiple properties just use union type like
-
+// if you want to pick multiple properties just use union type like:
 type ExampleOnlyMethodsAndString = PickProperties<Example, Function | string>;
-// Result:
-// {
-//   log(): void;
-//   version: string;
-// }
+//   ^? { log(): void; version: string }
 ```
 
 ### NonNever
@@ -713,11 +677,7 @@ type Bar = {
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
-// Result:
-// {
-//   a: number,
-//   b: number,
-// }
+//   ^? { a: number; b: number }
 ```
 
 ### MergeN
@@ -736,11 +696,7 @@ type Tuple = [
 ];
 
 const xyz: MergeN<Tuple> = { a: 4, b: 2 };
-// Result:
-// {
-//   a: number,
-//   b: number,
-// }
+//   ^? { a: number; b: number }
 ```
 
 ### MarkRequired
@@ -768,22 +724,12 @@ Useful when you want to make some properties optional without creating a separat
 
 ```typescript
 interface User {
-  id: number;
-  name: string;
   email: string;
   password: string;
 }
 
 type UserWithoutPassword = MarkOptional<User, "password">;
-
-// Result:
-
-// {
-//   id: number;
-//   name: string;
-//   email: string;
-//   password?: string;
-// }
+//   ^? { email: string; password?: string }
 ```
 
 ### MarkReadonly
@@ -794,20 +740,10 @@ Useful when you want to make some properties readonly without creating a separat
 interface User {
   id: number;
   name: string;
-  email: string;
-  password: string;
 }
 
 type UserThatCannotChangeName = MarkReadonly<User, "name">;
-
-// Result:
-
-// {
-//   id: number;
-//   readonly name: string;
-//   email: string;
-//   password: string;
-// }
+//   ^? { id: number; readonly name: string }
 ```
 
 ### MarkWritable
@@ -818,20 +754,10 @@ Useful when you want to make some properties writable (or unset `readonly`) with
 interface User {
   readonly id: number;
   readonly name: string;
-  readonly email: string;
-  readonly password: string;
 }
 
 type UserThatCanChangeName = MarkWritable<User, "name">;
-
-// Result:
-
-// {
-//   readonly id: number;
-//   name: string;
-//   readonly email: string;
-//   readonly password: string;
-// }
+//   ^? { readonly id: number; name: string }
 ```
 
 ### ReadonlyKeys
@@ -843,9 +769,9 @@ type T = {
   readonly a: number;
   b: string;
 };
+
 type Result = ReadonlyKeys<T>;
-// Result:
-// "a"
+//   ^? 'a'
 ```
 
 ### WritableKeys
@@ -857,9 +783,9 @@ type T = {
   readonly a: number;
   b: string;
 };
+
 type Result = WritableKeys<T>;
-// Result:
-// "b"
+//   ^? 'b'
 ```
 
 ### OptionalKeys
@@ -873,9 +799,9 @@ type T = {
   c: string | undefined;
   d?: string;
 };
+
 type Result = OptionalKeys<T>;
-// Result:
-// "b" | "d"
+//   ^? 'b' | 'd'
 ```
 
 ### RequiredKeys
@@ -889,9 +815,9 @@ type T = {
   c: string | undefined;
   d?: string;
 };
+
 type Result = RequiredKeys<T>;
-// Result:
-// "a" | "c"
+//   ^? 'a' | 'c'
 ```
 
 ### PickKeys
@@ -905,12 +831,12 @@ type T = {
   c: string | undefined;
   d: string;
 };
+
 type Result1 = PickKeys<T, string>;
-// Result1:
-// "d"
+//   ^? 'd'
+
 type Result2 = PickKeys<T, string | undefined>;
-// Result2:
-// "b" | "c" | "d"
+//   ^? 'b' | 'c' | 'd'
 ```
 
 ### UnionToIntersection
@@ -1004,16 +930,17 @@ const obj = {
   timestamp: 1548768231486,
 };
 
-type objKeys = ValueOf<typeof obj>;
-// Result: string | number
+type ObjectValueType = ValueOf<typeof obj>;
+//   ^? string | number
 ```
 
 ### ElementOf type
 
 ```typescript
 const array = [1, 2, true, false];
-type arrayElement = ElementOf<typeof array>;
-// Result: number | boolean
+
+type ArrayElementType = ElementOf<typeof array>;
+//   ^? number | boolean
 ```
 
 ### ArrayOrSingle
