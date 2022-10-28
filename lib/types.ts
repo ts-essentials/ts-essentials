@@ -424,7 +424,13 @@ export type Opaque<Type, Token extends string> = Token extends StringLiteral<Tok
   : never;
 
 /** Easily extract the type of a given object's values */
-export type ValueOf<T> = T[keyof T];
+export type ValueOf<T> = T extends Primitive
+  ? T
+  : T extends any[]
+  ? T[number]
+  : T extends (...args: any[]) => any
+  ? ReturnType<T>
+  : T[keyof T];
 
 /** Easily extract the type of a given array's elements */
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
