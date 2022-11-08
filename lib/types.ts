@@ -385,7 +385,7 @@ type DeepModify<T> =
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
-export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
+export type NonEmptyObject<T extends Record<PropertyKey, any>> = keyof T extends never ? never : T;
 
 export type NonEmptyArray<T> = [T, ...T[]];
 

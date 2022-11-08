@@ -44,6 +44,7 @@ import {
   ArrayOrSingle,
   IsAny,
   NonEmptyArray,
+  Primitive,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -836,8 +837,20 @@ function testNonEmptyObject() {
   type ObjectWithKeys = { foo: string; bar: number; xyz: undefined };
   type EmptyObject = {};
 
-  type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
-  type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
+  type Cases = [
+    Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>,
+    Assert<IsExact<NonEmptyObject<EmptyObject>, never>>,
+    // Works with Wrapper Object Types
+    Assert<IsExact<NonEmptyObject<String>, String>>,
+    Assert<IsExact<NonEmptyObject<Number>, Number>>,
+    Assert<IsExact<NonEmptyObject<Boolean>, Boolean>>,
+    // @ts-expect-error
+    Assert<IsExact<NonEmptyObject<string>, string>>, // Will Not work as T is a Primitive
+    // @ts-expect-error
+    Assert<IsExact<NonEmptyObject<number>, number>>, // Will Not work as T is a Primitive
+    // @ts-expect-error
+    Assert<IsExact<NonEmptyObject<undefined>, number>>, // Will Not work as T is a Primitive
+  ];
 }
 
 function testNonEmptyArray() {
