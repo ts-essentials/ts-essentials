@@ -3,11 +3,13 @@ import { ValueOf, Primitive, AnyArray } from "../lib/types";
 
 declare const array: number[];
 declare const func: (...arg: any[]) => boolean;
-declare const obj: { propA: string; propB: number; propC: () => void };
+declare const writableObj: { propA: string; propB: number; propC: () => void };
+declare const optionalObj: { propA?: string; propB?: number; propC?: () => void };
+declare const readonlyObj: { readonly propA: string; readonly propB: number; readonly propC: () => void };
 declare const tuple: [boolean, string, number];
 declare const primitive: Primitive;
-declare const primitiveOrObject: Primitive | typeof obj;
-declare const objOrFunc: typeof func | typeof obj;
+declare const primitiveOrObject: Primitive | typeof writableObj;
+declare const objOrFunc: typeof func | typeof writableObj;
 declare const arrayOrUndefined: number[] | undefined;
 
 // declare const readonly
@@ -18,7 +20,9 @@ declare const readonlyTupleOrUndefined: readonly [boolean, string, number] | und
 
 function testValueOf() {
   type cases = [
-    Assert<IsExact<ValueOf<typeof obj>, string | number | (() => void)>>,
+    Assert<IsExact<ValueOf<typeof writableObj>, string | number | (() => void)>>,
+    Assert<IsExact<ValueOf<typeof optionalObj>, string | number | (() => void) | undefined>>,
+    Assert<IsExact<ValueOf<typeof readonlyObj>, string | number | (() => void)>>,
     Assert<IsExact<ValueOf<typeof array>, number>>,
     Assert<IsExact<ValueOf<typeof arrayOrUndefined>, number | undefined>>,
     Assert<IsExact<ValueOf<typeof readonlyArray>, string | number>>,
@@ -37,11 +41,11 @@ function testValueOf() {
     Assert<IsExact<ValueOf<{ a: "1"; b: 2 }>, "1" | 2>>,
     // Combination of these types
     Assert<IsExact<ValueOf<typeof primitive>, Primitive>>,
-    Assert<IsExact<ValueOf<typeof primitiveOrObject>, ValueOf<Primitive> | ValueOf<typeof obj>>>,
-    Assert<IsExact<ValueOf<typeof objOrFunc>, ValueOf<typeof obj | ValueOf<typeof func>>>>,
+    Assert<IsExact<ValueOf<typeof primitiveOrObject>, ValueOf<Primitive> | ValueOf<typeof writableObj>>>,
+    Assert<IsExact<ValueOf<typeof objOrFunc>, ValueOf<typeof writableObj | ValueOf<typeof func>>>>,
     Assert<IsExact<ValueOf<[number[], string[]]>, number[] | string[]>>,
     Assert<IsExact<ValueOf<number[] | string | null>, number | string | null>>,
-    Assert<IsExact<ValueOf<boolean[] | typeof obj>, boolean | ValueOf<typeof obj>>>,
+    Assert<IsExact<ValueOf<boolean[] | typeof writableObj>, boolean | ValueOf<typeof writableObj>>>,
     Assert<IsExact<ValueOf<[string, number] | { keyA: bigint; keyB: null }>, string | number | bigint | null>>,
   ];
 }
