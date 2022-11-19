@@ -10,6 +10,7 @@ export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
+export type AnyFunction<TArgs extends any[] = any[], TReturnType = any> = (...args: TArgs) => TReturnType;
 
 export type ArrayOrSingle<T> = T | T[];
 
@@ -424,7 +425,13 @@ export type Opaque<Type, Token extends string> = Token extends StringLiteral<Tok
   : never;
 
 /** Easily extract the type of a given object's values */
-export type ValueOf<T> = T[keyof T];
+export type ValueOf<T> = T extends Primitive
+  ? T
+  : T extends AnyArray
+  ? T[number]
+  : T extends AnyFunction
+  ? ReturnType<T>
+  : T[keyof T];
 
 /** Easily extract the type of a given array's elements */
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
