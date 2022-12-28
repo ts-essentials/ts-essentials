@@ -36,3 +36,14 @@ function testIsExact() {
   // @ts-expect-error has different structure from BC (missing property b)
   isBC(c2);
 }
+
+function testUnionType() {
+  const value1 = 10;
+  const value2 = 10 as number | undefined;
+
+  const isNumber = isExact<number>();
+  const isMaybeNumber = isExact<number | undefined>();
+
+  isNumber(value1);
+  isMaybeNumber(value2);
+}
