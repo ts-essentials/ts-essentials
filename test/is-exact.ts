@@ -38,12 +38,24 @@ function testIsExact() {
 }
 
 function testUnionType() {
-  const value1 = 10;
-  const value2 = 10 as number | undefined;
+  type MaybeNumber = number | undefined;
+
+  const numericLiteral = 10;
+  const number = 10 as number;
+  const maybeNumber = 10 as MaybeNumber;
 
   const isNumber = isExact<number>();
-  const isMaybeNumber = isExact<number | undefined>();
+  const isMaybeNumber = isExact<MaybeNumber>();
 
-  isNumber(value1);
-  isMaybeNumber(value2);
+  // @ts-expect-error has different type from number (numeric literal type)
+  isNumber(numericLiteral);
+  isNumber(number);
+  // @ts-expect-error has different type from number (excessive `undefined` union element)
+  isNumber(maybeNumber);
+
+  // @ts-expect-error has different type from MaybeNumber (numeric literal type)
+  isMaybeNumber(numericLiteral);
+  isMaybeNumber(maybeNumber);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber(number);
 }
