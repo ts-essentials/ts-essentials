@@ -485,7 +485,17 @@ export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U,
 export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
 export type Tail<T extends AnyArray> = T extends [any, ...infer Rest] ? Rest : never;
 
-export type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : never) : never;
+type ObjectExact<TValue, TShape> = TValue extends TShape
+  ? IsNever<Exclude<keyof TValue, keyof TShape>> extends true
+    ? TValue
+    : never
+  : never;
+
+type PrimitiveExact<TValue, TShape> = [TValue] extends [TShape] ? ([TShape] extends [TValue] ? TValue : never) : never;
+
+export type Exact<TValue, TShape> = [TValue] extends [AnyRecord]
+  ? ObjectExact<TValue, TShape>
+  : PrimitiveExact<TValue, TShape>;
 
 /**
  * Basic interface for guarded functions that use [predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
