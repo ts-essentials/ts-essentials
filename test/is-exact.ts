@@ -54,6 +54,26 @@ function testObjectUnionType() {
   isBC(bcOrBc3);
 }
 
+function testObjectUndefinedUnionProperties() {
+  type RequiredA = { a: number };
+  type OptionalA = { a: number | undefined };
+
+  const requiredA: RequiredA = { a: 1 };
+  const optionalA: OptionalA = { a: 1 };
+
+  const isRequiredA = isExact<RequiredA>();
+  const isOptionalA = isExact<OptionalA>();
+
+  // as the same structure as RequiredA
+  isRequiredA(requiredA);
+  // @ts-expect-error has different structure from BC (a has excessive `undefined` union element)
+  isRequiredA(optionalA);
+  // @ts-expect-error has different structure from BC (a has missed `undefined` union element)
+  isOptionalA(requiredA);
+  // as the same structure as OptionalA
+  isOptionalA(optionalA);
+}
+
 function testPrimitiveUnionType() {
   type MaybeNumber = number | undefined;
 
