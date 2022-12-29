@@ -1,6 +1,6 @@
 import { isExact } from "../lib";
 
-function testIsExact() {
+function testObjects() {
   type ABC = { a: number; b: number; c: number };
   type BC = { b: number; c: number };
   type BC2 = { b: number; c: string };
@@ -37,7 +37,24 @@ function testIsExact() {
   isBC(c2);
 }
 
-function testUnionType() {
+function testObjectUnionType() {
+  type ABC = { a: number; b: number; c: number };
+  type BC = { b: number; c: number };
+
+  let abcOrBc: ABC | BC = { a: 1, b: 2, c: 3 };
+  let bc3 = { b: 2, c: 3 } as const;
+  let bcOrBc3: BC | typeof bc3 = bc3;
+
+  const isBC = isExact<BC>();
+
+  // @ts-expect-error has different structure from BC (excessive `ABC` union element)
+  isBC(abcOrBc);
+
+  // has the same structure as BC
+  isBC(bcOrBc3);
+}
+
+function testPrimitiveUnionType() {
   type MaybeNumber = number | undefined;
 
   const numericLiteral = 10;
