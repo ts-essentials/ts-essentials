@@ -509,5 +509,12 @@ type GetWithArray<O, K extends readonly any[]> = K extends readonly [infer Head,
   ? O
   : never;
 
+type AllPaths<TObject extends Record<string, unknown>> = {
+  [TKey in keyof TObject]: // TODO: Type instantiation is excessively deep and possibly infinite.
+  | (TObject[TKey] extends Record<string, unknown> ? `${TKey & string}.${AllPaths<TObject[TKey]> & string}` : never)
+    | (TObject[TKey] extends readonly any[] ? `${number}` : never)
+    | TKey;
+}[keyof TObject];
+
 /** Extract values of object having a specified path */
-export type Get<O extends Record<any, any>, T extends string> = GetWithArray<O, Path<T>>;
+export type Get<O extends Record<any, any>, T extends AllPaths<O>> = GetWithArray<O, Path<T>>;
