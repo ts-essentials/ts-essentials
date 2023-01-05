@@ -1,5 +1,32 @@
 # ts-essentials
 
+## 9.3.0
+
+### Minor Changes
+
+- a86c5b5: Add `ReadonlyArrayOrSingle` which is a counterpart to `ArrayOrSingle` with the array being readonly
+- 14cfa7c: Add utility function `createFactoryWithConstraint`
+
+### Patch Changes
+
+- c63e30e: Refactor `Tail` to use variadic tuple type
+- 8a28c53: Fix `DeepReadonly` for a union with an array of itself
+- 5989dda: Add union support to all Mark\* methods: `MarkRequired`, `MarkOptional`, `MarkReadonly` and `MarkWritable`
+- 8abe8a6: Fix `StrictExtract` usage for TypeScript@^4.6.0
+
+## 9.2.0
+
+### Minor Changes
+
+- 5aa1f26: Add `NonEmptyArray` which ensures an array to have at least one item
+- fa03dda: Add `StrictExclude`, a stricter version of `Exclude`
+- 6b27ee4: Add `MarkWritable` which unsets readonly for specified keys
+- e76a08a: Add `MarkReadonly` which sets readonly for specific keys
+
+### Patch Changes
+
+- 13504d0: Fix `DeepPartial` for normal arrays
+
 ## 9.1.2
 
 ### Patch Changes

@@ -10,8 +10,11 @@ export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
+export type AnyFunction<TArgs extends any[] = any[], TReturnType = any> = (...args: TArgs) => TReturnType;
 
 export type ArrayOrSingle<T> = T | T[];
+
+export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
 
@@ -167,6 +170,10 @@ export type DeepReadonly<T> = T extends Builtin
   ? WeakSet<DeepReadonly<U>>
   : T extends Promise<infer U>
   ? Promise<DeepReadonly<U>>
+  : T extends AnyArray<infer U>
+  ? T extends IsTuple<T>
+    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+    : ReadonlyArray<DeepReadonly<U>>
   : T extends {}
   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
   : IsUnknown<T> extends true
@@ -379,7 +386,9 @@ type DeepModify<T> =
 /** Remove keys with `never` value from object type */
 export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
 
-export type NonEmptyObject<T extends {}> = keyof T extends never ? never : T;
+export type NonEmptyObject<T extends AnyRecord> = keyof T extends never ? never : T;
+
+export type NonEmptyArray<T> = [T, ...T[]];
 
 /** Merge 2 types, properties types from the latter override the ones defined on the former type */
 export type Merge<M, N> = Omit<M, keyof N> & N;
@@ -392,16 +401,16 @@ type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head,
 export type MergeN<T extends readonly any[]> = _MergeN<T, {}>;
 
 /** Mark some properties as required, leaving others unchanged */
-export type MarkRequired<T, RK extends keyof T> = Omit<T, RK> & Required<Pick<T, RK>>;
+export type MarkRequired<T, RK extends keyof T> = T extends T ? Omit<T, RK> & Required<Pick<T, RK>> : never;
 
 /** Mark some properties as optional, leaving others unchanged */
-export type MarkOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type MarkOptional<T, K extends keyof T> = T extends T ? Omit<T, K> & Partial<Pick<T, K>> : never;
 
 /** Mark some properties as readonly, leaving others unchanged */
-export type MarkReadonly<T, K extends keyof T> = Omit<T, K> & Readonly<Pick<T, K>>;
+export type MarkReadonly<T, K extends keyof T> = T extends T ? Omit<T, K> & Readonly<Pick<T, K>> : never;
 
 /** Mark some properties as writable, leaving others unchanged */
-export type MarkWritable<T, K extends keyof T> = Omit<T, K> & Writable<Pick<T, K>>;
+export type MarkWritable<T, K extends keyof T> = T extends T ? Omit<T, K> & Writable<Pick<T, K>> : never;
 
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
@@ -416,7 +425,13 @@ export type Opaque<Type, Token extends string> = Token extends StringLiteral<Tok
   : never;
 
 /** Easily extract the type of a given object's values */
-export type ValueOf<T> = T[keyof T];
+export type ValueOf<T> = T extends Primitive
+  ? T
+  : T extends AnyArray
+  ? T[number]
+  : T extends AnyFunction
+  ? ReturnType<T>
+  : T[keyof T];
 
 /** Easily extract the type of a given array's elements */
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
@@ -468,11 +483,7 @@ export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U,
 
 /** Functional programming essentials */
 export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
-export type Tail<T extends AnyArray> = T["length"] extends 0
-  ? never
-  : ((...t: T) => void) extends (first: any, ...rest: infer Rest) => void
-  ? Rest
-  : never;
+export type Tail<T extends AnyArray> = T extends [any, ...infer Rest] ? Rest : never;
 
 export type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : never) : never;
 
@@ -510,11 +521,22 @@ type GetWithArray<O, K extends readonly any[]> = K extends readonly [infer Head,
   : never;
 
 type AllPaths<TObject extends Record<string, unknown>> = {
-  [TKey in keyof TObject]: // TODO: Type instantiation is excessively deep and possibly infinite.
-  | (TObject[TKey] extends Record<string, unknown> ? `${TKey & string}.${AllPaths<TObject[TKey]> & string}` : never)
+  [TKey in keyof TObject]:  // TODO: Type instantiation is excessively deep and possibly infinite.
+    | (TObject[TKey] extends Record<string, unknown> ? `${TKey & string}.${AllPaths<TObject[TKey]> & string}` : never)
     | (TObject[TKey] extends readonly any[] ? `${number}` : never)
     | TKey;
 }[keyof TObject];
 
 /** Extract values of object having a specified path */
 export type Get<O extends Record<any, any>, T extends AllPaths<O>> = GetWithArray<O, Path<T>>;
+/**
+ * Basic interface for guarded functions that use [predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
+ */
+export type PredicateFunction = (x: any, ..._z: any[]) => x is any;
+
+/**
+ * Extracts the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) of a guarded function
+ */
+export type PredicateType<T extends PredicateFunction> = T extends (target: any, ...rest: any[]) => target is infer P
+  ? P
+  : never;

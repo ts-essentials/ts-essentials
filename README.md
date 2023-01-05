@@ -50,6 +50,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
     - CamelCase
   - [Writable & DeepWritable](#Writable)
   - [Buildable](#Buildable)
+  - [Pick](#Pick)
   - [Omit](#Omit)
   - [StrictOmit](#StrictOmit)
     - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
@@ -62,6 +63,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   - [OmitProperties](#OmitProperties)
   - [PickProperties](#PickProperties)
   - [NonNever](#NonNever)
+  - [NonEmptyObject](#NonEmptyObject)
+  - [NonEmptyArray](#NonEmptyArray)
   - [Merge](#Merge)
   - [MergeN](#MergeN)
   - [MarkRequired](#MarkRequired)
@@ -123,8 +126,8 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
 };
 
 // and get dictionary values
-type stringDictValues = DictionaryValues<typeof stringDict>;
-// Result: string
+type StringDictionaryValueType = DictionaryValues<typeof stringDict>;
+//   ^? string
 
 // When building a map using JS objects consider using SafeDictionary
 const safeDict: SafeDictionary<number> = {};
@@ -366,6 +369,24 @@ buildable.nested.array.push({ bar: 1 });
 const finished = buildable as ReadonlyObject;
 ```
 
+### Pick
+
+There's no need for own implementation of `Pick`, as it's already strict:
+
+```typescript
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+//           ^^^^^^^^^^^^^^^^^
+
+interface Person {
+  age: number;
+  name: string;
+}
+
+// @ts-expect-error: Type '"job"' does not satisfy the constraint 'keyof Person'
+type WithJob = Pick<Person, "job">;
+//                          ^^^^^
+```
+
 ### Omit
 
 Our version of `Omit` is renamed to `StrictOmit` in `v3`, since the builtin `Omit` has become part of TypeScript 3.5
@@ -384,17 +405,11 @@ type ComplexObject = {
 };
 
 type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
-
-// Result:
-// {
-//  simple: number
-// }
+//   ^? { simple: number }
 
 // if you want to Omit multiple properties just use union type:
 type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
-
-// Result:
-// { } (empty type)
+//   ^? {}
 ```
 
 #### Comparison between `Omit` and `StrictOmit`
@@ -402,15 +417,13 @@ type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
 Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
 
 ```typescript
+// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'
+// @ts-expect-error: Type '"nonexistent"' is not assignable to type '"simple" | "nested"'
 type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
-
-// Result: error
-// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'.
-// Type '"nonexistent"' is not assignable to type '"simple" | "nested"'.
+//                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
-
-// Result: no error
+//   ^? {}
 ```
 
 As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
@@ -438,15 +451,17 @@ interface Mouse {
 type Animal = Dog | Cat | Mouse;
 
 type DogAnimal = StrictExtract<Animal, { type: "dog" }>;
-
-// Result:
-// Dog
+//   ^? Dog
 
 // if you want to Extract multiple properties just use union type:
-type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
 
-// Result:
-// Cat | Dog
+// 1. if you use typescript up to version 4.5
+type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
+//   ^? Cat | Dog
+
+// 2. otherwise use
+type HouseAnimal = StrictExtract<Animal, { type: "dog" } | { type: "cat" }>;
+//   ^? Cat | Dog
 ```
 
 #### Comparison between `Extract` and `StrictExtract`
@@ -454,15 +469,17 @@ type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
 Following the code above, we can compare the behavior of `Extract` and `StrictExtract`.
 
 ```typescript
-type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" | "cat" | "horse" }>;
+// Type '{ type: "dog"; } | { type: "cat"; } | { type: "horse"; }' does not satisfy the constraint 'Partial<Animal>'
+//   Type '{ type: "horse"; }' is not assignable to type 'Partial<Animal>'
+//     Type '{ type: "horse"; }' is not assignable to type 'Partial<Mouse>'
+//       Types of property 'type' are incompatible
+// @ts-expect-error: Type '"horse"' is not assignable to type '"mouse"'.
+type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
+//                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// Result: error
-// Type '"dog" | "cat" | "horse"' is not assignable to type '"mouse" | undefined'
-// Type '"dog"' is not assignable to type '"mouse" | undefined'.
-
-type HouseAnimalWithExtract = Extract<Animal, { type: "dog" | "cat" | "horse" }>;
-
-// Result: no error
+// no error
+type HouseAnimalWithExtract = Extract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
+//   ^? Dog | Cat
 ```
 
 ### StrictExclude
@@ -473,15 +490,11 @@ Usage is similar to the builtin version, but checks the filter type more strictl
 type Animal = "dog" | "cat" | "mouse";
 
 type DogAnimal = StrictExclude<Animal, "dog">;
-
-// Result:
-// 'cat' | 'mouse'
+//   ^? 'cat' | 'mouse'
 
 // if you want to Exclude multiple properties just use union type:
-type HouseAnimal = StrictExclude<Animal, "dog" | "cat">;
-
-// Result:
-// 'mouse'
+type MouseAnimal = StrictExclude<Animal, "dog" | "cat">;
+//   ^? 'mouse'
 ```
 
 #### Comparison between `Exclude` and `StrictExclude`
@@ -489,15 +502,12 @@ type HouseAnimal = StrictExclude<Animal, "dog" | "cat">;
 Following the code above, we can compare the behavior of `Exclude` and `StrictExclude`.
 
 ```typescript
+// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
+// @ts-expect-error: '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
 type HouseAnimalWithStrictExclude = StrictExclude<Animal, "dog" | "cat" | "horse">;
 
-// Result: error
-// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
-// Type '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
-
+// no error
 type HouseAnimalWithExclude = Exclude<Animal, "dog" | "cat" | "horse">;
-
-// Result: no error
 ```
 
 ### DeepOmit
@@ -527,15 +537,10 @@ type TeacherSimple = DeepOmit<
     gender: never;
     students: {
       score: never;
-    };
+    }[];
   }
 >;
-
-// The result will be:
-// {
-//  name: string,
-//  students: {name: string}[]
-// }
+// ^? { name: string; students: { name: string }[] }
 ```
 
 NOTE
@@ -571,15 +576,10 @@ type TeacherSimple = DeepPick<
     gender: never;
     students: {
       score: never;
-    };
+    }[];
   }
 >;
-
-// The result will be:
-// {
-//  gender: string;
-//  students: { score: number }[]
-// }
+// ^? { gender: string; students: { score: number }[] }
 ```
 
 ### OmitProperties
@@ -595,17 +595,11 @@ interface Example {
 }
 
 type ExampleWithoutMethods = OmitProperties<Example, Function>;
+//   ^? { version: string }
 
-// Result:
-// {
-//   version: string;
-// }
-
-// if you want to Omit multiple properties just use union type like
-
+// if you want to Omit multiple properties just use union type like:
 type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
-// Result:
-// { } (empty type)
+//   ^? {}
 ```
 
 ### PickProperties
@@ -620,20 +614,11 @@ interface Example {
 }
 
 type ExampleOnlyMethods = PickProperties<Example, Function>;
+//   ^? { log(): void }
 
-// Result:
-// {
-//   log(): void;
-// }
-
-// if you want to pick multiple properties just use union type like
-
+// if you want to pick multiple properties just use union type like:
 type ExampleOnlyMethodsAndString = PickProperties<Example, Function | string>;
-// Result:
-// {
-//   log(): void;
-//   version: string;
-// }
+//   ^? { log(): void; version: string }
 ```
 
 ### NonNever
@@ -662,6 +647,21 @@ type SomeObject = NumberDictionary<{ a: number; b: string }>;
 type EmptyObject = NumberDictionary<{}>;
 ```
 
+### NonEmptyArray
+
+Useful for accepting only arrays containing at least one element.
+
+```typescript
+// declare function expression type accepting some rest parameters, but at least one element for the rest parameters is required
+type FunctionAcceptingRestParameters = (someString: string, ...args: NonEmptyArray<number>) => void;
+
+// declare some non-empty array variables
+const okay: NonEmptyArray<number> = [1, 2];
+const alsoOkay: NonEmptyArray<number> = [1];
+// @ts-expect-error: Type '[]' is not assignable to type 'NonEmptyArray<number>'. Source has 0 element(s) but target requires 1.
+const error: NonEmptyArray<number> = [];
+```
+
 ### Merge
 
 _keywords: override_
@@ -677,11 +677,7 @@ type Bar = {
 };
 
 const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
-// Result:
-// {
-//   a: number,
-//   b: number,
-// }
+//   ^? { a: number; b: number }
 ```
 
 ### MergeN
@@ -700,11 +696,7 @@ type Tuple = [
 ];
 
 const xyz: MergeN<Tuple> = { a: 4, b: 2 };
-// Result:
-// {
-//   a: number,
-//   b: number,
-// }
+//   ^? { a: number; b: number }
 ```
 
 ### MarkRequired
@@ -732,22 +724,12 @@ Useful when you want to make some properties optional without creating a separat
 
 ```typescript
 interface User {
-  id: number;
-  name: string;
   email: string;
   password: string;
 }
 
 type UserWithoutPassword = MarkOptional<User, "password">;
-
-// Result:
-
-// {
-//   id: number;
-//   name: string;
-//   email: string;
-//   password?: string;
-// }
+//   ^? { email: string; password?: string }
 ```
 
 ### MarkReadonly
@@ -758,20 +740,10 @@ Useful when you want to make some properties readonly without creating a separat
 interface User {
   id: number;
   name: string;
-  email: string;
-  password: string;
 }
 
 type UserThatCannotChangeName = MarkReadonly<User, "name">;
-
-// Result:
-
-// {
-//   id: number;
-//   readonly name: string;
-//   email: string;
-//   password: string;
-// }
+//   ^? { id: number; readonly name: string }
 ```
 
 ### MarkWritable
@@ -782,20 +754,10 @@ Useful when you want to make some properties writable (or unset `readonly`) with
 interface User {
   readonly id: number;
   readonly name: string;
-  readonly email: string;
-  readonly password: string;
 }
 
 type UserThatCanChangeName = MarkWritable<User, "name">;
-
-// Result:
-
-// {
-//   readonly id: number;
-//   name: string;
-//   readonly email: string;
-//   readonly password: string;
-// }
+//   ^? { readonly id: number; name: string }
 ```
 
 ### ReadonlyKeys
@@ -807,9 +769,9 @@ type T = {
   readonly a: number;
   b: string;
 };
+
 type Result = ReadonlyKeys<T>;
-// Result:
-// "a"
+//   ^? 'a'
 ```
 
 ### WritableKeys
@@ -821,9 +783,9 @@ type T = {
   readonly a: number;
   b: string;
 };
+
 type Result = WritableKeys<T>;
-// Result:
-// "b"
+//   ^? 'b'
 ```
 
 ### OptionalKeys
@@ -837,9 +799,9 @@ type T = {
   c: string | undefined;
   d?: string;
 };
+
 type Result = OptionalKeys<T>;
-// Result:
-// "b" | "d"
+//   ^? 'b' | 'd'
 ```
 
 ### RequiredKeys
@@ -853,9 +815,9 @@ type T = {
   c: string | undefined;
   d?: string;
 };
+
 type Result = RequiredKeys<T>;
-// Result:
-// "a" | "c"
+//   ^? 'a' | 'c'
 ```
 
 ### PickKeys
@@ -869,12 +831,12 @@ type T = {
   c: string | undefined;
   d: string;
 };
+
 type Result1 = PickKeys<T, string>;
-// Result1:
-// "d"
+//   ^? 'd'
+
 type Result2 = PickKeys<T, string | undefined>;
-// Result2:
-// "b" | "c" | "d"
+//   ^? 'b' | 'c' | 'd'
 ```
 
 ### UnionToIntersection
@@ -968,16 +930,17 @@ const obj = {
   timestamp: 1548768231486,
 };
 
-type objKeys = ValueOf<typeof obj>;
-// Result: string | number
+type ObjectValueType = ValueOf<typeof obj>;
+//   ^? string | number
 ```
 
 ### ElementOf type
 
 ```typescript
 const array = [1, 2, true, false];
-type arrayElement = ElementOf<typeof array>;
-// Result: number | boolean
+
+type ArrayElementType = ElementOf<typeof array>;
+//   ^? number | boolean
 ```
 
 ### ArrayOrSingle
@@ -1070,6 +1033,30 @@ assert(anything instanceof String, "anything has to be a string!");
 // from now on `anything` is string
 ```
 
+### PredicateType
+
+_keywords: narrow, guard, validate_
+
+Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will
+return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated
+with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
+
+```typescript
+// Without PredicateType you can never use a set of functions like this together; how can you resolve ???
+// You would need a specific instance of isArrayOf for each type you want to narrow
+const isArrayOf = (thing: unknown, validator: (...x: any[]) => boolean): thing is ???[] => {
+  return Array.isArray(thing) && thing.every(validator);
+};
+
+// With PredicateType you can pull the predicate of the validator into the higher level guard
+const isArrayOf = <T extends (...x: any[]) => boolean>(
+  thing: unknown,
+  validator: T,
+): thing is Array<PredicateType<T>> => {
+  return Array.isArray(thing) && thing.every(validator);
+};
+```
+
 ### Exact
 
 _keywords: same, equals, equality_
@@ -1093,11 +1080,11 @@ Exact<C, C> // returns C
 ```typescript
 type ABC = { a: number; b: number; c: number };
 type BC = { b: number; c: number };
-type C = { c: number };
+
 let abc: ABC = { a: 1, b: 2, c: 3 };
 let bc: BC = { b: 2, c: 3 };
 
-// due to TS limitations, isExact has to be a curried function
+// due to TS limitations, `isExact` has to be a curried function
 const isBC = isExact<BC>();
 
 isBC(abc); // returns NEVER -- abc has different structure from BC (excessive property a)
@@ -1105,6 +1092,24 @@ isBC(bc); // works fine
 
 // note: that isExact can be used inline too
 isExact<BC>()(abc); // returns NEVER
+```
+
+### createFactoryWithConstraint
+
+`createFactoryWithConstraint<Constraint>()(value)` is a runtime function that returns (on the type level) value,
+narrowed within constraint type `Constraint`, or throws type error otherwise
+
+```typescript
+type NumericDictionary = Dictionary<number>;
+
+// due to TS limitations, `createFactoryWithConstraint` has to be a curried function
+const createNumericDictionary = createFactoryWithConstraint<NumericDictionary>();
+
+const abNumber = createNumericDictionary({ a: 1, b: 2 });
+//    ^? { a: number; b: number }
+
+// @ts-expect-error: Type 'string' is not assignable to type 'number'
+createNumericDictionary({ a: "1", b: "2" });
 ```
 
 ### XOR

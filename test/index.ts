@@ -11,14 +11,10 @@ import {
   DeepReadonly,
   DeepRequired,
   DeepWritable,
-  StrictExtract,
   Dictionary,
   DictionaryValues,
-  MarkOptional,
-  MarkRequired,
   Merge,
   MergeN,
-  NonEmptyObject,
   NonNever,
   noop,
   PickProperties,
@@ -42,11 +38,12 @@ import {
   IsTuple,
   Writable,
   OmitProperties,
-  isExact,
   IsUnknown,
   IsNever,
   ArrayOrSingle,
   IsAny,
+  NonEmptyArray,
+  Primitive,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -313,6 +310,17 @@ function testDeepReadonly() {
     >,
     Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
   ];
+
+  // Build-time test to ensure the fix for
+  // https://github.com/ts-essentials/ts-essentials/pull/310
+  // because IsExact<> is unable to text it.
+  {
+    type TestUnion = { value: string } | TestUnion[];
+    type ReadonlyTestUnion = { readonly value: string } | readonly ReadonlyTestUnion[];
+
+    const a: DeepReadonly<TestUnion> = [];
+    const b: ReadonlyTestUnion = a;
+  }
 
   // Build-time test to ensure the fix for
   // https://github.com/krzkaczor/ts-essentials/issues/17 remains in place.
@@ -824,29 +832,15 @@ function testNonNever() {
   type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
 }
 
-function testNonEmptyObject() {
-  type ObjectWithKeys = { foo: string; bar: number; xyz: undefined };
-  type EmptyObject = {};
+function testNonEmptyArray() {
+  type Cases<T> = [
+    Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>,
+    AssertFalse<IsExact<NonEmptyArray<T>, []>>,
 
-  type TestA = Assert<IsExact<NonEmptyObject<ObjectWithKeys>, ObjectWithKeys>>;
-  type TestB = Assert<IsExact<NonEmptyObject<EmptyObject>, never>>;
-}
-
-function testMarkOptional() {
-  type TestType = {
-    required1: number;
-    required2: string;
-    optional1?: null;
-    optional2?: boolean;
-  };
-  type ExpectedType = {
-    required1?: number;
-    required2: string;
-    optional1?: null;
-    optional2?: boolean;
-  };
-
-  type Test = Assert<IsExact<MarkOptional<TestType, "required1">, ExpectedType>>;
+    AssertFalse<Assignable<NonEmptyArray<T>, []>>,
+    Assert<Assignable<NonEmptyArray<T>, [T]>>,
+    Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
+  ];
 }
 
 function testMerge() {
@@ -998,43 +992,6 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
   ];
-}
-
-function testIsExact() {
-  type ABC = { a: number; b: number; c: number };
-  type BC = { b: number; c: number };
-  type BC2 = { b: number; c: string };
-  type C = { c: number };
-
-  let abc: ABC = { a: 1, b: 2, c: 3 };
-  let abc2 = { a: 1, b: 2, c: 3 } as const;
-  let bc: BC = { b: 2, c: 3 };
-  let bc2: BC2 = { b: 2, c: "3" };
-  let bc3 = { b: 2, c: 3 } as const;
-  let bc4 = { b: 2, c: "3" } as const;
-  let c: C = { c: 3 };
-  let c2 = { c: 3 } as const;
-
-  const isBC = isExact<BC>();
-
-  // @ts-expect-error has different structure from BC (excessive property a)
-  isBC(abc);
-  // @ts-expect-error has different structure from BC (excessive property a)
-  isBC(abc2);
-
-  // has the same structure as BC
-  isBC(bc);
-  // @ts-expect-error has different structure from BC (c has different type)
-  isBC(bc2);
-  // has the same structure as BC
-  isBC(bc3);
-  // @ts-expect-error has different structure from BC (c has different type)
-  isBC(bc4);
-
-  // @ts-expect-error has different structure from BC (missing property b)
-  isBC(c);
-  // @ts-expect-error has different structure from BC (missing property b)
-  isBC(c2);
 }
 
 function testIsUnknown() {

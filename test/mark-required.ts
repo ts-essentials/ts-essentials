@@ -11,6 +11,21 @@ function testMarkRequired() {
     optional2?: boolean;
   };
 
+  type UnionExample = MarkRequired<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">,
+    "optional1"
+  >;
+
+  let unionElementFields: UnionExample = {
+    readonly2: /\w+/g,
+    optional1: null,
+  };
+
+  unionElementFields = {
+    readonly1: new Date(),
+    optional1: null,
+  };
+
   type cases = [
     Assert<IsExact<MarkRequired<Example, never>, Example>>,
     Assert<IsExact<MarkRequired<Example, RequiredKeys<Example>>, Example>>,
@@ -28,7 +43,7 @@ function testMarkRequired() {
         }
       >
     >,
-    // @ts-expect-error do NOT support union types
+    // @ts-expect-error: throws type error when one of union elements doesn't have property
     MarkRequired<Example | { a: 1 }, "readonly1">,
   ];
 }
