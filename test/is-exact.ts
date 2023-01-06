@@ -26,7 +26,7 @@ function testObjects() {
   isBC(bc);
   // @ts-expect-error has different structure from BC (c has different type)
   isBC(bc2);
-  // has the same structure as BC
+  // @ts-expect-error: has different structure from BC (b and c have different types)
   isBC(bc3);
   // @ts-expect-error has different structure from BC (c has different type)
   isBC(bc4);
@@ -50,8 +50,13 @@ function testObjectUnionType() {
   // @ts-expect-error has different structure from BC (excessive `ABC` union element)
   isBC(abcOrBc);
 
-  // has the same structure as BC
+  // @ts-expect-error: has different structure from BC (b and c have different type)
   isBC(bcOrBc3);
+
+  const isBCorBC3 = isExact<BC | typeof bc3>();
+
+  // has the same structure
+  isBCorBC3(bcOrBc3);
 }
 
 function testObjectUndefinedUnionProperties() {
@@ -78,21 +83,57 @@ function testPrimitiveUnionType() {
   type MaybeNumber = number | undefined;
 
   const numericLiteral = 10;
+  let numericLiteral2 = 10 as 10;
   const number = 10 as number;
+  let number2 = 10;
+  let number3: number | undefined = 10;
   const maybeNumber = 10 as MaybeNumber;
+  const maybeNumber2 = 10 as number | undefined;
+  let maybeNumber3 = Math.random() > 0.5 ? 10 : undefined;
 
   const isNumber = isExact<number>();
   const isMaybeNumber = isExact<MaybeNumber>();
+  const isMaybeNumber2 = isExact<number | undefined>();
 
   // @ts-expect-error has different type from number (numeric literal type)
   isNumber(numericLiteral);
+  // @ts-expect-error has different type from number (numeric literal type)
+  isNumber(numericLiteral2);
   isNumber(number);
+  isNumber(number2);
+  isNumber(number3);
   // @ts-expect-error has different type from number (excessive `undefined` union element)
   isNumber(maybeNumber);
+  // @ts-expect-error has different type from number (excessive `undefined` union element)
+  isNumber(maybeNumber2);
+  // @ts-expect-error has different type from number (excessive `undefined` union element)
+  isNumber(maybeNumber3);
 
   // @ts-expect-error has different type from MaybeNumber (numeric literal type)
   isMaybeNumber(numericLiteral);
+  // @ts-expect-error has different type from MaybeNumber (numeric literal type)
+  isMaybeNumber(numericLiteral2);
   isMaybeNumber(maybeNumber);
+  isMaybeNumber(maybeNumber2);
+  isMaybeNumber(maybeNumber3);
   // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
   isMaybeNumber(number);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber(number2);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber(number3);
+
+  // @ts-expect-error has different type from MaybeNumber (numeric literal type)
+  isMaybeNumber2(numericLiteral);
+  // @ts-expect-error has different type from MaybeNumber (numeric literal type)
+  isMaybeNumber2(numericLiteral2);
+  isMaybeNumber2(maybeNumber);
+  isMaybeNumber2(maybeNumber2);
+  isMaybeNumber2(maybeNumber3);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber2(number);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber2(number2);
+  // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
+  isMaybeNumber2(number3);
 }
