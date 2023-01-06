@@ -485,8 +485,54 @@ export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U,
 export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
 export type Tail<T extends AnyArray> = T extends [any, ...infer Rest] ? Rest : never;
 
-type ObjectExact<TValue, TShape> = TValue extends TShape
-  ? IsNever<Exclude<keyof TValue, keyof TShape>> extends true
+type IsUnion<TUnion> = UnionToTuple<TUnion>["length"] extends 1 ? false : true;
+
+type UnionToFunctionInsertion<TUnion> = (TUnion extends any ? (arg: () => TUnion) => any : never) extends (
+  arg: infer TParam,
+) => any
+  ? TParam
+  : never;
+
+type UnionToTuple<TUnion> = UnionToFunctionInsertion<TUnion> extends () => infer TReturnType
+  ? [...UnionToTuple<Exclude<TUnion, TReturnType>>, TReturnType]
+  : [];
+
+type ExactUnionLength<
+  TValue,
+  TShape,
+  TValueLength = UnionToTuple<TValue>["length"],
+  TShapeLength = UnionToTuple<TShape>["length"],
+> = TValueLength extends TShapeLength ? true : false;
+
+type Xor<T, U> = T extends true ? (U extends true ? true : false) : U extends false ? true : false;
+
+type And<TTuple> = TTuple extends [infer _ extends true, ...infer Rest]
+  ? And<Rest>
+  : TTuple extends []
+    ? true
+    : false;
+
+type ObjectKeyExact<TValue, TShape> = And<[
+  IsNever<Exclude<keyof TValue, keyof TShape>>,
+  IsNever<Exclude<keyof TShape, keyof TValue>>
+]>;
+
+type ObjectValueDiff<TValue, TShape> = {
+  [TKey in keyof TValue]: Exclude<TValue[TKey], TShape[TKey & keyof TShape]>;
+}[keyof TValue];
+
+type ObjectValueExact<TValue, TShape> = And<[
+  IsNever<ObjectValueDiff<TValue, TShape>>,
+  IsNever<ObjectValueDiff<TShape, TValue>>
+]>;
+
+type ObjectExact<TValue, TShape> = [TValue] extends [TShape]
+  ? And<[
+      Xor<IsUnion<TValue>, IsUnion<TShape>>,
+      ExactUnionLength<TValue, TShape>,
+      ObjectKeyExact<TValue, TShape>,
+      ObjectValueExact<TValue, TShape>
+  ]> extends true
     ? TValue
     : never
   : never;
