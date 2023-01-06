@@ -506,33 +506,35 @@ type ExactUnionLength<
 
 type Xor<T, U> = T extends true ? (U extends true ? true : false) : U extends false ? true : false;
 
-type And<TTuple> = TTuple extends [infer _ extends true, ...infer Rest]
-  ? And<Rest>
+type And<TTuple> = TTuple extends [infer Head, ...infer Rest]
+  ? Head extends true
+    ? And<Rest>
+    : false
   : TTuple extends []
-    ? true
-    : false;
+  ? true
+  : false;
 
-type ObjectKeyExact<TValue, TShape> = And<[
-  IsNever<Exclude<keyof TValue, keyof TShape>>,
-  IsNever<Exclude<keyof TShape, keyof TValue>>
-]>;
+type ObjectKeyExact<TValue, TShape> = And<
+  [IsNever<Exclude<keyof TValue, keyof TShape>>, IsNever<Exclude<keyof TShape, keyof TValue>>]
+>;
 
 type ObjectValueDiff<TValue, TShape> = {
   [TKey in keyof TValue]: Exclude<TValue[TKey], TShape[TKey & keyof TShape]>;
 }[keyof TValue];
 
-type ObjectValueExact<TValue, TShape> = And<[
-  IsNever<ObjectValueDiff<TValue, TShape>>,
-  IsNever<ObjectValueDiff<TShape, TValue>>
-]>;
+type ObjectValueExact<TValue, TShape> = And<
+  [IsNever<ObjectValueDiff<TValue, TShape>>, IsNever<ObjectValueDiff<TShape, TValue>>]
+>;
 
 type ObjectExact<TValue, TShape> = [TValue] extends [TShape]
-  ? And<[
-      Xor<IsUnion<TValue>, IsUnion<TShape>>,
-      ExactUnionLength<TValue, TShape>,
-      ObjectKeyExact<TValue, TShape>,
-      ObjectValueExact<TValue, TShape>
-  ]> extends true
+  ? And<
+      [
+        Xor<IsUnion<TValue>, IsUnion<TShape>>,
+        ExactUnionLength<TValue, TShape>,
+        ObjectKeyExact<TValue, TShape>,
+        ObjectValueExact<TValue, TShape>,
+      ]
+    > extends true
     ? TValue
     : never
   : never;
