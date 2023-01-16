@@ -1,5 +1,49 @@
 import { isExact } from "../lib";
 
+function testArray() {
+  const readonlyArray: readonly number[] = [1, 2, 3];
+  const writableArray: number[] = [1, 2, 3];
+  const tuple: [number] = [1];
+  const readonlyTuple = [1, 2, 3] as const;
+
+  const isReadonlyArray = isExact<readonly number[]>();
+  const isWritableArray = isExact<number[]>();
+  const isTuple = isExact<[number]>();
+  const isReadonlyTuple = isExact<readonly [1, 2, 3]>();
+
+  isReadonlyArray(readonlyArray);
+  // @ts-expect-error: doesn't have `readonly`
+  isReadonlyArray(writableArray);
+  // @ts-expect-error: doesn't have `readonly` and is tuple
+  isReadonlyArray(tuple);
+  // @ts-expect-error: is tuple
+  isReadonlyArray(readonlyTuple);
+
+  // @ts-expect-error: has `readonly`
+  isWritableArray(readonlyArray);
+  isWritableArray(writableArray);
+  // @ts-expect-error: is tuple
+  isWritableArray(tuple);
+  // @ts-expect-error: has `readonly` and is tuple
+  isWritableArray(readonlyTuple);
+
+  // @ts-expect-error: has `readonly` and isn't tuple
+  isTuple(readonlyArray);
+  // @ts-expect-error: isn't tuple
+  isTuple(writableArray);
+  isTuple(tuple);
+  // @ts-expect-error: has `readonly`
+  isTuple(readonlyTuple);
+
+  // @ts-expect-error: isn't tuple
+  isReadonlyTuple(readonlyArray);
+  // @ts-expect-error: has NO `readonly` and isn't tuple
+  isReadonlyTuple(writableArray);
+  // @ts-expect-error: has NO `readonly`
+  isReadonlyTuple(tuple);
+  isReadonlyTuple(readonlyTuple);
+}
+
 function testObjects() {
   type ABC = { a: number; b: number; c: number };
   type BC = { b: number; c: number };
