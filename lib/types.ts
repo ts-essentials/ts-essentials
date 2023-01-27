@@ -437,7 +437,7 @@ export type ValueOf<T> = T extends Primitive
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
 
 /** Type constraint for tuple inference */
-export type Tuple<T = any> = [T] | T[];
+export type Tuple<T = any> = [T?, ...T[]];
 
 /** Useful as a return type in interfaces or abstract classes with missing implementation */
 export type AsyncOrSync<T> = PromiseLike<T> | T;
