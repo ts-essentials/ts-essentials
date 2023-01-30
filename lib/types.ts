@@ -539,9 +539,41 @@ type ObjectExact<TValue, TShape> = [TValue] extends [TShape]
     : never
   : never;
 
+type IsArray<TValue> = [TValue] extends [readonly any[]] ? true : false;
+
+type IsReadonly<TArray> = Readonly<TArray> extends TArray ? true : false;
+
+type SameLength<TValue extends readonly any[], TShape extends readonly any[]> = IsNever<
+  PrimitiveExact<TValue["length"], TShape["length"]>
+> extends true
+  ? false
+  : true;
+
+type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = And<
+  [
+    // both arrays
+    IsArray<TValue>,
+    IsArray<TShape>,
+    // same length
+    SameLength<TValue, TShape>,
+    // both readonly or not
+    Xor<IsReadonly<TValue>, IsReadonly<TShape>>,
+  ]
+> extends true
+  ? [TValue, TShape] extends [readonly (infer TValueElement)[], readonly (infer TShapeElement)[]]
+    ? Exact<TValueElement, TShapeElement> extends TValueElement
+      ? TValue
+      : never
+    : never
+  : never;
+
 type PrimitiveExact<TValue, TShape> = [TValue] extends [TShape] ? ([TShape] extends [TValue] ? TValue : never) : never;
 
-export type Exact<TValue, TShape> = [TValue] extends [AnyRecord]
+export type Exact<TValue, TShape> = [TValue] extends [readonly any[]]
+  ? [TShape] extends [readonly any[]]
+    ? ArrayExact<TValue, TShape>
+    : never
+  : [TValue] extends [AnyRecord]
   ? ObjectExact<TValue, TShape>
   : PrimitiveExact<TValue, TShape>;
 
