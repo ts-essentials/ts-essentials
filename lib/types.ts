@@ -19,11 +19,6 @@ export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
 
-/**
- * Like Record, but can be used with only one argument.
- * Useful, if you want to make sure that all of the keys of a finite type are used.
- */
-export type Dictionary<T, K extends KeyofBase = string> = { [key in K]: T };
 /** Given Dictionary<T> returns T */
 export type DictionaryValues<T> = T[keyof T];
 /**

@@ -43,6 +43,7 @@ import {
   ArrayOrSingle,
   IsAny,
   NonEmptyArray,
+  KeyofBase,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -65,6 +66,7 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
+    Assert<IsExact<Dictionary<number, KeyofBase>[symbol], number>>,
   ];
 }
 

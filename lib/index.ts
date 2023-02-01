@@ -12,6 +12,7 @@ export * from "./writable";
 
 export * from "./async-or-sync";
 export * from "./async-or-sync-type";
+export * from "./dictionary";
 
 // Mark wrapper types
 
