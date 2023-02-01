@@ -16,6 +16,7 @@ export * from "./dictionary";
 export * from "./dictionary-values";
 export * from "./merge";
 export * from "./merge-n";
+export * from "./newable";
 
 // Mark wrapper types
 
