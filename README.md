@@ -132,7 +132,10 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`isExact`]() -
 - [`noop`]() -
 
-### Built-in types
+## Built-in types
+
+TypeScript provides several [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) to
+facilitate common type transformations. These utilities are available globally.
 
 - [`Awaited<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#awaitedtype) - This type is meant to
   model operations like `await` in `async` functions, or the `.then()` method on `Promise`s - specifically, the way that
