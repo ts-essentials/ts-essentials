@@ -1,4 +1,4 @@
-import { Exact } from "./types";
+import { Exact } from "./exact";
 
 export class UnreachableCaseError extends Error {
   constructor(value: never) {
