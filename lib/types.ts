@@ -1,8 +1,7 @@
 import { Builtin } from "./built-in";
+import { KeyofBase } from "./key-of-base";
 import { Primitive } from "./primitive";
 
-// https://devblogs.microsoft.com/typescript/announcing-typescript-2-9-2/#support-for-symbols-and-numeric-literals-in-keyof-and-mapped-object-types
-export type KeyofBase = keyof any;
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
 type AnyRecord<T = any> = Record<KeyofBase, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
