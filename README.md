@@ -32,13 +32,20 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Basic
 
-- [`Builtin`]() -
-- [`KeyofBase`]() -
-- [`Primitive`]() -
-- [`StrictExclude`]() -
-- [`StrictExtract`]() -
-- [`StrictOmit`]() -
-- [`Writable`]() -
+- [`Builtin`]() - Primitive, function, date, error or regular expression
+- [`KeyofBase`]() - [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for
+  `PropertyKey`
+- [`Primitive`]() - Matches any [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
+- [`StrictExclude<UnionType, ExcludedMembers>`]() - Constructs a type by excluding from `UnionType` all union members
+  that are assignable to `ExcludedMembers`. This is stricter version of
+  [`Exclude`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers)
+- [`StrictExtract<Type, Union>`]() - Constructs a type by extracting from `Type` all union members that are assignable
+  to `Union`. This is stricter version of
+  [`Extract`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union)
+- [`StrictOmit<Type, Keys>`]() - Constructs a type by picking all properties from `Type` and then removing `Keys`. This
+  is stricter version of [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
+- [`Writable<Type>`]() - Constructs a type with removed `readonly` for all properties of `Type`, meaning the properties
+  of the constructed type can be reassigned.
 
 ### Utility types
 
