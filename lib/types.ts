@@ -1,14 +1,15 @@
+import { AnyArray } from "./any-array";
+import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
 import { Primitive } from "./primitive";
 
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
-type AnyRecord<T = any> = Record<KeyofBase, T>;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
 export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
-export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
+
 export type AnyFunction<TArgs extends any[] = any[], TReturnType = any> = (...args: TArgs) => TReturnType;
 
 export type ArrayOrSingle<T> = T | T[];
@@ -205,9 +206,6 @@ export type DeepWritable<T> = T extends Builtin
 
 /** Combination of DeepPartial and DeepWritable */
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
-
-/** Similar to the builtin Omit, but checks the filter strictly. */
-export type StrictOmit<T extends AnyRecord, K extends keyof T> = T extends AnyArray ? never : Omit<T, K>;
 
 type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T];
 
