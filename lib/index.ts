@@ -8,6 +8,10 @@ export * from "./strict-extract";
 export * from "./strict-omit";
 export * from "./writable";
 
+// Arrays and Tuples
+
+export * from "./any-array";
+
 // TODO: others
 
 export * from "./types";

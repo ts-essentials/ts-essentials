@@ -43,7 +43,6 @@ import {
   ArrayOrSingle,
   IsAny,
   NonEmptyArray,
-  Primitive,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
