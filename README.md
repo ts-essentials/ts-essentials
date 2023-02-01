@@ -49,7 +49,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Utility types
 
-- [`AsyncOrSync`]() -
+- [`AsyncOrSync<Type>`]() - Constructs a type with `Type` or `PromiseLike<Type>`
 - [`AsyncOrSyncType`]() -
 - [`Dictionary`]() -
 - [`DictionaryValues`]() -

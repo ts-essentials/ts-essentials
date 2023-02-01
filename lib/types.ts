@@ -1,5 +1,6 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
+import { AsyncOrSync } from "./async-or-sync";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
 import { Primitive } from "./primitive";
@@ -427,9 +428,6 @@ export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[
 
 /** Type constraint for tuple inference */
 export type Tuple<T = any> = [T?, ...T[]];
-
-/** Useful as a return type in interfaces or abstract classes with missing implementation */
-export type AsyncOrSync<T> = PromiseLike<T> | T;
 
 export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
 export type AsyncOrSyncType<T> = T extends AsyncOrSync<infer PT> ? PT : never;
