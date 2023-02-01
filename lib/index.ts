@@ -27,6 +27,7 @@ export * from "./newable";
 // Type checkers
 
 export * from "./exact";
+export * from "./non-empty-object";
 
 // Arrays and Tuples
 

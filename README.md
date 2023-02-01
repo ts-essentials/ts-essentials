@@ -61,7 +61,6 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`MergeN<Tuple>`](/lib/merge-n.ts) - Constructs a type by merging objects with type `Merge` in tuple `Tuple`
   recursively
 - [`Newable<ReturnType>`](/lib/newable.ts) - Constructs a class type with constructor which has return type `ReturnType`
-- [`NonEmptyObject`]() -
 - [`NonNever`]() -
 - [`OmitProperties`]() -
 - [`Opaque`]() -
@@ -107,6 +106,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`IsNever`]() -
 - [`IsUnknown`]() -
 - [`IsTuple`]() -
+- [`NonEmptyObject<Object>`](/lib/non-empty-object.ts) - Returns `Object` when `Object` has at least one key. Otherwise
+  returns `never`
 
 ### Arrays and Tuples
 
