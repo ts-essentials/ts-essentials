@@ -1,6 +1,5 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
-import { AsyncOrSync } from "./async-or-sync";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
 import { Primitive } from "./primitive";
@@ -430,7 +429,6 @@ export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[
 export type Tuple<T = any> = [T?, ...T[]];
 
 export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
-export type AsyncOrSyncType<T> = T extends AsyncOrSync<infer PT> ? PT : never;
 
 export interface Newable<T> {
   new (...args: any[]): T;

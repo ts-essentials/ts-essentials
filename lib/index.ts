@@ -11,6 +11,7 @@ export * from "./writable";
 // Utility types
 
 export * from "./async-or-sync";
+export * from "./async-or-sync-type";
 
 // Mark wrapper types
 
