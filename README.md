@@ -56,8 +56,6 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`Dictionary<Type, Keys>`](/lib/dictionary.ts) - Constructs an object type whose property keys are `Keys` (`string` by
   default) and whose property values are `Type`
 - [`DictionaryValues<Type>`](/lib/dictionary-values.ts) - This type unwraps `Dictionary` value type
-- [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when `Type` and `Shape` are identical. Otherwise returns
-  `never`
 - [`Merge<Object1, Object2>`](/lib/merge.ts) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Values from `Object2` override values from `Object1` when keys are the same
 - [`MergeN`]() -
@@ -102,6 +100,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Type checkers
 
+- [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when `Type` and `Shape` are identical. Otherwise returns
+  `never`
 - [`IsAny`]() -
 - [`IsNever`]() -
 - [`IsUnknown`]() -

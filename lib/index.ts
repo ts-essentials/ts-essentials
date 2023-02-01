@@ -14,7 +14,6 @@ export * from "./async-or-sync";
 export * from "./async-or-sync-type";
 export * from "./dictionary";
 export * from "./dictionary-values";
-export * from "./exact";
 export * from "./merge";
 
 // Mark wrapper types
@@ -24,6 +23,8 @@ export * from "./merge";
 // Key types
 
 // Type checkers
+
+export * from "./exact";
 
 // Arrays and Tuples
 
