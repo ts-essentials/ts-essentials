@@ -57,12 +57,14 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   default) and whose property values are `Type`
 - [`DictionaryValues<Type>`](/lib/dictionary-values.ts) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge.ts) - Constructs a type by picking all properties from `Object1` and `Object2`.
-  Values from `Object2` override values from `Object1` when keys are the same
+  Property values from `Object2` override property values from `Object1` when property keys are the same
 - [`MergeN<Tuple>`](/lib/merge-n.ts) - Constructs a type by merging objects with type `Merge` in tuple `Tuple`
   recursively
 - [`Newable<ReturnType>`](/lib/newable.ts) - Constructs a class type with constructor which has return type `ReturnType`
-- [`NonNever<Type>`](/lib/non-never.ts) - Constructs a type by picking all properties but `never` from `Type`
-- [`OmitProperties`]() -
+- [`NonNever<Type>`](/lib/non-never.ts) - Constructs a type by picking all properties from type `Type` which values
+  don't equal to `never`
+- [`OmitProperties<Type, Value>`](/lib/omit-properties.ts) - Constructs a type by picking all properties from type
+  `Type` and removing those properties which values equal to `Value`
 - [`Opaque`]() -
 - [`PickProperties`]() -
 - [`SafeDictionary`]() -

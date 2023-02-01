@@ -18,6 +18,7 @@ export * from "./merge";
 export * from "./merge-n";
 export * from "./newable";
 export * from "./non-never";
+export * from "./omit-properties";
 
 // Mark wrapper types
 
