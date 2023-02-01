@@ -209,9 +209,6 @@ export type Buildable<T> = DeepPartial<DeepWritable<T>>;
 /** Similar to the builtin Omit, but checks the filter strictly. */
 export type StrictOmit<T extends AnyRecord, K extends keyof T> = T extends AnyArray ? never : Omit<T, K>;
 
-/** Similar to the builtin Extract, but checks the filter strictly */
-export type StrictExtract<T, U extends Partial<T>> = Extract<T, U>;
-
 type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T];
 
 /** Omit all properties of given type in object type */
