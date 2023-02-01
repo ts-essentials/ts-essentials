@@ -132,26 +132,45 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`isExact`]() -
 - [`noop`]() -
 
-### Built-in
+### Built-in types
 
-- [`Awaited`]() -
-- [`Capitalize`]() -
-- [`ConstructParameters`]() -
-- [`Exclude`]() -
-- [`Extract`]() -
-- [`InstanceType`]() -
-- [`Lowercase`]() -
-- [`NonNullable`]() -
-- [`Omit`]() -
-- [`Parameters`]() -
-- [`Partial`]() -
-- [`Pick`]() -
-- [`Readonly`]() -
-- [`Record`]() -
-- [`Required`]() -
-- [`ReturnType`]() -
-- [`Uncapitalize`]() -
-- [`Uppercase`]() -
+- [`Awaited<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#awaitedtype) - This type is meant to
+  model operations like `await` in `async` functions, or the `.then()` method on `Promise`s - specifically, the way that
+  they recursively unwrap `Promise`s
+- [`Capitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype) -
+  Converts the first character in the string to an uppercase equivalent
+- [`ConstructParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
+  Constructs a tuple or array type from the types of a constructor function type `Type`
+- [`Exclude<UnionType, ExcludedMembers>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers) -
+  Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`
+- [`Extract<Type, Union>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union) -
+  Constructs a type by extracting from `Type` all union members that are assignable to `Union`
+- [`InstanceType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#instancetypetype) - Constructs
+  a type consisting of the instance type of a constructor function in `Type`
+- [`Lowercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#lowercasestringtype) -
+  Converts each character in the string to the lowercase equivalent
+- [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype) - Constructs a
+  type by excluding null and undefined from `Type`
+- [`Omit<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) - Constructs a
+  type by picking all properties from `Type` and then removing `Keys`
+- [`Parameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype) - Constructs a
+  tuple type from the types used in the parameters of a function type `Type`
+- [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) - Constructs a type
+  with all properties of `Type` set to optional
+- [`Pick<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) - Constructs a
+  type by picking the set of properties `Keys` from `Type`
+- [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype) - Constructs a type
+  with all properties of `Type` set to `readonly`, meaning the properties of the constructed type cannot be reassigned
+- [`Record<Keys, Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) - Constructs
+  an object type whose property keys are `Keys` and whose property values are `Type`
+- [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype) - Constructs a type
+  consisting of all properties of `Type` set to required
+- [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) - Constructs a
+  type consisting of the return type of function type `Type` parameter
+- [`Uncapitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype) -
+  Converts the first character in the string to a lowercase equivalent
+- [`Uppercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uppercasestringtype) -
+  Converts each character in the string to the uppercase version
 
 ## TypeScript dependency table
 
