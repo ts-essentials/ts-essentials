@@ -3,6 +3,7 @@ import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
 import { Primitive } from "./primitive";
+import { Writable } from "./writable";
 
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
 // https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
@@ -179,9 +180,6 @@ export type DeepReadonly<T> = T extends Builtin
   : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
-
-/** Make readonly object writable */
-export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
 /** Like Writable but recursive */
 export type DeepWritable<T> = T extends Builtin

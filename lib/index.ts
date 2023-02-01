@@ -6,6 +6,7 @@ export * from "./key-of-base";
 export * from "./strict-exclude";
 export * from "./strict-extract";
 export * from "./strict-omit";
+export * from "./writable";
 
 // TODO: others
 
