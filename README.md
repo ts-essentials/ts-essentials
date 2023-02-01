@@ -52,7 +52,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 ### Utility types
 
 - [`AsyncOrSync<Type>`](/lib/async-or-sync.ts) - Constructs a type with `Type` or `PromiseLike<Type>`
-- [`AsyncOrSyncType`](/lib/async-or-sync-type.ts) - This type unwraps `AsyncOrSync` type
+- [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type.ts) - This type unwraps `AsyncOrSync` type
 - [`Dictionary`]() -
 - [`DictionaryValues`]() -
 - [`Exact`]() -
