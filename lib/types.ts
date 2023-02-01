@@ -19,8 +19,6 @@ export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
 
-/** Given Dictionary<T> returns T */
-export type DictionaryValues<T> = T[keyof T];
 /**
  * Like Dictionary, but:
  *  - ensures type safety of index access

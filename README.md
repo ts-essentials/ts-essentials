@@ -55,7 +55,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type.ts) - This type unwraps `AsyncOrSync` type
 - [`Dictionary<Type, Keys>`](/lib/dictionary.ts) - Constructs an object type whose property keys are `Keys` (`string` by
   default) and whose property values are `Type`
-- [`DictionaryValues`]() -
+- [`DictionaryValues<Type>`](/lib/dictionary-values.ts) - This type unwraps `Dictionary` value type
 - [`Exact`]() -
 - [`Merge`]() -
 - [`MergeN`]() -
