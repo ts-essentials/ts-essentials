@@ -1,2 +1,2 @@
 /** Make readonly object writable */
-export type Writable<T> = { -readonly [P in keyof T]: T[P] };
+export type Writable<Type> = { -readonly [P in keyof Type]: Type[P] };
