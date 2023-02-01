@@ -61,7 +61,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`MergeN<Tuple>`](/lib/merge-n.ts) - Constructs a type by merging objects with type `Merge` in tuple `Tuple`
   recursively
 - [`Newable<ReturnType>`](/lib/newable.ts) - Constructs a class type with constructor which has return type `ReturnType`
-- [`NonNever`]() -
+- [`NonNever<Type>`](/lib/non-never.ts) - Constructs a type by picking all properties but `never` from `Type`
 - [`OmitProperties`]() -
 - [`Opaque`]() -
 - [`PickProperties`]() -

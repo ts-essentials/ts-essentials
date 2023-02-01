@@ -365,9 +365,6 @@ type DeepModify<T> =
   | (T extends ReadonlyMap<infer K, infer E> ? ReadonlyMap<K, DeepModify<E>> : never)
   | (T extends WeakMap<infer K, infer E> ? WeakMap<K, DeepModify<E>> : never);
 
-/** Remove keys with `never` value from object type */
-export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends never ? never : K }[keyof T]>;
-
 export type NonEmptyArray<T> = [T, ...T[]];
 
 /** Mark some properties as required, leaving others unchanged */
