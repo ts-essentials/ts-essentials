@@ -2,6 +2,7 @@ import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
+import { Merge } from "./merge";
 import { Primitive } from "./primitive";
 import { Writable } from "./writable";
 
@@ -371,9 +372,6 @@ export type NonNever<T extends {}> = Pick<T, { [K in keyof T]: T[K] extends neve
 export type NonEmptyObject<T extends AnyRecord> = keyof T extends never ? never : T;
 
 export type NonEmptyArray<T> = [T, ...T[]];
-
-/** Merge 2 types, properties types from the latter override the ones defined on the former type */
-export type Merge<M, N> = Omit<M, keyof N> & N;
 
 type _MergeN<T extends readonly any[], Result> = T extends readonly [infer Head, ...infer Tail]
   ? _MergeN<Tail, Merge<Result, Head>>
