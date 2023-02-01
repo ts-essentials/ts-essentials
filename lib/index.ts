@@ -15,6 +15,7 @@ export * from "./async-or-sync-type";
 export * from "./dictionary";
 export * from "./dictionary-values";
 export * from "./merge";
+export * from "./merge-n";
 
 // Mark wrapper types
 

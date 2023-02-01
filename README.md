@@ -58,7 +58,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`DictionaryValues<Type>`](/lib/dictionary-values.ts) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge.ts) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Values from `Object2` override values from `Object1` when keys are the same
-- [`MergeN`]() -
+- [`MergeN<Tuple>`](/lib/merge-n.ts) - Constructs a type by merging objects with type `Merge` in tuple `Tuple`
+  recursively
 - [`Newable`]() -
 - [`NonEmptyObject`]() -
 - [`NonNever`]() -
