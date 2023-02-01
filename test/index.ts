@@ -66,7 +66,8 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
-    Assert<IsExact<Dictionary<number, KeyofBase>[symbol], number>>,
+    // for TypeScript 4.1 and 4.2 it doesn't work, so using `string` to make it work on purpose
+    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.1" | "4.2" | "4.3" ? string : symbol], number>>,
   ];
 }
 
