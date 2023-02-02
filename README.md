@@ -85,7 +85,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   where properties `Keys` are set to `readonly`, meaning they cannot be reassigned
 - [`MarkRequired<Type, Keys>`](/lib/mark-required.ts) - Constructs a type by picking all properties from type `Type`
   where properties `Keys` are set as required
-- [`MarkWritable`]() -
+- [`MarkWritable<Type, Keys>`](/lib/mark-writable.ts) - Constructs a type by picking all properties from type `Type`
+  where properties `Keys` remove `readonly` modifier, meaning they can be reassigned
 
 ### Deep wrapper types
 

@@ -31,6 +31,7 @@ export * from "./xor";
 export * from "./mark-optional";
 export * from "./mark-readonly";
 export * from "./mark-required";
+export * from "./mark-writable";
 
 // Deep wrapper types
 

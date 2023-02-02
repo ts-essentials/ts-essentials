@@ -349,9 +349,6 @@ type DeepModify<T> =
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
-/** Mark some properties as writable, leaving others unchanged */
-export type MarkWritable<T, K extends keyof T> = T extends T ? Omit<T, K> & Writable<Pick<T, K>> : never;
-
 /** Easily extract the type of a given array's elements */
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
 
