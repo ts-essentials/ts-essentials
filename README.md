@@ -79,7 +79,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Mark wrapper types
 
-- [`MarkOptional`]() -
+- [`MarkOptional<Type, Keys>`](/lib/mark-optional.ts) - Constructs a type by picking all properties in type `Type` and
+  setting properties `Keys` optional, meaning the properties of the constructed type aren't required
 - [`MarkReadonly`]() -
 - [`MarkRequired`]() -
 - [`MarkWritable`]() -

@@ -28,6 +28,8 @@ export * from "./xor";
 
 // Mark wrapper types
 
+export * from "./mark-optional";
+
 // Deep wrapper types
 
 // Key types

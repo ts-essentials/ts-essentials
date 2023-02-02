@@ -352,9 +352,6 @@ export type NonEmptyArray<T> = [T, ...T[]];
 /** Mark some properties as required, leaving others unchanged */
 export type MarkRequired<T, RK extends keyof T> = T extends T ? Omit<T, RK> & Required<Pick<T, RK>> : never;
 
-/** Mark some properties as optional, leaving others unchanged */
-export type MarkOptional<T, K extends keyof T> = T extends T ? Omit<T, K> & Partial<Pick<T, K>> : never;
-
 /** Mark some properties as readonly, leaving others unchanged */
 export type MarkReadonly<T, K extends keyof T> = T extends T ? Omit<T, K> & Readonly<Pick<T, K>> : never;
 
