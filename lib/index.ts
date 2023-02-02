@@ -40,6 +40,7 @@ export * from "./deep-non-nullable";
 export * from "./deep-nullable";
 export * from "./deep-omit";
 export * from "./deep-partial";
+export * from "./deep-pick";
 export * from "./deep-writable";
 
 // Key types

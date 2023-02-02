@@ -102,8 +102,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [`DeepPick`]() - Constructs a type by picking set of properties, which have property values `never` or `true` in type
-  `Filter`, from type `Type`
+- [`DeepPick<Type, Filter>`](/lib/deep-pick.ts) - Constructs a type by picking set of properties, which have property
+  values `never` or `true` in type `Filter`, from type `Type`
 - [`DeepReadonly`]() -
 - [`DeepRequired`]() -
 - [`DeepUndefinable`]() -
