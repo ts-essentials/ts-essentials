@@ -66,6 +66,13 @@ export * from "./non-empty-object";
 // Arrays and Tuples
 
 export * from "./any-array";
+export * from "./array-or-single";
+export * from "./element-of";
+export * from "./head";
+export * from "./non-empty-array";
+export * from "./readonly-array-or-single";
+export * from "./tail";
+export * from "./tuple";
 
 // Change case
 

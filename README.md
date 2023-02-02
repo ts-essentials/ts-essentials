@@ -72,8 +72,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`SafeDictionary<Type, Keys>`](/lib/safe-dictionary.ts) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`
-- [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type that returns a primitive for primitive itself, array elements,
-  function return type or object property values
+- [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type for type `Type` and equals to a primitive for primitives,
+  array elements for arrays, function return type for functions or object property values for objects
 - [`XOR<Type1, Type2>`](/lib/xor.ts) - Construct a type which is assignable to either type `Type1` or `Type2` but not
   both
 
@@ -121,7 +121,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`OptionalKeys<Type>`](/lib/optional-keys.ts) - Takes object type `Type` and produces string literal union of all
   optional keys
 - [`PickKeys<Type, Value>`](/lib/pick-keys.ts) - Takes object type `Type` and produces string literal union with all
-  keys of type `Value`
+  keys, which values are assignable to type `Value`
 - [`ReadonlyKeys<Type>`](/lib/readonly-keys.ts) - Takes object type `Type` and produces string literal union of all
   `readonly` keys
 - [`RequiredKeys<Type>`](/lib/required-keys.ts) - Takes object type `Type` and produces string literal union of all
@@ -142,14 +142,14 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Arrays and Tuples
 
-- [`AnyArray`]() -
-- [`ArrayOrSingle`]() -
-- [`ElementOf`]() -
-- [`Head`]() -
-- [`NonEmptyArray`]() -
-- [`ReadonlyArrayOrSingle`]() -
-- [`Tail`]() -
-- [`Tuple`]() -
+- [`AnyArray<Type>`](/lib/any-array.ts) - Matches `Array` or `ReadonlyArray`
+- [`ArrayOrSingle<Type>`](/lib/array-or-single.ts) - Matches `Type` or `Type[]`
+- [`ElementOf<Type>`](/lib/element-of.ts) - Constructs a type which equals to array element type for type `Type`
+- [`Head<Type>`](/lib/head.ts) - Constructs a type which equals to first element in type `Type`
+- [`NonEmptyArray<Type>`](/lib/non-empty-array.ts) - Matches array with at least one element of type `Type`
+- [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single.ts) - Matches `Type` or `readonly Type[]`
+- [`Tail<Type>`](/lib/tail.ts) - Constructs a type which equals to elements but first one in type `Type`
+- [`Tuple<Type>`](/lib/tuple.ts) - Matches type constraint for tuple with elements of type `Type`
 
 ### Change case
 

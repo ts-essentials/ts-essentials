@@ -1,1 +1,1 @@
-export type AnyArray<T = any> = Array<T> | ReadonlyArray<T>;
+export type AnyArray<Type = any> = Array<Type> | ReadonlyArray<Type>;
