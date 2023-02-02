@@ -36,12 +36,16 @@ export * from "./mark-writable";
 // Deep wrapper types
 
 export * from "./deep-partial";
+export * from "./deep-writable";
 
 // Key types
 
 // Type checkers
 
 export * from "./exact";
+export * from "./is-any";
+export * from "./is-unknown";
+export * from "./is-tuple";
 export * from "./non-empty-object";
 
 // Arrays and Tuples

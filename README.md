@@ -95,13 +95,14 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`DeepNullable`]() -
 - [`DeepOmit`]() -
 - [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
-  and set them as optional. To make properties optional on one level, use
+  and setting them as optional. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [`DeepPick`]() -
 - [`DeepReadonly`]() -
 - [`DeepRequired`]() -
 - [`DeepUndefinable`]() -
-- [`DeepWritable`]() -
+- [`DeepWritable`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type` recursively and
+  removing `readonly` modifier, meaning they can be reassigned
 
 ### Key types
 

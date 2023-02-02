@@ -2,6 +2,7 @@ import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { DeepPartial } from "./deep-partial";
+import { DeepWritable } from "./deep-writable";
 import { IsTuple } from "./is-tuple";
 import { IsUnknown } from "./is-unknown";
 import { PickProperties } from "./pick-properties";
@@ -135,27 +136,6 @@ export type DeepReadonly<T> = T extends Builtin
   : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
-
-/** Like Writable but recursive */
-export type DeepWritable<T> = T extends Builtin
-  ? T
-  : T extends Map<infer K, infer V>
-  ? Map<DeepWritable<K>, DeepWritable<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? Map<DeepWritable<K>, DeepWritable<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<DeepWritable<K>, DeepWritable<V>>
-  : T extends Set<infer U>
-  ? Set<DeepWritable<U>>
-  : T extends ReadonlySet<infer U>
-  ? Set<DeepWritable<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<DeepWritable<U>>
-  : T extends Promise<infer U>
-  ? Promise<DeepWritable<U>>
-  : T extends {}
-  ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
-  : T;
 
 /** Combination of DeepPartial and DeepWritable */
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
