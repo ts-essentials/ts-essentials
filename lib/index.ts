@@ -50,6 +50,7 @@ export * from "./deep-writable";
 
 export * from "./optional-keys";
 export * from "./pick-keys";
+export * from "./readonly-keys";
 
 // Type checkers
 
