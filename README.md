@@ -90,7 +90,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Deep wrapper types
 
-- [`Buildable`]() -
+- [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable` meaning all
+  properties from type `Type` are recursively set as optional and remove `readonly` modifier recursively
 - [`DeepNonNullable`]() -
 - [`DeepNullable`]() -
 - [`DeepOmit`]() -
@@ -101,8 +102,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`DeepReadonly`]() -
 - [`DeepRequired`]() -
 - [`DeepUndefinable`]() -
-- [`DeepWritable`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type` recursively and
-  removing `readonly` modifier, meaning they can be reassigned
+- [`DeepWritable<Type>`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type`
+  recursively and removing `readonly` modifier, meaning they can be reassigned
 
 ### Key types
 

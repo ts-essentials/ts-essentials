@@ -1,8 +1,6 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
-import { DeepPartial } from "./deep-partial";
-import { DeepWritable } from "./deep-writable";
 import { IsTuple } from "./is-tuple";
 import { IsUnknown } from "./is-unknown";
 import { PickProperties } from "./pick-properties";
@@ -136,9 +134,6 @@ export type DeepReadonly<T> = T extends Builtin
   : IsUnknown<T> extends true
   ? unknown
   : Readonly<T>;
-
-/** Combination of DeepPartial and DeepWritable */
-export type Buildable<T> = DeepPartial<DeepWritable<T>>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = T extends unknown

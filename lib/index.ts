@@ -35,6 +35,7 @@ export * from "./mark-writable";
 
 // Deep wrapper types
 
+export * from "./buildable";
 export * from "./deep-partial";
 export * from "./deep-writable";
 
