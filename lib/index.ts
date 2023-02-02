@@ -49,6 +49,7 @@ export * from "./deep-writable";
 // Key types
 
 export * from "./optional-keys";
+export * from "./pick-keys";
 
 // Type checkers
 

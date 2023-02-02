@@ -1,6 +1,5 @@
 import { AnyArray } from "./any-array";
 import { OptionalKeys } from "./optional-keys";
-import { PickProperties } from "./pick-properties";
 import { Writable } from "./writable";
 
 export type IsNever<T> = [T] extends [never] ? true : false;
@@ -11,9 +10,6 @@ export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 /** Gets keys of an object which are required */
 export type RequiredKeys<T> = T extends unknown ? Exclude<keyof T, OptionalKeys<T>> : never;
-
-/** Gets keys of properties of given type in object type */
-export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
