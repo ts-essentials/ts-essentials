@@ -84,6 +84,10 @@ export * from "./predicate-type";
 
 // Utility functions
 
+// Build-in types
+
+export * from "./awaited";
+
 // TODO: remove
 
 export * from "./functions";
