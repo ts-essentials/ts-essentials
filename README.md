@@ -159,7 +159,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Function types
 
-- [`AnyFunction<Args, ReturnType>`](/lib/any-function.ts) - Matches function with arguments type `Args` (`any[]` by
+- [`AnyFunction<Args, ReturnType>`](/lib/any-function.ts) - Matches function type with arguments type `Args` (`any[]` by
   default) and return type `ReturnType` (`any` by default)
 - [`PredicateFunction`](/lib/predicate-function.ts) - Matches type constraint for type guard, meaning first argument is
   used in return type and return type is
@@ -169,11 +169,17 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Utility functions
 
-- [`UnreachableCaseError`]() -
-- [`assert`]() -
-- [`createFactoryWithConstraint`]() -
-- [`isExact`]() -
-- [`noop`]() -
+- [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error.ts) - Matches runtime class that helps check
+  exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
+- [`assert(condition, message)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
+  Otherwise it throws an error with `Assertion Error: ${message}`
+- [`createFactoryWithConstraint<Constraint>()(value)`](/lib/functions/create-factory-with-constraint.ts) - Matches
+  runtime function, which validates that type of `value` matches `Constraint` without changing resulting type of
+  `value`. Ponyfill for
+  [`satisfies` operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
+- [`isExact<Expected>()(value)`](/lib/functions/is-exact.ts) - Matches runtime function, which validates that type of
+  `value` equals to `Expected`. Otherwise shows TypeScript error
+- [`noop(..._args)`](/lib/functions/noop.ts) - Matches runtime function that does nothing with arguments `_args`
 
 ## Built-in types
 

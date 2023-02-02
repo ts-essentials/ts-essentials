@@ -87,10 +87,12 @@ export * from "./predicate-type";
 
 // Utility functions
 
+export * from "./functions/unreachable-case-error";
+export * from "./functions/assert";
+export * from "./functions/create-factory-with-constraint";
+export * from "./functions/is-exact";
+export * from "./functions/noop";
+
 // Build-in types
 
 export * from "./awaited";
-
-// TODO: remove
-
-export * from "./functions";
