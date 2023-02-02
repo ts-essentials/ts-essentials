@@ -126,8 +126,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   `readonly` keys
 - [`RequiredKeys<Type>`](/lib/required-keys.ts) - Takes object type `Type` and produces string literal union of all
   non-optional keys
-- [`WritableKeys`]() - Takes object type `Type` and produces string literal union of all keys without `readonly`
-  modifier
+- [`WritableKeys`](/lib/writable-keys.ts) - Takes object type `Type` and produces string literal union of all keys
+  without `readonly` modifier
 
 ### Type checkers
 

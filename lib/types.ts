@@ -1,5 +1,4 @@
 import { AnyArray } from "./any-array";
-import { IsFullyWritable } from "./is-fully-writable";
 
 export type IsNever<T> = [T] extends [never] ? true : false;
 
@@ -16,11 +15,6 @@ export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[
 export type Tuple<T = any> = [T?, ...T[]];
 
 export type Awaited<T> = T extends PromiseLike<infer PT> ? PT : never;
-
-/** Gets keys of an object which are writable */
-export type WritableKeys<T extends {}> = {
-  [P in keyof T]-?: IsFullyWritable<Pick<T, P>> extends true ? P : never;
-}[keyof T];
 
 /** Functional programming essentials */
 export type Head<T extends AnyArray> = T["length"] extends 0 ? never : T[0];
