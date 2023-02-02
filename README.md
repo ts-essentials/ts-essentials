@@ -91,20 +91,22 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 ### Deep wrapper types
 
 - [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
-  properties from type `Type` are recursively set as optional and remove `readonly` modifier recursively
+  properties from type `Type` are recursively set as `readonly` and optional
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable.ts) - Constructs a type by picking all properties from type `Type`
   recursively and exclude `null` and `undefined` property values from all of them. To make properties non-nullable on
   one level, use [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
-- [`DeepNullable`](/lib/deep-nullable.ts) - Constructs a type by picking all properties from type `Type` recursively and
-  include `null` property values to all of them
+- [`DeepNullable<Type>`](/lib/deep-nullable.ts) - Constructs a type by picking all properties from type `Type`
+  recursively and include `null` property values for all of them
 - [`DeepOmit<Type, Filter>`](/lib/deep-omit.ts) - Constructs a type by picking all properties from type `Type` and
   removing properties which values are `never` or `true` in type `Filter`
 - [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
-  and setting them as optional. To make properties optional on one level, use
+  and setting them as optional, meaning they aren't required. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [`DeepPick<Type, Filter>`](/lib/deep-pick.ts) - Constructs a type by picking set of properties, which have property
   values `never` or `true` in type `Filter`, from type `Type`
-- [`DeepReadonly`]() -
+- [`DeepReadonly<Type>`](/lib/deep-readonly.ts) - Constructs a type by picking all properties from type `Type`
+  recursively and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one
+  level, use [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
 - [`DeepRequired`]() -
 - [`DeepUndefinable`]() -
 - [`DeepWritable<Type>`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type`

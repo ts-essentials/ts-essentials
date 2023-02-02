@@ -1,7 +1,6 @@
 import { AnyArray } from "./any-array";
 import { Builtin } from "./built-in";
 import { IsTuple } from "./is-tuple";
-import { IsUnknown } from "./is-unknown";
 import { PickProperties } from "./pick-properties";
 import { Writable } from "./writable";
 
@@ -58,33 +57,6 @@ export type DeepRequired<T> = T extends Error
   : T extends {}
   ? { [K in keyof T]-?: DeepRequired<T[K]> }
   : Required<T>;
-
-/** Like Readonly but recursive */
-export type DeepReadonly<T> = T extends Builtin
-  ? T
-  : T extends Map<infer K, infer V>
-  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<DeepReadonly<K>, DeepReadonly<V>>
-  : T extends Set<infer U>
-  ? ReadonlySet<DeepReadonly<U>>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<DeepReadonly<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<DeepReadonly<U>>
-  : T extends Promise<infer U>
-  ? Promise<DeepReadonly<U>>
-  : T extends AnyArray<infer U>
-  ? T extends IsTuple<T>
-    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-    : ReadonlyArray<DeepReadonly<U>>
-  : T extends {}
-  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-  : IsUnknown<T> extends true
-  ? unknown
-  : Readonly<T>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = T extends unknown
