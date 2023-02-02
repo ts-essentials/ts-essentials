@@ -20,6 +20,7 @@ export * from "./newable";
 export * from "./non-never";
 export * from "./omit-properties";
 export * from "./opaque";
+export * from "./pick-properties";
 
 // Mark wrapper types
 

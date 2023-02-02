@@ -2,7 +2,7 @@ import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { KeyofBase } from "./key-of-base";
-import { PickKeysByValue } from "./pick-keys-by-value";
+import { PickProperties } from "./pick-properties";
 import { Primitive } from "./primitive";
 import { Writable } from "./writable";
 
@@ -198,9 +198,6 @@ export type DeepWritable<T> = T extends Builtin
 
 /** Combination of DeepPartial and DeepWritable */
 export type Buildable<T> = DeepPartial<DeepWritable<T>>;
-
-/** Pick all properties of given type in object type */
-export type PickProperties<T, P> = Pick<T, PickKeysByValue<T, P>>;
 
 /** Gets keys of an object which are optional */
 export type OptionalKeys<T> = T extends unknown

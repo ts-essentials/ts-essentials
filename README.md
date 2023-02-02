@@ -67,7 +67,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   `Type` and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque.ts) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
-- [`PickProperties`]() -
+- [`PickProperties<Type, Value>`](/lib/pick-properties.ts) - Constructs a type by picking all properties from type
+  `Type` which values equal to `Value`
 - [`SafeDictionary`]() -
 - [`UnionToIntersection`]() -
 - [`ValueOf`]() -
