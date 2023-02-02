@@ -58,6 +58,7 @@ export * from "./writable-keys";
 
 export * from "./exact";
 export * from "./is-any";
+export * from "./is-never";
 export * from "./is-unknown";
 export * from "./is-tuple";
 export * from "./non-empty-object";

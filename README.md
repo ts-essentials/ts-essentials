@@ -131,12 +131,12 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Type checkers
 
-- [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when `Type` and `Shape` are identical. Otherwise returns
+- [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
   `never`
-- [`IsAny`]() -
-- [`IsNever`]() -
-- [`IsUnknown`]() -
-- [`IsTuple`]() -
+- [`IsAny<Type>`](/lib/is-any.ts) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
+- [`IsNever<Type>`](/lib/is-never.ts) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
+- [`IsUnknown<Type>`](/lib/is-unknown.ts) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
+- [`IsTuple<Type>`](/lib/is-tuple.ts) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
 - [`NonEmptyObject<Object>`](/lib/non-empty-object.ts) - Returns `Object` when `Object` has at least one key. Otherwise
   returns `never`
 

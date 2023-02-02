@@ -1,7 +1,5 @@
 import { AnyArray } from "./any-array";
 
-export type IsNever<T> = [T] extends [never] ? true : false;
-
 export type ArrayOrSingle<T> = T | T[];
 
 export type ReadonlyArrayOrSingle<T> = T | readonly T[];
