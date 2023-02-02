@@ -1,4 +1,4 @@
-type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
+type StringLiteral<Type> = Type extends string ? (string extends Type ? never : Type) : never;
 
 declare const __OPAQUE_TYPE__: unique symbol;
 
