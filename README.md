@@ -90,7 +90,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Deep wrapper types
 
-- [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable` meaning all
+- [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as optional and remove `readonly` modifier recursively
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable.ts) - Constructs a type by picking all properties from type `Type`
   recursively and exclude `null` and `undefined` from all of them. To make properties writable on one level, use
