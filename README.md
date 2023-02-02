@@ -65,7 +65,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   don't equal to `never`
 - [`OmitProperties<Type, Value>`](/lib/omit-properties.ts) - Constructs a type by picking all properties from type
   `Type` and removing those properties which values equal to `Value`
-- [`Opaque`]() -
+- [`Opaque<Type, Token>`](/lib/opaque.ts) - Constructs a type which is a subset of `Type` with a specified unique token
+  `Token`
 - [`PickProperties`]() -
 - [`SafeDictionary`]() -
 - [`UnionToIntersection`]() -

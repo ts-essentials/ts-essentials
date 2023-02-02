@@ -378,15 +378,6 @@ export type MarkWritable<T, K extends keyof T> = T extends T ? Omit<T, K> & Writ
 /** Convert union type to intersection #darkmagic */
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
-type StringLiteral<T> = T extends string ? (string extends T ? never : T) : never;
-
-declare const __OPAQUE_TYPE__: unique symbol;
-
-/** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
-export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
-  ? Type & { readonly [__OPAQUE_TYPE__]: Token }
-  : never;
-
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T extends Primitive
   ? T
