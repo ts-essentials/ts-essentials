@@ -122,9 +122,10 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   optional keys
 - [`PickKeys<Type, Value>`](/lib/pick-keys.ts) - Takes object type `Type` and produces string literal union with all
   keys of type `Value`
-- [`ReadonlyKeys`](/lib/readonly-keys.ts) - Takes object type `Type` and produces string literal union of all `readonly`
-  keys
-- [`RequiredKeys`]() - Takes object type `Type` and produces string literal union of all non-optional keys
+- [`ReadonlyKeys<Type>`](/lib/readonly-keys.ts) - Takes object type `Type` and produces string literal union of all
+  `readonly` keys
+- [`RequiredKeys<Type>`](/lib/required-keys.ts) - Takes object type `Type` and produces string literal union of all
+  non-optional keys
 - [`WritableKeys`]() - Takes object type `Type` and produces string literal union of all keys without `readonly`
   modifier
 
