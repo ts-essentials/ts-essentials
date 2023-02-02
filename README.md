@@ -72,7 +72,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`SafeDictionary<Type, Keys>`](/lib/safe-dictionary.ts) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`
-- [`ValueOf`]() -
+- [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type that returns a primitive for primitive itself, array elements,
+  function return type or object property values
 - [`XOR`]() -
 
 ### Mark wrapper types

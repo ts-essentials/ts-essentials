@@ -22,6 +22,8 @@ export * from "./omit-properties";
 export * from "./opaque";
 export * from "./pick-properties";
 export * from "./safe-dictionary";
+export * from "./union-to-intersection";
+export * from "./value-of";
 
 // Mark wrapper types
 
@@ -41,6 +43,8 @@ export * from "./any-array";
 // Change case
 
 // Function types
+
+export * from "./any-function";
 
 // Utility functions
 

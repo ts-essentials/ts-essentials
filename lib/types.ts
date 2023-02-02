@@ -2,7 +2,6 @@ import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
 import { PickProperties } from "./pick-properties";
-import { Primitive } from "./primitive";
 import { Writable } from "./writable";
 
 export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
@@ -10,8 +9,6 @@ export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never
 export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
 export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
-
-export type AnyFunction<TArgs extends any[] = any[], TReturnType = any> = (...args: TArgs) => TReturnType;
 
 export type ArrayOrSingle<T> = T | T[];
 
@@ -363,18 +360,6 @@ export type MarkReadonly<T, K extends keyof T> = T extends T ? Omit<T, K> & Read
 
 /** Mark some properties as writable, leaving others unchanged */
 export type MarkWritable<T, K extends keyof T> = T extends T ? Omit<T, K> & Writable<Pick<T, K>> : never;
-
-/** Convert union type to intersection #darkmagic */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
-
-/** Easily extract the type of a given object's values */
-export type ValueOf<T> = T extends Primitive
-  ? T
-  : T extends AnyArray
-  ? T[number]
-  : T extends AnyFunction
-  ? ReturnType<T>
-  : T[keyof T];
 
 /** Easily extract the type of a given array's elements */
 export type ElementOf<T extends readonly any[]> = T extends readonly (infer ET)[] ? ET : never;
