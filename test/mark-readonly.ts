@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkReadonly, WritableKeys, ReadonlyKeys } from "../lib/types";
+import { MarkReadonly, WritableKeys, ReadonlyKeys } from "../lib";
 
 function testMarkReadonly() {
   type Example = {
