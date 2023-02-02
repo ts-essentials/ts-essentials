@@ -42,6 +42,7 @@ export * from "./deep-omit";
 export * from "./deep-partial";
 export * from "./deep-pick";
 export * from "./deep-readonly";
+export * from "./deep-required";
 export * from "./deep-writable";
 
 // Key types
