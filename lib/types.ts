@@ -1,6 +1,7 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
+import { DeepModify } from "./deep-modify";
 import { IsTuple } from "./is-tuple";
 import { IsUnknown } from "./is-unknown";
 import { PickProperties } from "./pick-properties";
@@ -11,8 +12,6 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 export type ArrayOrSingle<T> = T | T[];
 
 export type ReadonlyArrayOrSingle<T> = T | readonly T[];
-
-type NonUndefinable<T> = T extends undefined ? never : T;
 
 /** Recursive undefinable */
 export type DeepUndefinable<T> = T extends Builtin
@@ -102,67 +101,6 @@ export type RequiredKeys<T> = T extends unknown ? Exclude<keyof T, OptionalKeys<
 /** Gets keys of properties of given type in object type */
 export type PickKeys<T, P> = Exclude<keyof PickProperties<T, P>, undefined>;
 
-/** Recursively omit deep properties */
-export type DeepOmit<T, Filter extends DeepModify<T>> = T extends Builtin
-  ? T
-  : T extends Map<infer KeyType, infer ValueType>
-  ? Filter extends Map<KeyType, infer FilterValueType>
-    ? FilterValueType extends DeepModify<ValueType>
-      ? Map<KeyType, DeepOmit<ValueType, FilterValueType>>
-      : T
-    : T
-  : T extends ReadonlyMap<infer KeyType, infer ValueType>
-  ? Filter extends ReadonlyMap<KeyType, infer FilterValueType>
-    ? FilterValueType extends DeepModify<ValueType>
-      ? ReadonlyMap<KeyType, DeepOmit<ValueType, FilterValueType>>
-      : T
-    : T
-  : T extends WeakMap<infer KeyType, infer ValueType>
-  ? Filter extends WeakMap<KeyType, infer FilterValueType>
-    ? FilterValueType extends DeepModify<ValueType>
-      ? WeakMap<KeyType, DeepOmit<ValueType, FilterValueType>>
-      : T
-    : T
-  : T extends Set<infer ItemType>
-  ? Filter extends Set<infer FilterItemType>
-    ? FilterItemType extends DeepModify<ItemType>
-      ? Set<DeepOmit<ItemType, FilterItemType>>
-      : T
-    : T
-  : T extends ReadonlySet<infer ItemType>
-  ? Filter extends ReadonlySet<infer FilterItemType>
-    ? FilterItemType extends DeepModify<ItemType>
-      ? ReadonlySet<DeepOmit<ItemType, FilterItemType>>
-      : T
-    : T
-  : T extends WeakSet<infer ItemType>
-  ? Filter extends WeakSet<infer FilterItemType>
-    ? FilterItemType extends DeepModify<ItemType>
-      ? WeakSet<DeepOmit<ItemType, FilterItemType>>
-      : T
-    : T
-  : T extends Array<infer ItemType>
-  ? Filter extends Array<infer FilterItemType>
-    ? FilterItemType extends DeepModify<ItemType>
-      ? Array<DeepOmit<ItemType, FilterItemType>>
-      : T
-    : T
-  : T extends Promise<infer ItemType>
-  ? Filter extends Promise<infer FilterItemType>
-    ? FilterItemType extends DeepModify<ItemType>
-      ? Promise<DeepOmit<ItemType, FilterItemType>>
-      : T
-    : T
-  : Filter extends AnyRecord
-  ? {
-      [K in keyof T as K extends keyof Filter ? (Filter[K] extends true ? never : K) : K]: K extends keyof Filter
-        ? Filter[K] extends DeepModify<T[K]>
-          ? DeepOmit<T[K], Filter[K]>
-          : T[K]
-        : T[K];
-    }
-  : never;
-
 /** Recursively pick deep properties */
 export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
   ? T
@@ -226,27 +164,6 @@ export type DeepPick<T, Filter extends DeepModify<T>> = T extends Builtin
         : never;
     }
   : never;
-
-type DeepModify<T> =
-  | (T extends AnyRecord
-      ? {
-          [K in keyof T]?: undefined extends { [K2 in keyof T]: K2 }[K]
-            ? NonUndefinable<T[K]> extends object
-              ? true | DeepModify<NonUndefinable<T[K]>>
-              : true
-            : T[K] extends object
-            ? true | DeepModify<T[K]>
-            : true;
-        }
-      : never)
-  | (T extends Array<infer E> ? Array<DeepModify<E>> : never)
-  | (T extends Promise<infer E> ? Promise<DeepModify<E>> : never)
-  | (T extends Set<infer E> ? Set<DeepModify<E>> : never)
-  | (T extends ReadonlySet<infer E> ? ReadonlySet<DeepModify<E>> : never)
-  | (T extends WeakSet<infer E> ? WeakSet<DeepModify<E>> : never)
-  | (T extends Map<infer K, infer E> ? Map<K, DeepModify<E>> : never)
-  | (T extends ReadonlyMap<infer K, infer E> ? ReadonlyMap<K, DeepModify<E>> : never)
-  | (T extends WeakMap<infer K, infer E> ? WeakMap<K, DeepModify<E>> : never);
 
 export type NonEmptyArray<T> = [T, ...T[]];
 

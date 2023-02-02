@@ -93,15 +93,17 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as optional and remove `readonly` modifier recursively
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable.ts) - Constructs a type by picking all properties from type `Type`
-  recursively and exclude `null` and `undefined` from all of them. To make properties non-nullable on one level, use
-  [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
+  recursively and exclude `null` and `undefined` property values from all of them. To make properties non-nullable on
+  one level, use [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
 - [`DeepNullable`](/lib/deep-nullable.ts) - Constructs a type by picking all properties from type `Type` recursively and
-  include `null` to all of them
-- [`DeepOmit`]() -
+  include `null` property values to all of them
+- [`DeepOmit<Type, Filter>`](/lib/deep-omit.ts) - Constructs a type by picking all properties from type `Type` and
+  removing properties which values are `never` or `true` in type `Filter`
 - [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [`DeepPick`]() -
+- [`DeepPick`]() - Constructs a type by picking set of properties, which have property values `never` or `true` in type
+  `Filter`, from type `Type`
 - [`DeepReadonly`]() -
 - [`DeepRequired`]() -
 - [`DeepUndefinable`]() -
