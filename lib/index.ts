@@ -29,6 +29,7 @@ export * from "./xor";
 // Mark wrapper types
 
 export * from "./mark-optional";
+export * from "./mark-readonly";
 
 // Deep wrapper types
 
