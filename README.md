@@ -53,8 +53,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 - [`AsyncOrSync<Type>`](/lib/async-or-sync.ts) - Constructs a type with `Type` or `PromiseLike<Type>`
 - [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type.ts) - This type unwraps `AsyncOrSync` type
-- [`Dictionary<Type, Keys>`](/lib/dictionary.ts) - Constructs an object type whose property keys are `Keys` (`string` by
-  default) and whose property values are `Type`
+- [`Dictionary<Type, Keys>`](/lib/dictionary.ts) - Constructs a required object type which property keys are `Keys`
+  (`string` by default) and which property values are `Type`
 - [`DictionaryValues<Type>`](/lib/dictionary-values.ts) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge.ts) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Property values from `Object2` override property values from `Object1` when property keys are the same
@@ -69,7 +69,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
   `Token`
 - [`PickProperties<Type, Value>`](/lib/pick-properties.ts) - Constructs a type by picking all properties from type
   `Type` which values equal to `Value`
-- [`SafeDictionary`]() -
+- [`SafeDictionary<Type, Keys>`](/lib/safe-dictionary.ts) - Constructs an optional object type which property keys are
+  `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection`]() -
 - [`ValueOf`]() -
 - [`XOR`]() -

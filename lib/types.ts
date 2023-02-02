@@ -1,7 +1,6 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
-import { KeyofBase } from "./key-of-base";
 import { PickProperties } from "./pick-properties";
 import { Primitive } from "./primitive";
 import { Writable } from "./writable";
@@ -19,13 +18,6 @@ export type ArrayOrSingle<T> = T | T[];
 export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
-
-/**
- * Like Dictionary, but:
- *  - ensures type safety of index access
- *  - does not enforce key exhaustiveness
- */
-export type SafeDictionary<T, K extends KeyofBase = string> = { [key in K]?: T };
 
 /** Like Partial but recursive */
 export type DeepPartial<T> = T extends Builtin

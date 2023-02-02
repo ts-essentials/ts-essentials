@@ -21,6 +21,7 @@ export * from "./non-never";
 export * from "./omit-properties";
 export * from "./opaque";
 export * from "./pick-properties";
+export * from "./safe-dictionary";
 
 // Mark wrapper types
 
