@@ -153,8 +153,9 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Change case
 
-- [`CamelCase`]() -
-- [`DeepCamelCaseProperties`]() -
+- [`CamelCase<Type>`](/lib/camel-case.ts) - Converts type `Type` to camel case (e.g. `camelCase`)
+- [`DeepCamelCaseProperties<Type>`](/lib/deep-camel-case-properties.ts) - Constructs a type by picking all properties
+  from type `Type` recursively and converting all of them to camel case
 
 ### Function types
 

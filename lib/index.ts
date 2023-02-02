@@ -76,6 +76,9 @@ export * from "./tuple";
 
 // Change case
 
+export * from "./camel-case";
+export * from "./deep-camel-case-properties";
+
 // Function types
 
 export * from "./any-function";
@@ -91,4 +94,3 @@ export * from "./awaited";
 // TODO: remove
 
 export * from "./functions";
-export * from "./literal-types";
