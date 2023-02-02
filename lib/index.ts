@@ -35,6 +35,8 @@ export * from "./mark-writable";
 
 // Deep wrapper types
 
+export * from "./deep-partial";
+
 // Key types
 
 // Type checkers

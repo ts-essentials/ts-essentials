@@ -1,47 +1,19 @@
 import { AnyArray } from "./any-array";
 import { AnyRecord } from "./any-record";
 import { Builtin } from "./built-in";
+import { DeepPartial } from "./deep-partial";
+import { IsTuple } from "./is-tuple";
+import { IsUnknown } from "./is-unknown";
 import { PickProperties } from "./pick-properties";
 import { Writable } from "./writable";
 
-export type IsTuple<T> = T extends any[] ? (any[] extends T ? never : T) : never;
-// https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
-export type IsAny<T> = 0 extends 1 & T ? true : false;
 export type IsNever<T> = [T] extends [never] ? true : false;
-export type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
 
 export type ArrayOrSingle<T> = T | T[];
 
 export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
-
-/** Like Partial but recursive */
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Map<infer K, infer V>
-  ? Map<DeepPartial<K>, DeepPartial<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<DeepPartial<K>, DeepPartial<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<DeepPartial<K>, DeepPartial<V>>
-  : T extends Set<infer U>
-  ? Set<DeepPartial<U>>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<DeepPartial<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<DeepPartial<U>>
-  : T extends Array<infer U>
-  ? T extends IsTuple<T>
-    ? { [K in keyof T]?: DeepPartial<T[K]> }
-    : Array<DeepPartial<U> | undefined>
-  : T extends Promise<infer U>
-  ? Promise<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : IsUnknown<T> extends true
-  ? unknown
-  : Partial<T>;
 
 /** Recursive nullable */
 export type DeepNullable<T> = T extends Builtin
