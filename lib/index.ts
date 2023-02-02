@@ -79,11 +79,12 @@ export * from "./tuple";
 // Function types
 
 export * from "./any-function";
+export * from "./predicate-function";
+export * from "./predicate-type";
 
 // Utility functions
 
 // TODO: remove
 
-export * from "./types";
 export * from "./functions";
 export * from "./literal-types";

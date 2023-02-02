@@ -33,7 +33,6 @@ import {
   Opaque,
   AsyncOrSyncType,
   AsyncOrSync,
-  Awaited,
   Newable,
   IsTuple,
   Writable,
@@ -962,10 +961,6 @@ function testAsyncOrSyncType() {
     Assert<IsExact<AsyncOrSyncType<AsyncOrSync<number>>, number>>,
     Assert<IsExact<AsyncOrSyncType<AsyncOrSync<AsyncOrSync<number>>>, AsyncOrSync<number>>>,
   ];
-}
-
-function testAwaitedType() {
-  type t1 = Assert<IsExact<Awaited<Promise<number>>, number>>;
 }
 
 function testNewable() {
