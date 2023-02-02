@@ -110,7 +110,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`DeepRequired<Type>`](/lib/deep-required.ts) - Constructs a type by picking all properties from type `Type`
   recursively and setting as required. To make properties required on one level, use
   [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype)
-- [`DeepUndefinable`]() -
+- [`DeepUndefinable<Type>`](/lib/deep-undefinable.ts) - Constructs a type by picking all properties from type `Type`
+  recursively and include `undefined` property values for all of them
 - [`DeepWritable<Type>`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type`
   recursively and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one
   level, use `Writable<Type>`
