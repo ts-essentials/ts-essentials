@@ -48,6 +48,8 @@ export * from "./deep-writable";
 
 // Key types
 
+export * from "./optional-keys";
+
 // Type checkers
 
 export * from "./exact";

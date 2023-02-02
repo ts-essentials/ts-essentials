@@ -118,7 +118,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 
 ### Key types
 
-- [`OptionalKeys`]() -
+- [`OptionalKeys<Type>`](/lib/optional-keys.ts) - Takes object type `Type` and produces string literal union of all
+  optional keys
 - [`PickKeys`]() -
 - [`ReadonlyKeys`]() -
 - [`RequiredKeys`]() -
