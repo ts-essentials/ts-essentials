@@ -172,7 +172,7 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error.ts) - Matches runtime class that helps check
   exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
 - [`assert(condition, message)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
-  Otherwise it throws an error with `Assertion Error: ${message}`
+  When `condition` is falsy, it throws an error with `Assertion Error: ${message}`
 - [`createFactoryWithConstraint<Constraint>()(value)`](/lib/functions/create-factory-with-constraint.ts) - Matches
   runtime function, which validates that type of `value` matches `Constraint` without changing resulting type of
   `value`. Ponyfill for
