@@ -24,6 +24,7 @@ export * from "./pick-properties";
 export * from "./safe-dictionary";
 export * from "./union-to-intersection";
 export * from "./value-of";
+export * from "./xor";
 
 // Mark wrapper types
 

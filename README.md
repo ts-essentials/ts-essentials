@@ -74,7 +74,8 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type that returns a primitive for primitive itself, array elements,
   function return type or object property values
-- [`XOR`]() -
+- [`XOR<Type1, Type2>`](/lib/xor.ts) - Construct a type which is assignable to either type `Type1` or `Type2` but not
+  both
 
 ### Mark wrapper types
 
