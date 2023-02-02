@@ -93,9 +93,10 @@ If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/maste
 - [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as optional and remove `readonly` modifier recursively
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable.ts) - Constructs a type by picking all properties from type `Type`
-  recursively and exclude `null` and `undefined` from all of them. To make properties writable on one level, use
+  recursively and exclude `null` and `undefined` from all of them. To make properties non-nullable on one level, use
   [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
-- [`DeepNullable`]() -
+- [`DeepNullable`](/lib/deep-nullable.ts) - Constructs a type by picking all properties from type `Type` recursively and
+  include `null` to all of them
 - [`DeepOmit`]() -
 - [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional. To make properties optional on one level, use

@@ -37,6 +37,7 @@ export * from "./mark-writable";
 
 export * from "./buildable";
 export * from "./deep-non-nullable";
+export * from "./deep-nullable";
 export * from "./deep-partial";
 export * from "./deep-writable";
 

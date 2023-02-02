@@ -14,31 +14,6 @@ export type ReadonlyArrayOrSingle<T> = T | readonly T[];
 
 type NonUndefinable<T> = T extends undefined ? never : T;
 
-/** Recursive nullable */
-export type DeepNullable<T> = T extends Builtin
-  ? T | null
-  : T extends Map<infer K, infer V>
-  ? Map<DeepNullable<K>, DeepNullable<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<DeepNullable<K>, DeepNullable<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<DeepNullable<K>, DeepNullable<V>>
-  : T extends Set<infer U>
-  ? Set<DeepNullable<U>>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<DeepNullable<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<DeepNullable<U>>
-  : T extends Array<infer U>
-  ? T extends IsTuple<T>
-    ? { [K in keyof T]: DeepNullable<T[K]> | null }
-    : Array<DeepNullable<U>>
-  : T extends Promise<infer U>
-  ? Promise<DeepNullable<U>>
-  : T extends {}
-  ? { [K in keyof T]: DeepNullable<T[K]> }
-  : T | null;
-
 /** Recursive undefinable */
 export type DeepUndefinable<T> = T extends Builtin
   ? T | undefined
