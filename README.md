@@ -32,7 +32,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Basic
 
-- [`Builtin`](/lib/built-in.ts) - Primitive, function, date, error or regular expression
+- [`Builtin`](/lib/built-in.ts) - Matches primitive, function, date, error or regular expression
 - [`KeyofBase`](/lib/key-of-base.ts) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
 - [`Primitive`](/lib/primitive.ts) - Matches any
