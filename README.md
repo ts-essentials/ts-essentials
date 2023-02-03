@@ -23,8 +23,8 @@ npm install --save-dev ts-essentials
 👉 As we really want types to be stricter, we require enabled
 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
 
-If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add
-`ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
+If you use any [functions](/lib/functions) you should add `ts-essentials` to your `dependencies`
+(`npm install --save ts-essentials`) to avoid runtime errors in production.
 
 ## API
 
