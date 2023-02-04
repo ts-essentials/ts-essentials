@@ -1,9 +1,8 @@
-import { AnyArray } from "./any-array";
-import { Builtin } from "./built-in";
-import { IsTuple } from "./is-tuple";
-import { IsUnknown } from "./is-unknown";
+import { AnyArray } from "../any-array";
+import { Builtin } from "../built-in";
+import { IsTuple } from "../is-tuple";
+import { IsUnknown } from "../is-unknown";
 
-/** Like Readonly but recursive */
 export type DeepReadonly<Type> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>

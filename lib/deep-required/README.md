@@ -12,4 +12,4 @@ type Company = DeepRequired<DeepPartialCompany>;
 
 Useful when deep partial object type is a source of truth and you need to have required object type
 
-TS Playground – https://tsplay.dev/W4XkOW
+TS Playground – https://tsplay.dev/Na4a2w
