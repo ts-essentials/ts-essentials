@@ -134,7 +134,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 - [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
   `never`
-- [`IsAny<Type>`](/lib/is-any.ts) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
+- [`IsAny<Type>`](/lib/is-any) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
 - [`IsNever<Type>`](/lib/is-never) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
 - [`IsUnknown<Type>`](/lib/is-unknown) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
 - [`IsTuple<Type>`](/lib/is-tuple.ts) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
