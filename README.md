@@ -100,7 +100,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   recursively and include `null` property values for all of them
 - [`DeepOmit<Type, Filter>`](/lib/deep-omit.ts) - Constructs a type by picking all properties from type `Type` and
   removing properties which values are `never` or `true` in type `Filter`
-- [`DeepPartial<Type>`](/lib/deep-partial.ts) - Constructs a type by picking all properties from type `Type` recursively
+- [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional, meaning they aren't required. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [`DeepPick<Type, Filter>`](/lib/deep-pick.ts) - Constructs a type by picking set of properties, which have property

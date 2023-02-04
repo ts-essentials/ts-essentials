@@ -1,8 +1,7 @@
-import { Builtin } from "./built-in";
-import { IsTuple } from "./is-tuple";
-import { IsUnknown } from "./is-unknown";
+import { Builtin } from "../built-in";
+import { IsTuple } from "../is-tuple";
+import { IsUnknown } from "../is-unknown";
 
-/** Like Partial but recursive */
 export type DeepPartial<Type> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>
