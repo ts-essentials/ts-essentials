@@ -136,7 +136,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   `never`
 - [`IsAny<Type>`](/lib/is-any.ts) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
 - [`IsNever<Type>`](/lib/is-never.ts) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
-- [`IsUnknown<Type>`](/lib/is-unknown.ts) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
+- [`IsUnknown<Type>`](/lib/is-unknown) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
 - [`IsTuple<Type>`](/lib/is-tuple.ts) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
 - [`NonEmptyObject<Object>`](/lib/non-empty-object.ts) - Returns `Object` when `Object` has at least one key. Otherwise
   returns `never`
