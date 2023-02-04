@@ -69,7 +69,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   `Token`
 - [`PickProperties<Type, Value>`](/lib/pick-properties.ts) - Constructs a type by picking all properties from type
   `Type` which values equal to `Value`
-- [`SafeDictionary<Type, Keys>`](/lib/safe-dictionary.ts) - Constructs an optional object type which property keys are
+- [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type for type `Type` and equals to a primitive for primitives,
