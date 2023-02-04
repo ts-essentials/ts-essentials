@@ -1,6 +1,5 @@
-import { Builtin } from "./built-in";
+import { Builtin } from "../built-in";
 
-/** Like Required but recursive */
 export type DeepRequired<Type> = Type extends Error
   ? Required<Type>
   : Type extends Builtin
