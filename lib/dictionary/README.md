@@ -26,3 +26,5 @@ const cats: Dictionary<CatInfo, CatName> = {
   mordred: { age: 16, breed: "British Shorthair" },
 };
 ```
+
+TS Playground – https://tsplay.dev/WK9GoN
