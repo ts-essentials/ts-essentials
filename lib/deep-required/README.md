@@ -25,3 +25,18 @@ const defaultCompany: Company = {
 ```
 
 TS Playground – https://tsplay.dev/Nr8KaW
+
+It's different from `DeepNonNullable` as it doesn't remove `null`:
+
+```ts
+interface Person {
+  name?: string | null | undefined;
+}
+
+type NonNullablePerson = DeepNonNullable<Person>;
+//   ^? { name?: string | undefined; }
+type RequiredPerson = DeepRequired<Person>;
+//   ^? { name: string | null; }
+```
+
+TS Playground – https://tsplay.dev/N9jy8m

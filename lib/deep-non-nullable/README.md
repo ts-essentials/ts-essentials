@@ -15,3 +15,18 @@ Useful when object type, where property values can be either `undefined` or `nul
 have non-nullable object type, meaning property values cannot be either `undefined` or `null`
 
 TS Playground – https://tsplay.dev/wE75ym
+
+It's different from `DeepRequired` as it doesn't change optional field:
+
+```ts
+interface Person {
+  name?: string | null | undefined;
+}
+
+type RequiredPerson = DeepRequired<Person>;
+//   ^? { name: string | null; }
+type NonNullablePerson = DeepNonNullable<Person>;
+//   ^? { name?: string | undefined; }
+```
+
+TS Playground – https://tsplay.dev/N9jy8m
