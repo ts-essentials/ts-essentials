@@ -96,8 +96,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable) - Constructs a type by picking all properties from type `Type`
   recursively and exclude `null` and `undefined` property values from all of them. To make properties non-nullable on
   one level, use [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
-- [`DeepNullable<Type>`](/lib/deep-nullable.ts) - Constructs a type by picking all properties from type `Type`
-  recursively and include `null` property values for all of them
+- [`DeepNullable<Type>`](/lib/deep-nullable) - Constructs a type by picking all properties from type `Type` recursively
+  and include `null` property values for all of them
 - [`DeepOmit<Type, Filter>`](/lib/deep-omit.ts) - Constructs a type by picking all properties from type `Type` and
   removing properties which values are `never` or `true` in type `Filter`
 - [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively

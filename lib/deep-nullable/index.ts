@@ -1,7 +1,6 @@
-import { Builtin } from "./built-in";
-import { IsTuple } from "./is-tuple";
+import { Builtin } from "../built-in";
+import { IsTuple } from "../is-tuple";
 
-/** Recursive nullable */
 export type DeepNullable<Type> = Type extends Builtin
   ? Type | null
   : Type extends Map<infer Keys, infer Values>
