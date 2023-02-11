@@ -1,6 +1,5 @@
-import { Builtin } from "./built-in";
+import { Builtin } from "../built-in";
 
-/** Like NonNullable but recursive */
 export type DeepNonNullable<Type> = Type extends Builtin
   ? NonNullable<Type>
   : Type extends Map<infer Keys, infer Values>
