@@ -1,7 +1,6 @@
-import { Builtin } from "./built-in";
-import { IsTuple } from "./is-tuple";
+import { Builtin } from "../built-in";
+import { IsTuple } from "../is-tuple";
 
-/** Recursive undefinable */
 export type DeepUndefinable<Type> = Type extends Builtin
   ? Type | undefined
   : Type extends Map<infer Keys, infer Values>

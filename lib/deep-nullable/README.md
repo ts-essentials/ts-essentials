@@ -13,3 +13,5 @@ type DeepNullableCompany = DeepNullable<Company>;
 
 Useful when object type is a source of truth and you need to have nullable object type, meaning property values can be
 `null`
+
+TS Playground – https://tsplay.dev/mZ1roN

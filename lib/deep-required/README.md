@@ -10,6 +10,18 @@ type Company = DeepRequired<DeepPartialCompany>;
 //   ^? { name: string; employees: { name: string }[] }
 ```
 
-Useful when deep partial object type is a source of truth and you need to have required object type
+Useful when deep partial object type is a source of truth and you need to have required object type, e.g. for default
+values:
 
-TS Playground – https://tsplay.dev/Na4a2w
+```ts
+const defaultCompany: Company = {
+  name: "Unidentified company name",
+  employees: [
+    {
+      name: "Unidentified CEO name",
+    },
+  ],
+};
+```
+
+TS Playground – https://tsplay.dev/Nr8KaW
