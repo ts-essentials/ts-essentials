@@ -90,7 +90,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Deep wrapper types
 
-- [`Buildable<Type>`](/lib/buildable.ts) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
+- [`Buildable<Type>`](/lib/buildable) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as non-`readonly` and optional, meaning they can be reassigned and
   aren't required
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable) - Constructs a type by picking all properties from type `Type`
