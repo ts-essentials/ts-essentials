@@ -113,9 +113,9 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype)
 - [`DeepUndefinable<Type>`](/lib/deep-undefinable) - Constructs a type by picking all properties from type `Type`
   recursively and include `undefined` property values for all of them
-- [`DeepWritable<Type>`](/lib/deep-writable.ts) - Constructs a type by picking all properties from type `Type`
-  recursively and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one
-  level, use `Writable<Type>`
+- [`DeepWritable<Type>`](/lib/deep-writable) - Constructs a type by picking all properties from type `Type` recursively
+  and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one level, use
+  `Writable<Type>`
 
 ### Key types
 

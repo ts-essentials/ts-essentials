@@ -1,6 +1,5 @@
-import { Builtin } from "./built-in";
+import { Builtin } from "../built-in";
 
-/** Like Writable but recursive */
 export type DeepWritable<Type> = Type extends Builtin
   ? Type
   : Type extends Map<infer Key, infer Value>
