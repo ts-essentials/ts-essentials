@@ -11,7 +11,7 @@ type CatInfoWithoutBreed = StrictOmit<CatInfo, "breed">;
 ```
 
 This is stricter version of [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys),
-meaning `StrictOmit` validates that key union type `Keys` exist in type `Type`
+meaning `StrictOmit` validates that properties `Keys` exist in type `Type`
 
 ```ts
 // error: Type '"height"' does not satisfy the constraint 'keyof CatInfo'

@@ -37,8 +37,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
 - [`Primitive`](/lib/primitive.ts) - Matches any
   [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
-- [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude.ts) - Constructs a type by excluding from
-  `UnionType` all union members that are assignable to `ExcludedMembers`. This is stricter version of
+- [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude) - Constructs a type by excluding from `UnionType`
+  all union members that are assignable to `ExcludedMembers`. This is stricter version of
   [`Exclude`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers)
 - [`StrictExtract<Type, Union>`](/lib/strict-extract.ts) - Constructs a type by extracting from `Type` all union members
   that are assignable to `Union`. This is stricter version of
