@@ -43,7 +43,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`StrictExtract<Type, Union>`](/lib/strict-extract.ts) - Constructs a type by extracting from `Type` all union members
   that are assignable to `Union`. This is stricter version of
   [`Extract`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union)
-- [`StrictOmit<Type, Keys>`](/lib/strict-omit.ts) - Constructs a type by picking all properties from `Type` and then
+- [`StrictOmit<Type, Keys>`](/lib/strict-omit) - Constructs a type by picking all properties from `Type` and then
   removing `Keys`. This is stricter version of
   [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
 - [`Writable<Type>`](/lib/writable) - Constructs a type with removed `readonly` for all properties of `Type`, meaning
