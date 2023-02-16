@@ -40,7 +40,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude) - Constructs a type by excluding from `UnionType`
   all union members that are assignable to `ExcludedMembers`. This is stricter version of
   [`Exclude`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers)
-- [`StrictExtract<Type, Union>`](/lib/strict-extract.ts) - Constructs a type by extracting from `Type` all union members
+- [`StrictExtract<Type, Union>`](/lib/strict-extract) - Constructs a type by extracting from `Type` all union members
   that are assignable to `Union`. This is stricter version of
   [`Extract`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union)
 - [`StrictOmit<Type, Keys>`](/lib/strict-omit) - Constructs a type by picking all properties from `Type` and then
