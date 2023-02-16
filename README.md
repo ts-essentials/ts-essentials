@@ -143,14 +143,14 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Arrays and Tuples
 
-- [`AnyArray<Type>`](/lib/any-array.ts) - Matches `Array` or `ReadonlyArray`
+- [`AnyArray<Type?>`](/lib/any-array.ts) - Matches `Array` or `ReadonlyArray` (`Type` is `any` by default)
 - [`ArrayOrSingle<Type>`](/lib/array-or-single.ts) - Matches `Type` or `Type[]`
 - [`ElementOf<Type>`](/lib/element-of.ts) - Constructs a type which equals to array element type for type `Type`
 - [`Head<Type>`](/lib/head.ts) - Constructs a type which equals to first element in type `Type`
 - [`NonEmptyArray<Type>`](/lib/non-empty-array.ts) - Matches array with at least one element of type `Type`
 - [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single.ts) - Matches `Type` or `readonly Type[]`
 - [`Tail<Type>`](/lib/tail.ts) - Constructs a type which equals to elements but first one in type `Type`
-- [`Tuple<Type>`](/lib/tuple.ts) - Matches type constraint for tuple with elements of type `Type`
+- [`Tuple<Type?>`](/lib/tuple.ts) - Matches type constraint for tuple with elements of type `Type` (`any` by default)
 
 ### Change case
 
@@ -160,8 +160,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Function types
 
-- [`AnyFunction<Args, ReturnType>`](/lib/any-function.ts) - Matches function type with arguments type `Args` (`any[]` by
-  default) and return type `ReturnType` (`any` by default)
+- [`AnyFunction<Args?, ReturnType?>`](/lib/any-function.ts) - Matches function type with arguments type `Args` (`any[]`
+  by default) and return type `ReturnType` (`any` by default)
 - [`PredicateFunction`](/lib/predicate-function.ts) - Matches type constraint for type guard, meaning first argument is
   used in return type and return type is
   [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
@@ -172,8 +172,9 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 - [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error.ts) - Matches runtime class that helps check
   exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
-- [`assert(condition, message)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
-  When `condition` is falsy, it throws an error with `Assertion Error: ${message}`
+- [`assert(condition, message?)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
+  When `condition` is falsy, it throws an error with `Assertion Error: ${message}` (message is
+  `"no additional info provided"` by default)
 - [`createFactoryWithConstraint<Constraint>()(value)`](/lib/functions/create-factory-with-constraint.ts) - Matches
   runtime function, which validates that type of `value` matches `Constraint` without changing resulting type of
   `value`. Ponyfill for
