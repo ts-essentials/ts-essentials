@@ -65,3 +65,5 @@ takeSurvey(englishClass);
 
 - `DeepOmit` cannot be used when `Type` is generic type – https://github.com/ts-essentials/ts-essentials/issues/343
 - `DeepOmit` only limits access to specified properties in your codebase, but doesn't remove them in runtime
+
+TS Playground – https://tsplay.dev/w1EEAw
