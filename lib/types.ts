@@ -182,7 +182,7 @@ export type DeepReadonly<T> = T extends Builtin
 export type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
 /** Like Writable but recursive */
-export type DeepWritable<T> = T extends Builtin
+export type DeepWritable<T> = T extends Exclude<Builtin, Error>
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepWritable<K>, DeepWritable<V>>
@@ -200,6 +200,8 @@ export type DeepWritable<T> = T extends Builtin
   ? Promise<DeepWritable<U>>
   : T extends {}
   ? { -readonly [K in keyof T]: DeepWritable<T[K]> }
+  : IsUnknown<T> extends true
+  ? unknown
   : T;
 
 /** Combination of DeepPartial and DeepWritable */
