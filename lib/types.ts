@@ -33,7 +33,7 @@ export type DictionaryValues<T> = T[keyof T];
 export type SafeDictionary<T, K extends KeyofBase = string> = { [key in K]?: T };
 
 /** Like Partial but recursive */
-export type DeepPartial<T> = T extends Builtin
+export type DeepPartial<T> = T extends Exclude<Builtin, Error>
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepPartial<K>, DeepPartial<V>>
@@ -131,9 +131,7 @@ export type DeepNonNullable<T> = T extends Builtin
   : NonNullable<T>;
 
 /** Like Required but recursive */
-export type DeepRequired<T> = T extends Error
-  ? Required<T>
-  : T extends Builtin
+export type DeepRequired<T> = T extends Exclude<Builtin, Error>
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepRequired<K>, DeepRequired<V>>
