@@ -152,7 +152,7 @@ export type DeepRequired<T> = T extends Exclude<Builtin, Error>
   : Required<T>;
 
 /** Like Readonly but recursive */
-export type DeepReadonly<T> = T extends Builtin
+export type DeepReadonly<T> = T extends Exclude<Builtin, Error>
   ? T
   : T extends Map<infer K, infer V>
   ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
