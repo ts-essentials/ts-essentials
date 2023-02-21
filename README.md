@@ -63,8 +63,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`Newable<ReturnType>`](/lib/newable.ts) - Constructs a class type with constructor which has return type `ReturnType`
 - [`NonNever<Type>`](/lib/non-never.ts) - Constructs a type by picking all properties from type `Type` which values
   don't equal to `never`
-- [`OmitProperties<Type, Value>`](/lib/omit-properties.ts) - Constructs a type by picking all properties from type
-  `Type` and removing those properties which values equal to `Value`
+- [`OmitProperties<Type, Value>`](/lib/omit-properties) - Constructs a type by picking all properties from type `Type`
+  and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque.ts) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
 - [`PickProperties<Type, Value>`](/lib/pick-properties.ts) - Constructs a type by picking all properties from type
