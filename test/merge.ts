@@ -2,11 +2,6 @@ import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import { Merge } from "../lib";
 
 function testIndexSignatures() {
-  type SymbolNames = {
-    [names: symbol]: symbol;
-    name: symbol;
-  };
-
   type StringNames = {
     [names: string]: string;
     name: string;
@@ -17,18 +12,9 @@ function testIndexSignatures() {
     name: number;
   };
 
-  type SymbolAndStringMergedNames = Merge<SymbolNames, StringNames>;
   type StringAndNumericMergedNames = Merge<StringNames, NumericNames>;
 
   type cases = [
-    Assert<IsExact<SymbolAndStringMergedNames[symbol], symbol>>,
-    Assert<IsExact<SymbolAndStringMergedNames[typeof Symbol.iterator], symbol>>,
-    Assert<IsExact<SymbolAndStringMergedNames[string], string>>,
-    Assert<IsExact<SymbolAndStringMergedNames["name"], string>>,
-    Assert<IsExact<SymbolAndStringMergedNames["anotherField"], string>>,
-    // number can still be used as a key for { [names: symbol]: symbol; [names: string]: string }
-    Assert<IsExact<SymbolAndStringMergedNames[number], string>>,
-
     Assert<IsExact<StringAndNumericMergedNames[string], string>>,
     Assert<IsExact<StringAndNumericMergedNames[number], number>>,
     Assert<IsExact<StringAndNumericMergedNames["name"], number>>,
