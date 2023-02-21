@@ -138,7 +138,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`IsNever<Type>`](/lib/is-never) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
 - [`IsUnknown<Type>`](/lib/is-unknown) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
 - [`IsTuple<Type>`](/lib/is-tuple.ts) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
-- [`NonEmptyObject<Object>`](/lib/non-empty-object.ts) - Returns `Object` when `Object` has at least one key. Otherwise
+- [`NonEmptyObject<Object>`](/lib/non-empty-object) - Returns `Object` when `Object` has at least one key. Otherwise
   returns `never`
 
 ### Arrays and Tuples
@@ -147,7 +147,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`ArrayOrSingle<Type>`](/lib/array-or-single.ts) - Matches `Type` or `Type[]`
 - [`ElementOf<Type>`](/lib/element-of.ts) - Constructs a type which equals to array element type for type `Type`
 - [`Head<Type>`](/lib/head.ts) - Constructs a type which equals to first element in type `Type`
-- [`NonEmptyArray<Type>`](/lib/non-empty-array.ts) - Matches array with at least one element of type `Type`
+- [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
 - [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single.ts) - Matches `Type` or `readonly Type[]`
 - [`Tail<Type>`](/lib/tail.ts) - Constructs a type which equals to elements but first one in type `Type`
 - [`Tuple<Type?>`](/lib/tuple.ts) - Matches type constraint for tuple with elements of type `Type` (`any` by default)
