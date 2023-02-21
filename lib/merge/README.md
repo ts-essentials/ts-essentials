@@ -1,4 +1,5 @@
-`Merge<Object1, Object2>` constructs a type by picking all properties from `Object1` and `Object2`
+`Merge<Object1, Object2>` constructs a type by picking all properties from `Object1` and `Object2`. Property values from
+`Object2` override property values from `Object1` when property keys are the same
 
 ```ts
 type SymbolNames = {
