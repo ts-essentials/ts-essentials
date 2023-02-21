@@ -103,7 +103,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional, meaning they aren't required. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [`DeepPick<Type, Filter>`](/lib/deep-pick.ts) - Constructs a type by picking set of properties, which have property
+- [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
   values `never` or `true` in type `Filter`, from type `Type`
 - [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
   and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use

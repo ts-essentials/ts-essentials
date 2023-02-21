@@ -1,8 +1,7 @@
-import { AnyRecord } from "./any-record";
-import { Builtin } from "./built-in";
-import { DeepModify } from "./deep-modify";
+import { AnyRecord } from "../any-record";
+import { Builtin } from "../built-in";
+import { DeepModify } from "../deep-modify";
 
-/** Recursively pick deep properties */
 export type DeepPick<Type, Filter extends DeepModify<Type>> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>
