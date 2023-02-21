@@ -32,7 +32,7 @@ Please make sure to add:
 > //   ^? { age: number }
 > ```
 >
-> This is stricter version of [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-> keys),
+> This is stricter version of [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys),
 > meaning `StrictOmit` validates that properties `Keys` exist in type `Type`
 >
 > ```ts
