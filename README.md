@@ -67,8 +67,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque.ts) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
-- [`PickProperties<Type, Value>`](/lib/pick-properties.ts) - Constructs a type by picking all properties from type
-  `Type` which values equal to `Value`
+- [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
+  which values equal to `Value`
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`

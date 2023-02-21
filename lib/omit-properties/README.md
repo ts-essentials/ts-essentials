@@ -15,7 +15,7 @@ type UserFields = OmitProperties<UserInformation, Function>;
 //   ^? { birthday: Date; email: string; id: string; name: string; }
 ```
 
-`Value` can also be a union
+`Value` can also be a union type
 
 ```ts
 type UserActions = OmitProperties<UserInformation, Date | Primitive>;
