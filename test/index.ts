@@ -15,7 +15,6 @@ import {
   DictionaryValues,
   Merge,
   MergeN,
-  NonNever,
   noop,
   PickProperties,
   ReadonlyKeys,
@@ -821,17 +820,6 @@ function testParametrizedTuple() {
   }
 
   acceptsCertainTuple([42, "foo"]);
-}
-
-function testNonNever() {
-  type TypesMap = { foo: string; bar: number; xyz: undefined };
-
-  type Mapped = {
-    [K in keyof TypesMap]: TypesMap[K] extends undefined ? never : TypesMap[K];
-  };
-
-  type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
-  type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
 }
 
 function testNonEmptyArray() {
