@@ -82,8 +82,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   where properties `Keys` are set as optional, meaning they aren't required
 - [`MarkReadonly<Type, Keys>`](/lib/mark-readonly.ts) - Constructs a type by picking all properties from type `Type`
   where properties `Keys` are set to `readonly`, meaning they cannot be reassigned
-- [`MarkRequired<Type, Keys>`](/lib/mark-required.ts) - Constructs a type by picking all properties from type `Type`
-  where properties `Keys` are set as required
+- [`MarkRequired<Type, Keys>`](/lib/mark-required) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` are set as required
 - [`MarkWritable<Type, Keys>`](/lib/mark-writable.ts) - Constructs a type by picking all properties from type `Type`
   where properties `Keys` remove `readonly` modifier, meaning they can be reassigned
 
