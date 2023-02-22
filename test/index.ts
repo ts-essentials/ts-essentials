@@ -13,7 +13,6 @@ import {
   DeepWritable,
   Dictionary,
   DictionaryValues,
-  MergeN,
   noop,
   PickProperties,
   ReadonlyKeys,
@@ -829,19 +828,6 @@ function testNonEmptyArray() {
     AssertFalse<Assignable<NonEmptyArray<T>, []>>,
     Assert<Assignable<NonEmptyArray<T>, [T]>>,
     Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
-  ];
-}
-
-function testMergeN() {
-  type cases = [
-    Assert<IsExact<MergeN<[{ a: number; b: string; c: boolean }]>, { a: number; b: string; c: boolean }>>,
-    Assert<
-      IsExact<
-        MergeN<[{ a: number; b: string; c: boolean }, { b: number; c: string; d: boolean }]>,
-        { a: number; b: number; c: string; d: boolean }
-      >
-    >,
-    Assert<IsExact<MergeN<[{ a: number }, { a: string }, { a: boolean }]>, { a: boolean }>>,
   ];
 }
 

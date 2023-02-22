@@ -58,8 +58,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`DictionaryValues<Type>`](/lib/dictionary-values) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Property values from `Object2` override property values from `Object1` when property keys are the same
-- [`MergeN<Tuple>`](/lib/merge-n.ts) - Constructs a type by merging objects with type `Merge` in tuple `Tuple`
-  recursively
+- [`MergeN<Tuple>`](/lib/merge-n) - Constructs a type by merging objects with type `Merge` in tuple `Tuple` recursively
 - [`Newable<ReturnType>`](/lib/newable.ts) - Constructs a class type with constructor which has return type `ReturnType`
 - [`NonNever<Type>`](/lib/non-never) - Constructs a type by picking all properties from type `Type` which values don't
   equal to `never`
