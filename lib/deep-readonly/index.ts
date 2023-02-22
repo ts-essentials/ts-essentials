@@ -3,6 +3,20 @@ import { Builtin } from "../built-in";
 import { IsTuple } from "../is-tuple";
 import { IsUnknown } from "../is-unknown";
 
+// Builtin => Type
+// Map => ReadonlyMap
+// ReadonlyMap => ReadonlyMap
+// WeakMap => WeakMap
+// Set => ReadonlySet
+// ReadonlySet => ReadonlySet
+// WeakSet => WeakSet
+// Tuple => readonly key: value
+// Array<T> => ReadonlyArray<T>
+// Promise => Promise
+// Object => readonly key: value
+// unknown => unknown
+// otherwise => Readonly<Type>
+
 export type DeepReadonly<Type> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>
