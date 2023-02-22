@@ -78,8 +78,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Mark wrapper types
 
-- [`MarkOptional<Type, Keys>`](/lib/mark-optional.ts) - Constructs a type by picking all properties from type `Type`
-  where properties `Keys` are set as optional, meaning they aren't required
+- [`MarkOptional<Type, Keys>`](/lib/mark-optional) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` are set as optional, meaning they aren't required
 - [`MarkReadonly<Type, Keys>`](/lib/mark-readonly.ts) - Constructs a type by picking all properties from type `Type`
   where properties `Keys` are set to `readonly`, meaning they cannot be reassigned
 - [`MarkRequired<Type, Keys>`](/lib/mark-required) - Constructs a type by picking all properties from type `Type` where
