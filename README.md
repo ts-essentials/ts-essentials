@@ -118,8 +118,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Key types
 
-- [`OptionalKeys<Type>`](/lib/optional-keys.ts) - Constructs a union type by picking all optional properties of object
-  type `Type`
+- [`OptionalKeys<Type>`](/lib/optional-keys) - Constructs a union type by picking all optional properties of object type
+  `Type`
 - [`PickKeys<Type, Value>`](/lib/pick-keys.ts) - Constructs a union type by picking all properties of object type `Type`
   which values are assignable to type `Value`
 - [`ReadonlyKeys<Type>`](/lib/readonly-keys) - Constructs a union type by picking all `readonly` properties of object
