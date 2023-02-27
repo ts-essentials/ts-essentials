@@ -118,16 +118,16 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Key types
 
-- [`OptionalKeys<Type>`](/lib/optional-keys.ts) - Takes object type `Type` and produces string literal union of all
-  optional keys
-- [`PickKeys<Type, Value>`](/lib/pick-keys.ts) - Takes object type `Type` and produces string literal union with all
-  keys, which values are assignable to type `Value`
-- [`ReadonlyKeys<Type>`](/lib/readonly-keys.ts) - Takes object type `Type` and produces string literal union of all
-  `readonly` keys
-- [`RequiredKeys<Type>`](/lib/required-keys.ts) - Takes object type `Type` and produces string literal union of all
-  non-optional keys
-- [`WritableKeys`](/lib/writable-keys.ts) - Takes object type `Type` and produces string literal union of all keys
-  without `readonly` modifier
+- [`OptionalKeys<Type>`](/lib/optional-keys.ts) - Constructs a union type by picking all optional properties of object
+  type `Type`
+- [`PickKeys<Type, Value>`](/lib/pick-keys.ts) - Constructs a union type by picking all properties of object type `Type`
+  which values are assignable to type `Value`
+- [`ReadonlyKeys<Type>`](/lib/readonly-keys) - Constructs a union type by picking all `readonly` properties of object
+  type `Type`, meaning their values cannot be reassigned
+- [`RequiredKeys<Type>`](/lib/required-keys.ts) - Constructs a union type by picking all required properties of object
+  type `Type`
+- [`WritableKeys<Type>`](/lib/writable-keys.ts) - Constructs a union type by picking all writable properties of object
+  type `Type`, meaning their values can be reassigned
 
 ### Type checkers
 
