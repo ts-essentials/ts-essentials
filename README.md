@@ -70,7 +70,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   which values equal to `Value`
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
-- [`UnionToIntersection<Union>`](/lib/union-to-intersection.ts) - Constructs a intersection type from union type `Union`
+- [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of.ts) - Constructs a type for type `Type` and equals to a primitive for primitives,
   array elements for arrays, function return type for functions or object property values for objects
 - [`XOR<Type1, Type2>`](/lib/xor.ts) - Construct a type which is assignable to either type `Type1` or `Type2` but not
