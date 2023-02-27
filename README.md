@@ -124,8 +124,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   which values are assignable to type `Value`
 - [`ReadonlyKeys<Type>`](/lib/readonly-keys) - Constructs a union type by picking all `readonly` properties of object
   type `Type`, meaning their values cannot be reassigned
-- [`RequiredKeys<Type>`](/lib/required-keys.ts) - Constructs a union type by picking all required properties of object
-  type `Type`
+- [`RequiredKeys<Type>`](/lib/required-keys) - Constructs a union type by picking all required properties of object type
+  `Type`
 - [`WritableKeys<Type>`](/lib/writable-keys) - Constructs a union type by picking all writable properties of object type
   `Type`, meaning their values can be reassigned
 
