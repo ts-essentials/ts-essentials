@@ -126,8 +126,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   type `Type`, meaning their values cannot be reassigned
 - [`RequiredKeys<Type>`](/lib/required-keys.ts) - Constructs a union type by picking all required properties of object
   type `Type`
-- [`WritableKeys<Type>`](/lib/writable-keys.ts) - Constructs a union type by picking all writable properties of object
-  type `Type`, meaning their values can be reassigned
+- [`WritableKeys<Type>`](/lib/writable-keys) - Constructs a union type by picking all writable properties of object type
+  `Type`, meaning their values can be reassigned
 
 ### Type checkers
 
