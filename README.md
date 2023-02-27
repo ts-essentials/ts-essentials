@@ -64,7 +64,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   equal to `never`
 - [`OmitProperties<Type, Value>`](/lib/omit-properties) - Constructs a type by picking all properties from type `Type`
   and removing those properties which values equal to `Value`
-- [`Opaque<Type, Token>`](/lib/opaque.ts) - Constructs a type which is a subset of `Type` with a specified unique token
+- [`Opaque<Type, Token>`](/lib/opaque) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`
