@@ -419,10 +419,12 @@ type StringLiteral<T> = T extends string ? (string extends T ? never : T) : neve
 
 declare const __OPAQUE_TYPE__: unique symbol;
 
+export type WithOpaque<Token extends string> = {
+  readonly [__OPAQUE_TYPE__]: Token;
+};
+
 /** Easily create opaque types ie. types that are subset of their original types (ex: positive numbers, uppercased string) */
-export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
-  ? Type & { readonly [__OPAQUE_TYPE__]: Token }
-  : never;
+export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token> ? Type & WithOpaque<Token> : never;
 
 /** Easily extract the type of a given object's values */
 export type ValueOf<T> = T extends Primitive
