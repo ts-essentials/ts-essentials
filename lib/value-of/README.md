@@ -1,6 +1,6 @@
 `ValueOf<Type>` constructs a type for type `Type` where it equals to:
 
-1. The primitive for a primitive
+1. The primitive for a primitive (as just using `Type`)
 
 ```ts
 type BooleanValue = ValueOf<boolean>;
@@ -9,7 +9,7 @@ type StringValue = ValueOf<string>;
 //   ^? string
 ```
 
-2. The array elements for an array
+2. The array elements for an array (like [`ElementOf<Type>`](../element-of))
 
 ```ts
 const array = [false, 1, "2"];
@@ -21,7 +21,8 @@ type TupleValue = ValueOf<typeof tuple>;
 //   ^? string
 ```
 
-3. The function return type for a function
+3. The function return type for a function (like
+   [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype))
 
 ```ts
 const asTuple = <Type extends Tuple>(args: Type): Type => args;
@@ -33,7 +34,7 @@ type IdentityFunctionValue = ValueOf<typeof identity>;
 //   ^? unknown
 ```
 
-3. The object property values for objects
+3. The object property values for objects (like [`DictionaryValues<Type>`](../dictionary-values))
 
 ```ts
 interface User {
