@@ -143,7 +143,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 ### Arrays and Tuples
 
 - [`AnyArray<Type?>`](/lib/any-array.ts) - Matches `Array` or `ReadonlyArray` (`Type` is `any` by default)
-- [`ArrayOrSingle<Type>`](/lib/array-or-single.ts) - Matches `Type` or `Type[]`
+- [`ArrayOrSingle<Type>`](/lib/array-or-single) - Matches `Type` or `Type[]`
 - [`ElementOf<Type>`](/lib/element-of) - Constructs a type which equals to array element type for type `Type`
 - [`Head<Type>`](/lib/head.ts) - Constructs a type which equals to first element in type `Type`
 - [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
