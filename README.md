@@ -169,8 +169,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Utility functions
 
-- [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error.ts) - Matches runtime class that helps check
-  exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
+- [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error) - Matches runtime class instance type that
+  helps check exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
 - [`assert(condition, message?)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
   When `condition` is falsy, it throws an error with `Assertion Error: ${message}` (message is
   `"no additional info provided"` by default)
