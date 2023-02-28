@@ -10,8 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2015", "esnext.asynciterable"],
     "sourceMap": true,
-    "declaration": true,
-    "outDir": "dist/"
+    "declaration": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
