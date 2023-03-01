@@ -171,8 +171,8 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 - [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error) - Matches runtime class instance type that
   helps check exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
-- [`assert(condition, message?)`](/lib/functions/assert.ts) - Matches runtime function that helps assert `condition`.
-  When `condition` is falsy, it throws an error with `Assertion Error: ${message}` (message is
+- [`assert(condition, message?)`](/lib/functions/assert) - Matches runtime function that helps assert `condition`. When
+  `condition` is falsy, it throws an error with `Assertion Error: ${message}` (message is
   `"no additional info provided"` by default)
 - [`createFactoryWithConstraint<Constraint>()(value)`](/lib/functions/create-factory-with-constraint.ts) - Matches
   runtime function, which validates that type of `value` matches `Constraint` without changing resulting type of
