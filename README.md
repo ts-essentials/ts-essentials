@@ -131,7 +131,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Type checkers
 
-- [`Exact<Type, Shape>`](/lib/exact.ts) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
+- [`Exact<Type, Shape>`](/lib/exact) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
   `never`
 - [`IsAny<Type>`](/lib/is-any) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
 - [`IsNever<Type>`](/lib/is-never) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
