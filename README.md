@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/toolbox_1f9f0.png" width="120" alt="ts-essentials">
+  <img src="/logo.png" width="120" alt="ts-essentials">
   <h3 align="center">ts-essentials</h3>
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
