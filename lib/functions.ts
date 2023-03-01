@@ -16,9 +16,8 @@ export function noop(..._args: unknown[]): void {}
 
 export const isExact =
   <ExpectedShape>() =>
-  <ActualShape>(x: Exact<ActualShape, ExpectedShape>): ExpectedShape => {
-    return x;
-  };
+  <ActualShape>(x: Exact<ActualShape, ExpectedShape>) =>
+    x as ExpectedShape;
 
 export const createFactoryWithConstraint =
   <Constraint>() =>
