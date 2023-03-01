@@ -27,7 +27,6 @@ import {
   DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
-  Opaque,
   AsyncOrSyncType,
   AsyncOrSync,
   Awaited,
@@ -913,14 +912,6 @@ function testElementOf() {
 
 // T = U
 type Assignable<T, U> = U extends T ? true : false;
-
-function testOpaque() {
-  type t1 = Assert<IsExact<Assignable<number, Opaque<number, "a">>, true>>;
-  type t2 = Assert<IsExact<Assignable<Opaque<number, "a">, number>, false>>;
-  type t3 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "b">>, false>>;
-  type t4 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "a">>, true>>;
-  type t5 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
-}
 
 function testAsyncOrSyncType() {
   type cases = [

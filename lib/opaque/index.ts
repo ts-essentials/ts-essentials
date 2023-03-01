@@ -2,6 +2,8 @@ type StringLiteral<Type> = Type extends string ? (string extends Type ? never : 
 
 declare const __OPAQUE_TYPE__: unique symbol;
 
-export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token>
-  ? Type & { readonly [__OPAQUE_TYPE__]: Token }
-  : never;
+export type WithOpaque<Token extends string> = {
+  readonly [__OPAQUE_TYPE__]: Token;
+};
+
+export type Opaque<Type, Token extends string> = Token extends StringLiteral<Token> ? Type & WithOpaque<Token> : never;
