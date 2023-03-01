@@ -52,7 +52,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 ### Utility types
 
 - [`AsyncOrSync<Type>`](/lib/async-or-sync) - Constructs a type with `Type` or `PromiseLike<Type>`
-- [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type.ts) - Unwraps `AsyncOrSync` type
+- [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type) - Unwraps `AsyncOrSync` type
 - [`Dictionary<Type, Keys?>`](/lib/dictionary) - Constructs a required object type which property keys are `Keys`
   (`string` by default) and which property values are `Type`
 - [`DictionaryValues<Type>`](/lib/dictionary-values) - This type unwraps `Dictionary` value type
