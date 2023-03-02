@@ -18,4 +18,18 @@ type DogEqualsToDog = Exact<Dog, Dog>;
 //   ^? Dog
 ```
 
+It supports:
+
+- Object type
+
+It doesn't support:
+
+- Union types with objects
+- Union types with primitives
+- Arrays
+- Tuples
+- Enums
+
+Support is addressed in https://github.com/ts-essentials/ts-essentials/issues/342
+
 TS Playground – https://tsplay.dev/Wo8dlw

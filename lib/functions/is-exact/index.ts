@@ -1,4 +1,4 @@
-import { Exact } from "../exact";
+import { Exact } from "../../exact";
 
 export const isExact =
   <Expected>() =>
