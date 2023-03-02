@@ -73,8 +73,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of) - Constructs a type for type `Type` and equals to a primitive for primitives, array
   elements for arrays, function return type for functions or object property values for objects
-- [`XOR<Type1, Type2>`](/lib/xor.ts) - Construct a type which is assignable to either type `Type1` or `Type2` but not
-  both
+- [`XOR<Type1, Type2>`](/lib/xor) - Construct a type which is assignable to either type `Type1` or `Type2` but not both
 
 ### Mark wrapper types
 
