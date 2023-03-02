@@ -147,7 +147,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`Head<Type>`](/lib/head) - Constructs a type which equals to first element in type `Type`
 - [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
 - [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single.ts) - Matches `Type` or `readonly Type[]`
-- [`Tail<Type>`](/lib/tail.ts) - Constructs a type which equals to elements but first one in type `Type`
+- [`Tail<Type>`](/lib/tail) - Constructs a type which equals to elements but first one in type `Type`
 - [`Tuple<Type?>`](/lib/tuple) - Matches type constraint for tuple with elements of type `Type` (`any` by default)
 
 ### Change case
