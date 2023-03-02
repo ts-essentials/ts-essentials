@@ -33,7 +33,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 ### Basic
 
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
-- [`KeyofBase`](/lib/key-of-base.ts) -
+- [`KeyofBase`](/lib/key-of-base) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
 - [`Primitive`](/lib/primitive.ts) - Matches any
   [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
