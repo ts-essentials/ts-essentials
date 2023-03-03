@@ -160,7 +160,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 - [`AnyFunction<Args?, ReturnType?>`](/lib/any-function) - Matches function type with arguments type `Args` (`any[]` by
   default) and return type `ReturnType` (`any` by default)
-- [`PredicateFunction`](/lib/predicate-function.ts) - Matches type constraint for type guard, meaning first argument is
+- [`PredicateFunction`](/lib/predicate-function) - Matches type constraint for type guard, meaning first argument is
   used in return type and return type is
   [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
 - [`PredicateType<Type>`](/lib/predicate-type) - Constructs a type which equals to narrowed type in predicate function
