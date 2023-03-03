@@ -152,7 +152,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Change case
 
-- [`CamelCase<Type>`](/lib/camel-case.ts) - Converts type `Type` to camel case (e.g. `camelCase`)
+- [`CamelCase<Type>`](/lib/camel-case) - Converts type `Type` to camel case (e.g. `camelCase`)
 - [`DeepCamelCaseProperties<Type>`](/lib/deep-camel-case-properties.ts) - Constructs a type by picking all properties
   from type `Type` recursively and converting all of them to camel case
 
