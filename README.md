@@ -179,7 +179,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
   [`satisfies` operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
 - [`isExact<Expected>()(actual)`](/lib/functions/is-exact) - Matches runtime function, which validates that type of
   `actual` equals to `Expected`. Otherwise shows TypeScript error
-- [`noop(..._args)`](/lib/functions/noop.ts) - Matches runtime function that does nothing with arguments `_args`
+- [`noop(..._args)`](/lib/functions/noop) - Matches runtime function that does nothing with arguments `_args`
 
 ## Built-in types
 
