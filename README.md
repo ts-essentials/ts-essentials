@@ -35,7 +35,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
 - [`KeyofBase`](/lib/key-of-base) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
-- [`Primitive`](/lib/primitive.ts) - Matches any
+- [`Primitive`](/lib/primitive) - Matches any
   [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
 - [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude) - Constructs a type by excluding from `UnionType`
   all union members that are assignable to `ExcludedMembers`. This is stricter version of
