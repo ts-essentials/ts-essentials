@@ -23,9 +23,6 @@ npm install --save-dev ts-essentials
 👉 As we really want types to be stricter, we require enabled
 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
 
-If you use any [functions](/lib/functions) you should add `ts-essentials` to your `dependencies`
-(`npm install --save ts-essentials`) to avoid runtime errors in production.
-
 ## API
 
 `ts-essentials` is a set of high-quality, useful TypeScript types that make writing type-safe code easier.
@@ -168,7 +165,7 @@ If you use any [functions](/lib/functions) you should add `ts-essentials` to you
 
 ### Utility functions
 
-⚠️ Make sure you add `ts-essentials` to your `dependencies` to avoid runtime errors
+⚠️ Make sure you add `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors
 
 - [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error) - Matches runtime class instance type that
   helps check exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
