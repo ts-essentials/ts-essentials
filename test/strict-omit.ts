@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { StrictOmit } from "../lib/types";
+import { StrictOmit } from "../lib";
 
 function testStrictOmit() {
   type cases = [
