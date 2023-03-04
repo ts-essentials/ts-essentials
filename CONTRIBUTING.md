@@ -48,7 +48,17 @@ Please make sure to add:
 
 - Tests for new type in `lib/<type-name>.ts`, e.g. [`test/strict-omit.ts`](/test/strict-omit.ts)
 
-When you're done with your changes use `yarn test:fix` to run `prettier` to reformat code and `tsc` to make sure that
-there are no compilation errors.
+When you're done with your changes:
+
+- use `yarn test:fix` to run `prettier` to reformat code
+
+- use `tsc` to make sure that there are no compilation errors
+
+- use `yarn changeset` to create changelog with meaningful description as it will be visible in Releases, e.g.
+
+> Add `StrictOmit<Type, Keys>`, a stricter version of `Omit`. It validates that properties `Keys` exist in type `Type`
+
+To see examples of merged PRs for Releases, use
+[this link 🔗](https://github.com/ts-essentials/ts-essentials/pulls?q=is%3Apr+Version+Packages+is%3Aclosed+author%3Aapp%2Fgithub-actions)
 
 Thanks! 🙏🏻
