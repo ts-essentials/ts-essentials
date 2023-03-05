@@ -18,9 +18,9 @@ body:
     validations:
       required: true
   - type: textarea
-    id: why
+    id: examples
     attributes:
-      label: Why
+      label: Examples
       description: Give 1 or more examples of code that explain cases where this utility type/function is important
       placeholder: |
         A type-safe lodash-like get method:
