@@ -26,8 +26,8 @@ body:
   - type: input
     id: playground-link
     attributes:
-      label: Playground Link
-      description: Link to an isolated reproduction [in TypeScript playground](https://www.typescriptlang.org/play)
+      label: TypeScript Playground
+      description: Link to an isolated reproduction [in TypeScript playground](https://tsplay.dev/w25rYW)
       placeholder: https://www.typescriptlang.org/play?...
     validations:
       required: true
