@@ -23,37 +23,21 @@ body:
       label: Why
       description: Give 1 or more examples of code that explain cases where this utility type/function is important
       placeholder: |
-        Example:
+        A type-safe lodash-like get method:
 
         ```ts
-        interface ComplexObject {
-          elements: {
-            labels: [{ title: string, description?: string }];
-          }[]
-        }
-        ```
+        export function get<Type, DottedPath extends string>(obj: Type, path: DottedPath): Get<Type, DottedPath>;
 
-        1. To infer value type
-
-        ```ts
         interface ComplexObject {
           elements: {
             labels: [{ title: string, description?: string }];
           }[]
         }
 
-        type Label = Get<ComplexObject, 'elements.0.labels.0'>;
-        //   ^? { title: string, description?: string }
+        declare const obj: ComplexObject;
+
+        const firstLabel = get(obj, 'elements.0.labels.0');
         ```
-
-        2. Start typing to see autocomplete
-
-        ```ts
-        type Result = Get<ComplexObject, ''>;
-        //                               ^^
-        ```
-
-        ...
     validations:
       required: true
     validations:
