@@ -1,5 +1,3 @@
-import { KeyofBase } from "../key-of-base";
-
 type Path<T> = T extends `${infer P}.${infer Rest}` ? [P, ...Path<Rest>] : [T];
 
 type SafeObjectKeyExtractor<O, K> = K extends keyof O
@@ -32,23 +30,6 @@ type GetWithArray<O, K extends readonly any[]> = K extends readonly [infer Head,
   : K extends readonly []
   ? O
   : never;
-
-type PredefinedIndices = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-
-type SafeKey<TKey> = TKey extends string
-  ? TKey
-  : TKey extends number
-  ? number extends TKey
-    ? `${PredefinedIndices}` | `${bigint}`
-    : // ensures there are only integer numeric keys
-    `${TKey}` extends `${bigint}`
-    ? `${TKey}`
-    : never
-  : never;
-
-type SinglePath<TKey extends KeyofBase, TPath extends string> = TPath extends ""
-  ? TKey
-  : `${SafeKey<TPath>}.${SafeKey<TKey>}`;
 
 type Join<TKey, TPath> = TKey extends string | number
   ? TPath extends string | number
