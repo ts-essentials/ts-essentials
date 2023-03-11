@@ -12,12 +12,14 @@ type TupleKeys<TTuple extends readonly any[]> = Exclude<keyof TTuple, keyof any[
 
 type Paths<Type, TDepth extends number = 10> = [TDepth] extends [never]
   ? never
-  : Type extends IsTuple<Type>
-  ? {
-      [TKey in TupleKeys<Type>]-?: TKey extends string | number
-        ? `${TKey}` | Join<TKey, Paths<Type[TKey], PreviousIndexMapping[TDepth]>>
-        : never;
-    }[TupleKeys<Type>]
+  : Type extends Array<infer Values>
+  ? Type extends IsTuple<Type>
+    ? {
+        [TKey in TupleKeys<Type>]-?: TKey extends string | number
+          ? `${TKey}` | Join<TKey, Paths<Type[TKey], PreviousIndexMapping[TDepth]>>
+          : never;
+      }[TupleKeys<Type>]
+    : `${number}` | Join<`${number}`, Paths<Values, PreviousIndexMapping[TDepth]>>
   : Type extends object
   ? {
       [TKey in keyof Type]-?: TKey extends string | number
