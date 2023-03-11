@@ -23,7 +23,9 @@ type cases = [
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.2">>,
   // @ts-expect-error: key '3' does NOT exist in tuple
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.3">>,
+  // @ts-expect-error: key 'good' does NOT exist for string
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.0.good">>,
+  // @ts-expect-error: key 'good' does NOT exist for number
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.1.good">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.2.good">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.set">>,
@@ -49,7 +51,9 @@ type cases = [
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.2">>,
   // @ts-expect-error: key '3' does NOT exist in tuple
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.3">>,
+  // @ts-expect-error: key 'good' does NOT exist for string
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.0.good">>,
+  // @ts-expect-error: key 'good' does NOT exist for number
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.1.good">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.2.good">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.set">>,
