@@ -16,6 +16,6 @@ type Example = DeepCamelCaseProperties<Config>;
 
 It supports:
 
-- Objects
+- Object types
 
 TS Playground – https://tsplay.dev/wXOM8W

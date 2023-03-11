@@ -13,12 +13,12 @@ type ThreeWordsExample = CamelCase<"HERE-THREE-WORDS">;
 
 It supports:
 
+- COBOL-CASE
+- CONSTANT_CASE
+- PascalCase
+- camelCase
+- kebab-case
 - oneword
 - snake_case
-- CONSTANT_CASE
-- kebab-case
-- COBOL-CASE
-- camelCase
-- PascalCase
 
 TS Playground – https://tsplay.dev/mpjrMw
