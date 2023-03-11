@@ -1,4 +1,4 @@
-import { KeyofBase } from '../key-of-base';
+import { KeyofBase } from "../key-of-base";
 
 type Path<T> = T extends `${infer P}.${infer Rest}` ? [P, ...Path<Rest>] : [T];
 
@@ -50,14 +50,22 @@ type SinglePath<TKey extends KeyofBase, TPath extends string> = TPath extends ""
   ? TKey
   : `${SafeKey<TPath>}.${SafeKey<TKey>}`;
 
-type AllPaths<TObject, TPath extends string = ""> = TObject extends object
+type Join<TKey, TPath> = TKey extends string | number
+  ? TPath extends string | number
+    ? `${TKey}${"" extends TPath ? "" : "."}${TPath}`
+    : never
+  : never;
+
+type IndicesOrder = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...0[]];
+
+type AllPaths<TObject, TPath extends number = 10> = [TPath] extends [never]
+  ? never
+  : TObject extends object
   ? {
-      [TKey in keyof TObject]: SinglePath<TKey, TPath> extends infer TSinglePath
-        ? TSinglePath extends string
-          ? TSinglePath | AllPaths<TObject[TKey], TSinglePath>
-          : never
+      [TKey in keyof TObject]-?: TKey extends string | number
+        ? `${TKey}` | Join<TKey, AllPaths<TObject[TKey], IndicesOrder[TPath]>>
         : never;
     }[keyof TObject]
-  : never;
+  : "";
 
 export type Get<O extends Record<any, any>, T extends AllPaths<O>> = GetWithArray<O, Path<T>>;
