@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkOptional, OptionalKeys, RequiredKeys, WritableKeys } from "../lib";
+import { MarkOptional, OptionalKeys, RequiredKeys } from "../lib";
 
 function testMarkOptional() {
   type Example = {

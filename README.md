@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/toolbox_1f9f0.png" width="120" alt="ts-essentials">
+  <img src="/logo.png" width="120" alt="ts-essentials">
   <h3 align="center">ts-essentials</h3>
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
@@ -23,1132 +23,205 @@ npm install --save-dev ts-essentials
 👉 As we really want types to be stricter, we require enabled
 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
 
-If you use any [functions](https://github.com/krzkaczor/ts-essentials/blob/master/lib/functions.ts) you should add
-`ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors in production.
-
-## What's inside?
+## API
 
 `ts-essentials` is a set of high-quality, useful TypeScript types that make writing type-safe code easier.
 
-- [Install](#Install)
-- [What's inside?](#Whats-inside)
-  - [Basic](#Basic)
-  - [Dictionaries](#Dictionaries)
-  - [Type checkers](#type-checkers)
-    - `IsUnknown`
-    - `IsNever`
-    - `IsAny`
-  - [Deep\* wrapper types](#Deep-wrapper-types)
-    - DeepPartial
-    - DeepRequired
-    - DeepReadonly
-    - DeepNonNullable
-    - DeepNullable
-    - DeepUndefinable
-    - [Difference between `DeepRequired` and `DeepNonNullable`](#difference-between-deeprequired-and-deepnonnullable)
-  - [Literal types](https://github.com/krzkaczor/ts-essentials/tree/master/lib/literal-types#literal-types)
-    - CamelCase
-  - [Writable & DeepWritable](#Writable)
-  - [Buildable](#Buildable)
-  - [Pick](#Pick)
-  - [Omit](#Omit)
-  - [StrictOmit](#StrictOmit)
-    - [Comparison between `Omit` and `StrictOmit`](#Comparison-between-Omit-and-StrictOmit)
-  - [StrictExtract](#StrictExtract)
-    - [Comparison between `Extract` and `StrictExtract`](#Comparison-between-Extract-and-StrictExtract)
-  - [StrictExclude](#StrictExclude)
-    - [Comparison between `Exclude` and `StrictExclude`](#Comparison-between-Exclude-and-StrictExclude)
-  - [DeepOmit](#DeepOmit)
-  - [DeepPick](#DeepPick)
-  - [OmitProperties](#OmitProperties)
-  - [PickProperties](#PickProperties)
-  - [NonNever](#NonNever)
-  - [NonEmptyObject](#NonEmptyObject)
-  - [NonEmptyArray](#NonEmptyArray)
-  - [Merge](#Merge)
-  - [MergeN](#MergeN)
-  - [MarkRequired](#MarkRequired)
-  - [MarkOptional](#MarkOptional)
-  - [MarkReadonly](#MarkReadonly)
-  - [MarkWritable](#MarkWritable)
-  - [ReadonlyKeys](#ReadonlyKeys)
-  - [WritableKeys](#WritableKeys)
-  - [OptionalKeys](#OptionalKeys)
-  - [RequiredKeys](#RequiredKeys)
-  - [PickKeys](#pickkeys)
-  - [UnionToIntersection](#UnionToIntersection)
-  - [Opaque types](#Opaque-types)
-  - [Tuple constraint](#Tuple-constraint)
-  - [Exhaustive switch cases](#Exhaustive-switch-cases)
-  - [ValueOf type](#ValueOf-type)
-  - [ElementOf type](#ElementOf-type)
-  - [ArrayOrSingle](#ArrayOrSingle)
-  - [AsyncOrSync type](#AsyncOrSync-type)
-  - [Awaited type](#awaited-type)
-  - [Newable](#newable)
-  - [Assertions](#Assertions)
-  - [Exact](#Exact)
-  - [isExact](#isExact)
-  - [XOR](#XOR)
-  - [Functional type essentials](#functional-type-essentials)
-    - Head
-    - Tail
-- [TypeScript dependency table](#TypeScript-dependency-table)
-- [Contributors](#Contributors)
-
 ### Basic
 
-- `Primitive` type matching all primitive values.
-- `noop` function that takes any arguments and returns nothing, as a placeholder for e.g. callbacks.
+- [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
+- [`KeyofBase`](/lib/key-of-base) -
+  [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
+- [`Primitive`](/lib/primitive) - Matches any
+  [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
+- [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude) - Constructs a type by excluding from `UnionType`
+  all union members that are assignable to `ExcludedMembers`. This is stricter version of
+  [`Exclude`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers)
+- [`StrictExtract<Type, Union>`](/lib/strict-extract) - Constructs a type by extracting from `Type` all union members
+  that are assignable to `Union`. This is stricter version of
+  [`Extract`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union)
+- [`StrictOmit<Type, Keys>`](/lib/strict-omit) - Constructs a type by picking all properties from `Type` and then
+  removing `Keys`. This is stricter version of
+  [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
+- [`Writable<Type>`](/lib/writable) - Constructs a type with removed `readonly` for all properties of `Type`, meaning
+  the properties of the constructed type can be reassigned
 
-### Dictionaries
+### Utility types
 
-_keywords: map_
+- [`AsyncOrSync<Type>`](/lib/async-or-sync) - Constructs a type with `Type` or `PromiseLike<Type>`
+- [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type) - Unwraps `AsyncOrSync` type
+- [`Dictionary<Type, Keys?>`](/lib/dictionary) - Constructs a required object type which property keys are `Keys`
+  (`string` by default) and which property values are `Type`
+- [`DictionaryValues<Type>`](/lib/dictionary-values) - This type unwraps `Dictionary` value type
+- [`Merge<Object1, Object2>`](/lib/merge) - Constructs a type by picking all properties from `Object1` and `Object2`.
+  Property values from `Object2` override property values from `Object1` when property keys are the same
+- [`MergeN<Tuple>`](/lib/merge-n) - Constructs a type by merging objects with type `Merge` in tuple `Tuple` recursively
+- [`Newable<ReturnType>`](/lib/newable) - Constructs a class type with constructor which has return type `ReturnType`
+- [`NonNever<Type>`](/lib/non-never) - Constructs a type by picking all properties from type `Type` which values don't
+  equal to `never`
+- [`OmitProperties<Type, Value>`](/lib/omit-properties) - Constructs a type by picking all properties from type `Type`
+  and removing those properties which values equal to `Value`
+- [`Opaque<Type, Token>`](/lib/opaque) - Constructs a type which is a subset of `Type` with a specified unique token
+  `Token`
+- [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
+  which values equal to `Value`
+- [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
+  `Keys` (`string` by default) and which property values are `Type`
+- [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
+- [`ValueOf<Type>`](/lib/value-of) - Constructs a type for type `Type` and equals to a primitive for primitives, array
+  elements for arrays, function return type for functions or object property values for objects
+- [`XOR<Type1, Type2>`](/lib/xor) - Construct a type which is assignable to either type `Type1` or `Type2` but not both
 
-```typescript
-const stringDict: Dictionary<string> = {
-  a: "A",
-  b: "B",
-};
+### Mark wrapper types
 
-// Specify second type argument to change dictionary keys type
-const dictOfNumbers: Dictionary<string, number> = {
-  420: "four twenty",
-  1337: "HAX",
-};
+- [`MarkOptional<Type, Keys>`](/lib/mark-optional) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` are set as optional, meaning they aren't required
+- [`MarkReadonly<Type, Keys>`](/lib/mark-readonly) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` are set to `readonly`, meaning they cannot be reassigned
+- [`MarkRequired<Type, Keys>`](/lib/mark-required) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` are set as required
+- [`MarkWritable<Type, Keys>`](/lib/mark-writable) - Constructs a type by picking all properties from type `Type` where
+  properties `Keys` remove `readonly` modifier, meaning they can be reassigned
 
-// You may specify union types as key to cover all possible cases. It acts the same as Record from TS's standard library
-export type DummyOptions = "open" | "closed" | "unknown";
-const dictFromUnionType: Dictionary<number, DummyOptions> = {
-  closed: 1,
-  open: 2,
-  unknown: 3,
-};
+### Deep wrapper types
 
-// and get dictionary values
-type StringDictionaryValueType = DictionaryValues<typeof stringDict>;
-//   ^? string
+- [`Buildable<Type>`](/lib/buildable) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
+  properties from type `Type` are recursively set as non-`readonly` and optional, meaning they can be reassigned and
+  aren't required
+- [`DeepNonNullable<Type>`](/lib/deep-non-nullable) - Constructs a type by picking all properties from type `Type`
+  recursively and exclude `null` and `undefined` property values from all of them. To make properties non-nullable on
+  one level, use [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
+- [`DeepNullable<Type>`](/lib/deep-nullable) - Constructs a type by picking all properties from type `Type` recursively
+  and include `null` property values for all of them
+- [`DeepOmit<Type, Filter>`](/lib/deep-omit) - Constructs a type by picking all properties from type `Type` and removing
+  properties which values are `never` or `true` in type `Filter`
+- [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively
+  and setting them as optional, meaning they aren't required. To make properties optional on one level, use
+  [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
+  values `never` or `true` in type `Filter`, from type `Type`
+- [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
+  and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use
+  [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
+- [`DeepRequired<Type>`](/lib/deep-required) - Constructs a type by picking all properties from type `Type` recursively
+  and setting as required. To make properties required on one level, use
+  [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype)
+- [`DeepUndefinable<Type>`](/lib/deep-undefinable) - Constructs a type by picking all properties from type `Type`
+  recursively and include `undefined` property values for all of them
+- [`DeepWritable<Type>`](/lib/deep-writable) - Constructs a type by picking all properties from type `Type` recursively
+  and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one level, use
+  `Writable<Type>`
 
-// When building a map using JS objects consider using SafeDictionary
-const safeDict: SafeDictionary<number> = {};
-const value: number | undefined = safeDict["foo"];
+### Key types
 
-// With SafeDictionary you don't need to use all of the sub-types of a finite type.
-// If you care about the key exhaustiveness, use a regular Dictionary.
-type ConfigKeys = "LOGLEVEL" | "PORT" | "DEBUG";
-const configSafeDict: SafeDictionary<number, ConfigKeys> = {
-  LOGLEVEL: 2,
-};
-const maybePort: number | undefined = configSafeDict["PORT"];
-
-const configDict: Dictionary<number, ConfigKeys> = {
-  LOGLEVEL: 2,
-  PORT: 8080,
-  DEBUG: 1,
-};
-const port: number = configDict["PORT"];
-```
+- [`OptionalKeys<Type>`](/lib/optional-keys) - Constructs a union type by picking all optional properties of object type
+  `Type`
+- [`PickKeys<Type, Value>`](/lib/pick-keys) - Constructs a union type by picking all properties of object type `Type`
+  which values are assignable to type `Value`
+- [`ReadonlyKeys<Type>`](/lib/readonly-keys) - Constructs a union type by picking all `readonly` properties of object
+  type `Type`, meaning their values cannot be reassigned
+- [`RequiredKeys<Type>`](/lib/required-keys) - Constructs a union type by picking all required properties of object type
+  `Type`
+- [`WritableKeys<Type>`](/lib/writable-keys) - Constructs a union type by picking all writable properties of object type
+  `Type`, meaning their values can be reassigned
 
 ### Type checkers
 
-- `IsUnknown` checks whether we get `unknown` or not. If so, we get `true`. Otherwise, `false`
-
-```typescript
-// ✅ true
-type Test1 = IsUnknown<unknown>;
-// ❌ false
-type Test2 = IsUnknown<{ name: "Alexey" }>;
-```
-
-- `IsNever` checks whether we get `never` or not. If so, we get `true`. Otherwise, `false`
-
-```typescript
-// ✅ true
-type Test1 = IsNever<never>;
-// ❌ false
-type Test2 = IsNever<{ name: "Alexey" }>;
-```
-
-- `IsAny` checks whether we get `any` or not. If so, we get `true`. Otherwise, `false`
-
-```typescript
-// ✅ true
-type Test1 = IsAny<any>;
-// ❌ false
-type Test2 = IsAny<{ name: "Alexey" }>;
-```
-
-### Deep\* wrapper types
-
-- DeepPartial
-- DeepRequired
-- DeepReadonly
-- DeepNonNullable
-- DeepNullable
-- DeepUndefinable
-
-_keywords: recursive, nested, optional_
-
-```typescript
-type ComplexObject = {
-  simple: number;
-  nested: {
-    a: string;
-    array: [{ bar: number }];
-  };
-};
-
-type ComplexObjectPartial = DeepPartial<ComplexObject>;
-const samplePartial: ComplexObjectPartial = {
-  nested: {
-    array: [{}],
-  },
-};
-
-type ComplexObjectAgain = DeepRequired<ComplexObjectPartial>;
-const sampleRequired: ComplexObjectAgain = {
-  simple: 5,
-  nested: {
-    a: "test",
-    array: [{ bar: 1 }],
-  },
-};
-
-type ComplexObjectReadonly = DeepReadonly<ComplexObject>;
-
-type ComplexNullableObject = {
-  simple: number | null | undefined;
-  nested: {
-    a: string | null | undefined;
-    array: [{ bar: number | null | undefined }] | null | undefined;
-  };
-};
-
-type ComplexObjectNonNullable = DeepNonNullable<ComplexNullableObject>;
-const sampleNonNullable: ComplexObjectNonNullable = {
-  simple: 5,
-  nested: {
-    a: "test",
-    array: [{ bar: null }], // Error: Type 'null' is not assignable to type 'number'
-  },
-};
-
-type ComplexObjectNullable = DeepNullable<ComplexObject>;
-const sampleDeepNullable1: ComplexObjectNullable = {
-  simple: null,
-  nested: {
-    a: null,
-    array: [{ bar: null }],
-  },
-};
-const sampleDeepNullable2: ComplexObjectNullable = {
-  simple: 1,
-  nested: {
-    array: [null], // OK
-    // error -- property `a` missing, should be `number | null`
-  },
-};
-
-// DeepUndefinable will come in handy if:
-//  - you want to explicitly assign values to all of the properties
-//  AND
-//  - the expression used for the assignment can return an `undefined` value
-// In most situations DeepPartial will suffice.
-declare function tryGet(name: string): string | undefined;
-type ComplexObjectUndefinable = DeepUndefinable<ComplexObject>;
-const sampleDeepUndefinable1: ComplexObjectUndefinable = {
-  simple: undefined,
-  nested: {
-    a: tryGet("a-value"),
-    array: [{ bar: tryGet("bar-value") }],
-  },
-};
-const sampleDeepUndefinable2: ComplexObjectUndefinable = {
-  // error -- property `simple` missing, should be `number | undefined`
-  nested: {
-    array: [[{ bar: undefined }]],
-    // error -- property `a` missing, should be `string | undefined`
-  },
-};
-```
-
-#### Difference between `DeepRequired` and `DeepNonNullable`
-
-`DeepRequired` is closer to `Required` but `DeepNonNullable` on the other hand is closer to `NonNullable`
-
-It means that `DeepRequired` doesn't remove `null` and `undefined` but only makes fields required. On the other hand,
-`DeepNonNullable` will only remove `null` and `undefined` but doesn't prohibit the field to be optional.
-
-Let's have a look at the optional nullable field:
-
-```typescript
-type Person = {
-  name?: string | null | undefined;
-};
-
-type NonNullablePerson = DeepNonNullable<Person>;
-// { name?: string | undefined; }
-type RequiredPerson = DeepRequired<Person>;
-// { name: string | null; }
-```
-
-Let's have a look at the required nullable field:
-
-```typescript
-type FullName = {
-  first: string | null | undefined;
-};
-
-type NonNullableFullName = DeepNonNullable<FullName>;
-// { first: string; }
-type RequiredFullName = DeepRequired<FullName>;
-// { first: string | null | undefined; }
-```
-
-And there's no difference between `DeepNonNullable` and `DeepRequired` if the property is non nullable and required
-
-### Writable
-
-Make all attributes of object writable.
-
-```typescript
-type Foo = {
-  readonly a: number;
-  readonly b: string;
-};
-
-const foo: Foo = { a: 1, b: "b" };
-(foo as Writable<typeof foo>).a = 42;
-```
-
-```typescript
-type Foo = {
-  readonly foo: string;
-  bar: {
-    readonly x: number;
-  };
-}[];
-
-const test: DeepWritable<Foo> = [
-  {
-    foo: "a",
-    bar: {
-      x: 5,
-    },
-  },
-];
-
-// we can freely write to this object
-test[0].foo = "b";
-test[0].bar.x = 2;
-```
-
-### Buildable
-
-_keywords: builder_
-
-A combination of both `DeepWritable` and `DeepPartial`. This type allows building an object step-by-step by assigning
-values to its attributes in multiple statements.
-
-```typescript
-interface ReadonlyObject
-  extends Readonly<{
-    simple: number;
-    nested: Readonly<{
-      a: string;
-      array: ReadonlyArray<Readonly<{ bar: number }>>;
-    }>;
-  }> {}
-
-const buildable: Buildable<ReadonlyObject> = {};
-buildable.simple = 7;
-buildable.nested = {};
-buildable.nested.a = "test";
-buildable.nested.array = [];
-buildable.nested.array.push({ bar: 1 });
-const finished = buildable as ReadonlyObject;
-```
-
-### Pick
-
-There's no need for own implementation of `Pick`, as it's already strict:
-
-```typescript
-type Pick<T, K extends keyof T> = { [P in K]: T[P] };
-//           ^^^^^^^^^^^^^^^^^
-
-interface Person {
-  age: number;
-  name: string;
-}
-
-// @ts-expect-error: Type '"job"' does not satisfy the constraint 'keyof Person'
-type WithJob = Pick<Person, "job">;
-//                          ^^^^^
-```
-
-### Omit
-
-Our version of `Omit` is renamed to `StrictOmit` in `v3`, since the builtin `Omit` has become part of TypeScript 3.5
-
-### StrictOmit
-
-Usage is similar to the builtin version, but checks the filter type more strictly.
-
-```typescript
-type ComplexObject = {
-  simple: number;
-  nested: {
-    a: string;
-    array: [{ bar: number }];
-  };
-};
-
-type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested">;
-//   ^? { simple: number }
-
-// if you want to Omit multiple properties just use union type:
-type SimplifiedComplexObject = StrictOmit<ComplexObject, "nested" | "simple">;
-//   ^? {}
-```
-
-#### Comparison between `Omit` and `StrictOmit`
-
-Following the code above, we can compare the behavior of `Omit` and `StrictOmit`.
-
-```typescript
-// Type '"simple" | "nested" | "nonexistent"' does not satisfy the constraint '"simple" | "nested"'
-// @ts-expect-error: Type '"nonexistent"' is not assignable to type '"simple" | "nested"'
-type SimplifiedComplexObjectWithStrictOmit = StrictOmit<ComplexObject, "nested" | "simple" | "nonexistent">;
-//                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-type SimplifiedComplexObjectWithOmit = Omit<ComplexObject, "nested" | "simple" | "nonexistent">;
-//   ^? {}
-```
-
-As is shown in the example, `StrictOmit` ensures that no extra key is specified in the filter.
-
-### StrictExtract
-
-Usage is similar to the builtin version, but checks the filter type more strictly.
-
-```typescript
-interface Dog {
-  type: "dog";
-  woof(): void;
-}
-
-interface Cat {
-  type: "cat";
-  meow(): void;
-}
-
-interface Mouse {
-  type: "mouse";
-  squeak(): void;
-}
-
-type Animal = Dog | Cat | Mouse;
-
-type DogAnimal = StrictExtract<Animal, { type: "dog" }>;
-//   ^? Dog
-
-// if you want to Extract multiple properties just use union type:
-
-// 1. if you use typescript up to version 4.5
-type HouseAnimal = StrictExtract<Animal, { type: "dog" | "cat" }>;
-//   ^? Cat | Dog
-
-// 2. otherwise use
-type HouseAnimal = StrictExtract<Animal, { type: "dog" } | { type: "cat" }>;
-//   ^? Cat | Dog
-```
-
-#### Comparison between `Extract` and `StrictExtract`
-
-Following the code above, we can compare the behavior of `Extract` and `StrictExtract`.
-
-```typescript
-// Type '{ type: "dog"; } | { type: "cat"; } | { type: "horse"; }' does not satisfy the constraint 'Partial<Animal>'
-//   Type '{ type: "horse"; }' is not assignable to type 'Partial<Animal>'
-//     Type '{ type: "horse"; }' is not assignable to type 'Partial<Mouse>'
-//       Types of property 'type' are incompatible
-// @ts-expect-error: Type '"horse"' is not assignable to type '"mouse"'.
-type HouseAnimalWithStrictExtract = StrictExtract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
-//                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-// no error
-type HouseAnimalWithExtract = Extract<Animal, { type: "dog" } | { type: "cat" } | { type: "horse" }>;
-//   ^? Dog | Cat
-```
-
-### StrictExclude
-
-Usage is similar to the builtin version, but checks the filter type more strictly.
-
-```typescript
-type Animal = "dog" | "cat" | "mouse";
-
-type DogAnimal = StrictExclude<Animal, "dog">;
-//   ^? 'cat' | 'mouse'
-
-// if you want to Exclude multiple properties just use union type:
-type MouseAnimal = StrictExclude<Animal, "dog" | "cat">;
-//   ^? 'mouse'
-```
-
-#### Comparison between `Exclude` and `StrictExclude`
-
-Following the code above, we can compare the behavior of `Exclude` and `StrictExclude`.
-
-```typescript
-// Type '"dog" | "cat" | "horse"' is not assignable to type '"dog" | "cat" | "mouse"'
-// @ts-expect-error: '"horse"' is not assignable to type '"dog" | "cat" | "mouse"'.
-type HouseAnimalWithStrictExclude = StrictExclude<Animal, "dog" | "cat" | "horse">;
-
-// no error
-type HouseAnimalWithExclude = Exclude<Animal, "dog" | "cat" | "horse">;
-```
-
-### DeepOmit
-
-Recursively omit deep properties according to key names.
-
-Here is the `Teacher` interface.
-
-```typescript
-interface Teacher {
-  name: string;
-  gender: string;
-  students: { name: string; score: number }[];
-}
-```
-
-Now suppose you want to omit `gender` property of `Teacher`, and `score` property of `students`. You can achieve this
-with a simple type filter.
-
-In the filter, the properties to be omitted completely should be defined as either `never` or `true`. For the properties
-you want to partially omit, you should recursively define the sub-properties to be omitted.
-
-```typescript
-type TeacherSimple = DeepOmit<
-  Teacher,
-  {
-    gender: never;
-    students: {
-      score: never;
-    }[];
-  }
->;
-// ^? { name: string; students: { name: string }[] }
-```
-
-NOTE
-
-- `DeepOmit` works fine with `Array`s and `Set`s. When applied to a `Map`, the filter is only applied to its value.
-- If there exists any property in the filter which is not in the original type, an error will occur.
-
-### DeepPick
-
-Recursively pick deep properties according to key names.
-
-This type works as complementary type to DeepOmit, in the similar way like Exclude and Extract types complement each
-other.
-
-The filter syntax is the same as for the DeepPick, so one filter can be used to obtain both DeepPick and DeepOmit types
-from it.
-
-The properties to be picked completely should be defined as `never`. For the properties you want to partially pick, you
-should recursively define the sub-properties to be picked.
-
-```typescript
-interface Teacher {
-  name: string;
-  gender: string;
-  students: { name: string; score: number }[];
-}
-```
-
-```typescript
-type TeacherSimple = DeepPick<
-  Teacher,
-  {
-    gender: never;
-    students: {
-      score: never;
-    }[];
-  }
->;
-// ^? { gender: string; students: { score: number }[] }
-```
-
-### OmitProperties
-
-_keywords: filter, props_
-
-Removes all properties extending type `P` in type `T`. NOTE: it works opposite to filtering.
-
-```typescript
-interface Example {
-  log(): void;
-  version: string;
-}
-
-type ExampleWithoutMethods = OmitProperties<Example, Function>;
-//   ^? { version: string }
-
-// if you want to Omit multiple properties just use union type like:
-type ExampleWithoutMethods = OmitProperties<Example, Function | string>;
-//   ^? {}
-```
-
-### PickProperties
-
-Pick only properties extending type `P` in type `T`.
-
-```typescript
-interface Example {
-  log(): void;
-  version: string;
-  versionNumber: number;
-}
-
-type ExampleOnlyMethods = PickProperties<Example, Function>;
-//   ^? { log(): void }
-
-// if you want to pick multiple properties just use union type like:
-type ExampleOnlyMethodsAndString = PickProperties<Example, Function | string>;
-//   ^? { log(): void; version: string }
-```
-
-### NonNever
-
-Useful for purifying object types. It improves intellisense but also allows for extracting keys satisfying a conditional
-type.
-
-```typescript
-type GetDefined<TypesMap extends { [key: string]: any }> = keyof NonNever<{
-  [T in keyof TypesMap]: TypesMap[T] extends undefined ? never : TypesMap[T];
-}>;
-```
-
-### NonEmptyObject
-
-Useful for accepting only objects with keys, great after a filter like OmitProperties or PickProperties.
-
-```typescript
-/* return never if the object doesn't have any number value*/
-type NumberDictionary<T> = NonEmptyObject<PickProperties<T, number>>;
-
-// return { a: number }
-type SomeObject = NumberDictionary<{ a: number; b: string }>;
-
-// return never
-type EmptyObject = NumberDictionary<{}>;
-```
-
-### NonEmptyArray
-
-Useful for accepting only arrays containing at least one element.
-
-```typescript
-// declare function expression type accepting some rest parameters, but at least one element for the rest parameters is required
-type FunctionAcceptingRestParameters = (someString: string, ...args: NonEmptyArray<number>) => void;
-
-// declare some non-empty array variables
-const okay: NonEmptyArray<number> = [1, 2];
-const alsoOkay: NonEmptyArray<number> = [1];
-// @ts-expect-error: Type '[]' is not assignable to type 'NonEmptyArray<number>'. Source has 0 element(s) but target requires 1.
-const error: NonEmptyArray<number> = [];
-```
-
-### Merge
-
-_keywords: override_
-
-```typescript
-type Foo = {
-  a: number;
-  b: string;
-};
-
-type Bar = {
-  b: number;
-};
-
-const xyz: Merge<Foo, Bar> = { a: 4, b: 2 };
-//   ^? { a: number; b: number }
-```
-
-### MergeN
-
-_keywords: override_
-
-```typescript
-type Tuple = [
-  {
-    a: number;
-    b: string;
-  },
-  {
-    b: number;
-  },
-];
-
-const xyz: MergeN<Tuple> = { a: 4, b: 2 };
-//   ^? { a: number; b: number }
-```
-
-### MarkRequired
-
-Useful when you're sure some optional properties will be set. A real life example: when selecting an object with its
-related entities from an ORM.
-
-```typescript
-class User {
-  id: number;
-  posts?: Post[];
-  photos?: Photo[];
-}
-type UserWithPosts = MarkRequired<User, "posts">;
-
-// example usage with a TypeORM repository -- `posts` are now required, `photos` are still optional
-async function getUserWithPosts(id: number): Promise<UserWithPosts> {
-  return userRepo.findOneOrFail({ id }, { relations: ["posts"] }) as Promise<UserWithPosts>;
-}
-```
-
-### MarkOptional
-
-Useful when you want to make some properties optional without creating a separate type.
-
-```typescript
-interface User {
-  email: string;
-  password: string;
-}
-
-type UserWithoutPassword = MarkOptional<User, "password">;
-//   ^? { email: string; password?: string }
-```
-
-### MarkReadonly
-
-Useful when you want to make some properties readonly without creating a separate type.
-
-```typescript
-interface User {
-  id: number;
-  name: string;
-}
-
-type UserThatCannotChangeName = MarkReadonly<User, "name">;
-//   ^? { id: number; readonly name: string }
-```
-
-### MarkWritable
-
-Useful when you want to make some properties writable (or unset `readonly`) without creating a separate type.
-
-```typescript
-interface User {
-  readonly id: number;
-  readonly name: string;
-}
-
-type UserThatCanChangeName = MarkWritable<User, "name">;
-//   ^? { readonly id: number; name: string }
-```
-
-### ReadonlyKeys
-
-Gets keys of an object which are readonly.
-
-```typescript
-type T = {
-  readonly a: number;
-  b: string;
-};
-
-type Result = ReadonlyKeys<T>;
-//   ^? 'a'
-```
-
-### WritableKeys
-
-Gets keys of an object which are writable.
-
-```typescript
-type T = {
-  readonly a: number;
-  b: string;
-};
-
-type Result = WritableKeys<T>;
-//   ^? 'b'
-```
-
-### OptionalKeys
-
-Gets keys of an object which are optional.
-
-```typescript
-type T = {
-  a: number;
-  b?: string;
-  c: string | undefined;
-  d?: string;
-};
-
-type Result = OptionalKeys<T>;
-//   ^? 'b' | 'd'
-```
-
-### RequiredKeys
-
-Gets keys of an object which are required.
-
-```typescript
-type T = {
-  a: number;
-  b?: string;
-  c: string | undefined;
-  d?: string;
-};
-
-type Result = RequiredKeys<T>;
-//   ^? 'a' | 'c'
-```
-
-### PickKeys
-
-Gets keys of properties of given type in object type.
-
-```typescript
-type T = {
-  a: number;
-  b?: string;
-  c: string | undefined;
-  d: string;
-};
-
-type Result1 = PickKeys<T, string>;
-//   ^? 'd'
-
-type Result2 = PickKeys<T, string | undefined>;
-//   ^? 'b' | 'c' | 'd'
-```
-
-### UnionToIntersection
-
-Useful for converting mapped types with function values to intersection type (so in this case - overloaded function).
-
-```typescript
-type Foo = {
-  bar: string;
-  xyz: number;
-};
-
-type Fn = UnionToIntersection<{ [K in keyof Foo]: (type: K, arg: Foo[K]) => any }[keyof Foo]>;
-```
-
-### Opaque types
-
-Opaque types allow you to create unique type that can't be assigned to base type by accident. Good examples of opaque
-types include:
-
-- JWTs or other tokens - these are special kinds of string used for authorization purposes. If your app uses multiple
-  types of tokens each should be a separate opaque type to avoid confusion.
-- specific currencies - amount of different currencies shouldn't be mixed
-- bitcoin address - special kind of string
-
-It's **critical** to understand that each token (second argument to `Opaque`) has to be unique across your codebase.
-
-We encourage you to leverage a pattern where you have single function to validate base type and create opaque type.
-
-```typescript
-type PositiveNumber = Opaque<number, "PositiveNumber">;
-function makePositiveNumber(n: number): PositiveNumber {
-  if (n <= 0) {
-    throw new Error(`Value ${n} is not positive !`);
-  }
-  return n as PositiveNumber; // you can cast it directly without unknown and any
-}
-
-type NegativeNumber = Opaque<number, "NegativeNumber">;
-function makeNegativeNumber(n: number): NegativeNumber {
-  if (n >= 0) {
-    throw new Error(`Value ${n} is not negative !`);
-  }
-  return n as NegativeNumber; // you can cast it directly without unknown and any
-}
-
-let a = makePositiveNumber(5); // runtime check
-let b = makeNegativeNumber(-10); // runtime check
-
-a = b; // error at compile time
-```
-
-### Tuple constraint
-
-```typescript
-function foo<T extends Tuple>(tuple: T): T {
-  return tuple;
-}
-
-const ret = foo(["s", 1]);
-// return type of [string, number]
-```
-
-You can also parametrize `Tuple` type with a type argument to constraint it to certain types, i.e.
-`Tuple<string | number>`.
-
-### Exhaustive switch cases
-
-```typescript
-function actOnDummyOptions(options: DummyOptions): string {
-  switch (options) {
-    case "open":
-      return "it's open!";
-    case "closed":
-      return "it's closed";
-    case "unknown":
-      return "i have no idea";
-    default:
-      // if you would add another option to DummyOptions, you'll get error here!
-      throw new UnreachableCaseError(options);
-  }
-}
-```
-
-### ValueOf type
-
-```typescript
-const obj = {
-  id: "123e4567-e89b-12d3-a456-426655440000",
-  name: "Test object",
-  timestamp: 1548768231486,
-};
-
-type ObjectValueType = ValueOf<typeof obj>;
-//   ^? string | number
-```
-
-### ElementOf type
-
-```typescript
-const array = [1, 2, true, false];
-
-type ArrayElementType = ElementOf<typeof array>;
-//   ^? number | boolean
-```
-
-### ArrayOrSingle
-
-Useful for the functions where data can be passed as a value or an array
-
-```typescript
-const castArray = <T extends any>(value: ArrayOrSingle<T>): T[] => {
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  return [value];
-};
-
-// number[]
-const numbers = castArray(1);
-// string[]
-const strings = castArray(["a", "b", "c"]);
-```
-
-### AsyncOrSync type
-
-Useful as a return type in interfaces or abstract classes with missing implementation
-
-```typescript
-interface CiProvider {
-  getSHA(): AsyncOrSync<string>;
-  // same as
-  getSHA(): Promise<string> | string;
-}
-
-class Circle implements CiProvider {
-  // implementation can use sync version
-  getSHA() {
-    return "abc";
-  }
-}
-
-class Travis implements CiProvider {
-  // implementation can use async version when needed
-  async getSHA() {
-    // do async call
-    return "def";
-  }
-}
-
-// to get original type use AsyncOrSyncType
-AsyncOrSyncType<AsyncOrSync<number>> // return 'number'
-```
-
-### Awaited type
-
-Unwrap promised type:
-
-```typescript
-Awaited<Promise<number>> // number
-```
-
-### Newable
-
-_keywords: constructor, class_
-
-Type useful when working with classes (not their instances).
-
-```typescript
-class TestCls {
-  constructor(arg1: string) {}
-}
-
-const t1: Newable<any> = TestCls;
-```
-
-### Assertions
-
-_keywords: invariant_
-
-Simple runtime assertion that narrows involved types using
-[assertion functions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions).
-
-Note: This function is not purely type level and leaves minimal runtime trace in generated code.
-
-```typescript
-const something: string | undefined = "abc" as any;
-assert(something, "Something has to be defined!");
-// from now on `something` is string, if this wouldn't be a case, assert would throw
-
-const anything = "abc" as any;
-assert(anything instanceof String, "anything has to be a string!");
-// from now on `anything` is string
-```
-
-### PredicateType
-
-_keywords: narrow, guard, validate_
-
-Works just like [`ReturnType`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) but will
-return the [predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) associated
-with the function instead. This is particularly useful if you need to chain guards to narrow broader types.
-
-```typescript
-// Without PredicateType you can never use a set of functions like this together; how can you resolve ???
-// You would need a specific instance of isArrayOf for each type you want to narrow
-const isArrayOf = (thing: unknown, validator: (...x: any[]) => boolean): thing is ???[] => {
-  return Array.isArray(thing) && thing.every(validator);
-};
-
-// With PredicateType you can pull the predicate of the validator into the higher level guard
-const isArrayOf = <T extends (...x: any[]) => boolean>(
-  thing: unknown,
-  validator: T,
-): thing is Array<PredicateType<T>> => {
-  return Array.isArray(thing) && thing.every(validator);
-};
-```
-
-### Exact
-
-_keywords: same, equals, equality_
-
-`Exact<TYPE, SHAPE>` Checks if `TYPE` is exactly the same as `SHAPE`, if yes than `TYPE` is returned otherwise `never`.
-
-```typescript
-type ABC = { a: number; b: number; c: number }
-type BC = { b: number; c: number }
-type C = { c: number }
-
-Exact<ABC, C> // returns NEVER
-Exact<C, C> // returns C
-```
-
-### isExact
-
-`isExact<SHAPE>()(value)` is a runtime function that returns (on the type level) value if value is exactly of type
-`SHAPE` or `never` otherwise.
-
-```typescript
-type ABC = { a: number; b: number; c: number };
-type BC = { b: number; c: number };
-
-let abc: ABC = { a: 1, b: 2, c: 3 };
-let bc: BC = { b: 2, c: 3 };
-
-// due to TS limitations, `isExact` has to be a curried function
-const isBC = isExact<BC>();
-
-isBC(abc); // returns NEVER -- abc has different structure from BC (excessive property a)
-isBC(bc); // works fine
-
-// note: that isExact can be used inline too
-isExact<BC>()(abc); // returns NEVER
-```
-
-### createFactoryWithConstraint
-
-`createFactoryWithConstraint<Constraint>()(value)` is a runtime function that returns (on the type level) value,
-narrowed within constraint type `Constraint`, or throws type error otherwise
-
-```typescript
-type NumericDictionary = Dictionary<number>;
-
-// due to TS limitations, `createFactoryWithConstraint` has to be a curried function
-const createNumericDictionary = createFactoryWithConstraint<NumericDictionary>();
-
-const abNumber = createNumericDictionary({ a: 1, b: 2 });
-//    ^? { a: number; b: number }
-
-// @ts-expect-error: Type 'string' is not assignable to type 'number'
-createNumericDictionary({ a: "1", b: "2" });
-```
-
-### XOR
-
-Gets the XOR (Exclusive-OR) type which could make 2 types exclude each other.
-
-```typescript
-type A = { a: string };
-type B = { a: number; b: boolean };
-type C = { c: number };
-
-let A_XOR_B: XOR<A, B>;
-let A_XOR_C: XOR<A, C>;
-
-// fail
-A_XOR_B = { a: 0 };
-A_XOR_B = { b: true };
-A_XOR_B = { a: "", b: true };
-A_XOR_C = { a: "", c: 0 }; // would be allowed with `A | C` type
-
-// ok
-A_XOR_B = { a: 0, b: true };
-A_XOR_B = { a: "" };
-A_XOR_C = { c: 0 };
-```
-
-### Functional type essentials
-
-`Head` & `Tail`: useful for functional programming, or as building blocks for more complex functional types.
-
-```typescript
-function tail<T extends any[]>(array: T): Tail<T> {
-  return array.slice(1) as Tail<T>;
-}
-
-type FirstParameter<FnT extends (...args: any) => any> = FnT extends (...args: infer ArgsT) => any
-  ? Head<ArgsT>
-  : never;
-```
+- [`Exact<Type, Shape>`](/lib/exact) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
+  `never`
+- [`IsAny<Type>`](/lib/is-any) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
+- [`IsNever<Type>`](/lib/is-never) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
+- [`IsUnknown<Type>`](/lib/is-unknown) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
+- [`IsTuple<Type>`](/lib/is-tuple) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
+- [`NonEmptyObject<Object>`](/lib/non-empty-object) - Returns `Object` when `Object` has at least one key. Otherwise
+  returns `never`
+
+### Arrays and Tuples
+
+- [`AnyArray<Type?>`](/lib/any-array) - Matches `Array` or `ReadonlyArray` (`Type` is `any` by default)
+- [`ArrayOrSingle<Type>`](/lib/array-or-single) - Matches `Type` or `Type[]`
+- [`ElementOf<Type>`](/lib/element-of) - Constructs a type which equals to array element type for type `Type`
+- [`Head<Type>`](/lib/head) - Constructs a type which equals to first element in type `Type`
+- [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
+- [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single) - Matches `Type` or `readonly Type[]`
+- [`Tail<Type>`](/lib/tail) - Constructs a type which equals to elements but first one in type `Type`
+- [`Tuple<Type?>`](/lib/tuple) - Matches type constraint for tuple with elements of type `Type` (`any` by default)
+
+### Change case
+
+- [`CamelCase<Type>`](/lib/camel-case) - Converts type `Type` to camel case (e.g. `camelCase`)
+- [`DeepCamelCaseProperties<Type>`](/lib/deep-camel-case-properties) - Constructs a type by picking all properties from
+  type `Type` recursively and converting all of them to camel case
+
+### Function types
+
+- [`AnyFunction<Args?, ReturnType?>`](/lib/any-function) - Matches function type with arguments type `Args` (`any[]` by
+  default) and return type `ReturnType` (`any` by default)
+- [`PredicateFunction`](/lib/predicate-function) - Matches type constraint for type guard, meaning first argument is
+  used in return type and return type is
+  [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
+- [`PredicateType<Type>`](/lib/predicate-type) - Constructs a type which equals to narrowed type in predicate function
+  `Type`
+
+### Utility functions
+
+⚠️ Make sure you add `ts-essentials` to your `dependencies` (`npm install --save ts-essentials`) to avoid runtime errors
+
+- [`new UnreachableCaseError(value)`](/lib/functions/unreachable-case-error) - Matches runtime class instance type that
+  helps check exhaustiveness for `value`. When `value` isn't `never`, it shows TypeScript error
+- [`assert(condition, message?)`](/lib/functions/assert) - Matches runtime function that helps assert `condition`. When
+  `condition` is falsy, it throws an error with `Assertion Error: ${message}` (message is
+  `"no additional info provided"` by default)
+- [`createFactoryWithConstraint<Constraint>()(value)`](/lib/functions/create-factory-with-constraint) - Matches runtime
+  function, which validates that type of `value` matches `Constraint` without changing resulting type of `value`.
+  Ponyfill for
+  [`satisfies` operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
+- [`isExact<Expected>()(actual)`](/lib/functions/is-exact) - Matches runtime function, which validates that type of
+  `actual` equals to `Expected`. Otherwise shows TypeScript error
+- [`noop(..._args)`](/lib/functions/noop) - Matches runtime function that does nothing with arguments `_args`
+
+## Built-in types
+
+TypeScript provides several [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) to
+facilitate common type transformations. These utilities are available globally.
+
+- [`Awaited<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#awaitedtype) - This type is meant to
+  model operations like `await` in `async` functions, or the `.then()` method on `Promise`s - specifically, the way that
+  they recursively unwrap `Promise`s
+- [`Capitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype) -
+  Converts the first character in the string to an uppercase equivalent
+- [`ConstructParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
+  Constructs a tuple or array type from the types of a constructor function type `Type`
+- [`Exclude<UnionType, ExcludedMembers>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers) -
+  Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`
+- [`Extract<Type, Union>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union) -
+  Constructs a type by extracting from `Type` all union members that are assignable to `Union`
+- [`InstanceType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#instancetypetype) - Constructs
+  a type consisting of the instance type of a constructor function in `Type`
+- [`Lowercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#lowercasestringtype) -
+  Converts each character in the string to the lowercase equivalent
+- [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype) - Constructs a
+  type by excluding null and undefined from `Type`
+- [`Omit<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) - Constructs a
+  type by picking all properties from `Type` and then removing `Keys`
+- [`Parameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype) - Constructs a
+  tuple type from the types used in the parameters of a function type `Type`
+- [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) - Constructs a type
+  with all properties of `Type` set to optional
+- [`Pick<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) - Constructs a
+  type by picking the set of properties `Keys` from `Type`
+- [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype) - Constructs a type
+  with all properties of `Type` set to `readonly`, meaning the properties of the constructed type cannot be reassigned
+- [`Record<Keys, Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) - Constructs
+  an object type whose property keys are `Keys` and whose property values are `Type`
+- [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype) - Constructs a type
+  consisting of all properties of `Type` set to required
+- [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) - Constructs a
+  type consisting of the return type of function type `Type` parameter
+- [`Uncapitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype) -
+  Converts the first character in the string to a lowercase equivalent
+- [`Uppercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uppercasestringtype) -
+  Converts each character in the string to the uppercase version
 
 ## TypeScript dependency table
 

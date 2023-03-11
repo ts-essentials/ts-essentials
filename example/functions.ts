@@ -1,4 +1,4 @@
-import { UnreachableCaseError } from "../lib/functions";
+import { UnreachableCaseError } from "../lib";
 import { DummyOptions } from "./types";
 
 // exhaustive switch cases in typescript!

@@ -1,5 +1,15 @@
 # ts-essentials
 
+## 9.3.1
+
+### Patch Changes
+
+- 0c215b9: Changed the `Tuple`'s type implementation to only use a tuple type (instead of a union of a tuple type and an
+  array type).
+- 544742e: Fix unique symbol `__OPAQUE_TYPE__` in `Opaque` that cannot be used outside of ts-essentials
+- 4c45165: Improve the object constraint for `NonEmptyObject<T>` to not allow primitives
+- 66a6169: Improve the `ValueOf` utility type to cover the edge cases
+
 ## 9.3.0
 
 ### Minor Changes
