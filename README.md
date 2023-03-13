@@ -63,6 +63,7 @@ npm install --save-dev ts-essentials
   and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
+- [`PathValue<Type, Path>`](/lib/path-value) - Constructs a path value for type `Type` and path `Path`
 - [`Paths<Type>`](/lib/paths) - Constructs a union type by picking all possible paths for object type `Type`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`

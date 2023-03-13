@@ -1,4 +1,5 @@
 import { IsTuple } from "../is-tuple";
+import { Primitive } from "../primitive";
 
 type Pathable = string | number;
 
@@ -10,21 +11,21 @@ type PreviousIndexMapping = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
 
 type TupleKeys<TTuple extends readonly any[]> = Exclude<keyof TTuple, keyof any[]>;
 
-type Paths<Type, TDepth extends number = 10> = [TDepth] extends [never]
+type PathEvaluation<TKey extends Pathable, TValue, TDepth extends number> = TValue extends Primitive
+  ? `${TKey}`
+  : `${TKey}` | Join<TKey, Paths<TValue, PreviousIndexMapping[TDepth]>>;
+
+type Paths<Type, TDepth extends number = 3> = [TDepth] extends [never]
   ? never
   : Type extends Array<infer Values>
   ? Type extends IsTuple<Type>
     ? {
-        [TKey in TupleKeys<Type>]-?: TKey extends Pathable
-          ? `${TKey}` | Join<TKey, Paths<Type[TKey], PreviousIndexMapping[TDepth]>>
-          : never;
+        [TKey in TupleKeys<Type>]-?: PathEvaluation<TKey & Pathable, Type[TKey], TDepth>;
       }[TupleKeys<Type>]
     : `${bigint}` | Join<`${bigint}`, Paths<Values, PreviousIndexMapping[TDepth]>>
   : Type extends object
   ? {
-      [TKey in keyof Type]-?: TKey extends Pathable
-        ? `${TKey}` | Join<TKey, Paths<Type[TKey], PreviousIndexMapping[TDepth]>>
-        : never;
+      [TKey in keyof Type]-?: PathEvaluation<TKey & Pathable, Type[TKey], TDepth>;
     }[keyof Type]
   : "";
 
