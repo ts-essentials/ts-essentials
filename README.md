@@ -229,6 +229,7 @@ facilitate common type transformations. These utilities are available globally.
 
 | `ts-essentials` | `typescript` / type of dependency |
 | --------------- | --------------------------------- |
+| `^10.0.0`       | `^4.2.0` / peer                   |
 | `^8.0.0`        | `^4.1.0` / peer                   |
 | `^5.0.0`        | `^3.7.0` / peer                   |
 | `^3.0.1`        | `^3.5.0` / peer                   |
