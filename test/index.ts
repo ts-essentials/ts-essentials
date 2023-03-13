@@ -62,8 +62,8 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
-    // for TypeScript 4.1 and 4.2 it doesn't work, so using `string` to make it work on purpose
-    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.1" | "4.2" | "4.3" ? string : symbol], number>>,
+    // for TypeScript 4.2 and 4.3 it doesn't work, so using `string` to make it work on purpose
+    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.2" | "4.3" ? string : symbol], number>>,
   ];
 }
 
@@ -738,7 +738,7 @@ function testOptionalKeys() {
     Assert<
       IsExact<
         OptionalKeys<symbol>,
-        TsVersion extends "4.1" | "4.2"
+        TsVersion extends "4.2"
           ? (() => string) | (() => symbol)
           : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
       >
@@ -768,13 +768,13 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" | "4.2" ? never : SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.2" ? never : SymbolConstructor["iterator"]>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
     Assert<
       IsExact<
         RequiredKeys<symbol>,
-        TsVersion extends "4.1" | "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
+        TsVersion extends "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
       >
     >,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
