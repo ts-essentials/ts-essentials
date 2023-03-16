@@ -1,6 +1,6 @@
 import { Builtin } from "../built-in";
 
-export type DeepRequired<Type> = Type extends Exclude<Builtin, Error>
+export type DeepRequired<Type> = Type extends Error
   ? Required<Type>
   : Type extends Builtin
   ? Type
