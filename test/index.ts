@@ -11,9 +11,6 @@ import {
   DeepReadonly,
   Dictionary,
   DictionaryValues,
-  Merge,
-  MergeN,
-  NonNever,
   noop,
   PickProperties,
   ReadonlyKeys,
@@ -28,7 +25,6 @@ import {
   DeepUndefinable,
   OptionalKeys,
   RequiredKeys,
-  Opaque,
   AsyncOrSyncType,
   AsyncOrSync,
   Awaited,
@@ -41,6 +37,7 @@ import {
   ArrayOrSingle,
   IsAny,
   NonEmptyArray,
+  KeyofBase,
 } from "../lib";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -63,6 +60,8 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
+    // for TypeScript 4.1 and 4.2 it doesn't work, so using `string` to make it work on purpose
+    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.1" | "4.2" | "4.3" ? string : symbol], number>>,
   ];
 }
 
@@ -588,17 +587,6 @@ function testParametrizedTuple() {
   acceptsCertainTuple([42, "foo"]);
 }
 
-function testNonNever() {
-  type TypesMap = { foo: string; bar: number; xyz: undefined };
-
-  type Mapped = {
-    [K in keyof TypesMap]: TypesMap[K] extends undefined ? never : TypesMap[K];
-  };
-
-  type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
-  type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
-}
-
 function testNonEmptyArray() {
   type Cases<T> = [
     Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>,
@@ -607,27 +595,6 @@ function testNonEmptyArray() {
     AssertFalse<Assignable<NonEmptyArray<T>, []>>,
     Assert<Assignable<NonEmptyArray<T>, [T]>>,
     Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
-  ];
-}
-
-function testMerge() {
-  type cases = [
-    Assert<IsExact<Merge<{}, { a: string }>, { a: string }>>,
-    Assert<IsExact<Merge<{ a: string }, {}>, { a: string }>>,
-    Assert<IsExact<Merge<{ a: number; b: string }, { a: string }>, { a: string; b: string }>>,
-  ];
-}
-
-function testMergeN() {
-  type cases = [
-    Assert<IsExact<MergeN<[{ a: number; b: string; c: boolean }]>, { a: number; b: string; c: boolean }>>,
-    Assert<
-      IsExact<
-        MergeN<[{ a: number; b: string; c: boolean }, { b: number; c: string; d: boolean }]>,
-        { a: number; b: number; c: string; d: boolean }
-      >
-    >,
-    Assert<IsExact<MergeN<[{ a: number }, { a: string }, { a: boolean }]>, { a: boolean }>>,
   ];
 }
 
@@ -714,16 +681,11 @@ function testElementOf() {
 // T = U
 type Assignable<T, U> = U extends T ? true : false;
 
-function testOpaque() {
-  type t1 = Assert<IsExact<Assignable<number, Opaque<number, "a">>, true>>;
-  type t2 = Assert<IsExact<Assignable<Opaque<number, "a">, number>, false>>;
-  type t3 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "b">>, false>>;
-  type t4 = Assert<IsExact<Assignable<Opaque<number, "a">, Opaque<number, "a">>, true>>;
-  type t5 = Assert<IsExact<Opaque<"a", string>, never>>; // should blow on mismatched order
-}
-
 function testAsyncOrSyncType() {
-  type t1 = Assert<IsExact<AsyncOrSyncType<AsyncOrSync<number>>, number>>;
+  type cases = [
+    Assert<IsExact<AsyncOrSyncType<AsyncOrSync<number>>, number>>,
+    Assert<IsExact<AsyncOrSyncType<AsyncOrSync<AsyncOrSync<number>>>, AsyncOrSync<number>>>,
+  ];
 }
 
 function testAwaitedType() {

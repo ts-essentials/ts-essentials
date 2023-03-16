@@ -1,0 +1,55 @@
+name: '🐛 Report a Bug'
+description: 'Report a bug you encountered with ts-essentials'
+title: 'Bug: [type/function name here] <short description of the issue>'
+labels:
+  - bug
+body:
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      value: |
+        | package                                | version |
+        | -------------------------------------- | ------- |
+        | `typescript`                           | `X.Y.Z` |
+        | `ts-essentials`                        | `X.Y.Z` |
+    validations:
+      required: true
+  - type: textarea
+    id: repro-code
+    attributes:
+      label: Repro Code
+      description: A ***minimal*** code sample which reproduces the issue
+      render: typescript
+    validations:
+      required: true
+  - type: input
+    id: playground-link
+    attributes:
+      label: TypeScript Playground
+      description: Link to an isolated reproduction [in TypeScript playground](https://tsplay.dev/w25rYW)
+      placeholder: https://www.typescriptlang.org/play?...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Result
+      description: |
+        What did you expect to happen? Please be specific here:
+        - When type returns unexpected result, give examples which output should be returned for which input.
+      placeholder: |
+        I expected `{}` to be assignable to `DeepPartial<Type>`
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Result
+      description: |
+        What actually happened? Please be specific here
+        - When type returns unexpected result, give examples which output returned for which input.
+      placeholder: |
+        When I assign `{}` to `DeepPartial<Type>`, I get an error `TS2322: Type '{}' is not assignable to type 'DeepPartial<Type>'`...
+    validations:
+      required: true

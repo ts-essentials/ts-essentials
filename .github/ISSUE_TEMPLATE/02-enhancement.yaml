@@ -1,0 +1,50 @@
+name: '✨ Propose a New Type or Function'
+description: 'Propose a new type or function for ts-essentials'
+title: 'Enhancement: [type/function name here] <a short description of my proposal>'
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: Explain what your proposal would do
+      placeholder: |
+        I propose type `Get<Type, DottedPath>`:
+        - to infer value type by path `DottedPath`
+        - to autocomplete `DottedPath` based on the input type `Type`
+        - to support objects, unions, arrays/tuples types
+        - to include optional path support
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: Give 1 or more examples of code that explain cases where this utility type/function is important
+      placeholder: |
+        A type-safe lodash-like get method:
+
+        ```ts
+        export function get<Type, DottedPath extends string>(obj: Type, path: DottedPath): Get<Type, DottedPath>;
+
+        interface ComplexObject {
+          elements: {
+            labels: [{ title: string, description?: string }];
+          }[]
+        }
+
+        declare const obj: ComplexObject;
+
+        const firstLabel = get(obj, 'elements.0.labels.0');
+        ```
+    validations:
+      required: true
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Info
+      description: |
+        Any additional info you'd like to provide, e.g. references to the place where suggested type/function can be used.

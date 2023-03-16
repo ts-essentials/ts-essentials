@@ -1,12 +1,4 @@
-import {
-  Dictionary,
-  DictionaryValues,
-  DeepPartial,
-  DeepReadonly,
-  Opaque,
-  DeepRequired,
-  AsyncOrSync,
-} from "../lib/types";
+import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Opaque, DeepRequired, AsyncOrSync } from "../lib";
 
 const stringDict: Dictionary<string> = {
   a: "A",

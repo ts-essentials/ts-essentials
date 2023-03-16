@@ -1,5 +1,5 @@
 ﻿import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { ValueOf, Primitive, AnyArray } from "../lib/types";
+import { ValueOf, Primitive, AnyArray } from "../lib";
 
 declare const array: number[];
 declare const func: (...arg: any[]) => boolean;
