@@ -1,5 +1,29 @@
 # ts-essentials
 
+## 9.3.1
+
+### Patch Changes
+
+- 0c215b9: Changed the `Tuple`'s type implementation to only use a tuple type (instead of a union of a tuple type and an
+  array type).
+- 544742e: Fix unique symbol `__OPAQUE_TYPE__` in `Opaque` that cannot be used outside of ts-essentials
+- 4c45165: Improve the object constraint for `NonEmptyObject<T>` to not allow primitives
+- 66a6169: Improve the `ValueOf` utility type to cover the edge cases
+
+## 9.3.0
+
+### Minor Changes
+
+- a86c5b5: Add `ReadonlyArrayOrSingle` which is a counterpart to `ArrayOrSingle` with the array being readonly
+- 14cfa7c: Add utility function `createFactoryWithConstraint`
+
+### Patch Changes
+
+- c63e30e: Refactor `Tail` to use variadic tuple type
+- 8a28c53: Fix `DeepReadonly` for a union with an array of itself
+- 5989dda: Add union support to all Mark\* methods: `MarkRequired`, `MarkOptional`, `MarkReadonly` and `MarkWritable`
+- 8abe8a6: Fix `StrictExtract` usage for TypeScript@^4.6.0
+
 ## 9.2.0
 
 ### Minor Changes

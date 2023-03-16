@@ -11,7 +11,7 @@
     "lodash",
     "underscore"
   ],
-  "version": "9.2.0",
+  "version": "9.3.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:krzkaczor/ts-essentials.git",
@@ -21,8 +21,8 @@
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
-    "test": "prettier -c **/*.ts && tsc --noEmit",
-    "test:fix": "prettier --write **/*.ts && tsc --noEmit",
+    "test": "prettier -c **/*.ts && tsc --outDir ./testDist && rimraf ./testDist",
+    "test:fix": "prettier --write **/*.ts && tsc --outDir ./testDist && rimraf ./testDist",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"

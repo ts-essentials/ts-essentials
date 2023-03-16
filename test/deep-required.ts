@@ -1,8 +1,24 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { DeepRequired } from "../lib";
+import { DeepPartial, DeepRequired } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDeepRequired() {
+  interface ExtendedFunction extends Function {
+    args: 0;
+  }
+
+  interface ExtendedDate extends Date {
+    today(): number;
+  }
+
+  interface ExtendedError extends Error {
+    code: string;
+  }
+
+  interface ExtendedRegExp extends RegExp {
+    caseSensitive: true;
+  }
+
   type cases = [
     Assert<IsExact<DeepRequired<number | null | undefined>, number | null | undefined>>,
     Assert<IsExact<DeepRequired<string | null | undefined>, string | null | undefined>>,
@@ -11,9 +27,13 @@ function testDeepRequired() {
     Assert<IsExact<DeepRequired<symbol | null | undefined>, symbol | null | undefined>>,
     Assert<IsExact<DeepRequired<undefined | null>, undefined | null>>,
     Assert<IsExact<DeepRequired<Function | null | undefined>, Function | null | undefined>>,
+    Assert<IsExact<DeepRequired<DeepPartial<ExtendedFunction>>, ExtendedFunction>>,
     Assert<IsExact<DeepRequired<Date | null | undefined>, Date | null | undefined>>,
+    Assert<IsExact<DeepRequired<DeepPartial<ExtendedDate>>, ExtendedDate>>,
     Assert<IsExact<DeepRequired<Error | null | undefined>, Required<Error> | null | undefined>>,
+    Assert<IsExact<DeepRequired<DeepPartial<ExtendedError>>, Required<Error> & { code: string }>>,
     Assert<IsExact<DeepRequired<RegExp | null | undefined>, RegExp | null | undefined>>,
+    Assert<IsExact<DeepRequired<DeepPartial<ExtendedRegExp>>, ExtendedRegExp>>,
     Assert<
       IsExact<
         DeepRequired<Map<string | null | undefined, boolean | null | undefined>>,

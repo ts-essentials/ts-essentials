@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { PredicateFunction, PredicateType } from "../lib/types";
+import { PredicateFunction, PredicateType } from "../lib";
 
 function testPredicateType() {
   type GeneralCases = [
