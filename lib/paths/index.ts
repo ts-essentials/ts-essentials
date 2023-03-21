@@ -15,7 +15,7 @@ type PathEvaluation<TKey extends Pathable, TValue, TDepth extends number> = TVal
   ? `${TKey}`
   : `${TKey}` | Join<TKey, Paths<TValue, PreviousIndexMapping[TDepth]>>;
 
-type Paths<Type, TDepth extends number = 3> = [TDepth] extends [never]
+type Paths<Type, TDepth extends number = 5> = [TDepth] extends [never]
   ? never
   : Type extends Array<infer Values>
   ? Type extends IsTuple<Type>
