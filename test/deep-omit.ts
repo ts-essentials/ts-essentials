@@ -683,12 +683,8 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
-    let map: DeepOmit<
-      MapType,
-      // for TypeScript 4.2 it's working though, so breaking it on purpose
-      // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
-      TsVersion extends "4.2" ? { breakingOnPurpose: true } : WeakMap<{ a: number }, { age: true }>
-    >;
+    // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
+    let map: DeepOmit<MapType, WeakMap<{ a: number }, { age: true }>>;
   }
 
   {
