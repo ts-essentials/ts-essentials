@@ -20,6 +20,8 @@ export * from "./newable";
 export * from "./non-never";
 export * from "./omit-properties";
 export * from "./opaque";
+export * from "./path-value";
+export * from "./paths";
 export * from "./pick-properties";
 export * from "./safe-dictionary";
 export * from "./union-to-intersection";

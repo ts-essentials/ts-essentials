@@ -38,7 +38,7 @@ const projectProperties = mergeAll(
 
 It supports:
 
-- index signatures
-- property modifiers (optional or readonly property)
+- Index signatures
+- Property modifiers (optional or readonly property)
 
 TS Playground – https://tsplay.dev/WYLKzm
