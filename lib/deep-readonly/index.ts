@@ -3,7 +3,7 @@ import { Builtin } from "../built-in";
 import { IsTuple } from "../is-tuple";
 import { IsUnknown } from "../is-unknown";
 
-export type DeepReadonly<Type> = Type extends Builtin
+export type DeepReadonly<Type> = Type extends Exclude<Builtin, Error>
   ? Type
   : Type extends Map<infer Keys, infer Values>
   ? ReadonlyMap<DeepReadonly<Keys>, DeepReadonly<Values>>

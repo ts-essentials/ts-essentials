@@ -1,6 +1,7 @@
 import { Builtin } from "../built-in";
+import { IsUnknown } from "../is-unknown";
 
-export type DeepWritable<Type> = Type extends Builtin
+export type DeepWritable<Type> = Type extends Exclude<Builtin, Error>
   ? Type
   : Type extends Map<infer Key, infer Value>
   ? Map<DeepWritable<Key>, DeepWritable<Value>>
@@ -18,4 +19,6 @@ export type DeepWritable<Type> = Type extends Builtin
   ? Promise<DeepWritable<Value>>
   : Type extends {}
   ? { -readonly [Key in keyof Type]: DeepWritable<Type[Key]> }
+  : IsUnknown<Type> extends true
+  ? unknown
   : Type;

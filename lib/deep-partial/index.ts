@@ -2,7 +2,7 @@ import { Builtin } from "../built-in";
 import { IsTuple } from "../is-tuple";
 import { IsUnknown } from "../is-unknown";
 
-export type DeepPartial<Type> = Type extends Builtin
+export type DeepPartial<Type> = Type extends Exclude<Builtin, Error>
   ? Type
   : Type extends Map<infer Keys, infer Values>
   ? Map<DeepPartial<Keys>, DeepPartial<Values>>
