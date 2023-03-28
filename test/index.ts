@@ -742,6 +742,8 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<readonly [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, readonly [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
     Assert<IsExact<IsTuple<number[]>, never>>,
     Assert<IsExact<IsTuple<readonly number[]>, never>>,
+    Assert<IsExact<IsTuple<Array<number>>, never>>,
+    Assert<IsExact<IsTuple<ReadonlyArray<number>>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
   ];
 }
