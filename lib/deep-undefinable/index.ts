@@ -15,10 +15,12 @@ export type DeepUndefinable<Type> = Type extends Builtin
   ? ReadonlySet<DeepUndefinable<Values>>
   : Type extends WeakSet<infer Values>
   ? WeakSet<DeepUndefinable<Values>>
-  : Type extends Array<infer Values>
+  : Type extends ReadonlyArray<infer Values>
   ? Type extends IsTuple<Type>
     ? { [Key in keyof Type]: DeepUndefinable<Type[Key]> | undefined }
-    : Array<DeepUndefinable<Values>>
+    : Type extends Array<Values>
+    ? Array<DeepUndefinable<Values>>
+    : ReadonlyArray<DeepUndefinable<Values>>
   : Type extends Promise<infer Value>
   ? Promise<DeepUndefinable<Value>>
   : Type extends {}
