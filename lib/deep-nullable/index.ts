@@ -15,10 +15,12 @@ export type DeepNullable<Type> = Type extends Builtin
   ? ReadonlySet<DeepNullable<Values>>
   : Type extends WeakSet<infer Values>
   ? WeakSet<DeepNullable<Values>>
-  : Type extends Array<infer Values>
+  : Type extends ReadonlyArray<infer Values>
   ? Type extends IsTuple<Type>
     ? { [Key in keyof Type]: DeepNullable<Type[Key]> | null }
-    : Array<DeepNullable<Values>>
+    : Type extends Array<Values>
+    ? Array<DeepNullable<Values>>
+    : ReadonlyArray<DeepNullable<Values>>
   : Type extends Promise<infer Value>
   ? Promise<DeepNullable<Value>>
   : Type extends {}
