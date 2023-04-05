@@ -1,4 +1,5 @@
 import { Builtin } from "../built-in";
+import { IsTuple } from "../is-tuple";
 
 export type DeepRequired<Type> = Type extends Error
   ? Required<Type>
@@ -18,6 +19,12 @@ export type DeepRequired<Type> = Type extends Error
   ? WeakSet<DeepRequired<Values>>
   : Type extends Promise<infer Value>
   ? Promise<DeepRequired<Value>>
+  : Type extends ReadonlyArray<infer Values>
+  ? Type extends IsTuple<Type>
+    ? { [Key in keyof Type]-?: DeepRequired<Type[Key]> }
+    : Type extends Array<Values>
+    ? Array<Exclude<DeepRequired<Values>, undefined>>
+    : ReadonlyArray<Exclude<DeepRequired<Values>, undefined>>
   : Type extends {}
   ? { [Key in keyof Type]-?: DeepRequired<Type[Key]> }
   : Required<Type>;

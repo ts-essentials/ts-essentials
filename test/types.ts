@@ -1,9 +1,13 @@
+interface ExtendedArray<T> extends Array<T> {}
+
 export type ComplexNestedRequired = {
   simple: number;
   nested: {
     date: Date;
     func: () => string;
     array: { bar: number }[];
+    readonlyArray: ReadonlyArray<{ bar: number }>;
+    extendedArray: ExtendedArray<{ bar: number }>;
     tuple: [string, number, { good: boolean }];
     set: Set<{ name: string }>;
     map: Map<
@@ -22,6 +26,8 @@ export type ComplexNestedPartial = {
     date?: Date;
     func?: () => string;
     array?: ({ bar?: number } | undefined)[];
+    readonlyArray?: ReadonlyArray<{ bar?: number } | undefined>;
+    extendedArray?: ExtendedArray<{ bar?: number } | undefined>;
     set?: Set<{ name?: string }>;
     tuple?: [string?, number?, { good?: boolean }?];
     map?: Map<
@@ -40,6 +46,8 @@ export type ComplexNestedReadonly = {
     readonly date: Date;
     readonly func: () => string;
     readonly array: readonly { readonly bar: number }[];
+    readonly readonlyArray: ReadonlyArray<{ readonly bar: number }>;
+    readonly extendedArray: ReadonlyArray<{ readonly bar: number }>;
     readonly tuple: readonly [string, number, { readonly good: boolean }];
     readonly set: ReadonlySet<{
       readonly name: string;
