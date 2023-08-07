@@ -33,6 +33,11 @@
   "peerDependencies": {
     "typescript": ">=4.1.0"
   },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@changesets/cli": "^2.11.2",
     "@codechecks/build-size-watcher": "^0.1.0",
