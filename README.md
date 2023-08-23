@@ -18,7 +18,7 @@ npm install --save-dev ts-essentials
 ```
 
 👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
-[TypeScript dependency table](https://github.com/ts-essentials/ts-essentials/tree/master#TypeScript-dependency-table)
+[TypeScript dependency table](#typescript-dependency-table)
 
 👉 As we really want types to be stricter, we require enabled
 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in your project
