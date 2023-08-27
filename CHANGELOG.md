@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 9.4.0
+
+### Minor Changes
+
+- ddb1bea: Make `typescript` optional as a peer dependency
+
 ## 9.3.2
 
 ### Patch Changes
