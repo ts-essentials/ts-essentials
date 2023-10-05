@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 9.4.1
+
+### Patch Changes
+
+- bc3c474: Fix regression in TypeScript 5.1 with CamelCase
+
 ## 9.4.0
 
 ### Minor Changes
