@@ -1,3 +1,5 @@
+export type Debug<Type> = { [Key in keyof Type]: Type[Key] } & {};
+
 export type ComplexNestedRequired = {
   simple: number;
   nested: {
