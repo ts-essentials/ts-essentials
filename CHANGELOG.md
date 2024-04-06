@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 9.4.2
+
+### Patch Changes
+
+- f88f757: Add TypeScript 5.3 and 5.4 support (fix a bug with `WeakKey` for `WeakSet` and `WeakMap`)
+
 ## 9.4.1
 
 ### Patch Changes
