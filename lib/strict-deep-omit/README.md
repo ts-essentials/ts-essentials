@@ -44,8 +44,8 @@ type UnknownEnglishClass = StrictDeepOmit<
 >;
 ```
 
-If you don't need a second type parameter to be validated against a first type parameter structure, please use
-[DeepOmit](../deep-omit/).
+If you don't need a second type parameter `Filter` to be validated against a structure of a first type parameter `Type`,
+please use [`DeepOmit<Type, Filter>`](../deep-omit/).
 
 Useful in functions which cannot access specified properties
 

@@ -44,8 +44,8 @@ type UnknownEnglishClass = StrictDeepPick<
 >;
 ```
 
-If you don't need a second type parameter to be validated against a first type parameter structure, please use
-[DeepPick](../deep-pick/).
+If you don't need a second type parameter `Filter` to be validated against a structure of a first type parameter `Type`,
+please use [`DeepPick<Type, Filter>`](../deep-pick/).
 
 Useful in functions which cannot access specified properties
 
