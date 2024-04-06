@@ -8,13 +8,21 @@ export type DeepUndefinable<Type> = Type extends Builtin
   : Type extends ReadonlyMap<infer Keys, infer Values>
   ? ReadonlyMap<DeepUndefinable<Keys>, DeepUndefinable<Values>>
   : Type extends WeakMap<infer Keys, infer Values>
-  ? WeakMap<DeepUndefinable<Keys>, DeepUndefinable<Values>>
+  ? // TODO: replace it with WeakKey (introduced at TypeScript@5.2)
+    // WeakMap key has to satisfy WeakKey which is object at the moment
+    DeepUndefinable<Keys> extends object
+    ? WeakMap<DeepUndefinable<Keys>, DeepUndefinable<Values>>
+    : never
   : Type extends Set<infer Values>
   ? Set<DeepUndefinable<Values>>
   : Type extends ReadonlySet<infer Values>
   ? ReadonlySet<DeepUndefinable<Values>>
   : Type extends WeakSet<infer Values>
-  ? WeakSet<DeepUndefinable<Values>>
+  ? // TODO: replace it with WeakKey (introduced at TypeScript@5.2)
+    // WeakSet key has to satisfy WeakKey which is object at the moment
+    DeepUndefinable<Values> extends object
+    ? WeakSet<DeepUndefinable<Values>>
+    : never
   : Type extends ReadonlyArray<infer Values>
   ? Type extends IsTuple<Type>
     ? { [Key in keyof Type]: DeepUndefinable<Type[Key]> | undefined }
