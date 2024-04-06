@@ -23,14 +23,9 @@ type EnglishClassNamesOnly = DeepPick<
 >;
 ```
 
-It validates that all `Filter` properties exist in type `Type`
+It doesn't validate that all `Filter` properties exist in type `Type`:
 
 ```ts
-// error: Type '{ id: never; students: { id: never; }[]; teacher: { id: never; }; }' does not satisfy the constraint '{ students?: true | DeepModify<{ name: string; score: number; }[]> | undefined; teacher?: true | { name?: true | undefined; yearsOfExperience?: true | undefined; } | undefined; year?: true | undefined; }'.
-//   Types of property 'students' are incompatible.
-//     Type '{ id: never; }[]' is not assignable to type 'true | DeepModify<{ name: string; score: number; }[]> | undefined'.
-//       Type '{ id: never; }[]' is not assignable to type '(true | { name?: true | undefined; score?: true | undefined; } | undefined)[]'.
-//         Type '{ id: never; }' is not assignable to type 'true | { name?: true | undefined; score?: true | undefined; } | undefined'.
 type UnknownEnglishClass = DeepPick<
   EnglishClass,
   {
@@ -40,9 +35,11 @@ type UnknownEnglishClass = DeepPick<
       id: never;
     };
   }
-  // ^^^^^^^^^^^^^^^^^^^^^^^^
 >;
 ```
+
+If you'd like a second type parameter to be validated against a first type parameter structure, please use
+[StrictDeepPick](../strict-deep-pick/).
 
 Useful in functions which cannot access specified properties
 
@@ -66,7 +63,6 @@ calculateAverageScore(englishClass);
 
 ⚠️ Limitations:
 
-- `DeepPick` cannot be used when `Type` is generic type – https://github.com/ts-essentials/ts-essentials/issues/343
 - `DeepPick` only limits access to specified properties in your codebase, but doesn't remove them in runtime
 
 TS Playground – https://tsplay.dev/mAJ2PW

@@ -2,7 +2,8 @@ import { AnyRecord } from "../any-record";
 import { Builtin } from "../built-in";
 import { DeepModify } from "../deep-modify";
 
-export type DeepPick<Type, Filter extends DeepModify<Type>> = Type extends Builtin
+// TODO: remove DeepModify in DeepPick
+export type DeepPick<Type, Filter> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>
   ? Filter extends Map<Keys, infer FilterValues>

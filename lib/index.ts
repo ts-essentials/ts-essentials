@@ -40,6 +40,7 @@ export * from "./deep-non-nullable";
 export * from "./deep-nullable";
 export * from "./deep-omit";
 export * from "./deep-partial";
+export * from "./strict-deep-pick";
 export * from "./deep-pick";
 export * from "./deep-readonly";
 export * from "./deep-required";
