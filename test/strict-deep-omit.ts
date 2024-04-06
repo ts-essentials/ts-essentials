@@ -1,15 +1,15 @@
-import { DeepOmit } from "../lib";
+import { StrictDeepOmit } from "../lib";
 import { complexNestedRequired, complexNestedUndefined } from "./const";
 import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDeepOmitInRequiredObject() {
-  let obj1: DeepOmit<ComplexNestedRequired, {}>;
+  let obj1: StrictDeepOmit<ComplexNestedRequired, {}>;
   obj1 = complexNestedRequired;
   // @ts-expect-error missed nested
   obj1 = { simple: complexNestedRequired.simple };
 
-  let obj2: DeepOmit<ComplexNestedRequired, { simple: true }>;
+  let obj2: StrictDeepOmit<ComplexNestedRequired, { simple: true }>;
   // @ts-expect-error
   obj2 = {};
   // @ts-expect-error
@@ -20,7 +20,7 @@ function testDeepOmitInRequiredObject() {
   };
   obj2 = { nested: complexNestedRequired.nested };
 
-  let obj2_1: DeepOmit<ComplexNestedRequired, { simple: never }>;
+  let obj2_1: StrictDeepOmit<ComplexNestedRequired, { simple: never }>;
   // @ts-expect-error
   obj2_1 = {};
   // @ts-expect-error
@@ -36,7 +36,7 @@ function testDeepOmitInRequiredObject() {
       nested: { date, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj3: DeepOmit<ComplexNestedRequired, { nested: { date: true } }>;
+    let obj3: StrictDeepOmit<ComplexNestedRequired, { nested: { date: true } }>;
     // @ts-expect-error
     obj3 = {};
     // @ts-expect-error
@@ -57,7 +57,7 @@ function testDeepOmitInRequiredObject() {
       nested: { date, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj3_1: DeepOmit<ComplexNestedRequired, { nested: { date: never } }>;
+    let obj3_1: StrictDeepOmit<ComplexNestedRequired, { nested: { date: never } }>;
     // @ts-expect-error
     obj3_1 = {};
     // @ts-expect-error
@@ -78,7 +78,7 @@ function testDeepOmitInRequiredObject() {
       nested: { func, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj4: DeepOmit<ComplexNestedRequired, { nested: { func: true } }>;
+    let obj4: StrictDeepOmit<ComplexNestedRequired, { nested: { func: true } }>;
     // @ts-expect-error
     obj4 = {};
     // @ts-expect-error
@@ -99,7 +99,7 @@ function testDeepOmitInRequiredObject() {
       nested: { func, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj4_1: DeepOmit<ComplexNestedRequired, { nested: { func: never } }>;
+    let obj4_1: StrictDeepOmit<ComplexNestedRequired, { nested: { func: never } }>;
     // @ts-expect-error
     obj4_1 = {};
     // @ts-expect-error
@@ -120,7 +120,7 @@ function testDeepOmitInRequiredObject() {
       nested: { array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj5: DeepOmit<ComplexNestedRequired, { nested: { array: true } }>;
+    let obj5: StrictDeepOmit<ComplexNestedRequired, { nested: { array: true } }>;
     // @ts-expect-error
     obj5 = {};
     // @ts-expect-error
@@ -141,7 +141,7 @@ function testDeepOmitInRequiredObject() {
       nested: { array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj5_1: DeepOmit<ComplexNestedRequired, { nested: { array: never } }>;
+    let obj5_1: StrictDeepOmit<ComplexNestedRequired, { nested: { array: never } }>;
     // @ts-expect-error
     obj5_1 = {};
     // @ts-expect-error
@@ -162,7 +162,7 @@ function testDeepOmitInRequiredObject() {
       nested: { tuple, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj6: DeepOmit<ComplexNestedRequired, { nested: { tuple: true } }>;
+    let obj6: StrictDeepOmit<ComplexNestedRequired, { nested: { tuple: true } }>;
     // @ts-expect-error
     obj6 = {};
     // @ts-expect-error
@@ -183,7 +183,7 @@ function testDeepOmitInRequiredObject() {
       nested: { tuple, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj6_1: DeepOmit<ComplexNestedRequired, { nested: { tuple: never } }>;
+    let obj6_1: StrictDeepOmit<ComplexNestedRequired, { nested: { tuple: never } }>;
     // @ts-expect-error
     obj6_1 = {};
     // @ts-expect-error
@@ -204,7 +204,7 @@ function testDeepOmitInRequiredObject() {
       nested: { set, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj7: DeepOmit<ComplexNestedRequired, { nested: { set: true } }>;
+    let obj7: StrictDeepOmit<ComplexNestedRequired, { nested: { set: true } }>;
     // @ts-expect-error
     obj7 = {};
     // @ts-expect-error
@@ -225,7 +225,7 @@ function testDeepOmitInRequiredObject() {
       nested: { set, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj7_1: DeepOmit<ComplexNestedRequired, { nested: { set: never } }>;
+    let obj7_1: StrictDeepOmit<ComplexNestedRequired, { nested: { set: never } }>;
     // @ts-expect-error
     obj7_1 = {};
     // @ts-expect-error
@@ -246,7 +246,7 @@ function testDeepOmitInRequiredObject() {
       nested: { map, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj8: DeepOmit<ComplexNestedRequired, { nested: { map: true } }>;
+    let obj8: StrictDeepOmit<ComplexNestedRequired, { nested: { map: true } }>;
     // @ts-expect-error
     obj8 = {};
     // @ts-expect-error
@@ -267,7 +267,7 @@ function testDeepOmitInRequiredObject() {
       nested: { map, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj8_1: DeepOmit<ComplexNestedRequired, { nested: { map: never } }>;
+    let obj8_1: StrictDeepOmit<ComplexNestedRequired, { nested: { map: never } }>;
     // @ts-expect-error
     obj8_1 = {};
     // @ts-expect-error
@@ -288,7 +288,7 @@ function testDeepOmitInRequiredObject() {
       nested: { promise, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj9: DeepOmit<ComplexNestedRequired, { nested: { promise: true } }>;
+    let obj9: StrictDeepOmit<ComplexNestedRequired, { nested: { promise: true } }>;
     // @ts-expect-error
     obj9 = {};
     // @ts-expect-error
@@ -309,7 +309,7 @@ function testDeepOmitInRequiredObject() {
       nested: { promise, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj9_1: DeepOmit<ComplexNestedRequired, { nested: { promise: never } }>;
+    let obj9_1: StrictDeepOmit<ComplexNestedRequired, { nested: { promise: never } }>;
     // @ts-expect-error
     obj9_1 = {};
     // @ts-expect-error
@@ -330,7 +330,7 @@ function testDeepOmitInRequiredObject() {
       nested: { date, array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj10: DeepOmit<ComplexNestedRequired, { nested: { date: true; array: true } }>;
+    let obj10: StrictDeepOmit<ComplexNestedRequired, { nested: { date: true; array: true } }>;
     // @ts-expect-error
     obj10 = {};
     // @ts-expect-error
@@ -348,11 +348,11 @@ function testDeepOmitInRequiredObject() {
 }
 
 function testDeepOmitInPartialObject() {
-  let obj1: DeepOmit<ComplexNestedPartial, {}>;
+  let obj1: StrictDeepOmit<ComplexNestedPartial, {}>;
   obj1 = complexNestedRequired;
   obj1 = { simple: complexNestedRequired.simple };
 
-  let obj2: DeepOmit<ComplexNestedPartial, { simple: true }>;
+  let obj2: StrictDeepOmit<ComplexNestedPartial, { simple: true }>;
   obj2 = {};
   obj2 = { nested: undefined };
   obj2 = {
@@ -360,7 +360,7 @@ function testDeepOmitInPartialObject() {
   };
   obj2 = { nested: complexNestedRequired.nested };
 
-  let obj2_1: DeepOmit<ComplexNestedPartial, { simple: never }>;
+  let obj2_1: StrictDeepOmit<ComplexNestedPartial, { simple: never }>;
   obj2_1 = {};
   obj2_1 = { nested: undefined };
   obj2_1 = {
@@ -373,7 +373,7 @@ function testDeepOmitInPartialObject() {
       nested: { date, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj3: DeepOmit<ComplexNestedPartial, { nested: { date: true } }>;
+    let obj3: StrictDeepOmit<ComplexNestedPartial, { nested: { date: true } }>;
     obj3 = {};
     obj3 = { simple: undefined };
     obj3 = { nested: undefined };
@@ -388,7 +388,7 @@ function testDeepOmitInPartialObject() {
       nested: { date, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj3_1: DeepOmit<ComplexNestedPartial, { nested: { date: never } }>;
+    let obj3_1: StrictDeepOmit<ComplexNestedPartial, { nested: { date: never } }>;
     obj3_1 = {};
     obj3_1 = { simple: undefined };
     obj3_1 = { nested: undefined };
@@ -403,7 +403,7 @@ function testDeepOmitInPartialObject() {
       nested: { func, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj4: DeepOmit<ComplexNestedPartial, { nested: { func: true } }>;
+    let obj4: StrictDeepOmit<ComplexNestedPartial, { nested: { func: true } }>;
     obj4 = {};
     obj4 = { simple: undefined };
     obj4 = { nested: undefined };
@@ -418,7 +418,7 @@ function testDeepOmitInPartialObject() {
       nested: { func, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj4_1: DeepOmit<ComplexNestedPartial, { nested: { func: never } }>;
+    let obj4_1: StrictDeepOmit<ComplexNestedPartial, { nested: { func: never } }>;
     obj4_1 = {};
     obj4_1 = { simple: undefined };
     obj4_1 = { nested: undefined };
@@ -433,7 +433,7 @@ function testDeepOmitInPartialObject() {
       nested: { array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj5: DeepOmit<ComplexNestedPartial, { nested: { array: true } }>;
+    let obj5: StrictDeepOmit<ComplexNestedPartial, { nested: { array: true } }>;
     obj5 = {};
     obj5 = { simple: undefined };
     obj5 = { nested: undefined };
@@ -448,7 +448,7 @@ function testDeepOmitInPartialObject() {
       nested: { array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj5_1: DeepOmit<ComplexNestedPartial, { nested: { array: never } }>;
+    let obj5_1: StrictDeepOmit<ComplexNestedPartial, { nested: { array: never } }>;
     obj5_1 = {};
     obj5_1 = { simple: undefined };
     obj5_1 = { nested: undefined };
@@ -463,7 +463,7 @@ function testDeepOmitInPartialObject() {
       nested: { tuple, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj6: DeepOmit<ComplexNestedPartial, { nested: { tuple: true } }>;
+    let obj6: StrictDeepOmit<ComplexNestedPartial, { nested: { tuple: true } }>;
     obj6 = {};
     obj6 = { simple: undefined };
     obj6 = { nested: undefined };
@@ -478,7 +478,7 @@ function testDeepOmitInPartialObject() {
       nested: { tuple, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj6_1: DeepOmit<ComplexNestedPartial, { nested: { tuple: never } }>;
+    let obj6_1: StrictDeepOmit<ComplexNestedPartial, { nested: { tuple: never } }>;
     obj6_1 = {};
     obj6_1 = { simple: undefined };
     obj6_1 = { nested: undefined };
@@ -493,7 +493,7 @@ function testDeepOmitInPartialObject() {
       nested: { set, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj7: DeepOmit<ComplexNestedPartial, { nested: { set: true } }>;
+    let obj7: StrictDeepOmit<ComplexNestedPartial, { nested: { set: true } }>;
     obj7 = {};
     obj7 = { simple: undefined };
     obj7 = { nested: undefined };
@@ -508,7 +508,7 @@ function testDeepOmitInPartialObject() {
       nested: { set, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj7_1: DeepOmit<ComplexNestedPartial, { nested: { set: never } }>;
+    let obj7_1: StrictDeepOmit<ComplexNestedPartial, { nested: { set: never } }>;
     obj7_1 = {};
     obj7_1 = { simple: undefined };
     obj7_1 = { nested: undefined };
@@ -523,7 +523,7 @@ function testDeepOmitInPartialObject() {
       nested: { map, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj8: DeepOmit<ComplexNestedPartial, { nested: { map: true } }>;
+    let obj8: StrictDeepOmit<ComplexNestedPartial, { nested: { map: true } }>;
     obj8 = {};
     obj8 = { simple: undefined };
     obj8 = { nested: undefined };
@@ -538,7 +538,7 @@ function testDeepOmitInPartialObject() {
       nested: { map, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj8_1: DeepOmit<ComplexNestedPartial, { nested: { map: never } }>;
+    let obj8_1: StrictDeepOmit<ComplexNestedPartial, { nested: { map: never } }>;
     obj8_1 = {};
     obj8_1 = { simple: undefined };
     obj8_1 = { nested: undefined };
@@ -553,7 +553,7 @@ function testDeepOmitInPartialObject() {
       nested: { promise, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj9: DeepOmit<ComplexNestedPartial, { nested: { promise: true } }>;
+    let obj9: StrictDeepOmit<ComplexNestedPartial, { nested: { promise: true } }>;
     obj9 = {};
     obj9 = { simple: undefined };
     obj9 = { nested: undefined };
@@ -568,7 +568,7 @@ function testDeepOmitInPartialObject() {
       nested: { promise, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj9_1: DeepOmit<ComplexNestedPartial, { nested: { promise: never } }>;
+    let obj9_1: StrictDeepOmit<ComplexNestedPartial, { nested: { promise: never } }>;
     obj9_1 = {};
     obj9_1 = { simple: undefined };
     obj9_1 = { nested: undefined };
@@ -583,7 +583,7 @@ function testDeepOmitInPartialObject() {
       nested: { date, array, ...complexNestedRequiredNested },
     } = complexNestedRequired;
 
-    let obj10: DeepOmit<ComplexNestedPartial, { nested: { date: true; array: true } }>;
+    let obj10: StrictDeepOmit<ComplexNestedPartial, { nested: { date: true; array: true } }>;
     obj10 = {};
     obj10 = { simple: undefined };
     obj10 = { nested: undefined };
@@ -603,7 +603,7 @@ function testDeepOmitInPartialObject() {
     >;
 
     // @ts-expect-error ❌ Type 'number' is not assignable to type 'string'
-    let map: DeepOmit<MapType, Map<number, { age: true }>>;
+    let map: StrictDeepOmit<MapType, Map<number, { age: true }>>;
   }
 
   {
@@ -615,7 +615,7 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
-    let map: DeepOmit<MapType, Map<string, { name: true }>>;
+    let map: StrictDeepOmit<MapType, Map<string, { name: true }>>;
 
     map = new Map<string, { age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -643,7 +643,7 @@ function testDeepOmitInPartialObject() {
     >;
 
     // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
-    let map: DeepOmit<MapType, ReadonlyMap<number, { age: true }>>;
+    let map: StrictDeepOmit<MapType, ReadonlyMap<number, { age: true }>>;
   }
 
   {
@@ -655,7 +655,7 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
-    let map: DeepOmit<MapType, ReadonlyMap<string, { name: true }>>;
+    let map: StrictDeepOmit<MapType, ReadonlyMap<string, { name: true }>>;
 
     map = new Map<string, { age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -683,7 +683,7 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
-    let map: DeepOmit<
+    let map: StrictDeepOmit<
       MapType,
       // for TypeScript 4.1 and 4.2 it's working though, so breaking it on purpose
       // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
@@ -700,7 +700,7 @@ function testDeepOmitInPartialObject() {
       }
     >;
 
-    let map: DeepOmit<MapType, WeakMap<{ a: string }, { name: true }>>;
+    let map: StrictDeepOmit<MapType, WeakMap<{ a: string }, { name: true }>>;
 
     map = new WeakMap<{ a: string }, { age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -724,7 +724,7 @@ function testDeepOmitInPartialObject() {
       age: number;
     }>;
 
-    let set: DeepOmit<SetType, Set<{ name: true }>>;
+    let set: StrictDeepOmit<SetType, Set<{ name: true }>>;
 
     set = new Set<{ age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -745,7 +745,7 @@ function testDeepOmitInPartialObject() {
       age: number;
     }>;
 
-    let set: DeepOmit<ReadonlySetType, ReadonlySet<{ name: true }>>;
+    let set: StrictDeepOmit<ReadonlySetType, ReadonlySet<{ name: true }>>;
 
     set = new Set<{ age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -767,7 +767,7 @@ function testDeepOmitInPartialObject() {
       age: number;
     }>;
 
-    let set: DeepOmit<WeakSetType, WeakSet<{ name: true }>>;
+    let set: StrictDeepOmit<WeakSetType, WeakSet<{ name: true }>>;
 
     set = new WeakSet<{ age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -788,7 +788,7 @@ function testDeepOmitInPartialObject() {
       age: number;
     }>;
 
-    let arr: DeepOmit<ArrayType, Array<{ name: true }>>;
+    let arr: StrictDeepOmit<ArrayType, Array<{ name: true }>>;
 
     arr = new Array<{ age: number }>();
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'
@@ -809,7 +809,7 @@ function testDeepOmitInPartialObject() {
       age: number;
     }>;
 
-    let promise: DeepOmit<PromiseType, Promise<{ name: true }>>;
+    let promise: StrictDeepOmit<PromiseType, Promise<{ name: true }>>;
 
     promise = new Promise<{ age: number }>(() => {});
     // @ts-expect-error  Property 'age' is missing in type '{ name: string; }' but required in type '{ age: number; }'

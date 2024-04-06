@@ -38,6 +38,7 @@ export * from "./mark-writable";
 export * from "./buildable";
 export * from "./deep-non-nullable";
 export * from "./deep-nullable";
+export * from "./strict-deep-omit";
 export * from "./deep-omit";
 export * from "./deep-partial";
 export * from "./strict-deep-pick";
