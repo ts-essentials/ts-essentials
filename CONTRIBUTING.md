@@ -2,7 +2,12 @@
 
 All contributions to `ts-essentials` are welcomed.
 
-Do you have idea for a new type? Please, first submit github issue (or send me PM) and describe your proposal.
+Do you have idea for a new type? Please, first submit a GitHub issue (or send me PM) and describe your proposal.
+
+## Conventions
+
+To follow ts-essentials conventions, please check [CONVENTIONS.md](./CONVENTIONS.md). Anything missing or something is
+unclear? Don't hesitate to suggest it in a GitHub issue and please don't forget to add the `convention` label.
 
 ## Adding new types
 
