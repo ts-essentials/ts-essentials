@@ -25,7 +25,12 @@ Prefixes:
   in [`MarkOptional<Type, Keys>`](/lib/mark-optional)
 - `Non*` prefix is used when type expects to return `Type` or `never` (although this is not strict)
   - [`NonNever<Type>`](/lib/non-never) doesn't return `never` so has to be renamed to `OmitNeverProperties`
-- `Strict*` prefix is used when the additional generic constraint is applied to a type parameter to constrain its usage.
+- `Strict*` prefix is used when the additional generic constraint is applied to a type parameter to constrain its usage,
+  e.g. [`StrictOmit<Type, Keys>`](/lib/strict-omit) adds an additional generic constraint for `Keys extends keyof Type`
+  so only existing keys within `Type` are passed to this utility type.
+  - ⚠️ Inevitably all `Strict*` types lack the support of generic types for the first type parameter `Type` because
+    generic constraints rely on a structure of `Type` which cannot be inferred at declaration. To mitigate it, please
+    use non-`Strict*` analogue of a utility type.
 
 Body:
 
