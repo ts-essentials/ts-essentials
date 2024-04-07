@@ -223,7 +223,7 @@ function testStrictDeepPickInRequiredObject() {
   obj10 = { nested: { array: [{ bar: 1 }], date: new Date() } };
 }
 
-function testStrictDeepInPartialObject() {
+function testStrictDeepPickInPartialObject() {
   let obj1: StrictDeepPick<ComplexNestedPartial, {}>;
   obj1 = {};
   // can still assign anything that is not from {}
