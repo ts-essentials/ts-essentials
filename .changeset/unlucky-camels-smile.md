@@ -1,5 +1,6 @@
 ---
-"ts-essentials": minor
+"ts-essentials": major
 ---
 
-Add `StrictDeepOmit` and `StrictDeepPick` that support generic type
+Added `StrictDeepOmit` and `StrictDeepPick` that support generic type and removed generic constraint on the second type
+parameter of `DeepOmit` and `DeepPick`
