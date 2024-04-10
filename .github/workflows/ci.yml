@@ -10,7 +10,7 @@ jobs:
   test:
     strategy:
       matrix:
-        node: ['10.x']
+        node: ["14.x"]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
@@ -35,7 +35,6 @@ jobs:
       - run: yarn codechecks
         env:
           CC_SECRET: ${{ secrets.CC_SECRET }}
-
 # Few tips github actions
 # - name: Setup SSH debug session
 #   uses: mxschmitt/action-tmate@v2

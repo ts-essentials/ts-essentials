@@ -1,5 +1,31 @@
 # ts-essentials
 
+## 9.4.2
+
+### Patch Changes
+
+- f88f757: Add TypeScript 5.3 and 5.4 support (fix a bug with `WeakKey` for `WeakSet` and `WeakMap`)
+
+## 9.4.1
+
+### Patch Changes
+
+- bc3c474: Fix regression in TypeScript 5.1 with CamelCase
+
+## 9.4.0
+
+### Minor Changes
+
+- ddb1bea: Make `typescript` optional as a peer dependency
+
+## 9.3.2
+
+### Patch Changes
+
+- 8761667: `DeepPartial`, `DeepRequired`, `DeepWritable` and `DeepReadonly` can update structure of `Error` or interface
+  which extends `Error`
+- afccd35: Fix handling of readonly arrays in `isTuple`, `DeepNullable`, `DeepPartial`, and `DeepUndefinable`
+
 ## 9.3.1
 
 ### Patch Changes

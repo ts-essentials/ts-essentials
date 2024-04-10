@@ -1,12 +1,10 @@
 type IsStringLiteral<Type> = Type extends string ? (string extends Type ? false : true) : false;
 
-type WordInPascalCase<Type> = Capitalize<WordInCamelCase<Uncapitalize<Type & string>>>;
-
-type WordInCamelCase<Type, Character extends string = ""> = Type extends `${Character}${infer NextCharacter}${infer _}`
+type WordInCamelCase<Type, Word extends string = ""> = Type extends `${Word}${infer NextCharacter}${infer _}`
   ? NextCharacter extends Capitalize<NextCharacter>
-    ? Character
-    : WordInCamelCase<Type, `${Character}${NextCharacter}`>
-  : Character;
+    ? Word
+    : WordInCamelCase<Type, `${Word}${NextCharacter}`>
+  : Word;
 
 type Separator = "_" | "-";
 
@@ -34,19 +32,14 @@ type SeparatorCaseParser<
 
 type CamelCaseParser<Type, Tuple extends readonly any[] = []> = Type extends ""
   ? Tuple
-  : Type extends `${WordInCamelCase<Type & string>}${infer Tail}`
+  : Type extends `${WordInCamelCase<Type>}${infer Tail}`
   ? Type extends `${infer Word}${Tail}`
     ? CamelCaseParser<Uncapitalize<Tail>, [...Tuple, Lowercase<Word>]>
     : never
   : never;
 
-type PascalCaseParser<Type, Tuple extends readonly any[] = []> = Type extends ""
-  ? Tuple
-  : Type extends `${WordInPascalCase<Type & string>}${infer Tail}`
-  ? Type extends `${infer Word}${Tail}`
-    ? PascalCaseParser<Tail, [...Tuple, Lowercase<Word>]>
-    : never
-  : never;
+// Convert first character of string literal type to lowercase and reuse CamelCaseParser
+type PascalCaseParser<Type> = Type extends string ? CamelCaseParser<Uncapitalize<Type>> : never;
 
 type SplitAnyCase<Type> = IncludesSeparator<Type> extends true
   ? SeparatorCaseParser<Type>
