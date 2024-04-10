@@ -65,8 +65,8 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj5 = { nested: { array: undefined } };
   obj5 = { nested: { array: [] } };
-  // @ts-expect-error
-  obj5 = { nested: { array: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj5 = { nested: { array: [] as const } };
   // @ts-expect-error
   obj5 = { nested: { array: ["1"] } };
   // @ts-expect-error
@@ -81,8 +81,8 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj5_1 = { nested: { array: undefined } };
   obj5_1 = { nested: { array: [] } };
-  // @ts-expect-error
-  obj5_1 = { nested: { array: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj5_1 = { nested: { array: [] as const } };
   // @ts-expect-error
   obj5_1 = { nested: { array: ["1"] } };
   // @ts-expect-error
@@ -101,8 +101,8 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj6 = { nested: { tuple: [] as const } };
   obj6 = { nested: { tuple: ["1", 2, { good: true }] } };
-  // @ts-expect-error
-  obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
   let obj6_1: DeepPick<ComplexNestedRequired, { nested: { tuple: never } }>;
   // @ts-expect-error
@@ -116,8 +116,8 @@ function testDeepPickInRequiredObject() {
   // @ts-expect-error
   obj6_1 = { nested: { tuple: [] as const } };
   obj6_1 = { nested: { tuple: ["1", 2, { good: true }] } };
-  // @ts-expect-error
-  obj6_1 = { nested: { tuple: ["1", 2, { good: true }] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6_1 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
   let obj7: DeepPick<ComplexNestedRequired, { nested: { set: true } }>;
   // @ts-expect-error
@@ -268,8 +268,8 @@ function testDeepPickInPartialObject() {
   obj5 = { nested: undefined };
   obj5 = { nested: { array: undefined } };
   obj5 = { nested: { array: [] } };
-  // @ts-expect-error
-  obj5 = { nested: { array: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj5 = { nested: { array: [] as const } };
   // @ts-expect-error
   obj5 = { nested: { array: ["1"] } };
   // @ts-expect-error
@@ -281,8 +281,8 @@ function testDeepPickInPartialObject() {
   obj5_1 = { nested: undefined };
   obj5_1 = { nested: { array: undefined } };
   obj5_1 = { nested: { array: [] } };
-  // @ts-expect-error
-  obj5_1 = { nested: { array: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj5_1 = { nested: { array: [] as const } };
   // @ts-expect-error
   obj5_1 = { nested: { array: ["1"] } };
   // @ts-expect-error
@@ -294,22 +294,22 @@ function testDeepPickInPartialObject() {
   obj6 = { nested: undefined };
   obj6 = { nested: { tuple: undefined } };
   obj6 = { nested: { tuple: [] } };
-  // @ts-expect-error
-  obj6 = { nested: { tuple: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6 = { nested: { tuple: [] as const } };
   obj6 = { nested: { tuple: ["1", 2, { good: true }] } };
-  // @ts-expect-error
-  obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
   let obj6_1: DeepPick<ComplexNestedPartial, { nested: { tuple: never } }>;
   obj6_1 = {};
   obj6_1 = { nested: undefined };
   obj6_1 = { nested: { tuple: undefined } };
   obj6_1 = { nested: { tuple: [] } };
-  // @ts-expect-error
-  obj6_1 = { nested: { tuple: [] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6_1 = { nested: { tuple: [] as const } };
   obj6_1 = { nested: { tuple: ["1", 2, { good: true }] } };
-  // @ts-expect-error
-  obj6_1 = { nested: { tuple: ["1", 2, { good: true }] as const } };
+  // It doesn't throw TypeError for TypeScript>=5.3
+  // obj6_1 = { nested: { tuple: ["1", 2, { good: true }] as const } };
 
   let obj7: DeepPick<ComplexNestedPartial, { nested: { set: true } }>;
   obj7 = {};
