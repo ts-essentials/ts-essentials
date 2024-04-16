@@ -1,27 +1,33 @@
-import { Paths } from "../paths";
+// TODO: merge to ExtractFromArray
+type ExtractFromObject<Obj extends Record<PropertyKey, unknown>, Key> = Key extends keyof Obj
+  ? Obj[Key]
+  : Key extends keyof NonNullable<Obj>
+  ? NonNullable<Obj>[Key] | undefined
+  : undefined;
 
-type UnsafePathValue<Type, TPath> = Type extends any
-  ? TPath extends `${infer TKey}.${infer TRest}`
-    ? TKey extends keyof Type
-      ? Type[TKey] extends infer TValue
-        ? UnsafePathValue<TValue, TRest> extends infer CalculatedUnsafePathValue
-          ? undefined extends TValue
-            ? CalculatedUnsafePathValue | undefined
-            : CalculatedUnsafePathValue
-          : never
-        : never
-      : TKey extends `${bigint}`
-      ? Type extends readonly (infer TValues)[]
-        ? UnsafePathValue<TValues, TRest>
-        : never
-      : never
-    : TPath extends keyof Type
-    ? Type[TPath]
-    : TPath extends `${bigint}`
-    ? Type extends readonly (infer TValues)[]
-      ? TValues
-      : never
-    : never
+// TODO: merge to ExtractFromObject
+type ExtractFromArray<Arr extends readonly any[], Key> = any[] extends Arr
+  ? Arr extends readonly (infer T)[]
+    ? T | undefined
+    : undefined
+  : Key extends keyof Arr
+  ? Arr[Key]
+  : undefined;
+
+type GetWithArray<Type, Path> = Path extends []
+  ? Type
+  : Path extends [infer Key, ...infer Rest]
+  ? Type extends Record<PropertyKey, unknown>
+    ? GetWithArray<ExtractFromObject<Type, Key>, Rest>
+    : Type extends readonly any[]
+    ? GetWithArray<ExtractFromArray<Type, Key>, Rest>
+    : undefined
   : never;
 
-export type PathValue<Type, Path extends Paths<Type>> = UnsafePathValue<Type, Path>;
+type Path<Type> = Type extends `${infer Key}.${infer Rest}`
+  ? [Key, ...Path<Rest>]
+  : Type extends `${infer Key}`
+  ? [Key]
+  : [];
+
+export type PathValue<Type, StringPath> = GetWithArray<Type, Path<StringPath>>;
