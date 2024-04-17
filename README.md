@@ -96,12 +96,14 @@ npm install --save-dev ts-essentials
 - [`DeepNullable<Type>`](/lib/deep-nullable) - Constructs a type by picking all properties from type `Type` recursively
   and include `null` property values for all of them
 - [`DeepOmit<Type, Filter>`](/lib/deep-omit) - Constructs a type by picking all properties from type `Type` and removing
-  properties which values are `never` or `true` in type `Filter`
+  properties which values are `never` or `true` in type `Filter`. If you'd like type `Filter` to be validated against a
+  structure of `Type`, please use [`StrictDeepOmit<Type, Filter>`](./lib/strict-deep-omit/).
 - [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional, meaning they aren't required. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
-  values `never` or `true` in type `Filter`, from type `Type`
+  values `never` or `true` in type `Filter`, from type `Type`. If you'd like type `Filter` to be validated against a
+  structure of `Type`, please use [`StrictDeepPick<Type, Filter>`](./lib/strict-deep-pick/).
 - [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
   and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use
   [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
@@ -113,6 +115,12 @@ npm install --save-dev ts-essentials
 - [`DeepWritable<Type>`](/lib/deep-writable) - Constructs a type by picking all properties from type `Type` recursively
   and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one level, use
   `Writable<Type>`
+- [`StrictDeepOmit<Type, Filter>`](/lib/strict-deep-omit) - Constructs a type by picking all properties from type `Type`
+  and removing properties which values are `never` or `true` in type `Filter`. The type `Filter` is validated against a
+  structure of `Type`.
+- [`StrictDeepPick<Type, Filter>`](/lib/strict-deep-pick) - Constructs a type by picking set of properties, which have
+  property values `never` or `true` in type `Filter`, from type `Type`. The type `Filter` is validated against a
+  structure of `Type`.
 
 ### Key types
 
