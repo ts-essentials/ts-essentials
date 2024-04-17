@@ -479,8 +479,11 @@ function testDeepPickInPartialObject() {
       }
     >;
 
-    // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
-    let map: DeepPick<MapType, WeakMap<{ a: number }, { age: true }>>;
+    let map: DeepPick<
+      MapType, // for TypeScript 4.1 and 4.2 it's working though, so breaking it on purpose
+      // @ts-expect-error ❌  Type 'number' is not assignable to type 'string'
+      TsVersion extends "4.1" | "4.2" ? { breakingOnPurpose: true } : WeakMap<{ a: number }, { age: true }>
+    >;
   }
 
   {

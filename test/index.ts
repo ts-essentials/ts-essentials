@@ -40,6 +40,7 @@ import {
   KeyofBase,
 } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
+import { TsVersion } from "./ts-version";
 
 function testDictionary() {
   type cases = [
@@ -59,7 +60,8 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
-    Assert<IsExact<Dictionary<number, KeyofBase>[symbol], number>>,
+    // for TypeScript 4.1 and 4.2 it doesn't work, so using `string` to make it work on purpose
+    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.1" | "4.2" | "4.3" ? string : symbol], number>>,
   ];
 }
 
@@ -515,7 +517,14 @@ function testOptionalKeys() {
     // @ts-expect-error converts to BigInt and gets its optional keys
     Assert<IsExact<OptionalKeys<bigint>, never>>,
     // wtf?
-    Assert<IsExact<OptionalKeys<symbol>, string | ((hint: string) => symbol) | (() => string) | (() => symbol)>>,
+    Assert<
+      IsExact<
+        OptionalKeys<symbol>,
+        TsVersion extends "4.1" | "4.2"
+          ? (() => string) | (() => symbol)
+          : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
+      >
+    >,
     Assert<IsExact<OptionalKeys<undefined>, never>>,
     Assert<IsExact<OptionalKeys<null>, never>>,
     Assert<IsExact<OptionalKeys<Function>, never>>,
@@ -541,10 +550,15 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" | "4.2" ? never : SymbolConstructor["iterator"]>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
-    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<
+      IsExact<
+        RequiredKeys<symbol>,
+        TsVersion extends "4.1" | "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
+      >
+    >,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
     Assert<IsExact<RequiredKeys<null>, never>>,
     Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
