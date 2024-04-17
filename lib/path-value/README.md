@@ -1,4 +1,4 @@
-`PathValue<Type, Path>` constructs a path value for type `Type` and path `Path`
+`PathValue<Type, StringPath>` constructs a path value for type `Type` and path `Path`
 
 ```ts
 interface Company {
@@ -7,13 +7,13 @@ interface Company {
 }
 
 type CompanyPaths = PathValue<Company, `employees.0`>;
-//   ^? { name: string }
+//   ^? { name: string } | undefined
 ```
 
 It's handy to bind it to JS with small utility function
 
 ```ts
-function get<Type, Path extends Paths<Type>>(obj: Type, path: `${Path}`): PathValue<Type, Path>;
+function get<Type, StringPath extends string>(obj: Type, path: `${StringPath}`): PathValue<Type, StringPath>;
 function get<Type>(obj: Type, path: string) {
   const keys = (path as string).split(".") as (keyof Type)[];
 
@@ -29,14 +29,14 @@ const companyName = get(company, "name");
 const companyEmployees = get(company, "employees");
 //    ^? { name: string }[]
 const companyEmployee = get(company, "employees.0");
-//    ^? { name: string }
+//    ^? { name: string } | undefined
 const companyEmployeeName = get(company, "employees.0.name");
-//    ^? string
+//    ^? string | undefined
 ```
 
-It supports:
+⚠️ Limitations:
 
-- autocomplete for `Path`
-- Arrays/Tuples indices
+- `StringPath extends Paths<Type>` isn't currently supported and will throw TypeError code T2589:
+  `Type instantiation is excessively deep and possibly infinite`
 
-TS Playground – https://tsplay.dev/NlDAON
+TS Playground – https://tsplay.dev/m3qQjw
