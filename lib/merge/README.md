@@ -34,7 +34,7 @@ const merge = <Object1, Object2>(obj1: Object1, obj2: Object2): Merge<Object1, O
 
 It supports:
 
-- index signatures
-- property modifiers (optional or readonly property)
+- Index signatures
+- Property modifiers (optional or readonly property)
 
 TS Playground – https://tsplay.dev/mbE39N

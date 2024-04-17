@@ -17,7 +17,7 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
+👉 We require `typescript>=4.2`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/ts-essentials/ts-essentials/tree/master#TypeScript-dependency-table)
 
 👉 As we really want types to be stricter, we require enabled
@@ -63,6 +63,8 @@ npm install --save-dev ts-essentials
   and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
+- [`PathValue<Type, Path>`](/lib/path-value) - Constructs a path value for type `Type` and path `Path`
+- [`Paths<Type>`](/lib/paths) - Constructs a union type by picking all possible paths for type `Type`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
@@ -235,6 +237,7 @@ facilitate common type transformations. These utilities are available globally.
 
 | `ts-essentials` | `typescript` / type of dependency                                                     |
 | --------------- | ------------------------------------------------------------------------------------- |
+| `^10.0.0`       | `^4.2.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^9.4.0`        | `^4.1.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^8.0.0`        | `^4.1.0` / peer                                                                       |
 | `^5.0.0`        | `^3.7.0` / peer                                                                       |

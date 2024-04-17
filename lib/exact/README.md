@@ -20,15 +20,15 @@ type DogEqualsToDog = Exact<Dog, Dog>;
 
 It supports:
 
-- Object type
+- Object types
 
 It doesn't support:
 
+- Arrays
+- Enums
+- Tuples
 - Union types with objects
 - Union types with primitives
-- Arrays
-- Tuples
-- Enums
 
 Support is addressed in https://github.com/ts-essentials/ts-essentials/issues/342
 
