@@ -11,11 +11,11 @@ type cases = [
   Assert<Has<Paths<ComplexNestedRequired>, "nested.date">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.func">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.array">>,
-  // @ts-expect-error: 0.1 cannot be used as key
+  // It allows float number access
   Assert<Assignable<Paths<ComplexNestedRequired>, "nested.array.0.1">>,
   Assert<Assignable<Paths<ComplexNestedRequired>, "nested.array.1">>,
-  Assert<Has<Paths<ComplexNestedRequired>, `nested.array.${bigint}`>>,
-  Assert<Has<Paths<ComplexNestedRequired>, `nested.array.${bigint}.bar`>>,
+  Assert<Has<Paths<ComplexNestedRequired>, `nested.array.${number}`>>,
+  Assert<Has<Paths<ComplexNestedRequired>, `nested.array.${number}.bar`>>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.0">>,
   Assert<Has<Paths<ComplexNestedRequired>, "nested.tuple.1">>,
@@ -36,11 +36,11 @@ type cases = [
   Assert<Has<Paths<ComplexNestedPartial>, "nested.date">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.func">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.array">>,
-  // @ts-expect-error: 0.1 cannot be used as key
+  // It allows float number access
   Assert<Assignable<Paths<ComplexNestedPartial>, "nested.array.0.1">>,
   Assert<Assignable<Paths<ComplexNestedPartial>, "nested.array.1">>,
-  Assert<Has<Paths<ComplexNestedPartial>, `nested.array.${bigint}`>>,
-  Assert<Has<Paths<ComplexNestedPartial>, `nested.array.${bigint}.bar`>>,
+  Assert<Has<Paths<ComplexNestedPartial>, `nested.array.${number}`>>,
+  Assert<Has<Paths<ComplexNestedPartial>, `nested.array.${number}.bar`>>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.0">>,
   Assert<Has<Paths<ComplexNestedPartial>, "nested.tuple.1">>,
