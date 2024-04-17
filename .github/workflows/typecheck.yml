@@ -15,7 +15,6 @@ jobs:
         os: [ubuntu-latest]
         typescript:
           [
-            "4.1.5",
             "4.2.4",
             "4.3.5",
             "4.4.4",

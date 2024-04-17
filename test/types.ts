@@ -53,3 +53,8 @@ export type ComplexNestedReadonly = {
     readonly promise: Promise<{ readonly foo: string; readonly bar: number }>;
   };
 };
+
+export type DiscriminatedUnionObject =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; x: number }
+  | { kind: "triangle"; x: number; y: number };
