@@ -36,6 +36,24 @@ function testXOR() {
   singlePet = { cat: "Timofey", dog: "Sirius" };
 }
 
+function testVariadicXOR() {
+  type Type1 = XOR<
+    { property1: string },
+    XOR<{ property2: string }, XOR<{ property3: string }, XOR<{ property4: string }, { property5: string }>>>
+  >;
+
+  type Type2 = XOR<
+    { property1: string },
+    { property2: string },
+    { property3: string },
+    { property4: string },
+    { property5: string }
+  >;
+
+  // 6 properties will give a type error `Type instantiation is excessively deep and possibly infinite`
+  type Test = Assert<IsExact<Type1, Type2>>;
+}
+
 function stressTestXOR() {
   type StressTest = XOR<
     { property1: string },
