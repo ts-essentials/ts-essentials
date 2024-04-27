@@ -57,7 +57,7 @@ When you're done with your changes:
 
 - use `yarn test:fix` to run `prettier` to reformat code
 
-- use `tsc` to make sure that there are no compilation errors
+- use `yarn test` to make sure that there are no compilation errors
 
 - use `yarn changeset` to create changelog with meaningful description as it will be visible in Releases, e.g.
 
