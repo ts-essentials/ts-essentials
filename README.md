@@ -191,6 +191,19 @@ npm install --save-dev ts-essentials
   `actual` equals to `Expected`. Otherwise shows TypeScript error
 - [`noop(..._args)`](/lib/functions/noop) - Matches runtime function that does nothing with arguments `_args`
 
+## Search
+
+When one of utility types is known by a different name, kindly ask adding it here for the better search.
+
+- `ArrayValues` - [`ValueOf<Type>`](/lib/value-of)
+- `Branded` - [`Opaque<Type, Token>`](/lib/opaque)
+- `ConditionalKeys` - [`PickKeys<Type, Value>`](/lib/pick-keys)
+- `Except` - [`StrictOmit<Type, Keys>`](/lib/strict-omit)
+- `Get` - [`PathValue<Type, Path>`](/lib/path-value)
+- `Mutable` - [`Writable<Type>`](/lib/writable)
+- `Nominal` - [`Opaque<Type, Token>`](/lib/opaque)
+- `Set*`, e.g. `SetOptional` - `Mark*`, e.g. [`MarkReadonly<Type, Keys>`](/lib/mark-readonly)
+
 ## Built-in types
 
 TypeScript provides several [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) to
