@@ -72,7 +72,8 @@ npm install --save-dev ts-essentials
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of) - Constructs a type for type `Type` and equals to a primitive for primitives, array
   elements for arrays, function return type for functions or object property values for objects
-- [`XOR<Type1, Type2>`](/lib/xor) - Construct a type which is assignable to either type `Type1` or `Type2` but not both
+- [`XOR<Type1, Type2, Type3?, ..., Type50?>`](/lib/xor) - Construct a type which is assignable to either type `Type1`,
+  `Type2` but not both. Starting in ts-essentials@10, it supports up to 50 generic types.
 
 ### Mark wrapper types
 
