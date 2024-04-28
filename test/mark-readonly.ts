@@ -1,6 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkReadonly, WritableKeys, ReadonlyKeys } from "../lib";
-import { Debug } from "./types";
+import { MarkReadonly, WritableKeys, ReadonlyKeys, Prettify } from "../lib";
 
 type Example = {
   readonly readonly1: Date;
@@ -12,7 +11,7 @@ type Example = {
 };
 
 function testMarkReadonly() {
-  type ExampleWithReadonlyRequired1 = Debug<MarkReadonly<Example, "required1">>;
+  type ExampleWithReadonlyRequired1 = Prettify<MarkReadonly<Example, "required1">>;
 
   type cases = [
     Assert<IsExact<MarkReadonly<Example, never>, Example>>,
@@ -25,7 +24,7 @@ function testMarkReadonly() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Debug<
+  type UnionExample = Prettify<
     MarkReadonly<Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">, "optional1">
   >;
 

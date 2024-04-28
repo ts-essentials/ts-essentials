@@ -1,6 +1,4 @@
-type Prettify<Type> = {
-  [Key in keyof Type]: Type[Key];
-} & {};
+import { Prettify } from "../prettify";
 
 type Without<Type1, Type2> = { [P in Exclude<keyof Type1, keyof Type2>]?: never };
 
