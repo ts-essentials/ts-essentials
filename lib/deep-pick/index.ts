@@ -1,56 +1,39 @@
 import { AnyRecord } from "../any-record";
 import { Builtin } from "../built-in";
-import { DeepModify } from "../deep-modify";
 
-export type DeepPick<Type, Filter extends DeepModify<Type>> = Type extends Builtin
+export type DeepPick<Type, Filter> = Type extends Builtin
   ? Type
   : Type extends Map<infer Keys, infer Values>
   ? Filter extends Map<Keys, infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? Map<Keys, DeepPick<Values, FilterValues>>
-      : Type
+    ? Map<Keys, DeepPick<Values, FilterValues>>
     : Type
   : Type extends ReadonlyMap<infer Keys, infer Values>
   ? Filter extends ReadonlyMap<Keys, infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? ReadonlyMap<Keys, DeepPick<Values, FilterValues>>
-      : Type
+    ? ReadonlyMap<Keys, DeepPick<Values, FilterValues>>
     : Type
   : Type extends WeakMap<infer Keys, infer Values>
   ? Filter extends WeakMap<Keys, infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? WeakMap<Keys, DeepPick<Values, FilterValues>>
-      : Type
+    ? WeakMap<Keys, DeepPick<Values, FilterValues>>
     : Type
   : Type extends Set<infer Values>
   ? Filter extends Set<infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? Set<DeepPick<Values, FilterValues>>
-      : Type
+    ? Set<DeepPick<Values, FilterValues>>
     : Type
   : Type extends ReadonlySet<infer Values>
   ? Filter extends ReadonlySet<infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? ReadonlySet<DeepPick<Values, FilterValues>>
-      : Type
+    ? ReadonlySet<DeepPick<Values, FilterValues>>
     : Type
   : Type extends WeakSet<infer Values>
   ? Filter extends WeakSet<infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? WeakSet<DeepPick<Values, FilterValues>>
-      : Type
+    ? WeakSet<DeepPick<Values, FilterValues>>
     : Type
   : Type extends Array<infer Values>
   ? Filter extends Array<infer FilterValues>
-    ? FilterValues extends DeepModify<Values>
-      ? Array<DeepPick<Values, FilterValues>>
-      : Type
+    ? Array<DeepPick<Values, FilterValues>>
     : Type
   : Type extends Promise<infer Value>
   ? Filter extends Promise<infer FilterValue>
-    ? FilterValue extends DeepModify<Value>
-      ? Promise<DeepPick<Value, FilterValue>>
-      : Type
+    ? Promise<DeepPick<Value, FilterValue>>
     : Type
   : Filter extends AnyRecord
   ? {
@@ -58,9 +41,7 @@ export type DeepPick<Type, Filter extends DeepModify<Type>> = Type extends Built
       [Key in keyof Type as Key extends keyof Filter ? Key : never]: Filter[Key & keyof Filter] extends true
         ? Type[Key]
         : Key extends keyof Filter
-        ? Filter[Key] extends DeepModify<Type[Key]>
-          ? DeepPick<Type[Key], Filter[Key]>
-          : never
+        ? DeepPick<Type[Key], Filter[Key]>
         : never;
     }
   : never;

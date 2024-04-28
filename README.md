@@ -17,7 +17,7 @@
 npm install --save-dev ts-essentials
 ```
 
-👉 We require `typescript>=4.1`. If you're looking for support for older TS versions, please have a look at the
+👉 We require `typescript>=4.2`. If you're looking for support for older TS versions, please have a look at the
 [TypeScript dependency table](https://github.com/ts-essentials/ts-essentials/tree/master#TypeScript-dependency-table)
 
 👉 As we really want types to be stricter, we require enabled
@@ -63,6 +63,8 @@ npm install --save-dev ts-essentials
   and removing those properties which values equal to `Value`
 - [`Opaque<Type, Token>`](/lib/opaque) - Constructs a type which is a subset of `Type` with a specified unique token
   `Token`
+- [`PathValue<Type, Path>`](/lib/path-value) - Constructs a path value for type `Type` and path `Path`
+- [`Paths<Type>`](/lib/paths) - Constructs a union type by picking all possible paths for type `Type`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
@@ -70,7 +72,8 @@ npm install --save-dev ts-essentials
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
 - [`ValueOf<Type>`](/lib/value-of) - Constructs a type for type `Type` and equals to a primitive for primitives, array
   elements for arrays, function return type for functions or object property values for objects
-- [`XOR<Type1, Type2>`](/lib/xor) - Construct a type which is assignable to either type `Type1` or `Type2` but not both
+- [`XOR<Type1, Type2, Type3?, ..., Type50?>`](/lib/xor) - Construct a type which is assignable to either type `Type1`,
+  `Type2` but not both. Starting in ts-essentials@10, it supports up to 50 generic types.
 
 ### Mark wrapper types
 
@@ -94,12 +97,14 @@ npm install --save-dev ts-essentials
 - [`DeepNullable<Type>`](/lib/deep-nullable) - Constructs a type by picking all properties from type `Type` recursively
   and include `null` property values for all of them
 - [`DeepOmit<Type, Filter>`](/lib/deep-omit) - Constructs a type by picking all properties from type `Type` and removing
-  properties which values are `never` or `true` in type `Filter`
+  properties which values are `never` or `true` in type `Filter`. If you'd like type `Filter` to be validated against a
+  structure of `Type`, please use [`StrictDeepOmit<Type, Filter>`](./lib/strict-deep-omit/).
 - [`DeepPartial<Type>`](/lib/deep-partial) - Constructs a type by picking all properties from type `Type` recursively
   and setting them as optional, meaning they aren't required. To make properties optional on one level, use
   [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
-  values `never` or `true` in type `Filter`, from type `Type`
+  values `never` or `true` in type `Filter`, from type `Type`. If you'd like type `Filter` to be validated against a
+  structure of `Type`, please use [`StrictDeepPick<Type, Filter>`](./lib/strict-deep-pick/).
 - [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
   and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use
   [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
@@ -111,6 +116,12 @@ npm install --save-dev ts-essentials
 - [`DeepWritable<Type>`](/lib/deep-writable) - Constructs a type by picking all properties from type `Type` recursively
   and removing `readonly` modifier, meaning they can be reassigned. To make properties writable on one level, use
   `Writable<Type>`
+- [`StrictDeepOmit<Type, Filter>`](/lib/strict-deep-omit) - Constructs a type by picking all properties from type `Type`
+  and removing properties which values are `never` or `true` in type `Filter`. The type `Filter` is validated against a
+  structure of `Type`.
+- [`StrictDeepPick<Type, Filter>`](/lib/strict-deep-pick) - Constructs a type by picking set of properties, which have
+  property values `never` or `true` in type `Filter`, from type `Type`. The type `Filter` is validated against a
+  structure of `Type`.
 
 ### Key types
 
@@ -180,6 +191,19 @@ npm install --save-dev ts-essentials
   `actual` equals to `Expected`. Otherwise shows TypeScript error
 - [`noop(..._args)`](/lib/functions/noop) - Matches runtime function that does nothing with arguments `_args`
 
+## Search
+
+When one of utility types is known by a different name, kindly ask adding it here for the better search.
+
+- `ArrayValues` - [`ValueOf<Type>`](/lib/value-of)
+- `Branded` - [`Opaque<Type, Token>`](/lib/opaque)
+- `ConditionalKeys` - [`PickKeys<Type, Value>`](/lib/pick-keys)
+- `Except` - [`StrictOmit<Type, Keys>`](/lib/strict-omit)
+- `Get` - [`PathValue<Type, Path>`](/lib/path-value)
+- `Mutable` - [`Writable<Type>`](/lib/writable)
+- `Nominal` - [`Opaque<Type, Token>`](/lib/opaque)
+- `Set*`, e.g. `SetOptional` - `Mark*`, e.g. [`MarkReadonly<Type, Keys>`](/lib/mark-readonly)
+
 ## Built-in types
 
 TypeScript provides several [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) to
@@ -227,6 +251,7 @@ facilitate common type transformations. These utilities are available globally.
 
 | `ts-essentials` | `typescript` / type of dependency                                                     |
 | --------------- | ------------------------------------------------------------------------------------- |
+| `^10.0.0`       | `^4.2.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^9.4.0`        | `^4.1.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^8.0.0`        | `^4.1.0` / peer                                                                       |
 | `^5.0.0`        | `^3.7.0` / peer                                                                       |

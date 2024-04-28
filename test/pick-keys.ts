@@ -16,7 +16,7 @@ function testPickKeys() {
     Assert<
       IsExact<
         PickKeys<symbol, number | undefined>,
-        TsVersion extends "4.1" | "4.2"
+        TsVersion extends "4.2"
           ? (() => string) | (() => symbol)
           : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
       >

@@ -17,7 +17,6 @@ import {
   SafeDictionary,
   Tuple,
   WritableKeys,
-  XOR,
   Head,
   Tail,
   Exact,
@@ -39,8 +38,8 @@ import {
   NonEmptyArray,
   KeyofBase,
 } from "../lib";
-import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
+import { TsVersion } from "./ts-version";
 
 function testDictionary() {
   type cases = [
@@ -60,8 +59,8 @@ function testDictionary() {
     Assert<IsExact<Dictionary<number, "a" | "b">[string], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["a"], number>>,
     Assert<IsExact<Dictionary<number, "a" | "b">["b"], number>>,
-    // for TypeScript 4.1 and 4.2 it doesn't work, so using `string` to make it work on purpose
-    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.1" | "4.2" | "4.3" ? string : symbol], number>>,
+    // for TypeScript 4.2 and 4.3 it doesn't work, so using `string` to make it work on purpose
+    Assert<IsExact<Dictionary<number, KeyofBase>[TsVersion extends "4.2" | "4.3" ? string : symbol], number>>,
   ];
 }
 
@@ -520,7 +519,7 @@ function testOptionalKeys() {
     Assert<
       IsExact<
         OptionalKeys<symbol>,
-        TsVersion extends "4.1" | "4.2"
+        TsVersion extends "4.2"
           ? (() => string) | (() => symbol)
           : string | ((hint: string) => symbol) | (() => string) | (() => symbol)
       >
@@ -550,13 +549,13 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.1" | "4.2" ? never : SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, TsVersion extends "4.2" ? never : SymbolConstructor["iterator"]>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
     Assert<
       IsExact<
         RequiredKeys<symbol>,
-        TsVersion extends "4.1" | "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
+        TsVersion extends "4.2" ? "toString" | "valueOf" : typeof Symbol.toPrimitive | typeof Symbol.toStringTag
       >
     >,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
@@ -640,21 +639,6 @@ function testAssert() {
   assert(anything);
   type Actual = typeof anything;
   type Test = Assert<IsExact<Actual, string>>;
-}
-
-function testXOR() {
-  type TestType1 = { a: string };
-  type TestType2 = { a: number; b: boolean };
-  type TestType3 = { c: number; d: boolean };
-
-  type Actual1 = XOR<TestType1, TestType2>;
-  type Expected1 = { a: string; b?: never } | { a: number; b: boolean };
-
-  type Actual2 = XOR<TestType1, TestType3>;
-  type Expected2 = { a: string; c?: never; d?: never } | { a?: never; c: number; d: boolean };
-
-  type Test1 = Assert<IsExact<Actual1, Expected1>>;
-  type Test2 = Assert<IsExact<Actual2, Expected2>>;
 }
 
 function testNoop() {

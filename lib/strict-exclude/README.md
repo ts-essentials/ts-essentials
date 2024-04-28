@@ -23,4 +23,9 @@ type NotMordredOrMrsNorris = StrictExclude<CatName, "mordred" | "Norris">;
 //                                                  ^^^^^^^^^^^^^^^^^^^^
 ```
 
+⚠️ Limitations:
+
+- `StrictExclude` cannot be used when `UnionType` is generic type
+  – https://github.com/ts-essentials/ts-essentials/issues/343 (please use `Exclude` instead)
+
 TS Playground – https://tsplay.dev/w6x1Gm
