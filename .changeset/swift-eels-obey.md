@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Add support for primitive union types in `isExact`
+Add support of union types for arrays, tuples, objects and primitive in `isExact`
