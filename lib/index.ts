@@ -23,6 +23,7 @@ export * from "./opaque";
 export * from "./path-value";
 export * from "./paths";
 export * from "./pick-properties";
+export * from "./prettify";
 export * from "./safe-dictionary";
 export * from "./union-to-intersection";
 export * from "./value-of";

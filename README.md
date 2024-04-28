@@ -32,6 +32,7 @@ npm install --save-dev ts-essentials
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
 - [`KeyofBase`](/lib/key-of-base) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
+- [`Prettify<Type>`](/lib/prettify/) - flattens type and makes it more readable on the hover in your IDE
 - [`Primitive`](/lib/primitive) - Matches any
   [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
 - [`StrictExclude<UnionType, ExcludedMembers>`](/lib/strict-exclude) - Constructs a type by excluding from `UnionType`
