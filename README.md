@@ -204,6 +204,7 @@ When one of utility types is known by a different name, kindly ask adding it her
 - `Mutable` - [`Writable<Type>`](/lib/writable)
 - `Nominal` - [`Opaque<Type, Token>`](/lib/opaque)
 - `Set*`, e.g. `SetOptional` - `Mark*`, e.g. [`MarkReadonly<Type, Keys>`](/lib/mark-readonly)
+- `Unwrap` - [`Prettify<Type>`](/lib/prettify/)
 
 ## Built-in types
 
