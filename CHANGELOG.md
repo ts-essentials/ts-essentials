@@ -1,5 +1,26 @@
 # ts-essentials
 
+## 10.0.0
+
+### Major Changes
+
+- b127a8a: Use TypeScript@^4.2.0 because of excessively deep and possibly infinite type instantiation limitation for
+  `PathValue` and `Paths`
+- 26be790: Fixed assignability of Mark\* utility types which required removing support of TypeScript@<4.5
+- 9935d80: Added `StrictDeepOmit` and `StrictDeepPick` that support generic type and removed generic constraint on the
+  second type parameter of `DeepOmit` and `DeepPick`
+
+### Minor Changes
+
+- 5b7650a: Add variadic XOR, up to 50 generic types
+- b127a8a: Implement `Paths` and `PathValue` to access object properties, array/tuple indices
+
+### Patch Changes
+
+- d2dbcf9: Added `CONVENTIONS.md` for reliable, consistent and predictable development
+- ed57101: Add support for types which explicitly extend Array inside types passed to `DeepRequired`.
+- 25f3f60: Add support of union types for arrays, tuples, objects and primitive in `isExact`
+
 ## 9.4.2
 
 ### Patch Changes
