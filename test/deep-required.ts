@@ -19,6 +19,10 @@ function testDeepRequired() {
     caseSensitive: true;
   }
 
+  interface ExtendedArray<T> extends Array<T> {}
+
+  interface ExtendedReadonlyArray<T> extends ReadonlyArray<T> {}
+
   type cases = [
     Assert<IsExact<DeepRequired<number | null | undefined>, number | null | undefined>>,
     Assert<IsExact<DeepRequired<string | null | undefined>, string | null | undefined>>,
@@ -89,6 +93,9 @@ function testDeepRequired() {
     >,
     Assert<IsExact<DeepRequired<readonly (number | null | undefined)[]>, readonly (number | null)[]>>,
     Assert<IsExact<DeepRequired<Array<number | null | undefined>>, Array<number | null>>>,
+    Assert<IsExact<DeepRequired<ReadonlyArray<number | null | undefined>>, ReadonlyArray<number | null>>>,
+    Assert<IsExact<DeepRequired<ExtendedArray<number | null | undefined>>, Array<number | null>>>,
+    Assert<IsExact<DeepRequired<ExtendedReadonlyArray<number | null | undefined>>, ReadonlyArray<number | null>>>,
     Assert<IsExact<DeepRequired<Promise<number | null | undefined>>, Promise<number | null | undefined>>>,
     Assert<
       IsExact<
