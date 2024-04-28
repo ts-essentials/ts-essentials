@@ -33,3 +33,28 @@ export type ComplexNestedPartial = {
     promise?: Promise<{ foo?: string; bar?: number }>;
   };
 };
+
+export type ComplexNestedReadonly = {
+  readonly simple: number;
+  readonly nested: {
+    readonly date: Date;
+    readonly func: () => string;
+    readonly array: readonly { readonly bar: number }[];
+    readonly tuple: readonly [string, number, { readonly good: boolean }];
+    readonly set: ReadonlySet<{
+      readonly name: string;
+    }>;
+    readonly map: ReadonlyMap<
+      string,
+      {
+        readonly name: string;
+      }
+    >;
+    readonly promise: Promise<{ readonly foo: string; readonly bar: number }>;
+  };
+};
+
+export type DiscriminatedUnionObject =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; x: number }
+  | { kind: "triangle"; x: number; y: number };
