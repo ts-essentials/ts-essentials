@@ -181,3 +181,22 @@ function testPrimitiveUnionType() {
   // @ts-expect-error has different type from MaybeNumber (missing `undefined` union element)
   isMaybeNumber2(number3);
 }
+
+function testEnums() {
+  enum SingleValueEnum {
+    Foo = "foo",
+  }
+  enum MultipleValueEnum {
+    Foo = "foo",
+    Bar = "bar",
+    Baz = "baz",
+  }
+
+  const singleValueEnum = SingleValueEnum.Foo;
+  const multipleValueEnum = MultipleValueEnum.Foo;
+
+  isExact<SingleValueEnum>()(singleValueEnum);
+  // TODO: fix under a separate bug
+  // @ts-expect-error: Argument of type 'MultipleEnum' is not assignable to parameter of type 'never'
+  isExact<MultipleValueEnum>()(multipleValueEnum);
+}
