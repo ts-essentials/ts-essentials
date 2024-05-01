@@ -1,8 +1,9 @@
 // Basic
 
-export * from "./primitive";
 export * from "./built-in";
+export * from "./json-primitive";
 export * from "./key-of-base";
+export * from "./primitive";
 export * from "./strict-exclude";
 export * from "./strict-extract";
 export * from "./strict-omit";
