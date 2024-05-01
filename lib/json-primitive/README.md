@@ -1,4 +1,4 @@
-Matches any [JSON primitive value](https://www.rfc-editor.org/rfc/rfc7159#section-3)
+Matches any [JSON primitive value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
 
 ```ts
 let primitive: JsonPrimitive;
