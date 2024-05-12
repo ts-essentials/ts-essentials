@@ -30,6 +30,7 @@ npm install --save-dev ts-essentials
 ### Basic
 
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
+- [`JsonObject`](/lib/json-object) - Matches any [JSON object](https://www.rfc-editor.org/rfc/rfc8259#section-3)
 - [`JsonPrimitive`](/lib/json-primitive) - Matches any
   [JSON primitive value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
 - [`JsonValue`](/lib/json-value) - Matches any [JSON value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
