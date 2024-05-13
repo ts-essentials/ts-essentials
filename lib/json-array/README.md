@@ -11,12 +11,6 @@ jsonArray = [{ symbolProperty: Symbol.iterator }];
 jsonArray = [{ nullProperty: null }];
 // @ts-expect-error: Type 'undefined' is not assignable to type `JsonValue`
 jsonArray = [{ undefinedProperty: undefined }];
-
-type Person = {
-  name: string;
-  age: number;
-  pets?: string[];
-};
 ```
 
 TS Playground - https://tsplay.dev/N5dVPw
