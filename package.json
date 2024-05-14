@@ -14,7 +14,7 @@
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
     "test": "prettier -c {lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
     "test:fix": "prettier --write {lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
-    "perf": "vitest run",
+    "perf": "tsx ./bench/example.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
@@ -38,6 +38,7 @@
     "conditional-type-checks": "^1.0.4",
     "prettier": "^2.0.0",
     "rimraf": "^3.0.2",
+    "tsx": "4.10.2",
     "typescript": "^4.5.0",
     "vitest": "1.6.0"
   },
