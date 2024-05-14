@@ -36,3 +36,4 @@ jobs:
       - run: yarn add typescript@${{ matrix.typescript }}
       - run: yarn setTsVersion
       - run: yarn test
+      - run: yarn perf
