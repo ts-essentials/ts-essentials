@@ -12,6 +12,6 @@
     "sourceMap": true,
     "declaration": true
   },
-  "include": ["**/*.ts"],
+  "include": ["lib/**/*.ts"],
   "exclude": ["node_modules"]
 }
