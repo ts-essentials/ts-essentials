@@ -1,6 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import { PickKeys } from "../lib";
-import { TsVersion } from "./ts-version";
 
 function testPickKeys() {
   type cases = [
@@ -9,14 +8,14 @@ function testPickKeys() {
     // @ts-expect-error converts to String and gets `number | undefined` keys
     Assert<IsExact<PickKeys<string, number | undefined>, never>>,
     // wtf?
-    Assert<IsExact<PickKeys<boolean, number | undefined>, () => boolean>>,
+    Assert<IsExact<PickKeys<boolean, number | undefined>, "valueOf">>,
     // @ts-expect-error converts to BigInt and gets `number | undefined` keys
     Assert<IsExact<PickKeys<bigint, number | undefined>, never>>,
     // wtf?
     Assert<
       IsExact<
         PickKeys<symbol, number | undefined>,
-        string | ((hint: string) => symbol) | (() => string) | (() => symbol)
+        SymbolConstructor["toPrimitive"] | SymbolConstructor["toStringTag"] | "toString" | "valueOf"
       >
     >,
     Assert<IsExact<PickKeys<undefined, number | undefined>, never>>,
