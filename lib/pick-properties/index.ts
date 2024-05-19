@@ -1,3 +1,3 @@
-export type PickProperties<Type, Value> = {
-  [Key in keyof Type as Type[Key] extends Value ? Key : never]: Type[Key];
-};
+export type PickKeysByValue<Type, Value> = { [Key in keyof Type]: Type[Key] extends Value ? Key : never }[keyof Type];
+
+export type PickProperties<Type, Value> = Pick<Type, PickKeysByValue<Type, Value>>;
