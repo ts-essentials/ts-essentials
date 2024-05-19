@@ -14,7 +14,7 @@
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
     "test": "prettier -c {lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
     "test:fix": "prettier --write {lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
-    "perf": "tsx ./bench/example.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
+    "perf": "tsx ./bench/*.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
