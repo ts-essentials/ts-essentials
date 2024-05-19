@@ -1,11 +1,11 @@
 // @ts-nocheck
 
 import { bench } from "@arktype/attest";
-import { OmitProperties } from "../lib";
+import { PickProperties } from "../lib";
 
-export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
-  bench("[OmitProperties] removes nothing on empty object", () => {
-    return {} as OmitProperties<{}, never>;
+export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
+  bench("[PickProperties] picks nothing on empty object", () => {
+    return {} as PickProperties<{}, never>;
   }).types([
     {
       "4.5": 9,
@@ -22,7 +22,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
     "instantiations",
   ]);
 
-  bench("[OmitProperties] removes one type on 6 properties in interface", () => {
+  bench("[PickProperties] picks one type on 6 properties in interface", () => {
     interface UserInformation {
       birthday: Date;
       email: string;
@@ -32,24 +32,24 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       hello: () => void;
     }
 
-    return {} as OmitProperties<UserInformation, Function>;
+    return {} as PickProperties<UserInformation, Function>;
   }).types([
     {
-      "4.5": 101,
-      "4.6": 101,
-      "4.7": 81,
-      "4.8": 78,
-      "4.9": 78,
-      "5.0": 76,
-      "5.1": 76,
-      "5.2": 76,
-      "5.3": 76,
-      "5.4": 76,
+      "4.5": 99,
+      "4.6": 99,
+      "4.7": 79,
+      "4.8": 76,
+      "4.9": 76,
+      "5.0": 74,
+      "5.1": 74,
+      "5.2": 74,
+      "5.3": 74,
+      "5.4": 74,
     }[majorMinorVersion],
     "instantiations",
   ]);
 
-  bench("[OmitProperties] removes one type on 12 properties in interface", () => {
+  bench("[PickProperties] picks one type on 12 properties in interface", () => {
     interface UserInformation {
       birthday1: Date;
       email1: string;
@@ -65,24 +65,24 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       hello2: () => void;
     }
 
-    return {} as OmitProperties<UserInformation, Function>;
+    return {} as PickProperties<UserInformation, Function>;
   }).types([
     {
-      "4.5": 145,
-      "4.6": 145,
-      "4.7": 125,
-      "4.8": 122,
-      "4.9": 122,
-      "5.0": 120,
-      "5.1": 120,
-      "5.2": 120,
-      "5.3": 120,
-      "5.4": 120,
+      "4.5": 141,
+      "4.6": 141,
+      "4.7": 121,
+      "4.8": 118,
+      "4.9": 118,
+      "5.0": 116,
+      "5.1": 116,
+      "5.2": 116,
+      "5.3": 116,
+      "5.4": 116,
     }[majorMinorVersion],
     "instantiations",
   ]);
 
-  bench("[OmitProperties] removes multiple types on 6 properties in interface", () => {
+  bench("[PickProperties] picks multiple types on 6 properties in interface", () => {
     interface UserInformation {
       birthday: Date;
       email: string;
@@ -92,24 +92,24 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       hello: () => void;
     }
 
-    return {} as OmitProperties<UserInformation, Date | string>;
+    return {} as PickProperties<UserInformation, Date | string>;
   }).types([
     {
-      "4.5": 49,
-      "4.6": 49,
-      "4.7": 49,
-      "4.8": 49,
-      "4.9": 49,
-      "5.0": 47,
-      "5.1": 47,
-      "5.2": 47,
-      "5.3": 47,
-      "5.4": 47,
+      "4.5": 51,
+      "4.6": 51,
+      "4.7": 51,
+      "4.8": 51,
+      "4.9": 51,
+      "5.0": 49,
+      "5.1": 49,
+      "5.2": 49,
+      "5.3": 49,
+      "5.4": 49,
     }[majorMinorVersion],
     "instantiations",
   ]);
 
-  bench("[OmitProperties] removes multiple types on 12 properties in interface", () => {
+  bench("[PickProperties] picks multiple types on 12 properties in interface", () => {
     interface UserInformation {
       birthday1: Date;
       email1: string;
@@ -125,19 +125,19 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       hello2: () => void;
     }
 
-    return {} as OmitProperties<UserInformation, Date | string>;
+    return {} as PickProperties<UserInformation, Date | string>;
   }).types([
     {
-      "4.5": 89,
-      "4.6": 89,
-      "4.7": 89,
-      "4.8": 89,
-      "4.9": 89,
-      "5.0": 87,
-      "5.1": 87,
-      "5.2": 87,
-      "5.3": 87,
-      "5.4": 87,
+      "4.5": 93,
+      "4.6": 93,
+      "4.7": 93,
+      "4.8": 93,
+      "4.9": 93,
+      "5.0": 91,
+      "5.1": 91,
+      "5.2": 91,
+      "5.3": 91,
+      "5.4": 91,
     }[majorMinorVersion],
     "instantiations",
   ]);
