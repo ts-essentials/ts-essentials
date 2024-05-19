@@ -2,4 +2,5 @@
 "ts-essentials": patch
 ---
 
-Improve performance of `PickKeys`, `OmitProperties` and `PickProperties`
+Use key remapping in `PickKeys`, `OmitProperties` and `PickProperties` that reduced the number of instantiations by
+~20-40% on average
