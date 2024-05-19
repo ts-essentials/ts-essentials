@@ -2,38 +2,38 @@
 # yarn lockfile v1
 
 
-"@arktype/attest@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@arktype/attest/-/attest-0.7.3.tgz#49467c77db65f8d95d2a1045516b8ac4a225782c"
-  integrity sha512-K7M30gev9Ni94PHNTUqBdVvHxoEFs/UAX8YErhtJVtqX3zzUvuCSAW/pU7SPXYdmOQhDFyNZyHknIjlvzyq2Xg==
+"@arktype/attest@0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@arktype/attest/-/attest-0.7.5.tgz#d8bf6ff48e2036cc4543c2e39ced5bddfc834a73"
+  integrity sha512-ZOF9uqLbvoVO6RHhlByJEBBj5qhWLpaCK/wWa5guD1OQR1/a7JZ9jCrDAcaASt6tYBA3dGhDerXhc7FcDWlRQw==
   dependencies:
-    "@arktype/fs" "0.0.18"
-    "@arktype/util" "0.0.37"
+    "@arktype/fs" "0.0.19"
+    "@arktype/util" "0.0.41"
     "@typescript/analyze-trace" "0.10.1"
     "@typescript/vfs" "1.5.0"
-    arktype "2.0.0-dev.10"
+    arktype "2.0.0-dev.11"
 
-"@arktype/fs@0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@arktype/fs/-/fs-0.0.18.tgz#43ce87b84d6c6bf0a830055228cfd52fd30a8a6d"
-  integrity sha512-lfthvb6YuIEjhfovVR28vcMtHIi9b7OKT4YuGaTtXBzvTXl4+E1GcnN0bfbwZgRNmVU0Z9FJYHb+FIPuZ44cpA==
+"@arktype/fs@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@arktype/fs/-/fs-0.0.19.tgz#bfce90a0d457c3cc3bb06830f00f9c217ac8f816"
+  integrity sha512-ZEiSc6DgJANSgMTee9lueumCH/3gIikJWT8wlN8CyVk/IDFKFbJb3/BHj906Aw+APvCc8oyvu+2Hanshkgh4Bg==
 
-"@arktype/schema@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@arktype/schema/-/schema-0.1.1.tgz#96c1680ce032f024f7d9347786869a9fa2898d9c"
-  integrity sha512-wLZNVs6m/OHi4KgJavyjDW2RyPU/TGdfcTtncPvgt8n5JdJkYNaizlLQxDshUBMLPtWdRcN7mHDSZafqrnMJ2Q==
+"@arktype/schema@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@arktype/schema/-/schema-0.1.2.tgz#66c749ea8b7dc3c20c54ee40c0bd5024f313854d"
+  integrity sha512-ggvxs5P0toqd/4/XK76URQrtyOYpbYcLhirEZeTso6FxkloPa0lT+whPg7DNQj5qi2OQXLUHBYKMx9DOb13ViQ==
   dependencies:
-    "@arktype/util" "0.0.36"
+    "@arktype/util" "0.0.38"
 
-"@arktype/util@0.0.36":
-  version "0.0.36"
-  resolved "https://registry.yarnpkg.com/@arktype/util/-/util-0.0.36.tgz#17190b418ab30a2c1cb79592af2f9c854e70c1f1"
-  integrity sha512-w9rngq4t1DFGyyLDLqkWhZH+wd1kmML0e87K8qKEHk0Oq2VhUBDEn383qZ1dX+nkweB4szLe+FCkZ0SJO6zQMA==
+"@arktype/util@0.0.38":
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/@arktype/util/-/util-0.0.38.tgz#0909e28533a3dd924b2a837962b09cd4838a9299"
+  integrity sha512-IvYMGnkUASJllRk3mdBVgckomKx2LNsDTrWCxz04EBK1OuU+4fJ/smSjxgZVWfopNXZds9sHNxZgTJOIw7GvJw==
 
-"@arktype/util@0.0.37":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@arktype/util/-/util-0.0.37.tgz#04dbf9248e518e1bef8a66616c7585f55fe97460"
-  integrity sha512-P8Yiv5IbSVLN8/o/53YmII9sbxpp7Qm5gurDUIqBS6kfn4LfOcIqi/3cl0347C9zEBScwAly3JoT1MHt29ncNA==
+"@arktype/util@0.0.41":
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/@arktype/util/-/util-0.0.41.tgz#a2c384b3fcc98b9007c1ee2d1df2a8fe45e80c7f"
+  integrity sha512-0YURzJ42v+lhlP1t5Dj90YezETRTCdFU0oM4xMVpYsmPx/DHJzr9n7AX1QPAlYWH4wY7hYY3gwai3O+8VntPgw==
 
 "@babel/code-frame@^7.0.0":
   version "7.14.5"
@@ -550,13 +550,13 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-arktype@2.0.0-dev.10:
-  version "2.0.0-dev.10"
-  resolved "https://registry.yarnpkg.com/arktype/-/arktype-2.0.0-dev.10.tgz#76547b22dd687be722ddb841120cc8cf7e45e05d"
-  integrity sha512-fxprnIgP71JgeRdrxZI67QaM2swkTHDeZbIT5XuZJ6CG33Ais1rmi2qG1DNayiUXGGobBew9HjQVJDtcaXB0fw==
+arktype@2.0.0-dev.11:
+  version "2.0.0-dev.11"
+  resolved "https://registry.yarnpkg.com/arktype/-/arktype-2.0.0-dev.11.tgz#f5bb3bf18e0d51a6948fc800d0dbcb899c6b29e1"
+  integrity sha512-k+WVQoHsHsTyTiVQkO201mxLQxyXHmy3buJW8TXLOkr4X2yOUCp0K1SBscuG9OEJoc8MjpvoIharjPHEkFI7kg==
   dependencies:
-    "@arktype/schema" "0.1.1"
-    "@arktype/util" "0.0.36"
+    "@arktype/schema" "0.1.2"
+    "@arktype/util" "0.0.38"
 
 array-union@^2.1.0:
   version "2.1.0"

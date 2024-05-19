@@ -31,7 +31,7 @@
     }
   },
   "devDependencies": {
-    "@arktype/attest": "0.7.3",
+    "@arktype/attest": "0.7.5",
     "@changesets/cli": "^2.11.2",
     "@codechecks/build-size-watcher": "^0.1.0",
     "@codechecks/client": "^0.1.11",
