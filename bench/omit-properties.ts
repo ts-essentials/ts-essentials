@@ -18,7 +18,8 @@ bench("[OmitProperties] removes one type on 6 properties in interface", () => {
   }
 
   return {} as OmitProperties<UserInformation, Function>;
-}).types([136, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([159, "instantiations"]);
 
 bench("[OmitProperties] removes one type on 12 properties in interface", () => {
   interface UserInformation {
@@ -37,7 +38,8 @@ bench("[OmitProperties] removes one type on 12 properties in interface", () => {
   }
 
   return {} as OmitProperties<UserInformation, Function>;
-}).types([194, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([217, "instantiations"]);
 
 bench("[OmitProperties] removes multiple types on 6 properties in interface", () => {
   interface UserInformation {
@@ -50,6 +52,7 @@ bench("[OmitProperties] removes multiple types on 6 properties in interface", ()
   }
 
   return {} as OmitProperties<UserInformation, Date | string>;
+  // TypeScript 4.5 baseline
 }).types([109, "instantiations"]);
 
 bench("[OmitProperties] removes multiple types on 12 properties in interface", () => {
@@ -69,4 +72,5 @@ bench("[OmitProperties] removes multiple types on 12 properties in interface", (
   }
 
   return {} as OmitProperties<UserInformation, Date | string>;
+  // TypeScript 4.5 baseline
 }).types([165, "instantiations"]);

@@ -14,7 +14,8 @@ bench("[PickKeys] picks one type on 6 properties in interface", () => {
   }
 
   return {} as PickKeys<UserInformation, Function>;
-}).types([133, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([165, "instantiations"]);
 
 bench("[PickKeys] picks one type on 12 properties in interface", () => {
   interface UserInformation {
@@ -33,7 +34,8 @@ bench("[PickKeys] picks one type on 12 properties in interface", () => {
   }
 
   return {} as PickKeys<UserInformation, Function>;
-}).types([181, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([213, "instantiations"]);
 
 bench("[PickKeys] picks multiple types on 6 properties in interface", () => {
   interface UserInformation {
@@ -46,7 +48,8 @@ bench("[PickKeys] picks multiple types on 6 properties in interface", () => {
   }
 
   return {} as PickKeys<UserInformation, Date | string>;
-}).types([114, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([123, "instantiations"]);
 
 bench("[PickKeys] picks multiple types on 12 properties in interface", () => {
   interface UserInformation {
@@ -65,4 +68,5 @@ bench("[PickKeys] picks multiple types on 12 properties in interface", () => {
   }
 
   return {} as PickKeys<UserInformation, Date | string>;
-}).types([168, "instantiations"]);
+  // TypeScript 4.5 baseline
+}).types([177, "instantiations"]);
