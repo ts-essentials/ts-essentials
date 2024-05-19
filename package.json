@@ -1,28 +1,20 @@
 {
   "name": "ts-essentials",
-  "description": "All essential TypeScript types in one place",
-  "keywords": [
-    "typescript",
-    "types",
-    "essentials",
-    "utils",
-    "toolbox",
-    "toolbelt",
-    "lodash",
-    "underscore"
-  ],
   "version": "10.0.0",
+  "description": "All essential TypeScript types in one place",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "git@github.com:krzkaczor/ts-essentials.git",
+  "repository": "git@github.com:ts-essentials/ts-essentials.git",
+  "homepage": "https://github.com/ts-essentials/ts-essentials#readme",
   "author": "Krzysztof Kaczor <chris@kaczor.io>",
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
-    "test": "prettier -c **/*.ts && tsc --outDir ./testDist && rimraf ./testDist",
-    "test:fix": "prettier --write **/*.ts && tsc --outDir ./testDist && rimraf ./testDist",
+    "test": "prettier -c {bench,lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
+    "test:fix": "prettier --write {bench,lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
+    "perf": "tsx ./bench/index.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
@@ -39,12 +31,24 @@
     }
   },
   "devDependencies": {
+    "@arktype/attest": "0.7.5",
     "@changesets/cli": "^2.11.2",
     "@codechecks/build-size-watcher": "^0.1.0",
     "@codechecks/client": "^0.1.11",
     "conditional-type-checks": "^1.0.4",
     "prettier": "^2.0.0",
     "rimraf": "^3.0.2",
+    "tsx": "4.10.5",
     "typescript": "^4.5.0"
-  }
+  },
+  "keywords": [
+    "typescript",
+    "types",
+    "essentials",
+    "utils",
+    "toolbox",
+    "toolbelt",
+    "lodash",
+    "underscore"
+  ]
 }

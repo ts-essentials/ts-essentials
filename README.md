@@ -3,10 +3,17 @@
   <h3 align="center">ts-essentials</h3>
   <p align="center">All essential TypeScript types in one place 🤙</p>
   <p align="center">
+    <a href="https://www.npmjs.com/package/ts-essentials" title="View this project on NPM">
+      <img alt="Version" src="https://img.shields.io/npm/v/ts-essentials.svg">
+    </a>
     <img alt="Downloads" src="https://img.shields.io/npm/dm/ts-essentials.svg">
-    <img alt="Build status" src="https://github.com/ts-essentials/ts-essentials/actions/workflows/ci.yml/badge.svg">
+    <a href="https://github.com/ts-essentials/ts-essentials/actions?query=branch%3Amaster" title="View Github Build status">
+      <img alt="Build status" src="https://github.com/ts-essentials/ts-essentials/actions/workflows/ci.yml/badge.svg">
+    </a>
+    <a href="https://t.me/ts_essentials" title="Get support in Telegram">
+      <img alt="Telegram" src="https://img.shields.io/badge/-telegram-red?color=white&logo=telegram">
+    </a>
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <img src="https://img.shields.io/badge/all_contributors-32-orange.svg?style=flat-square" alt="All Contributors">
     <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
