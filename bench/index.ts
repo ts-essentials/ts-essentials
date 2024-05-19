@@ -1,6 +1,11 @@
-/**
- * This is entry file for all benchmarks
- */
+import { version } from "typescript";
+import { runOmitPropertiesBenchmarks } from "./omit-properties";
+import { runPickKeysBenchmarks } from "./pick-keys";
 
-import "./omit-properties";
-import "./pick-keys";
+const [majorVersion, minorVersion] = version.split(".");
+
+const majorMinorVersion = `${majorVersion}.${minorVersion}`;
+console.log(`\nRunning benchmarks for TypeScript@${majorMinorVersion}\n`);
+
+runOmitPropertiesBenchmarks(majorMinorVersion);
+runPickKeysBenchmarks(majorMinorVersion);
