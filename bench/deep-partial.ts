@@ -17,16 +17,16 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
     return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -47,19 +47,19 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
       hello2: () => void;
     }
 
-    return {} as PickKeys<UserInformation, Function>;
+    return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -85,16 +85,16 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
     return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -129,19 +129,19 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
       };
     }
 
-    return {} as PickKeys<UserInformation, Function>;
+    return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -175,16 +175,16 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
     return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -233,19 +233,19 @@ export const runDeepPartialBenchmarks = (majorMinorVersion: string) => {
       };
     }
 
-    return {} as PickKeys<UserInformation, Function>;
+    return {} as DeepPartial<UserInformation>;
   }).types([
     {
-      "4.5": 0,
-      "4.6": 0,
-      "4.7": 0,
-      "4.8": 0,
+      "4.5": 121,
+      "4.6": 121,
+      "4.7": 121,
+      "4.8": 121,
       "4.9": 117,
-      "5.0": 0,
-      "5.1": 0,
-      "5.2": 0,
-      "5.3": 0,
-      "5.4": 0,
+      "5.0": 117,
+      "5.1": 117,
+      "5.2": 117,
+      "5.3": 117,
+      "5.4": 117,
     }[majorMinorVersion],
     "instantiations",
   ]);
