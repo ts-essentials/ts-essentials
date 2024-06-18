@@ -1,11 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-// import { XOR } from "../lib";
-
-type Without<Type1, Type2> = { [P in Exclude<keyof Type1, keyof Type2>]?: never };
-
-export type XOR<Type1, Type2> = Type1 | Type2 extends object
-  ? (Without<Type1, Type2> & Type2) | (Without<Type2, Type1> & Type1)
-  : Type1 | Type2;
+import { isExact, XOR } from "../lib";
 
 function testXOR2InTypes() {
   type TestType1 = { a: string };
@@ -26,268 +20,373 @@ function testXOR2InTypes() {
   type Test3 = Assert<IsExact<Actual3, Expected3>>;
 }
 
-// function testXOR8() {
-//   type SinglePet = XOR<
-//     { cat: string },
-//     { dog: string },
-//     { parrot: string },
-//     { fish: string },
-//     { rabbit: string },
-//     { turtle: string },
-//     { guineaPig: string },
-//     { hamster: string }
-//   >;
+function testXOR8() {
+  type SinglePet = XOR<
+    { cat: string },
+    { dog: string },
+    { parrot: string },
+    { fish: string },
+    { rabbit: string },
+    { turtle: string },
+    { guineaPig: string },
+    { hamster: string }
+  >;
 
-//   let singlePet: SinglePet;
-//   singlePet = { cat: "Timofey" };
-//   singlePet = { dog: "Sirius" };
-//   // @ts-expect-error: cannot have both
-//   singlePet = { cat: "Timofey", dog: "Sirius" };
-// }
+  let singlePet: SinglePet;
+  singlePet = { cat: "Timofey" };
+  singlePet = { dog: "Sirius" };
+  // @ts-expect-error: cannot have both
+  singlePet = { cat: "Timofey", dog: "Sirius" };
+}
 
-function testXOR2InFunctions() {
-  // Types have to have mutually exclusive properties so the function return
-  // type matched the attribute type
+const assertUndefined = isExact<undefined>();
+const assertNumber = isExact<number>();
+const assertNumberOrUndefined = isExact<number | undefined>();
+const assertString = isExact<string>();
+const assertStringOrUndefined = isExact<string | undefined>();
+const assertStringOrNumber = isExact<string | number>();
+const assertBoolean = isExact<boolean>();
+const assertBooleanOrUndefined = isExact<boolean | undefined>();
+declare const booleanToString: (_: boolean) => string;
+declare const numberToString: (_: number) => string;
+
+function testXORInFunctions() {
+  // Types have to have mutually exclusive properties
 
   type TestType1 = { a: string };
   type TestType2 = { b: boolean };
+  type TestType3 = { c: number };
 
-  const test1 = ({ a, b }: XOR<TestType1, TestType2>): string | boolean => {
+  const test1_1 = ({ a, b }: XOR<TestType1, TestType2>): string => {
     if (typeof a === "string") return a;
-    return b;
+    assertUndefined(a);
+    assertBoolean(b);
+    return booleanToString(b);
   };
 
-  // const test2 = ({ a, b }: XOR<TestType1, TestType2, unknown>): string | boolean => {
-  //   if (typeof a === "string") return a;
-  //   return b;
-  // };
+  const test1_2 = ({ a, b }: XOR<TestType1, TestType2>): string => {
+    if (typeof b === "boolean") return booleanToString(b);
+    assertString(a);
+    assertUndefined(b);
+    return a;
+  };
+
+  const test2_1 = ({ a, b }: XOR<TestType1, TestType2, unknown>): string => {
+    if (typeof a === "string") return a;
+    assertUndefined(a);
+    assertBoolean(b);
+    return booleanToString(b);
+  };
+
+  const test2_2 = ({ a, b }: XOR<TestType1, TestType2, unknown>): string => {
+    if (typeof b === "boolean") return booleanToString(b);
+    assertString(a);
+    assertUndefined(b);
+    return a;
+  };
+
+  const test3_1 = ({ a, b, c }: XOR<TestType1, TestType2, TestType3>): string => {
+    if (typeof a === "string") return a;
+    assertUndefined(a);
+    assertBooleanOrUndefined(b);
+    assertNumberOrUndefined(c);
+    if (typeof b === "boolean") return booleanToString(b);
+    assertUndefined(a);
+    assertUndefined(b);
+    assertNumber(c);
+    return numberToString(c);
+  };
+
+  const test3_2 = ({ a, b, c }: XOR<TestType1, TestType2, TestType3>): string => {
+    if (typeof b === "boolean") return booleanToString(b);
+    assertStringOrUndefined(a);
+    assertUndefined(b);
+    assertNumberOrUndefined(c);
+    if (typeof a === "string") return a;
+    assertUndefined(a);
+    assertUndefined(b);
+    assertNumber(c);
+    return numberToString(c);
+  };
+
+  const test3_3 = ({ a, b, c }: XOR<TestType1, TestType2, TestType3>): string => {
+    if (typeof c === "number") return numberToString(c);
+    assertStringOrUndefined(a);
+    assertBooleanOrUndefined(b);
+    assertUndefined(c);
+    if (typeof a === "string") return a;
+    assertUndefined(a);
+    assertBoolean(b);
+    assertUndefined(c);
+    return booleanToString(b);
+  };
+
+  // These types don't have to have mutually exclusive properties
+
+  type TestType4 = { d: string };
+  type TestType5 = { d: number; e: string };
+  type TestType6 = { e: number; f: boolean };
+
+  const test4 = ({ d, e }: XOR<TestType4, TestType5>): string => {
+    if (typeof d === "string") return d;
+    assertNumber(d);
+    assertStringOrUndefined(e);
+    if (typeof e === "string") return e;
+    assertUndefined(d);
+    assertUndefined(e);
+    return "";
+  };
+
+  const test5_1 = ({ d, e, f }: XOR<TestType4, TestType5, TestType6>): string => {
+    if (typeof d === "string") return d;
+    assertNumberOrUndefined(d);
+    assertStringOrNumber(e);
+    assertBooleanOrUndefined(f);
+    if (typeof e === "string") return e;
+    assertUndefined(d);
+    assertNumber(e);
+    assertBoolean(f);
+    return `${numberToString(e)},${booleanToString(f)}`;
+  };
+
+  const test5_2 = ({ d, e, f }: XOR<TestType4, TestType5, TestType6>): string => {
+    if (typeof e === "string") return e;
+    assertStringOrUndefined(d);
+    assertNumberOrUndefined(e);
+    assertBooleanOrUndefined(f);
+    if (typeof d === "string") return d;
+    assertUndefined(d);
+    assertNumber(e);
+    assertBoolean(f);
+    return `${numberToString(e)},${booleanToString(f)}`;
+  };
 }
 
-// function testVariadicXOR() {
-//   type Type1 = XOR<
-//     { property1: string },
-//     XOR<{ property2: string }, XOR<{ property3: string }, XOR<{ property4: string }, { property5: string }>>>
-//   >;
+function testVariadicXOR() {
+  type Type1 = XOR<
+    { property1: string },
+    XOR<{ property2: string }, XOR<{ property3: string }, XOR<{ property4: string }, { property5: string }>>>
+  >;
 
-//   type Type2 = XOR<
-//     { property1: string },
-//     { property2: string },
-//     { property3: string },
-//     { property4: string },
-//     { property5: string }
-//   >;
+  type Type2 = XOR<
+    { property1: string },
+    { property2: string },
+    { property3: string },
+    { property4: string },
+    { property5: string }
+  >;
 
-//   // 6 properties will give a type error `Type instantiation is excessively deep and possibly infinite`
-//   type Test = Assert<IsExact<Type1, Type2>>;
-// }
+  // 6 properties will give a type error `Type instantiation is excessively deep and possibly infinite`
+  type Test = Assert<IsExact<Type1, Type2>>;
+}
 
-// function stressTestXOR() {
-//   type StressTest = XOR<
-//     { property1: string },
-//     { property2: string },
-//     { property3: string },
-//     { property4: string },
-//     { property5: string },
-//     { property6: string },
-//     { property7: string },
-//     { property8: string },
-//     { property9: string },
-//     { property10: string },
-//     { property11: string },
-//     { property12: string },
-//     { property13: string },
-//     { property14: string },
-//     { property15: string },
-//     { property16: string },
-//     { property17: string },
-//     { property18: string },
-//     { property19: string },
-//     { property20: string },
-//     { property21: string },
-//     { property22: string },
-//     { property23: string },
-//     { property24: string },
-//     { property25: string },
-//     { property26: string },
-//     { property27: string },
-//     { property28: string },
-//     { property29: string },
-//     { property30: string },
-//     { property31: string },
-//     { property32: string },
-//     { property33: string },
-//     { property34: string },
-//     { property35: string },
-//     { property36: string },
-//     { property37: string },
-//     { property38: string },
-//     { property39: string },
-//     { property40: string },
-//     { property41: string },
-//     { property42: string },
-//     { property43: string },
-//     { property44: string },
-//     { property45: string },
-//     { property46: string },
-//     { property47: string },
-//     { property48: string },
-//     { property49: string },
-//     { property50: string }
-//   >;
+function testXOR50Assignability() {
+  type StressTest = XOR<
+    { property1: string },
+    { property2: string },
+    { property3: string },
+    { property4: string },
+    { property5: string },
+    { property6: string },
+    { property7: string },
+    { property8: string },
+    { property9: string },
+    { property10: string },
+    { property11: string },
+    { property12: string },
+    { property13: string },
+    { property14: string },
+    { property15: string },
+    { property16: string },
+    { property17: string },
+    { property18: string },
+    { property19: string },
+    { property20: string },
+    { property21: string },
+    { property22: string },
+    { property23: string },
+    { property24: string },
+    { property25: string },
+    { property26: string },
+    { property27: string },
+    { property28: string },
+    { property29: string },
+    { property30: string },
+    { property31: string },
+    { property32: string },
+    { property33: string },
+    { property34: string },
+    { property35: string },
+    { property36: string },
+    { property37: string },
+    { property38: string },
+    { property39: string },
+    { property40: string },
+    { property41: string },
+    { property42: string },
+    { property43: string },
+    { property44: string },
+    { property45: string },
+    { property46: string },
+    { property47: string },
+    { property48: string },
+    { property49: string },
+    { property50: string }
+  >;
 
-//   var test: StressTest;
+  var test: StressTest;
 
-//   // passed
-//   test = { property1: "boo" };
-//   test = { property2: "boo" };
-//   test = { property3: "boo" };
-//   test = { property4: "boo" };
-//   test = { property5: "boo" };
-//   test = { property6: "boo" };
-//   test = { property7: "boo" };
-//   test = { property8: "boo" };
-//   test = { property9: "boo" };
-//   test = { property10: "boo" };
-//   test = { property11: "boo" };
-//   test = { property12: "boo" };
-//   test = { property13: "boo" };
-//   test = { property14: "boo" };
-//   test = { property15: "boo" };
-//   test = { property16: "boo" };
-//   test = { property17: "boo" };
-//   test = { property18: "boo" };
-//   test = { property19: "boo" };
-//   test = { property20: "boo" };
-//   test = { property21: "boo" };
-//   test = { property22: "boo" };
-//   test = { property23: "boo" };
-//   test = { property24: "boo" };
-//   test = { property25: "boo" };
-//   test = { property26: "boo" };
-//   test = { property27: "boo" };
-//   test = { property28: "boo" };
-//   test = { property29: "boo" };
-//   test = { property30: "boo" };
-//   test = { property31: "boo" };
-//   test = { property32: "boo" };
-//   test = { property33: "boo" };
-//   test = { property34: "boo" };
-//   test = { property35: "boo" };
-//   test = { property36: "boo" };
-//   test = { property37: "boo" };
-//   test = { property38: "boo" };
-//   test = { property39: "boo" };
-//   test = { property40: "boo" };
-//   test = { property41: "boo" };
-//   test = { property42: "boo" };
-//   test = { property43: "boo" };
-//   test = { property44: "boo" };
-//   test = { property45: "boo" };
-//   test = { property46: "boo" };
-//   test = { property47: "boo" };
-//   test = { property48: "boo" };
-//   test = { property49: "boo" };
-//   test = { property50: "boo" };
+  // passed
+  test = { property1: "boo" };
+  test = { property2: "boo" };
+  test = { property3: "boo" };
+  test = { property4: "boo" };
+  test = { property5: "boo" };
+  test = { property6: "boo" };
+  test = { property7: "boo" };
+  test = { property8: "boo" };
+  test = { property9: "boo" };
+  test = { property10: "boo" };
+  test = { property11: "boo" };
+  test = { property12: "boo" };
+  test = { property13: "boo" };
+  test = { property14: "boo" };
+  test = { property15: "boo" };
+  test = { property16: "boo" };
+  test = { property17: "boo" };
+  test = { property18: "boo" };
+  test = { property19: "boo" };
+  test = { property20: "boo" };
+  test = { property21: "boo" };
+  test = { property22: "boo" };
+  test = { property23: "boo" };
+  test = { property24: "boo" };
+  test = { property25: "boo" };
+  test = { property26: "boo" };
+  test = { property27: "boo" };
+  test = { property28: "boo" };
+  test = { property29: "boo" };
+  test = { property30: "boo" };
+  test = { property31: "boo" };
+  test = { property32: "boo" };
+  test = { property33: "boo" };
+  test = { property34: "boo" };
+  test = { property35: "boo" };
+  test = { property36: "boo" };
+  test = { property37: "boo" };
+  test = { property38: "boo" };
+  test = { property39: "boo" };
+  test = { property40: "boo" };
+  test = { property41: "boo" };
+  test = { property42: "boo" };
+  test = { property43: "boo" };
+  test = { property44: "boo" };
+  test = { property45: "boo" };
+  test = { property46: "boo" };
+  test = { property47: "boo" };
+  test = { property48: "boo" };
+  test = { property49: "boo" };
+  test = { property50: "boo" };
 
-//   // failed
-//   // @ts-expect-error
-//   test = { property1: "boo", property2: "boo" };
-//   // @ts-expect-error
-//   test = { property2: "boo", property3: "boo" };
-//   // @ts-expect-error
-//   test = { property3: "boo", property4: "boo" };
-//   // @ts-expect-error
-//   test = { property4: "boo", property5: "boo" };
-//   // @ts-expect-error
-//   test = { property5: "boo", property6: "boo" };
-//   // @ts-expect-error
-//   test = { property6: "boo", property7: "boo" };
-//   // @ts-expect-error
-//   test = { property7: "boo", property8: "boo" };
-//   // @ts-expect-error
-//   test = { property8: "boo", property9: "boo" };
-//   // @ts-expect-error
-//   test = { property9: "boo", property10: "boo" };
-//   // @ts-expect-error
-//   test = { property10: "boo", property11: "boo" };
-//   // @ts-expect-error
-//   test = { property11: "boo", property12: "boo" };
-//   // @ts-expect-error
-//   test = { property12: "boo", property13: "boo" };
-//   // @ts-expect-error
-//   test = { property13: "boo", property14: "boo" };
-//   // @ts-expect-error
-//   test = { property14: "boo", property15: "boo" };
-//   // @ts-expect-error
-//   test = { property15: "boo", property16: "boo" };
-//   // @ts-expect-error
-//   test = { property16: "boo", property17: "boo" };
-//   // @ts-expect-error
-//   test = { property17: "boo", property18: "boo" };
-//   // @ts-expect-error
-//   test = { property18: "boo", property19: "boo" };
-//   // @ts-expect-error
-//   test = { property19: "boo", property20: "boo" };
-//   // @ts-expect-error
-//   test = { property20: "boo", property21: "boo" };
-//   // @ts-expect-error
-//   test = { property21: "boo", property22: "boo" };
-//   // @ts-expect-error
-//   test = { property22: "boo", property23: "boo" };
-//   // @ts-expect-error
-//   test = { property23: "boo", property24: "boo" };
-//   // @ts-expect-error
-//   test = { property24: "boo", property25: "boo" };
-//   // @ts-expect-error
-//   test = { property25: "boo", property26: "boo" };
-//   // @ts-expect-error
-//   test = { property26: "boo", property27: "boo" };
-//   // @ts-expect-error
-//   test = { property27: "boo", property28: "boo" };
-//   // @ts-expect-error
-//   test = { property28: "boo", property29: "boo" };
-//   // @ts-expect-error
-//   test = { property29: "boo", property30: "boo" };
-//   // @ts-expect-error
-//   test = { property30: "boo", property31: "boo" };
-//   // @ts-expect-error
-//   test = { property31: "boo", property32: "boo" };
-//   // @ts-expect-error
-//   test = { property32: "boo", property33: "boo" };
-//   // @ts-expect-error
-//   test = { property33: "boo", property34: "boo" };
-//   // @ts-expect-error
-//   test = { property34: "boo", property35: "boo" };
-//   // @ts-expect-error
-//   test = { property35: "boo", property36: "boo" };
-//   // @ts-expect-error
-//   test = { property36: "boo", property37: "boo" };
-//   // @ts-expect-error
-//   test = { property37: "boo", property38: "boo" };
-//   // @ts-expect-error
-//   test = { property38: "boo", property39: "boo" };
-//   // @ts-expect-error
-//   test = { property39: "boo", property40: "boo" };
-//   // @ts-expect-error
-//   test = { property40: "boo", property41: "boo" };
-//   // @ts-expect-error
-//   test = { property41: "boo", property42: "boo" };
-//   // @ts-expect-error
-//   test = { property42: "boo", property43: "boo" };
-//   // @ts-expect-error
-//   test = { property43: "boo", property44: "boo" };
-//   // @ts-expect-error
-//   test = { property44: "boo", property45: "boo" };
-//   // @ts-expect-error
-//   test = { property45: "boo", property46: "boo" };
-//   // @ts-expect-error
-//   test = { property46: "boo", property47: "boo" };
-//   // @ts-expect-error
-//   test = { property47: "boo", property48: "boo" };
-//   // @ts-expect-error
-//   test = { property48: "boo", property49: "boo" };
-//   // @ts-expect-error
-//   test = { property49: "boo", property50: "boo" };
-//   // @ts-expect-error
-//   test = { property50: "boo", property1: "boo" };
-// }
+  // failed
+  // @ts-expect-error
+  test = { property1: "boo", property2: "boo" };
+  // @ts-expect-error
+  test = { property2: "boo", property3: "boo" };
+  // @ts-expect-error
+  test = { property3: "boo", property4: "boo" };
+  // @ts-expect-error
+  test = { property4: "boo", property5: "boo" };
+  // @ts-expect-error
+  test = { property5: "boo", property6: "boo" };
+  // @ts-expect-error
+  test = { property6: "boo", property7: "boo" };
+  // @ts-expect-error
+  test = { property7: "boo", property8: "boo" };
+  // @ts-expect-error
+  test = { property8: "boo", property9: "boo" };
+  // @ts-expect-error
+  test = { property9: "boo", property10: "boo" };
+  // @ts-expect-error
+  test = { property10: "boo", property11: "boo" };
+  // @ts-expect-error
+  test = { property11: "boo", property12: "boo" };
+  // @ts-expect-error
+  test = { property12: "boo", property13: "boo" };
+  // @ts-expect-error
+  test = { property13: "boo", property14: "boo" };
+  // @ts-expect-error
+  test = { property14: "boo", property15: "boo" };
+  // @ts-expect-error
+  test = { property15: "boo", property16: "boo" };
+  // @ts-expect-error
+  test = { property16: "boo", property17: "boo" };
+  // @ts-expect-error
+  test = { property17: "boo", property18: "boo" };
+  // @ts-expect-error
+  test = { property18: "boo", property19: "boo" };
+  // @ts-expect-error
+  test = { property19: "boo", property20: "boo" };
+  // @ts-expect-error
+  test = { property20: "boo", property21: "boo" };
+  // @ts-expect-error
+  test = { property21: "boo", property22: "boo" };
+  // @ts-expect-error
+  test = { property22: "boo", property23: "boo" };
+  // @ts-expect-error
+  test = { property23: "boo", property24: "boo" };
+  // @ts-expect-error
+  test = { property24: "boo", property25: "boo" };
+  // @ts-expect-error
+  test = { property25: "boo", property26: "boo" };
+  // @ts-expect-error
+  test = { property26: "boo", property27: "boo" };
+  // @ts-expect-error
+  test = { property27: "boo", property28: "boo" };
+  // @ts-expect-error
+  test = { property28: "boo", property29: "boo" };
+  // @ts-expect-error
+  test = { property29: "boo", property30: "boo" };
+  // @ts-expect-error
+  test = { property30: "boo", property31: "boo" };
+  // @ts-expect-error
+  test = { property31: "boo", property32: "boo" };
+  // @ts-expect-error
+  test = { property32: "boo", property33: "boo" };
+  // @ts-expect-error
+  test = { property33: "boo", property34: "boo" };
+  // @ts-expect-error
+  test = { property34: "boo", property35: "boo" };
+  // @ts-expect-error
+  test = { property35: "boo", property36: "boo" };
+  // @ts-expect-error
+  test = { property36: "boo", property37: "boo" };
+  // @ts-expect-error
+  test = { property37: "boo", property38: "boo" };
+  // @ts-expect-error
+  test = { property38: "boo", property39: "boo" };
+  // @ts-expect-error
+  test = { property39: "boo", property40: "boo" };
+  // @ts-expect-error
+  test = { property40: "boo", property41: "boo" };
+  // @ts-expect-error
+  test = { property41: "boo", property42: "boo" };
+  // @ts-expect-error
+  test = { property42: "boo", property43: "boo" };
+  // @ts-expect-error
+  test = { property43: "boo", property44: "boo" };
+  // @ts-expect-error
+  test = { property44: "boo", property45: "boo" };
+  // @ts-expect-error
+  test = { property45: "boo", property46: "boo" };
+  // @ts-expect-error
+  test = { property46: "boo", property47: "boo" };
+  // @ts-expect-error
+  test = { property47: "boo", property48: "boo" };
+  // @ts-expect-error
+  test = { property48: "boo", property49: "boo" };
+  // @ts-expect-error
+  test = { property49: "boo", property50: "boo" };
+  // @ts-expect-error
+  test = { property50: "boo", property1: "boo" };
+}
