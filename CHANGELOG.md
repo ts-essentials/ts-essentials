@@ -1,5 +1,13 @@
 # ts-essentials
 
+## 10.0.1
+
+### Patch Changes
+
+- 365612c: Use key remapping in `PickKeys`, `OmitProperties` and `PickProperties` that reduced the number of
+  instantiations by ~20-40% on average
+- 39eb424: Remove XOR union element with all properties excluded from the intersection
+
 ## 10.0.0
 
 ### Major Changes
