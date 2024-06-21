@@ -27,6 +27,7 @@ export const runPickKeysBenchmarks = (majorMinorVersion: string) => {
       "5.2": 114,
       "5.3": 114,
       "5.4": 114,
+      "5.5": 114,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -60,6 +61,7 @@ export const runPickKeysBenchmarks = (majorMinorVersion: string) => {
       "5.2": 158,
       "5.3": 158,
       "5.4": 158,
+      "5.5": 158,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -87,6 +89,7 @@ export const runPickKeysBenchmarks = (majorMinorVersion: string) => {
       "5.2": 89,
       "5.3": 89,
       "5.4": 89,
+      "5.5": 89,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -120,6 +123,7 @@ export const runPickKeysBenchmarks = (majorMinorVersion: string) => {
       "5.2": 133,
       "5.3": 133,
       "5.4": 133,
+      "5.5": 133,
     }[majorMinorVersion],
     "instantiations",
   ]);

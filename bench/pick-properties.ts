@@ -18,6 +18,7 @@ export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 7,
       "5.3": 7,
       "5.4": 7,
+      "5.5": 7,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -45,6 +46,7 @@ export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 74,
       "5.3": 74,
       "5.4": 74,
+      "5.5": 74,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -78,6 +80,7 @@ export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 116,
       "5.3": 116,
       "5.4": 116,
+      "5.5": 116,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -105,6 +108,7 @@ export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 49,
       "5.3": 49,
       "5.4": 49,
+      "5.5": 49,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -138,6 +142,7 @@ export const runPickPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 91,
       "5.3": 91,
       "5.4": 91,
+      "5.5": 91,
     }[majorMinorVersion],
     "instantiations",
   ]);
