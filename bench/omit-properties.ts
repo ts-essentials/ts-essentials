@@ -18,6 +18,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 7,
       "5.3": 7,
       "5.4": 7,
+      "5.5": 7,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -45,6 +46,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 76,
       "5.3": 76,
       "5.4": 76,
+      "5.5": 76,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -78,6 +80,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 120,
       "5.3": 120,
       "5.4": 120,
+      "5.5": 120,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -105,6 +108,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 47,
       "5.3": 47,
       "5.4": 47,
+      "5.5": 47,
     }[majorMinorVersion],
     "instantiations",
   ]);
@@ -138,6 +142,7 @@ export const runOmitPropertiesBenchmarks = (majorMinorVersion: string) => {
       "5.2": 87,
       "5.3": 87,
       "5.4": 87,
+      "5.5": 87,
     }[majorMinorVersion],
     "instantiations",
   ]);
