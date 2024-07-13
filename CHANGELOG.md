@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 10.0.2
+
+### Patch Changes
+
+- 490712c: Deprecated `DictionaryValues` in favour of `ValueOf`
+
 ## 10.0.1
 
 ### Patch Changes
