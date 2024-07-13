@@ -60,7 +60,6 @@ npm install --save-dev ts-essentials
 - [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type) - Unwraps `AsyncOrSync` type
 - [`Dictionary<Type, Keys?>`](/lib/dictionary) - Constructs a required object type which property keys are `Keys`
   (`string` by default) and which property values are `Type`
-- [`DictionaryValues<Type>`](/lib/dictionary-values) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Property values from `Object2` override property values from `Object1` when property keys are the same
 - [`MergeN<Tuple>`](/lib/merge-n) - Constructs a type by merging objects with type `Merge` in tuple `Tuple` recursively
@@ -212,6 +211,7 @@ When one of utility types is known by a different name, kindly ask adding it her
 - `Nominal` - [`Opaque<Type, Token>`](/lib/opaque)
 - `Set*`, e.g. `SetOptional` - `Mark*`, e.g. [`MarkReadonly<Type, Keys>`](/lib/mark-readonly)
 - `Unwrap` - [`Prettify<Type>`](/lib/prettify/)
+- `ValueOf` - `DictionaryValues`
 
 ## Built-in types
 

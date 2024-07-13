@@ -34,7 +34,7 @@ type IdentityFunctionValue = ValueOf<typeof identity>;
 //   ^? unknown
 ```
 
-3. The object property values for objects (like [`DictionaryValues<Type>`](../dictionary-values))
+3. The object property values for objects
 
 ```ts
 interface User {
