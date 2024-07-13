@@ -1,5 +1,5 @@
 ﻿import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { ValueOf, Primitive, AnyArray } from "../lib";
+import { ValueOf, Primitive, AnyArray, Dictionary, SafeDictionary } from "../lib";
 
 declare const array: number[];
 declare const func: (...arg: any[]) => boolean;
@@ -47,5 +47,55 @@ function testValueOf() {
     Assert<IsExact<ValueOf<number[] | string | null>, number | string | null>>,
     Assert<IsExact<ValueOf<boolean[] | typeof writableObj>, boolean | ValueOf<typeof writableObj>>>,
     Assert<IsExact<ValueOf<[string, number] | { keyA: bigint; keyB: null }>, string | number | bigint | null>>,
+  ];
+}
+
+// Moving unit tests in the scope of `ValueOf` since `DictionaryValues` is
+// deprecated in favour of `ValueOf`
+
+function testDictionaryValues() {
+  type cases = [
+    Assert<IsExact<ValueOf<Dictionary<string>>, string>>,
+    Assert<IsExact<ValueOf<Dictionary<number>>, number>>,
+    Assert<IsExact<ValueOf<Dictionary<boolean>>, boolean>>,
+    Assert<IsExact<ValueOf<Dictionary<bigint>>, bigint>>,
+    Assert<IsExact<ValueOf<Dictionary<symbol>>, symbol>>,
+    Assert<IsExact<ValueOf<Dictionary<undefined>>, undefined>>,
+    Assert<IsExact<ValueOf<Dictionary<null>>, null>>,
+    Assert<IsExact<ValueOf<Dictionary<string, "a" | "b">>, string>>,
+    Assert<IsExact<ValueOf<Dictionary<number, "a" | "b">>, number>>,
+    Assert<IsExact<ValueOf<Dictionary<boolean, "a" | "b">>, boolean>>,
+    Assert<IsExact<ValueOf<Dictionary<bigint, "a" | "b">>, bigint>>,
+    Assert<IsExact<ValueOf<Dictionary<symbol, "a" | "b">>, symbol>>,
+    Assert<IsExact<ValueOf<Dictionary<undefined, "a" | "b">>, undefined>>,
+    Assert<IsExact<ValueOf<Dictionary<null, "a" | "b">>, null>>,
+    Assert<IsExact<ValueOf<Dictionary<string, 1 | 2>>, string>>,
+    Assert<IsExact<ValueOf<Dictionary<number, 1 | 2>>, number>>,
+    Assert<IsExact<ValueOf<Dictionary<boolean, 1 | 2>>, boolean>>,
+    Assert<IsExact<ValueOf<Dictionary<bigint, 1 | 2>>, bigint>>,
+    Assert<IsExact<ValueOf<Dictionary<symbol, 1 | 2>>, symbol>>,
+    Assert<IsExact<ValueOf<Dictionary<undefined, 1 | 2>>, undefined>>,
+    Assert<IsExact<ValueOf<Dictionary<null, 1 | 2>>, null>>,
+    Assert<IsExact<ValueOf<SafeDictionary<string>>, string | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<number>>, number | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<boolean>>, boolean | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<bigint>>, bigint | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<symbol>>, symbol | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<undefined>>, undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<null>>, null | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<string, "a" | "b">>, string | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<number, "a" | "b">>, number | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<boolean, "a" | "b">>, boolean | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<bigint, "a" | "b">>, bigint | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<symbol, "a" | "b">>, symbol | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<undefined, "a" | "b">>, undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<null, "a" | "b">>, null | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<string, 1 | 2>>, string | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<number, 1 | 2>>, number | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<boolean, 1 | 2>>, boolean | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<bigint, 1 | 2>>, bigint | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<symbol, 1 | 2>>, symbol | undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<undefined, 1 | 2>>, undefined>>,
+    Assert<IsExact<ValueOf<SafeDictionary<null, 1 | 2>>, null | undefined>>,
   ];
 }

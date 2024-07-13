@@ -1,6 +1,6 @@
-import { Dictionary, DictionaryValues, DeepPartial, DeepReadonly, Opaque, DeepRequired, AsyncOrSync } from "../lib";
+import { Dictionary, DeepPartial, DeepReadonly, Opaque, DeepRequired, AsyncOrSync, ValueOf } from "../lib";
 
-const stringDict: Dictionary<string> = {
+const stringObj: Dictionary<string> = {
   a: "A",
   b: "B",
 };
@@ -19,8 +19,8 @@ const dictFromUnionType: Dictionary<number, DummyOptions> = {
   unknown: 3,
 };
 
-// and get dictionary values
-type stringDictValues = DictionaryValues<typeof stringDict>;
+// and get object values
+type stringObjValues = ValueOf<typeof stringObj>;
 
 type ComplexObject = {
   simple: number;
