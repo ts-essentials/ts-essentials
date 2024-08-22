@@ -1,4 +1,4 @@
-import { AssertTrue as Assert, Has, IsExact } from "conditional-type-checks";
+import { AssertTrue as Assert, Has } from "conditional-type-checks";
 import { Paths } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired, DiscriminatedUnionObject } from "./types";
 
