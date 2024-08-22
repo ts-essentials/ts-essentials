@@ -47,6 +47,6 @@ type UnionToTuple<UnionType, Accumulator extends string[] = []> = [UnionType] ex
     : never
   : never;
 
-export type DeepMarkRequired<Type, KeyPaths extends Paths<Type>> = HasParsablePath<Type> extends false
+export type DeepMarkRequired<Type, KeyPathUnion extends Paths<Type>> = HasParsablePath<Type> extends false
   ? Type
-  : RecursiveDeepMarkRequired<NonNullable<Type>, UnionToTuple<KeyPaths>>;
+  : RecursiveDeepMarkRequired<NonNullable<Type>, UnionToTuple<KeyPathUnion>>;
