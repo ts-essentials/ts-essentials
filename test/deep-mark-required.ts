@@ -15,7 +15,7 @@ function testDeepMarkRequired() {
     Assert<IsExact<P1, { address: { postcode?: string; city: string } }>>,
     Assert<IsExact<P2, { address?: { postcode?: string; city: string } }>>,
     Assert<IsExact<P3, { address: { postcode?: string; city?: string } }>>,
-    Assert<IsExact<P4, { address: { postcode: string; city: string } }>>,
+    Assert<IsExact<P4, Teacher>>,
   ];
 }
 
