@@ -83,6 +83,8 @@ type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = 
     : never
   : never;
 
+// NOTE: When replacing the body with `AreNonDistributiveEqual<TValue, TShape> extends true ? TValue : never`,
+// `isBCorBC3(bcOrBc3)` fails because `bcOrBc3` is inferred as `BC`???
 type PrimitiveExact<TValue, TShape> = [TValue] extends [TShape] ? ([TShape] extends [TValue] ? TValue : never) : never;
 
 export type Exact<TValue, TShape> = [TValue] extends [readonly any[]]
