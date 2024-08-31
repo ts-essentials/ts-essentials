@@ -9,28 +9,28 @@ type UnionToFunctionInsertion<TUnion> = (TUnion extends any ? (arg: () => TUnion
   ? TParam
   : never;
 
+// NOTE: When replacing the utility type with `UnionToTuple` from `../union-to-tuple`,
+// `isBC(bcOrBc3)` fails because `isBC` allows `BC | {readonly b: 2;readonly c: 3;}` as parameter???
 type UnionToTuple<TUnion> = UnionToFunctionInsertion<TUnion> extends () => infer TReturnType
   ? [...UnionToTuple<Exclude<TUnion, TReturnType>>, TReturnType]
   : [];
 
-type ExactUnionLength<
-  TValue,
-  TShape,
-  TValueLength = UnionToTuple<TValue>["length"],
-  TShapeLength = UnionToTuple<TShape>["length"],
-> = TValueLength extends TShapeLength ? true : false;
+type ExactUnionLength<TValue, TShape> = UnionToTuple<TValue>["length"] extends UnionToTuple<TShape>["length"]
+  ? true
+  : false;
 
-type Xor<T, U> = T extends true ? (U extends true ? true : false) : U extends false ? true : false;
+// NOTE: `XOR` cannot be used as it's only handy with objects, not booleans
+type BooleanXor<T, U> = T extends true ? (U extends true ? true : false) : U extends false ? true : false;
 
-type And<TTuple> = TTuple extends [infer Head, ...infer Rest]
+type BooleanAnd<TTuple> = TTuple extends [infer Head, ...infer Rest]
   ? Head extends true
-    ? And<Rest>
+    ? BooleanAnd<Rest>
     : false
   : TTuple extends []
   ? true
   : false;
 
-type ObjectKeyExact<TValue, TShape> = And<
+type ObjectKeyExact<TValue, TShape> = BooleanAnd<
   [IsNever<Exclude<keyof TValue, keyof TShape>>, IsNever<Exclude<keyof TShape, keyof TValue>>]
 >;
 
@@ -38,14 +38,14 @@ type ObjectValueDiff<TValue, TShape> = {
   [TKey in keyof TValue]: Exclude<TValue[TKey], TShape[TKey & keyof TShape]>;
 }[keyof TValue];
 
-type ObjectValueExact<TValue, TShape> = And<
+type ObjectValueExact<TValue, TShape> = BooleanAnd<
   [IsNever<ObjectValueDiff<TValue, TShape>>, IsNever<ObjectValueDiff<TShape, TValue>>]
 >;
 
 type ObjectExact<TValue, TShape> = [TValue] extends [TShape]
-  ? And<
+  ? BooleanAnd<
       [
-        Xor<IsUnion<TValue>, IsUnion<TShape>>,
+        BooleanXor<IsUnion<TValue>, IsUnion<TShape>>,
         ExactUnionLength<TValue, TShape>,
         ObjectKeyExact<TValue, TShape>,
         ObjectValueExact<TValue, TShape>,
@@ -65,7 +65,7 @@ type SameLength<TValue extends readonly any[], TShape extends readonly any[]> = 
   ? false
   : true;
 
-type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = And<
+type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = BooleanAnd<
   [
     // both arrays
     IsArray<TValue>,
@@ -73,7 +73,7 @@ type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = 
     // same length
     SameLength<TValue, TShape>,
     // both readonly or not
-    Xor<IsReadonly<TValue>, IsReadonly<TShape>>,
+    BooleanXor<IsReadonly<TValue>, IsReadonly<TShape>>,
   ]
 > extends true
   ? [TValue, TShape] extends [readonly (infer TValueElement)[], readonly (infer TShapeElement)[]]
