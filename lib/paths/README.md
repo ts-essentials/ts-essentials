@@ -16,6 +16,16 @@ It supports:
 - Object types
 - Tuples
 - As a side effect of `number`, float number access for arrays
+- Wildcard array indices (opt-in)
+
+An optional symbol may be specified that will satisfy any array index
+
+```ts
+type WildcardCompanyPaths = Paths<Company, { anyArrayIndexAccessor: "*" }>;
+
+const anyEmployee: WildcardCompanyPaths = 'employees.*';
+const anyEmployeeName: WildcardCompanyPaths = 'employees.*.name';
+```
 
 ⚠️ Limitations:
 
