@@ -11,7 +11,6 @@ type NonRecursiveType = Builtin | Promise<unknown> | ReadonlyMap<unknown, unknow
 
 type DefaultRecursivePathsOptions = {
   depth: [];
-  anyArrayIndexAccessor: false;
 };
 
 /**
@@ -21,7 +20,6 @@ type DefaultRecursivePathsOptions = {
  */
 type RecursivePathsOptions = {
   depth: any[];
-  anyArrayIndexAccessor: string | false;
 };
 
 /**
@@ -35,7 +33,7 @@ type RecursivePathsOptions = {
  */
 type DefaultPathsOptions = {
   depth: 7;
-  anyArrayIndexAccessor: false;
+  anyArrayIndexAccessor: `${number}`;
 };
 
 /**
@@ -47,7 +45,7 @@ type DefaultPathsOptions = {
  */
 type PathsOptions = {
   depth: number;
-  anyArrayIndexAccessor: string | false;
+  anyArrayIndexAccessor: string;
 };
 
 type Append<Tuple extends any[]> = [...Tuple, 0];
@@ -63,7 +61,7 @@ type RecursivePaths<
       ValueOf<{
         [Key in keyof Type]: Key extends Pathable
           ?
-              | `${AnyArrayIndexAccessorOrKey<Key, CallOptions>}`
+              | `${AnyArrayIndexAccessorOrKey<Key, UserOptions>}`
               | (CallOptions["depth"]["length"] extends UserOptions["depth"]
                   ? // Stop at the configured depth
                     never
@@ -76,12 +74,11 @@ type RecursivePaths<
                           UserOptions,
                           {
                             depth: Append<CallOptions["depth"]>;
-                            anyArrayIndexAccessor: AnyArrayIndexAccessor<Value, UserOptions>;
                           }
                         > extends infer Rest
                         ? IsNever<Rest> extends true
                           ? never
-                          : `${AnyArrayIndexAccessorOrKey<Key, CallOptions>}.${Rest & string}`
+                          : `${AnyArrayIndexAccessorOrKey<Key, UserOptions>}.${Rest & string}`
                         : never
                       : never
                     : never
@@ -104,16 +101,11 @@ type UnsafePaths<Type, Options extends Required<PathsOptions>> = Type extends Ty
     : never
   : never;
 
-type AnyArrayIndexAccessor<Type, Options extends Required<PathsOptions>> = Type extends any[]
-  ? Options["anyArrayIndexAccessor"] extends string
-    ? `${Options["anyArrayIndexAccessor"]}`
-    : false
-  : false;
-
-type AnyArrayIndexAccessorOrKey<
-  Key extends Pathable,
-  Options extends RecursivePathsOptions,
-> = Options["anyArrayIndexAccessor"] extends false ? Key : Key | Options["anyArrayIndexAccessor"];
+// prettier-ignore
+type AnyArrayIndexAccessorOrKey<Key extends Pathable, UserOptions extends Required<PathsOptions>> = 
+  Key extends number
+  ? Key | UserOptions["anyArrayIndexAccessor"]
+  : Key;
 
 export type Paths<Type, OverridePathOptions extends Partial<PathsOptions> = {}> = UnsafePaths<
   Type,

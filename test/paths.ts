@@ -201,6 +201,10 @@ function testAnyArrayIndexAccessor() {
     Assert<Has<With, `nested.array.${number}.bar`>>,
     Assert<Has<With, "nested.tuple.0">>,
     Assert<Has<With, "nested.tuple.2.good">>,
+    // @ts-expect-error: tuples should not be wildcard-able
+    Assert<Has<With, "nested.tuple.*">>,
+    // @ts-expect-error: tuples should not be wildcard-able
+    Assert<Has<With, "nested.tuple.*.good">>,
   ];
 
   type cases_without_any_accessor = [
