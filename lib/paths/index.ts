@@ -3,6 +3,7 @@ import { IsAny } from "../is-any";
 import { IsNever } from "../is-never";
 import { CreateTypeOptions } from "../create-type-options";
 import { ValueOf } from "../value-of";
+import { Primitive } from "../primitive";
 
 type Pathable = string | number;
 
@@ -50,8 +51,6 @@ type PathsOptions = {
 
 type Append<Tuple extends any[]> = [...Tuple, 0];
 
-type ReallyPrimitive = string | number | bigint | boolean | null | undefined;
-
 type RecursivePaths<
   Type,
   UserOptions extends Required<PathsOptions>,
@@ -78,9 +77,7 @@ type RecursivePaths<
                             depth: Append<CallOptions["depth"]>;
                           }
                         > extends infer Rest
-                        ? IsNever<Rest> extends true
-                          ? never
-                          : Rest extends ReallyPrimitive
+                        ? Rest extends Exclude<Primitive, symbol>
                           ? `${AnyArrayIndexAccessorOrKey<Key, UserOptions>}.${Rest}`
                           : never
                         : never
