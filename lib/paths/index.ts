@@ -50,6 +50,8 @@ type PathsOptions = {
 
 type Append<Tuple extends any[]> = [...Tuple, 0];
 
+type ReallyPrimitive = string | number | bigint | boolean | null | undefined;
+
 type RecursivePaths<
   Type,
   UserOptions extends Required<PathsOptions>,
@@ -78,7 +80,9 @@ type RecursivePaths<
                         > extends infer Rest
                         ? IsNever<Rest> extends true
                           ? never
-                          : `${AnyArrayIndexAccessorOrKey<Key, UserOptions>}.${Rest & string}`
+                          : Rest extends ReallyPrimitive
+                          ? `${AnyArrayIndexAccessorOrKey<Key, UserOptions>}.${Rest}`
+                          : never
                         : never
                       : never
                     : never
