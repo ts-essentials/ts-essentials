@@ -1,4 +1,8 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["lib/**/*.ts"]
+  "include": ["lib/**/*.ts", "test/**/*.ts"],
+  "exclude": [
+    // TODO: fix 4.6.4; 4.7.4; 4.8.4
+    "test/xor.ts",
+  ]
 }
