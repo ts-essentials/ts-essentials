@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 10.0.3
+
+### Patch Changes
+
+- d0ad79f: Improve `Paths` performance by limiting the depth of paths to 7 (default)
+
 ## 10.0.2
 
 ### Patch Changes
