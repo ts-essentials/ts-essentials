@@ -62,3 +62,7 @@ singlePet = { cat: "Timofey", dog: "Sirius" };
 ```
 
 TS Playground – https://tsplay.dev/wRb51w
+
+> [!NOTE]  
+> XOR utility type never inferred the right types in functions for TypeScript
+> versions between 4.5.x and 4.8.x.
