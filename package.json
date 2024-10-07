@@ -12,7 +12,7 @@
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
-    "test": "node scripts/update-tsconfig.js && prettier -c {bench,lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
+    "test": "node scripts/update-test-tsconfig.js && prettier -c {bench,lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
     "test:fix": "prettier --write {bench,lib,test}/**/*.ts && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
     "perf": "tsx ./bench/index.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
     "prerelease": "yarn test",

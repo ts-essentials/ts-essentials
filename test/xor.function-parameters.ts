@@ -1,3 +1,7 @@
+// XOR utility type didn't infer the correct types in functions parameters for
+// TypeScript versions between 4.5.x and 4.8.x, therefore conditionally run this
+// file using `scripts/update-test-tsconfig.js`
+
 import { isExact, XOR } from "../lib";
 
 const assertUndefined = isExact<undefined>();

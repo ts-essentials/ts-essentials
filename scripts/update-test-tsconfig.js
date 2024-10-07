@@ -2,8 +2,8 @@
 const fs = require("fs/promises");
 const { findTsVersion } = require("./find-ts-version");
 
-const RULES = {
-  XOR: "test/xor.ts4_9plus.ts",
+const CONDITIONAL_FILES = {
+  XOR_FUNCTION_PARAMETERS: "test/xor.function-parameters.ts",
 };
 
 /**
@@ -12,11 +12,17 @@ const RULES = {
  * @param {string} tsVersion
  */
 const applyRules = (json, tsVersion) => {
-  // reset
-  let exclude = (json.exclude || []).filter((v) => !Object.values(RULES).includes(v));
+  const ALL_CONDITIONAL_FILES = Object.values(CONDITIONAL_FILES);
+
+  // reset `exclude` to the original state, without any conditional files
+
+  let exclude = (json.exclude || []).filter((v) => !ALL_CONDITIONAL_FILES.includes(v));
 
   if (["4.5", "4.6", "4.7", "4.8"].includes(tsVersion)) {
-    exclude.push(RULES.XOR);
+    // XOR utility type never inferred the right types in functions parameters
+    // for TypeScript versions between 4.5.x and 4.8.x
+
+    exclude.push(CONDITIONAL_FILES.XOR_FUNCTION_PARAMETERS);
   }
 
   json.exclude = exclude;
