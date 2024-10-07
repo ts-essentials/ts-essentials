@@ -71,7 +71,9 @@ type RecursivePaths<
                         > extends infer Rest
                         ? IsNever<Rest> extends true
                           ? never
-                          : `${Key}.${Rest & string}`
+                          : Rest extends Pathable
+                          ? `${Key}.${Rest}`
+                          : never
                         : never
                       : never
                     : never
