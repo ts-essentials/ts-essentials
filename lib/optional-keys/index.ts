@@ -1,5 +1,5 @@
-export type OptionalKeys<Type> = Type extends unknown
+export type OptionalKeys<Type> = Type extends object
   ? {
-      [Key in Exclude<keyof Type, never>]-?: undefined extends { [Key2 in keyof Type]: never }[Key] ? Key : never;
-    }[keyof Type]
+      [Key in keyof Type]-?: undefined extends { [Key2 in keyof Type]: never }[Key] ? Key : never;
+    }[keyof Type & (Type extends ReadonlyArray<any> ? number : keyof Type)]
   : never;

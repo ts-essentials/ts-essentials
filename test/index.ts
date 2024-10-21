@@ -471,7 +471,7 @@ function testOptionalKeys() {
     Assert<IsExact<OptionalKeys<() => void>, never>>,
     Assert<IsExact<OptionalKeys<any[]>, never>>,
     Assert<IsExact<OptionalKeys<[1, 2]>, never>>,
-    // function with optional property
+    Assert<IsExact<OptionalKeys<[1, 2?]>, "1">>,
     Assert<IsExact<OptionalKeys<{ (): void; a?: 1 }>, "a">>,
     Assert<IsExact<OptionalKeys<{ (): void; a: 1 }>, never>>,
     Assert<IsExact<OptionalKeys<{}>, never>>,
@@ -507,8 +507,8 @@ function testRequiredKeys() {
     Assert<IsExact<RequiredKeys<any[]>, keyof any[]>>,
     Assert<IsExact<RequiredKeys<[1, 2]>, keyof [1, 2]>>,
     Assert<IsExact<RequiredKeys<{ (): void; a?: 1 }>, never>>,
-    // function with required property
     Assert<IsExact<RequiredKeys<{ (): void; a: 1 }>, "a">>,
+    Assert<IsExact<RequiredKeys<[1, 2?]>, Exclude<keyof [1, 2?], "1">>>,
     Assert<IsExact<RequiredKeys<{}>, never>>,
     Assert<IsExact<RequiredKeys<{ a: 1 }>, "a">>,
     Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
