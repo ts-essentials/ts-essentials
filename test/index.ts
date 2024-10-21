@@ -457,22 +457,23 @@ function testPickProperties() {
 
 function testOptionalKeys() {
   type cases = [
-    // @ts-expect-error converts to Number and gets its optional keys
     Assert<IsExact<OptionalKeys<number>, never>>,
-    // @ts-expect-error converts to String and gets its optional keys
     Assert<IsExact<OptionalKeys<string>, never>>,
-    // wtf?
-    Assert<IsExact<OptionalKeys<boolean>, () => boolean>>,
-    // @ts-expect-error converts to BigInt and gets its optional keys
+    Assert<IsExact<OptionalKeys<boolean>, never>>,
     Assert<IsExact<OptionalKeys<bigint>, never>>,
-    // wtf?
-    Assert<IsExact<OptionalKeys<symbol>, string | ((hint: string) => symbol) | (() => string) | (() => symbol)>>,
+    Assert<IsExact<OptionalKeys<symbol>, never>>,
     Assert<IsExact<OptionalKeys<undefined>, never>>,
     Assert<IsExact<OptionalKeys<null>, never>>,
     Assert<IsExact<OptionalKeys<Function>, never>>,
     Assert<IsExact<OptionalKeys<Date>, never>>,
     Assert<IsExact<OptionalKeys<Error>, "stack">>,
     Assert<IsExact<OptionalKeys<RegExp>, never>>,
+    Assert<IsExact<OptionalKeys<() => void>, never>>,
+    Assert<IsExact<OptionalKeys<any[]>, never>>,
+    Assert<IsExact<OptionalKeys<[1, 2]>, never>>,
+    // function with optional property
+    Assert<IsExact<OptionalKeys<{ (): void; a?: 1 }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ (): void; a: 1 }>, never>>,
     Assert<IsExact<OptionalKeys<{}>, never>>,
     Assert<IsExact<OptionalKeys<{ a: 1 }>, never>>,
     Assert<IsExact<OptionalKeys<{ a?: 1 }>, "a">>,
@@ -492,16 +493,22 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, keyof string>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
-    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<IsExact<RequiredKeys<symbol>, keyof symbol>>,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
     Assert<IsExact<RequiredKeys<null>, never>>,
     Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
     Assert<IsExact<RequiredKeys<Date>, keyof Date>>,
     Assert<IsExact<RequiredKeys<Error>, "name" | "message">>,
     Assert<IsExact<RequiredKeys<RegExp>, keyof RegExp>>,
+    Assert<IsExact<RequiredKeys<() => void>, never>>,
+    Assert<IsExact<RequiredKeys<any[]>, keyof any[]>>,
+    Assert<IsExact<RequiredKeys<[1, 2]>, keyof [1, 2]>>,
+    Assert<IsExact<RequiredKeys<{ (): void; a?: 1 }>, never>>,
+    // function with required property
+    Assert<IsExact<RequiredKeys<{ (): void; a: 1 }>, "a">>,
     Assert<IsExact<RequiredKeys<{}>, never>>,
     Assert<IsExact<RequiredKeys<{ a: 1 }>, "a">>,
     Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
