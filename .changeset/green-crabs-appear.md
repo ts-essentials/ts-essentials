@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Fix `Prettify<Type>`, it nows works correctly with function instantiations.
+`Prettify<Type>` returns the same type when the type parameter is a function
