@@ -558,20 +558,20 @@ function testNonEmptyArray() {
 
 function testReadonlyKeys() {
   type cases = [
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<string>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<number>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<boolean>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<bigint>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<symbol>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<null>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<ReadonlyKeys<undefined>, any>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<string>, keyof string>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<number>, keyof number>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<boolean>, keyof boolean>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<bigint>, keyof bigint>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<symbol>, keyof symbol>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<null>, keyof null>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<ReadonlyKeys<undefined>, keyof undefined>>,
     Assert<IsExact<ReadonlyKeys<{}>, never>>,
     Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 }>, "a">>,
     Assert<IsExact<ReadonlyKeys<{ readonly a: 1; readonly b?: 2 }>, "a" | "b">>,
@@ -588,20 +588,20 @@ function testReadonlyKeys() {
 
 function testWritableKeys() {
   type cases = [
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<string>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<number>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<boolean>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<bigint>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<symbol>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<null>, any>>,
-    // @ts-expect-error
-    Assert<IsExact<WritableKeys<undefined>, any>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<string>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<number>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<boolean>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<bigint>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<symbol>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<null>, never>>,
+    // @ts-expect-error primitives not allowed
+    Assert<IsExact<WritableKeys<undefined>, never>>,
     Assert<IsExact<WritableKeys<{}>, never>>,
     Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 }>, "b">>,
     Assert<IsExact<WritableKeys<{ readonly a: 1; b?: 2 }>, "b">>,
