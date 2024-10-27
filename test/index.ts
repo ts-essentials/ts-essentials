@@ -557,23 +557,64 @@ function testNonEmptyArray() {
 }
 
 function testReadonlyKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = ReadonlyKeys<T>;
-
-  type Expected = "a";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<string>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<number>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<boolean>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<bigint>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<symbol>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<null>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<ReadonlyKeys<undefined>, any>>,
+    Assert<IsExact<ReadonlyKeys<{}>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 }>, "a">>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; readonly b?: 2 }>, "a" | "b">>,
+    Assert<IsExact<ReadonlyKeys<{ readonly [x: string]: 1 }>, string | number>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1 } | { readonly b: 2; c?: 3 }>, "a" | "b">>,
+    Assert<IsExact<ReadonlyKeys<[1, 2?]>, never>>,
+    Assert<IsExact<ReadonlyKeys<readonly [1, 2?]>, "0" | "1">>,
+    Assert<IsExact<ReadonlyKeys<string[]>, never>>,
+    Assert<IsExact<ReadonlyKeys<readonly string[]>, number>>,
+    Assert<IsExact<ReadonlyKeys<() => void>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ (): void; readonly a: 1 }>, "a">>,
+  ];
 }
 
 function testWritableKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = WritableKeys<T>;
-
-  type Expected = "b";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<string>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<number>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<boolean>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<bigint>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<symbol>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<null>, any>>,
+    // @ts-expect-error
+    Assert<IsExact<WritableKeys<undefined>, any>>,
+    Assert<IsExact<WritableKeys<{}>, never>>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 }>, "b">>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b?: 2 }>, "b">>,
+    Assert<IsExact<WritableKeys<{ [x: string]: 1 }>, string | number>>,
+    Assert<IsExact<WritableKeys<{ readonly [x: string]: 1 }>, never>>,
+    Assert<IsExact<WritableKeys<{ a: 1 } | { readonly b: 2; c?: 3 }>, "a" | "c">>,
+    Assert<IsExact<WritableKeys<[1, 2?]>, keyof [1, 2?]>>,
+    Assert<IsExact<WritableKeys<readonly [1, 2?]>, Exclude<keyof (readonly [1, 2?]), "0" | "1">>>,
+    Assert<IsExact<WritableKeys<string[]>, keyof string[]>>,
+    Assert<IsExact<WritableKeys<readonly string[]>, Exclude<keyof (readonly string[]), number>>>,
+    Assert<IsExact<WritableKeys<() => void>, never>>,
+    Assert<IsExact<WritableKeys<{ (): void; a: 1 }>, "a">>,
+  ];
 }
 
 function testAssert() {

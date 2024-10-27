@@ -1,5 +1,3 @@
-import { IsFullyWritable } from "../is-fully-writable";
+import { ReadonlyKeys } from "../readonly-keys";
 
-export type WritableKeys<Type extends {}> = {
-  [Key in keyof Type]-?: IsFullyWritable<Pick<Type, Key>> extends true ? Key : never;
-}[keyof Type];
+export type WritableKeys<Type extends {}> = Type extends unknown ? Exclude<keyof Type, ReadonlyKeys<Type>> : never;
