@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-Fix `OptionalKeys<Type>`, it now works as expected with primitives and arrays
+`OptionalKeys<Type>` returns `never` for primitives and returns only optional indices for arrays and tuples
