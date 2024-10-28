@@ -1,5 +1,5 @@
-export type OptionalKeys<Type> = Type extends unknown
-  ? {
-      [Key in keyof Type]-?: undefined extends { [Key2 in keyof Type]: Key2 }[Key] ? Key : never;
-    }[keyof Type]
+export type OptionalKeys<Type> = Type extends object
+  ? keyof {
+      [Key in keyof Type as Type extends Required<Pick<Type, Key>> ? never : Key]: any;
+    }
   : never;
