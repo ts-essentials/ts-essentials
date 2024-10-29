@@ -1,5 +1,4 @@
 import { IsFullyWritable } from "../is-fully-writable";
-import { IsTuple } from "../is-tuple";
 
 export type ReadonlyKeys<Type extends object> = Type extends unknown
   ? keyof {

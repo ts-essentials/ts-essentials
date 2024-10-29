@@ -1,8 +1,8 @@
 // @ts-check
 const fs = require("fs");
 
-const FIRST_TYPESCRIPT_LINE = /typescript\@\^?(\d+.\d+(.\d+)?):/;
-const TYPESCRIPT_VERSION_LINE = /version "(\d+.\d+)(.\d+)?"/;
+const FIRST_TYPESCRIPT_LINE = /typescript@\S*:/;
+const TYPESCRIPT_VERSION_LINE = /version "(\d+\.\d+\.\d+)"/;
 
 /**
  * Finds TypeScript version in a filename
