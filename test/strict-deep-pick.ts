@@ -1,5 +1,4 @@
 import { StrictDeepPick } from "../lib";
-import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testStrictDeepPickInRequiredObject() {
