@@ -21,8 +21,8 @@ const applyRules = (json, tsVersion) => {
 
   let exclude = (json.exclude || []).filter((v) => !ALL_CONDITIONAL_FILES.includes(v));
 
-  Object.entries(CONDITIONAL_FILES).forEach(([file, version]) => {
-    if (semver.satisfies(tsVersion, version)) {
+  Object.entries(CONDITIONAL_FILES).forEach(([file, tsVersionConstraint]) => {
+    if (semver.satisfies(tsVersion, tsVersionConstraint)) {
       exclude.push(file);
     }
   });
