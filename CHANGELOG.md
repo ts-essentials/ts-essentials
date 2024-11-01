@@ -1,5 +1,17 @@
 # ts-essentials
 
+## 10.0.3
+
+### Patch Changes
+
+- cc7b838: `ReadonlyKeys<Type>` and `WritableKeys<Type>` now return only the readonly and writable keys, respectively,
+  for arrays and tuples
+- d6867ea: `Prettify<Type>` returns the same type when the type parameter is a function
+- bc51ac5: `OptionalKeys<Type>` returns `never` for primitives and returns only optional indices for arrays and tuples
+- d0ad79f: Improve `Paths` performance by limiting the depth of paths to 7 (default)
+- 162fd9d: Add `Paths<Type, { anyArrayIndexAccessor: '*' }>`, a string literal representing a catch-all or "wildcard"
+  when indexing on arrays.
+
 ## 10.0.2
 
 ### Patch Changes
