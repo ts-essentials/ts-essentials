@@ -41,7 +41,9 @@ function testStrictExtract() {
       IsExact<
         StrictExtract<
           Animal,
-          TsVersion extends "4.6" | "4.7" ? { type: "cat" } | { type: "dog" } : { type: "cat" | "dog" }
+          TsVersion extends `4.6.${number}` | `4.7.${number}`
+            ? { type: "cat" } | { type: "dog" }
+            : { type: "cat" | "dog" }
         >,
         Cat | Dog
       >
@@ -53,7 +55,7 @@ function testStrictExtract() {
       IsExact<
         StrictExtract<
           Animal,
-          TsVersion extends "4.6" | "4.7"
+          TsVersion extends `4.6.${number}` | `4.7.${number}`
             ? { type: "cat" } | { type: "dog" } | { type: "mouse" }
             : { type: "cat" | "dog" | "mouse" }
         >,

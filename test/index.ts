@@ -557,23 +557,55 @@ function testNonEmptyArray() {
 }
 
 function testReadonlyKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = ReadonlyKeys<T>;
-
-  type Expected = "a";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<string>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<number>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<boolean>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<bigint>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<symbol>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<null>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<undefined>,
+    Assert<IsExact<ReadonlyKeys<{}>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 }>, "a">>,
+    Assert<IsExact<ReadonlyKeys<{ a?: 1; readonly b?: 2 }>, "b">>,
+    Assert<IsExact<ReadonlyKeys<{ [x: string]: 1 }>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 } | { readonly c: 3; d?: 4 }>, "a" | "c">>,
+    Assert<IsExact<ReadonlyKeys<() => void>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ (): void; readonly a: 1 }>, "a">>,
+  ];
 }
 
 function testWritableKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = WritableKeys<T>;
-
-  type Expected = "b";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error primitives not allowed
+    WritableKeys<string>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<number>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<boolean>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<bigint>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<symbol>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<null>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<undefined>,
+    Assert<IsExact<WritableKeys<{}>, never>>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 }>, "b">>,
+    Assert<IsExact<WritableKeys<{ a?: 1; readonly b?: 2 }>, "a">>,
+    Assert<IsExact<WritableKeys<{ [x: string]: 1 }>, string | number>>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 } | { readonly c: 3; d?: 4 }>, "b" | "d">>,
+    Assert<IsExact<WritableKeys<() => void>, never>>,
+    Assert<IsExact<WritableKeys<{ (): void; a: 1 }>, "a">>,
+  ];
 }
 
 function testAssert() {
