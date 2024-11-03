@@ -2,4 +2,4 @@
 "ts-essentials": patch
 ---
 
-`MarkOptional<Type>` is now assignable to `Partial<Type>`
+`MarkOptional<Type, Keys extends keyof Type>` is now assignable to `Partial<Type>`
