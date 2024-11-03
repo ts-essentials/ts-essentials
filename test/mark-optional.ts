@@ -55,6 +55,7 @@ function testAssignability() {
   // @ts-expect-error: Type 'Omit<Example, "required1"> & Partial<Pick<Example, "required1">>' is not assignable to type 'Example'
   example = markedOptionalExample;
   optionalExample = example;
+  optionalExample = markedOptionalExample;
   markedOptionalExample = example;
 
   // it verifies that type `Partial<Type>` is NOT assignable to type `Type`
@@ -69,5 +70,12 @@ function testAssignability() {
     object: Type,
     propertyNames: PropertyName[],
     // @ts-expect-error: Type 'MarkOptional<Type, PropertyName>' is not assignable to type 'Type'
+  ) => object is MarkOptional<Type, PropertyName>;
+
+  // it verifies that type `MarkOptional<Type, PropertyName>` is assignable to type `Partial<Type>`
+
+  let assignabilityCheck3: <Type, PropertyName extends keyof Type>(
+    object: Partial<Type>,
+    propertyNames: PropertyName[],
   ) => object is MarkOptional<Type, PropertyName>;
 }
