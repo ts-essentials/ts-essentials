@@ -270,6 +270,10 @@ facilitate common type transformations. These utilities are available globally.
 | `^1.0.1`        | `^3.2.2` / dev                                                                        |
 | `^1.0.0`        | `^3.0.3` / dev                                                                        |
 
+## Limitations
+
+- This project doesn't use `extends` Constraints on `infer` Type Variables as it's introduced in TypeScript 4.7, but currently ts-essentials supports versions below, e.g. TypeScript 4.5. Read more in https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#extends-constraints-on-infer-type-variables
+
 ## Contributors
 
 Special shout-out to active contributors:
