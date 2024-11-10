@@ -46,10 +46,13 @@ function preserveNullOnObjects() {
 
   type P0 = DeepMarkRequired<Teacher, "address">;
   type P1 = DeepMarkRequired<Teacher, "address.postcode">;
+  // @ts-expect-error: non-existing path
+  type P2 = DeepMarkRequired<Teacher, "address.postcode1">;
 
   type cases = [
     Assert<IsExact<P0, { address: { postcode?: string } | null }>>,
     Assert<IsExact<P1, { address?: { postcode: string } | null }>>,
+    Assert<IsExact<P2, Teacher>>,
   ];
 }
 
