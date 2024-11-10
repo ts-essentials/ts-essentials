@@ -1,7 +1,7 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { DeepPartial, DeepMarkRequired, Paths } from "../lib";
+import { DeepPartial, DeepMarkRequired, Paths, DeepNullable } from "../lib";
 
-function testDeepMarkRequired() {
+function testWithDeepPartial() {
   type Teacher = { address: { postcode: string; city: string } };
 
   type P0 = DeepMarkRequired<DeepPartial<Teacher>, never>;
@@ -16,6 +16,24 @@ function testDeepMarkRequired() {
     Assert<IsExact<P2, { address?: { postcode?: string; city: string } }>>,
     Assert<IsExact<P3, { address: { postcode?: string; city?: string } }>>,
     Assert<IsExact<P4, Teacher>>,
+  ];
+}
+
+function testWithDeepPartialAndDeepNullable() {
+  type Teacher = { address: { postcode: string; city: string } };
+
+  type P0 = DeepMarkRequired<DeepPartial<DeepNullable<Teacher>>, never>;
+  type P1 = DeepMarkRequired<DeepPartial<DeepNullable<Teacher>>, "address" | "address.city">;
+  type P2 = DeepMarkRequired<DeepPartial<DeepNullable<Teacher>>, "address.city">;
+  type P3 = DeepMarkRequired<DeepPartial<DeepNullable<Teacher>>, "address">;
+  type P4 = DeepMarkRequired<DeepPartial<DeepNullable<Teacher>>, Paths<Teacher>>;
+
+  type cases = [
+    Assert<IsExact<P0, { address?: { postcode?: string | null; city?: string | null } }>>,
+    Assert<IsExact<P1, { address: { postcode?: string | null; city: string | null } }>>,
+    Assert<IsExact<P2, { address?: { postcode?: string | null; city: string | null } }>>,
+    Assert<IsExact<P3, { address: { postcode?: string | null; city?: string | null } }>>,
+    Assert<IsExact<P4, DeepNullable<Teacher>>>,
   ];
 }
 
