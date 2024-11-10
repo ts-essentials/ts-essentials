@@ -27,4 +27,4 @@ type RecursiveDeepMarkRequired<Accumulator, KeyPaths extends string[]> = KeyPath
 
 export type DeepMarkRequired<Type, KeyPathUnion extends Paths<Type>> = HasParsablePath<Type> extends false
   ? Type
-  : RecursiveDeepMarkRequired<NonNullable<Type>, UnionToTuple<KeyPathUnion>>;
+  : RecursiveDeepMarkRequired<Type, UnionToTuple<KeyPathUnion>>;
