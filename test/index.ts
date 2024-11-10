@@ -457,22 +457,23 @@ function testPickProperties() {
 
 function testOptionalKeys() {
   type cases = [
-    // @ts-expect-error converts to Number and gets its optional keys
     Assert<IsExact<OptionalKeys<number>, never>>,
-    // @ts-expect-error converts to String and gets its optional keys
     Assert<IsExact<OptionalKeys<string>, never>>,
-    // wtf?
-    Assert<IsExact<OptionalKeys<boolean>, () => boolean>>,
-    // @ts-expect-error converts to BigInt and gets its optional keys
+    Assert<IsExact<OptionalKeys<boolean>, never>>,
     Assert<IsExact<OptionalKeys<bigint>, never>>,
-    // wtf?
-    Assert<IsExact<OptionalKeys<symbol>, string | ((hint: string) => symbol) | (() => string) | (() => symbol)>>,
+    Assert<IsExact<OptionalKeys<symbol>, never>>,
     Assert<IsExact<OptionalKeys<undefined>, never>>,
     Assert<IsExact<OptionalKeys<null>, never>>,
     Assert<IsExact<OptionalKeys<Function>, never>>,
     Assert<IsExact<OptionalKeys<Date>, never>>,
     Assert<IsExact<OptionalKeys<Error>, "stack">>,
     Assert<IsExact<OptionalKeys<RegExp>, never>>,
+    Assert<IsExact<OptionalKeys<() => void>, never>>,
+    Assert<IsExact<OptionalKeys<any[]>, never>>,
+    Assert<IsExact<OptionalKeys<[1, 2]>, never>>,
+    Assert<IsExact<OptionalKeys<[1, 2?]>, "1">>,
+    Assert<IsExact<OptionalKeys<{ (): void; a?: 1 }>, "a">>,
+    Assert<IsExact<OptionalKeys<{ (): void; a: 1 }>, never>>,
     Assert<IsExact<OptionalKeys<{}>, never>>,
     Assert<IsExact<OptionalKeys<{ a: 1 }>, never>>,
     Assert<IsExact<OptionalKeys<{ a?: 1 }>, "a">>,
@@ -492,16 +493,22 @@ function testOptionalKeys() {
 function testRequiredKeys() {
   type cases = [
     Assert<IsExact<RequiredKeys<number>, keyof Number>>,
-    Assert<IsExact<RequiredKeys<string>, SymbolConstructor["iterator"]>>,
+    Assert<IsExact<RequiredKeys<string>, keyof string>>,
     Assert<IsExact<RequiredKeys<boolean>, keyof Boolean>>,
     Assert<IsExact<RequiredKeys<bigint>, keyof BigInt>>,
-    Assert<IsExact<RequiredKeys<symbol>, typeof Symbol.toPrimitive | typeof Symbol.toStringTag>>,
+    Assert<IsExact<RequiredKeys<symbol>, keyof symbol>>,
     Assert<IsExact<RequiredKeys<undefined>, never>>,
     Assert<IsExact<RequiredKeys<null>, never>>,
     Assert<IsExact<RequiredKeys<Function>, keyof Function>>,
     Assert<IsExact<RequiredKeys<Date>, keyof Date>>,
     Assert<IsExact<RequiredKeys<Error>, "name" | "message">>,
     Assert<IsExact<RequiredKeys<RegExp>, keyof RegExp>>,
+    Assert<IsExact<RequiredKeys<() => void>, never>>,
+    Assert<IsExact<RequiredKeys<any[]>, keyof any[]>>,
+    Assert<IsExact<RequiredKeys<[1, 2]>, keyof [1, 2]>>,
+    Assert<IsExact<RequiredKeys<{ (): void; a?: 1 }>, never>>,
+    Assert<IsExact<RequiredKeys<{ (): void; a: 1 }>, "a">>,
+    Assert<IsExact<RequiredKeys<[1, 2?]>, Exclude<keyof [1, 2?], "1">>>,
     Assert<IsExact<RequiredKeys<{}>, never>>,
     Assert<IsExact<RequiredKeys<{ a: 1 }>, "a">>,
     Assert<IsExact<RequiredKeys<{ a?: 1 }>, never>>,
@@ -550,23 +557,55 @@ function testNonEmptyArray() {
 }
 
 function testReadonlyKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = ReadonlyKeys<T>;
-
-  type Expected = "a";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<string>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<number>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<boolean>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<bigint>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<symbol>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<null>,
+    // @ts-expect-error primitives not allowed
+    ReadonlyKeys<undefined>,
+    Assert<IsExact<ReadonlyKeys<{}>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 }>, "a">>,
+    Assert<IsExact<ReadonlyKeys<{ a?: 1; readonly b?: 2 }>, "b">>,
+    Assert<IsExact<ReadonlyKeys<{ [x: string]: 1 }>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ readonly a: 1; b: 2 } | { readonly c: 3; d?: 4 }>, "a" | "c">>,
+    Assert<IsExact<ReadonlyKeys<() => void>, never>>,
+    Assert<IsExact<ReadonlyKeys<{ (): void; readonly a: 1 }>, "a">>,
+  ];
 }
 
 function testWritableKeys() {
-  type T = { readonly a: number; b: string };
-
-  type Actual = WritableKeys<T>;
-
-  type Expected = "b";
-
-  type Test = Assert<IsExact<Actual, Expected>>;
+  type cases = [
+    // @ts-expect-error primitives not allowed
+    WritableKeys<string>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<number>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<boolean>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<bigint>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<symbol>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<null>,
+    // @ts-expect-error primitives not allowed
+    WritableKeys<undefined>,
+    Assert<IsExact<WritableKeys<{}>, never>>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 }>, "b">>,
+    Assert<IsExact<WritableKeys<{ a?: 1; readonly b?: 2 }>, "a">>,
+    Assert<IsExact<WritableKeys<{ [x: string]: 1 }>, string | number>>,
+    Assert<IsExact<WritableKeys<{ readonly a: 1; b: 2 } | { readonly c: 3; d?: 4 }>, "b" | "d">>,
+    Assert<IsExact<WritableKeys<() => void>, never>>,
+    Assert<IsExact<WritableKeys<{ (): void; a: 1 }>, "a">>,
+  ];
 }
 
 function testAssert() {

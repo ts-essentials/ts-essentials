@@ -186,3 +186,31 @@ function testDepth2() {
     Assert<Assignable<P, "nested.tuple.2.good">>,
   ];
 }
+
+/**
+ * Configuration allows wildcard accessors for array indices.
+ */
+function testAnyArrayIndexAccessor() {
+  type With = Paths<ComplexNestedRequired, { anyArrayIndexAccessor: "*" }>;
+  type Without = Paths<ComplexNestedRequired>;
+
+  type cases_with_any_accessor = [
+    Assert<Has<With, "nested.array.*">>,
+    Assert<Has<With, "nested.array.*.bar">>,
+    Assert<Has<With, `nested.array.${number}`>>,
+    Assert<Has<With, `nested.array.${number}.bar`>>,
+    Assert<Has<With, "nested.tuple.0">>,
+    Assert<Has<With, "nested.tuple.2.good">>,
+    // @ts-expect-error: tuples should not be wildcard-able
+    Assert<Has<With, "nested.tuple.*">>,
+    // @ts-expect-error: tuples should not be wildcard-able
+    Assert<Has<With, "nested.tuple.*.good">>,
+  ];
+
+  type cases_without_any_accessor = [
+    // @ts-expect-error: anyArrayIndexAccessor is not configured
+    Assert<Has<Without, "nested.array.*">>,
+    // @ts-expect-error: anyArrayIndexAccessor is not configured
+    Assert<Has<Without, "nested.array.*.bar">>,
+  ];
+}

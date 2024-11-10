@@ -1,6 +1,5 @@
 import { StrictDeepOmit } from "../lib";
 import { complexNestedRequired, complexNestedUndefined } from "./const";
-import { TsVersion } from "./ts-version";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
 
 function testDeepOmitInRequiredObject() {
