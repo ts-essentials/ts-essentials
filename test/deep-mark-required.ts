@@ -37,6 +37,22 @@ function testWithDeepPartialAndDeepNullable() {
   ];
 }
 
+function preserveNullOnObjects() {
+  type Teacher = {
+    address?: {
+      postcode?: string;
+    } | null;
+  };
+
+  type P0 = DeepMarkRequired<Teacher, "address">;
+  type P1 = DeepMarkRequired<Teacher, "address.postcode">;
+
+  type cases = [
+    Assert<IsExact<P0, { address: { postcode?: string } | null }>>,
+    Assert<IsExact<P1, { address?: { postcode: string } | null }>>,
+  ];
+}
+
 function testRecursiveLimitations() {
   type ObjectOfDepth<
     Depth extends number,
