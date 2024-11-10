@@ -37,6 +37,18 @@ function testWithDeepPartialAndDeepNullable() {
   ];
 }
 
+function testWithUnions() {
+  type Teacher = { address?: { postcode?: string } | { city?: string } };
+
+  type P0 = DeepMarkRequired<Teacher, never>;
+  type P1 = DeepMarkRequired<Teacher, "address.postcode">;
+
+  type cases = [
+    Assert<IsExact<P0, Teacher>>,
+    Assert<IsExact<P1, { address?: { postcode: string } | { city?: string } }>>,
+  ];
+}
+
 function preserveNullOnObjects() {
   type Teacher = {
     address?: {
