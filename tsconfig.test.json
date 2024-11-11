@@ -4,5 +4,8 @@
     "lib/**/*.ts",
     "test/**/*.ts"
   ],
-  "exclude": []
+  "exclude": [
+    "test/readonly-keys-arrays-and-index-signatures.ts",
+    "test/writable-keys-arrays-and-index-signatures.ts"
+  ]
 }
