@@ -58,6 +58,8 @@ function testAssignability() {
   example = markedRequiredExample;
   // @ts-expect-error: Type 'Example' is not assignable to type 'Required<Example>'
   requiredExample = example;
+  // @ts-expect-error: Type 'MarkRequired<Example, "optional1">' is not assignable to type 'Required<Example>'
+  requiredExample = markedRequiredExample;
   // @ts-expect-error: Type 'Example' is not assignable to type 'Required<Pick<Example, "optional1">>'
   markedRequiredExample = example;
 
@@ -71,5 +73,20 @@ function testAssignability() {
   let assignabilityCheck2: <Type, PropertyName extends keyof Type>(
     object: Type,
     propertyNames: PropertyName[],
+  ) => object is MarkRequired<Type, PropertyName>;
+
+  // it verifies that type `MarkRequired<Type, PropertyName>` is assignable to type `Partial<Type>`
+
+  let assignabilityCheck3: <Type, PropertyName extends keyof Type>(
+    object: Partial<Type>,
+    propertyNames: PropertyName[],
+  ) => object is MarkRequired<Type, PropertyName>;
+
+  // it verifies that type `MarkRequired<Type, PropertyName>` is NOT assignable to type `Required<Type>`
+
+  let assignabilityCheck4: <Type, PropertyName extends keyof Type>(
+    object: Required<Type>,
+    propertyNames: PropertyName[],
+    // @ts-expect-error: Type 'MarkRequired<Type, PropertyName>' is NOT assignable to type 'Required<Type>'
   ) => object is MarkRequired<Type, PropertyName>;
 }

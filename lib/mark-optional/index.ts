@@ -1,3 +1,5 @@
+import { OptionalKeys } from "../optional-keys";
+
 export type MarkOptional<Type, Keys extends keyof Type> = Type extends Type
-  ? Omit<Type, Keys> & Partial<Pick<Type, Keys>>
+  ? Partial<Type> & Required<Omit<Type, Keys | OptionalKeys<Type>>>
   : never;
