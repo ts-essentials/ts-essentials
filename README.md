@@ -278,6 +278,7 @@ Special shout-out to active contributors:
 - [Artur Kozak](https://x.com/quezak2) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=quezak)
 - [Zihua Wu](https://x.com/gabriel_wzh) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=lucifer1004)
 - [Alexey Berezin](https://x.com/beraliv) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=Beraliv)
+- [Som Shekhar Mukherjee](https://github.com/som-sm) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=som-sm)
 
 And thanks goes to these wonderful people:
 
@@ -318,7 +319,6 @@ And thanks goes to these wonderful people:
 - [MT Lewis](https://github.com/mtlewis) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mtlewis)
 - [Daniel Bertocci](https://github.com/DanielBertocci) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=DanielBertocci)
 - [Myles J](https://github.com/mylesj) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mylesj)
-- [Som Shekhar Mukherjee](https://github.com/som-sm) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=som-sm)
 
 💻 - contributions, i.e. links to commits by the user on this project
 
