@@ -1,1 +1,3 @@
-export type MarkRequired<Type, Keys extends keyof Type> = Type extends Type ? Type & Required<Pick<Type, Keys>> : never;
+export type MarkRequired<Type, Keys extends keyof Type> = Type extends Type
+  ? Type & Required<Omit<Type, Exclude<keyof Type, Keys>>>
+  : never;

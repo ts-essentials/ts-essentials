@@ -15,6 +15,7 @@ function testMarkWritable() {
 
   type cases = [
     Assert<IsExact<MarkWritable<Example, never>, Example>>,
+    Assert<IsExact<MarkWritable<Example, any>, Writable<Example>>>,
     Assert<IsExact<MarkWritable<Example, WritableKeys<Example>>, Example>>,
     Assert<IsExact<MarkWritable<Example, ReadonlyKeys<Example>>, Writable<Example>>>,
     Assert<IsExact<ReadonlyKeys<ExampleWithWritableReadonly1>, "readonly2">>,
