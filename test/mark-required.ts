@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkRequired, RequiredKeys, OptionalKeys, Prettify } from "../lib";
+import { MarkRequired, RequiredKeys, OptionalKeys } from "../lib";
 
 type Example = {
   readonly readonly1: Date;
@@ -34,8 +34,9 @@ function testMarkRequired() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkRequired<Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">, "optional1">
+  type UnionExample = MarkRequired<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">,
+    "optional1"
   >;
 
   let unionElementFields: UnionExample = {
@@ -51,7 +52,7 @@ function testUnionTypes() {
 
 declare let example: Example;
 declare let requiredExample: Required<Example>;
-declare let markedRequiredExample: Prettify<MarkRequired<Example, "optional1">>;
+declare let markedRequiredExample: MarkRequired<Example, "optional1">;
 
 function testAssignability() {
   example = requiredExample;
