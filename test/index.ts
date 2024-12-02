@@ -625,15 +625,29 @@ function testNoop() {
   const callback: (_: number) => void = noop;
 }
 
-function testHeadTail() {
+function testHead() {
   type List1 = [number, string, boolean, "a" | "b"];
 
   type TestHead = Assert<IsExact<Head<List1>, number>>;
   type TestHeadOnEmpty = Assert<IsExact<Head<[]>, never>>;
+}
 
-  type TestTail = Assert<IsExact<Tail<List1>, [string, boolean, "a" | "b"]>>;
-  type TestTailOnEmpty = Assert<IsExact<Tail<[]>, never>>;
-  type TestTailOn1Elem = Assert<IsExact<Tail<[number]>, []>>;
+function testTail() {
+  type cases = [
+    Assert<IsExact<Tail<[]>, never>>,
+    Assert<IsExact<Tail<readonly []>, never>>,
+    Assert<IsExact<Tail<[1, 2, 3 | 4]>, [2, 3 | 4]>>,
+    Assert<IsExact<Tail<readonly [1, 2, 3 | 4]>, [2, 3 | 4]>>,
+    Assert<IsExact<Tail<[1]>, []>>,
+    Assert<IsExact<Tail<[1?]>, []>>,
+    Assert<IsExact<Tail<[1, 2] | [3, 4]>, [2] | [4]>>,
+    Assert<IsExact<Tail<[1?, 2?, 3?]>, [2?, 3?]>>,
+    Assert<IsExact<Tail<[1, 2, ...number[]]>, [2, ...number[]]>>,
+    Assert<IsExact<Tail<number[]>, number[]>>,
+    Assert<IsExact<Tail<readonly number[]>, number[]>>,
+    Assert<IsExact<Tail<any>, unknown[]>>,
+    Assert<IsExact<Tail<never>, never>>,
+  ];
 }
 
 function testExact() {
