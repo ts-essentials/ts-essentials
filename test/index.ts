@@ -645,7 +645,8 @@ function testTail() {
     Assert<IsExact<Tail<[1, 2, ...number[]]>, [2, ...number[]]>>,
     Assert<IsExact<Tail<number[]>, number[]>>,
     Assert<IsExact<Tail<readonly number[]>, number[]>>,
-    Assert<IsExact<Tail<any>, unknown[]>>,
+    Assert<IsExact<Tail<any[]>, any[]>>,
+    Assert<IsExact<Tail<any>, unknown[]>>, // refer https://github.com/ts-essentials/ts-essentials/pull/424#discussion_r1867834519 for why it's unknown[]
     Assert<IsExact<Tail<never>, never>>,
   ];
 }
