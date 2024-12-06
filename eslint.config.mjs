@@ -4,7 +4,7 @@ import typescriptEslintParser from "@typescript-eslint/parser";
 export default [
   {
     ...expectType,
-    files: ["test/**/*.ts"],
+    files: ["test/**/*.display.ts"],
     languageOptions: {
       parser: typescriptEslintParser,
       parserOptions: {
