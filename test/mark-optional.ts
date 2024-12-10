@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkOptional, OptionalKeys, Prettify, RequiredKeys } from "../lib";
+import { MarkOptional, OptionalKeys, RequiredKeys } from "../lib";
 
 type Example = {
   required1: number;
@@ -30,8 +30,9 @@ function testMarkOptional() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkOptional<Pick<Example, "required1" | "optional1"> | Pick<Example, "required2" | "optional1">, "optional1">
+  type UnionExample = MarkOptional<
+    Pick<Example, "required1" | "optional1"> | Pick<Example, "required2" | "optional1">,
+    "optional1"
   >;
 
   let unionElementFields: UnionExample = {
@@ -47,7 +48,7 @@ function testUnionTypes() {
 
 declare let example: Example;
 declare let optionalExample: Partial<Example>;
-declare let markedOptionalExample: Prettify<MarkOptional<Example, "required1">>;
+declare let markedOptionalExample: MarkOptional<Example, "required1">;
 
 function testAssignability() {
   // @ts-expect-error: Type 'Partial<Example>' is not assignable to type 'Example'
