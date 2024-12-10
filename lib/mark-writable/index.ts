@@ -3,5 +3,5 @@ import { WritableKeys } from "../writable-keys";
 import { Prettify } from "../prettify";
 
 export type MarkWritable<Type, Keys extends keyof Type> = Type extends Type
-  ? Prettify<Readonly<Type> & Writable<Pick<Type, (Type extends object ? WritableKeys<Type> : never) | Keys>>>
+  ? Prettify<Readonly<Type> & Writable<Omit<Type, Exclude<keyof Type, WritableKeys<Type & object> | Keys>>>>
   : never;

@@ -11,6 +11,7 @@ type Example = {
 function testMarkOptional() {
   type cases = [
     Assert<IsExact<MarkOptional<Example, never>, Example>>,
+    Assert<IsExact<MarkOptional<Example, any>, Partial<Example>>>,
     Assert<IsExact<MarkOptional<Example, OptionalKeys<Example>>, Example>>,
     Assert<IsExact<MarkOptional<Example, RequiredKeys<Example>>, Partial<Example>>>,
     Assert<
