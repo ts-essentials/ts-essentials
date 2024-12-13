@@ -39,17 +39,18 @@ export * from "./mark-writable";
 // Deep wrapper types
 
 export * from "./buildable";
+export * from "./deep-mark-required";
 export * from "./deep-non-nullable";
 export * from "./deep-nullable";
-export * from "./strict-deep-omit";
 export * from "./deep-omit";
 export * from "./deep-partial";
-export * from "./strict-deep-pick";
 export * from "./deep-pick";
 export * from "./deep-readonly";
 export * from "./deep-required";
 export * from "./deep-undefinable";
 export * from "./deep-writable";
+export * from "./strict-deep-omit";
+export * from "./strict-deep-pick";
 
 // Key types
 

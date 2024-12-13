@@ -87,7 +87,7 @@ function testObjectUnionType() {
 
   let abcOrBc: ABC | BC = { a: 1, b: 2, c: 3 };
   let bc3 = { b: 2, c: 3 } as const;
-  let bcOrBc3: BC | typeof bc3 = bc3;
+  let bcOrBc3 = bc3 as unknown as BC | typeof bc3;
 
   const isBC = isExact<BC>();
 
