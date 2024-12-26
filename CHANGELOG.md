@@ -1,5 +1,18 @@
 # ts-essentials
 
+## 10.0.4
+
+### Patch Changes
+
+- ecb490b: `Head<Type>` no longer includes an extraneous `| undefined` when instantiated with a union of empty and
+  non-empty tuple, like `[] | [1, 2]`
+- 859d85c: `MarkOptional<Type, Keys>` is now assignable to `Partial<Type>`
+- dda4def: `Tail<Type>` now works with readonly arrays and also correctly returns the tail for tuples with all optional
+  members. Additionally, it now acts as an identity for non-tuple arrays, i.e., it returns `Type` when `Type` is a
+  non-tuple array, such as `string[]`, `number[]`, etc.
+- d02bf22: Fix `MarkRequired<Type, Keys>` & `MarkWritable<Type, Keys>` types when `Keys` is `any`
+- d3b56d7: Prettify the output of `Mark-*` and `Merge` types
+
 ## 10.0.3
 
 ### Patch Changes
