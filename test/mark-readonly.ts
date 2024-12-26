@@ -15,6 +15,7 @@ function testMarkReadonly() {
 
   type cases = [
     Assert<IsExact<MarkReadonly<Example, never>, Example>>,
+    Assert<IsExact<MarkReadonly<Example, any>, Readonly<Example>>>,
     Assert<IsExact<MarkReadonly<Example, ReadonlyKeys<Example>>, Example>>,
     Assert<IsExact<MarkReadonly<Example, WritableKeys<Example>>, Readonly<Example>>>,
     Assert<IsExact<ReadonlyKeys<ExampleWithReadonlyRequired1>, "readonly1" | "readonly2" | "required1">>,

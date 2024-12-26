@@ -13,6 +13,7 @@ type Example = {
 function testMarkRequired() {
   type cases = [
     Assert<IsExact<MarkRequired<Example, never>, Example>>,
+    Assert<IsExact<MarkRequired<Example, any>, Required<Example>>>,
     Assert<IsExact<MarkRequired<Example, RequiredKeys<Example>>, Example>>,
     Assert<IsExact<MarkRequired<Example, OptionalKeys<Example>>, Required<Example>>>,
     Assert<
