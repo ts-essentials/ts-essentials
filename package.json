@@ -12,9 +12,8 @@
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
-    "test": "node scripts/update-test-tsconfig.js && prettier -c {bench,lib,test}/**/*.ts && eslint && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
-    "test:fix": "node scripts/update-test-tsconfig.js && prettier --write {bench,lib,test}/**/*.ts && eslint --fix",
-    "perf": "tsx ./bench/index.ts --benchErrorOnThresholdExceeded --benchPercentThreshold 1",
+    "test": "node scripts/update-test-tsconfig.js && prettier -c {lib,test}/**/*.ts && eslint && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
+    "test:fix": "node scripts/update-test-tsconfig.js && prettier --write {lib,test}/**/*.ts && eslint --fix",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
@@ -31,7 +30,6 @@
     }
   },
   "devDependencies": {
-    "@arktype/attest": "^0.8.0",
     "@changesets/cli": "^2.20.0",
     "@codechecks/build-size-watcher": "^0.1.0",
     "@codechecks/client": "^0.1.11",
