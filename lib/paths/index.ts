@@ -1,13 +1,9 @@
-import { Builtin } from "../built-in";
-import { IsAny } from "../is-any";
 import { IsNever } from "../is-never";
 import { CreateTypeOptions } from "../create-type-options";
 import { ValueOf } from "../value-of";
+import { HasParsablePath } from "../has-parsable-path";
 
 type Pathable = string | number;
-
-// Prevent inference of non-recursive type methods, e.g. Promise.then, Map.get, etc
-type NonRecursiveType = Builtin | Promise<unknown> | ReadonlyMap<unknown, unknown> | ReadonlySet<unknown>;
 
 type DefaultRecursivePathsOptions = {
   depth: [];
@@ -88,14 +84,6 @@ type RecursivePaths<
           : never;
       }>
     >;
-
-type HasParsablePath<Type> = Type extends NonRecursiveType
-  ? false
-  : IsAny<Type> extends true
-  ? false
-  : Type extends object
-  ? true
-  : false;
 
 type UnsafePaths<Type, Options extends Required<PathsOptions>> = Type extends Type
   ? HasParsablePath<Type> extends true
