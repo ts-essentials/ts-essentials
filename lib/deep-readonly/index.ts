@@ -21,10 +21,22 @@ export type DeepReadonly<Type> = Type extends Exclude<Builtin, Error>
   ? Promise<DeepReadonly<Value>>
   : Type extends AnyArray<infer Values>
   ? Type extends IsTuple<Type>
-    ? { readonly [Key in keyof Type]: DeepReadonly<Type[Key]> }
+    ? {
+        readonly [Key in keyof Type]: Key extends typeof Symbol.iterator
+          ? Type[Key] extends () => Iterator<infer T, infer TReturn, infer TNext>
+            ? () => Readonly<Iterator<DeepReadonly<T>, DeepReadonly<TReturn>, DeepReadonly<TNext>>>
+            : DeepReadonly<Type[Key]>
+          : DeepReadonly<Type[Key]>;
+      }
     : ReadonlyArray<DeepReadonly<Values>>
   : Type extends {}
-  ? { readonly [Key in keyof Type]: DeepReadonly<Type[Key]> }
+  ? {
+      readonly [Key in keyof Type]: Key extends typeof Symbol.iterator
+        ? Type[Key] extends () => Iterator<infer T, infer TReturn, infer TNext>
+          ? () => Readonly<Iterator<DeepReadonly<T>, DeepReadonly<TReturn>, DeepReadonly<TNext>>>
+          : DeepReadonly<Type[Key]>
+        : DeepReadonly<Type[Key]>;
+    }
   : IsUnknown<Type> extends true
   ? unknown
   : Readonly<Type>;
