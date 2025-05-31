@@ -39,6 +39,7 @@ export * from "./mark-writable";
 // Deep wrapper types
 
 export * from "./buildable";
+export * from "./deep-mark-optional";
 export * from "./deep-mark-required";
 export * from "./deep-non-nullable";
 export * from "./deep-nullable";
