@@ -122,9 +122,6 @@ npm install --save-dev ts-essentials
 - [`DeepRequired<Type>`](/lib/deep-required) - Constructs a type by picking all properties from type `Type` recursively
   and setting as required. To make properties required on one level, use
   [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype)
-- [`DeepRequired<Type>`](/lib/deep-required) - Constructs a type by picking all properties from type `Type` recursively
-  and setting as required. To make properties required on one level, use
-  [`Required<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype)  
 - [`DeepUndefinable<Type>`](/lib/deep-undefinable) - Constructs a type by picking all properties from type `Type`
   recursively and include `undefined` property values for all of them
 - [`DeepWritable<Type>`](/lib/deep-writable) - Constructs a type by picking all properties from type `Type` recursively

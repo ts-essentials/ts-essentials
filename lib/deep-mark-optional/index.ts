@@ -14,13 +14,13 @@ type RecursiveDeepMarkOptionalSinglePath<Type, KeyPath> = Type extends object
     : Prettify<MarkOptional<Type, KeyPath & keyof Type>>
   : Type;
 
-type RecursiveDeepMarkOptional<Accumulator, KeyPaths extends Array<string>> = KeyPaths extends [
+type RecursiveDeepMarkOptional<Accumulator, KeyPaths extends string[]> = KeyPaths extends [
   infer KeyPath,
   ...infer RestKeyPaths,
 ]
-  ? RestKeyPaths extends Array<string>
+  ? RestKeyPaths extends string[]
     ? // Keep all the changes in `Accumulator`
-      RecursiveDeepMarkOptional<RecursiveDeepMarkOptionalSinglePath<Accumulator, KeyPath & string>, RestKeyPaths>
+      RecursiveDeepMarkOptional<RecursiveDeepMarkOptionalSinglePath<Accumulator, KeyPath>, RestKeyPaths>
     : never
   : Accumulator;
 
