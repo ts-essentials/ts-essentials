@@ -1,5 +1,14 @@
 # ts-essentials
 
+## 10.1.0
+
+### Minor Changes
+
+- 39d315e: Implement `DeepMarkRequired` utility type that constructs a type by picking all properties from type `Type`
+  where properties by paths `KeyPathUnion` are set as required
+- f7c2c36: Implement `DeepMarkOptional` utility type that constructs a type by picking all properties from type `Type`
+  where properties by paths `KeyPathUnion` are set as optional
+
 ## 10.0.4
 
 ### Patch Changes
