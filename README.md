@@ -98,6 +98,8 @@ npm install --save-dev ts-essentials
 - [`Buildable<Type>`](/lib/buildable) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as non-`readonly` and optional, meaning they can be reassigned and
   aren't required
+- [`DeepMarkOptional<Type, KeyPathUnion>`](/lib/deep-mark-optional) - Constructs a type by picking all properties from type `Type` where
+  properties by paths `KeyPathUnion` are set as optional. To mark properties optional on one level, use [`MarkOptional<Type, Keys>`](/lib/mark-optional).  
 - [`DeepMarkRequired<Type, KeyPathUnion>`](/lib/deep-mark-required) - Constructs a type by picking all properties from type `Type` where
   properties by paths `KeyPathUnion` are set as required. To mark properties required on one level, use [`MarkRequired<Type, Keys>`](/lib/mark-required).
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable) - Constructs a type by picking all properties from type `Type`
