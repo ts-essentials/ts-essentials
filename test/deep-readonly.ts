@@ -63,6 +63,7 @@ function testDeepReadonly() {
       >
     >,
     Assert<IsExact<DeepReadonly<ComplexNestedRequired>, ComplexNestedReadonly>>,
+    Assert<IsExact<DeepReadonly<{ foo: [string, ...number[]] }>, { readonly foo: readonly [string, ...number[]] }>>,
   ];
 
   // Build-time test to ensure the fix for

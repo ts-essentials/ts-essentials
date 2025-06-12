@@ -1,4 +1,5 @@
 import { Builtin } from "../built-in";
+import type { IsNever } from "../is-never";
 import { IsTuple } from "../is-tuple";
 
 export type DeepRequired<Type> = Type extends Error
@@ -20,7 +21,7 @@ export type DeepRequired<Type> = Type extends Error
   : Type extends Promise<infer Value>
   ? Promise<DeepRequired<Value>>
   : Type extends ReadonlyArray<infer Values>
-  ? Type extends IsTuple<Type>
+  ? IsNever<IsTuple<Type>> extends false
     ? { [Key in keyof Type]-?: DeepRequired<Type[Key]> }
     : Type extends Array<Values>
     ? Array<Exclude<DeepRequired<Values>, undefined>>

@@ -1,5 +1,6 @@
 import { AnyArray } from "../any-array";
 import { Builtin } from "../built-in";
+import { IsNever } from "../is-never";
 import { IsTuple } from "../is-tuple";
 import { IsUnknown } from "../is-unknown";
 
@@ -20,7 +21,7 @@ export type DeepReadonly<Type> = Type extends Exclude<Builtin, Error>
   : Type extends Promise<infer Value>
   ? Promise<DeepReadonly<Value>>
   : Type extends AnyArray<infer Values>
-  ? Type extends IsTuple<Type>
+  ? IsNever<IsTuple<Type>> extends false
     ? { readonly [Key in keyof Type]: DeepReadonly<Type[Key]> }
     : ReadonlyArray<DeepReadonly<Values>>
   : Type extends {}

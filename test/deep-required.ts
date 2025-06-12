@@ -97,6 +97,7 @@ function testDeepRequired() {
     Assert<IsExact<DeepRequired<ExtendedArray<number | null | undefined>>, Array<number | null>>>,
     Assert<IsExact<DeepRequired<ExtendedReadonlyArray<number | null | undefined>>, ReadonlyArray<number | null>>>,
     Assert<IsExact<DeepRequired<Promise<number | null | undefined>>, Promise<number | null | undefined>>>,
+    Assert<IsExact<DeepRequired<{ foo?: [string, ...number[]] }>, { foo: [string, ...number[]] }>>,
     Assert<
       IsExact<
         DeepRequired<Promise<{ api: (() => { play: () => void; pause: () => void }) | null | undefined }>>,
