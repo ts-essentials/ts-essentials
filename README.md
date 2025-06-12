@@ -227,7 +227,7 @@ facilitate common type transformations. These utilities are available globally.
   they recursively unwrap `Promise`s
 - [`Capitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype) -
   Converts the first character in the string to an uppercase equivalent
-- [`ConstructParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
+- [`ConstructorParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
   Constructs a tuple or array type from the types of a constructor function type `Type`
 - [`Exclude<UnionType, ExcludedMembers>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers) -
   Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`
@@ -239,8 +239,10 @@ facilitate common type transformations. These utilities are available globally.
   Converts each character in the string to the lowercase equivalent
 - [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype) - Constructs a
   type by excluding null and undefined from `Type`
+- [`NoInfer<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#noinfertype) - Blocks inferences to the contained type. Other than blocking inferences, `NoInfer<Type>` is identical to `Type`
 - [`Omit<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) - Constructs a
   type by picking all properties from `Type` and then removing `Keys`
+- [`OmitThisParameter<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omitthisparametertype) - Removes the `this` parameter from `Type`. If `Type` has no explicitly declared this parameter, the result is simply `Type`. Otherwise, a new function type with no this parameter is created from `Type`. Generics are erased and only the last overload signature is propagated into the new function type.
 - [`Parameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype) - Constructs a
   tuple type from the types used in the parameters of a function type `Type`
 - [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) - Constructs a type
@@ -255,6 +257,8 @@ facilitate common type transformations. These utilities are available globally.
   consisting of all properties of `Type` set to required
 - [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) - Constructs a
   type consisting of the return type of function type `Type` parameter
+- [`ThisParameterType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thisparametertypetype) - Extracts the type of the `this` parameter for a function type, or `unknown` if the function type has no `this` parameter
+- [`ThisType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype) - This utility does not return a transformed type. Instead, it serves as a marker for a contextual `this` type. Note that the `noImplicitThis` flag must be enabled to use this utility
 - [`Uncapitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype) -
   Converts the first character in the string to a lowercase equivalent
 - [`Uppercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uppercasestringtype) -
