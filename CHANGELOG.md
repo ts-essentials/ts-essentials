@@ -1,5 +1,12 @@
 # ts-essentials
 
+## 10.1.1
+
+### Patch Changes
+
+- 8ae038e: Fix `DeepReadonly<Type>` & `DeepRequired<Type>` types when `Type` is an array containing rest element, like
+  `[string, ...number[]]`
+
 ## 10.1.0
 
 ### Minor Changes
