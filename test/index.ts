@@ -745,6 +745,7 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1?, 2?, 3?]>, [1?, 2?, 3?]>>,
     Assert<IsExact<IsTuple<[1, 2, ...number[]]>, [1, 2, ...number[]]>>,
     Assert<IsExact<IsTuple<[1?, 2?, ...number[]]>, [1?, 2?, ...number[]]>>,
+    Assert<IsExact<IsTuple<[number?, ...number[]]>, [number?, ...number[]]>>,
     Assert<IsExact<IsTuple<[1, 2, ...number[], 3, 4]>, [1, 2, ...number[], 3, 4]>>,
     Assert<IsExact<IsTuple<[...number[], 1, 2]>, [...number[], 1, 2]>>,
     Assert<IsExact<IsTuple<any[]>, never>>,
