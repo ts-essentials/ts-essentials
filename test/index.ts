@@ -222,7 +222,9 @@ function testDeepNullable() {
     >,
     Assert<IsExact<DeepNullable<{ a: 1; b: 2; c: 3 }>, { a: 1 | null; b: 2 | null; c: 3 | null }>>,
     Assert<IsExact<DeepNullable<{ foo: () => void }>, { foo: (() => void) | null }>>,
+    Assert<IsExact<DeepNullable<{ foo: never }>, { foo: null }>>,
     Assert<IsExact<DeepNullable<ComplexNestedRequired>, ComplexNestedNullable>>,
+    Assert<IsExact<DeepNullable<never>, null>>,
   ];
 }
 
@@ -286,7 +288,9 @@ function testDeepUndefinable() {
     >,
     Assert<IsExact<DeepUndefinable<{ a: 1; b: 2; c: 3 }>, { a: 1 | undefined; b: 2 | undefined; c: 3 | undefined }>>,
     Assert<IsExact<DeepUndefinable<{ foo: () => void }>, { foo: (() => void) | undefined }>>,
+    Assert<IsExact<DeepUndefinable<{ foo: never }>, { foo: undefined }>>,
     Assert<IsExact<DeepUndefinable<ComplexNestedRequired>, ComplexNestedUndefinable>>,
+    Assert<IsExact<DeepUndefinable<never>, undefined>>,
   ];
 }
 
@@ -711,6 +715,7 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<undefined>, never>>,
     Assert<IsExact<IsTuple<null>, never>>,
     Assert<IsExact<IsTuple<{ a: 1 }>, never>>,
+    Assert<IsExact<IsTuple<[]>, []>>,
     Assert<IsExact<IsTuple<[1]>, [1]>>,
     Assert<IsExact<IsTuple<[1, 2]>, [1, 2]>>,
     Assert<IsExact<IsTuple<[1, 2, 3]>, [1, 2, 3]>>,
@@ -721,6 +726,7 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8]>, [1, 2, 3, 4, 5, 6, 7, 8]>>,
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9]>, [1, 2, 3, 4, 5, 6, 7, 8, 9]>>,
     Assert<IsExact<IsTuple<[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]>>,
+    Assert<IsExact<IsTuple<readonly []>, readonly []>>,
     Assert<IsExact<IsTuple<readonly [1]>, readonly [1]>>,
     Assert<IsExact<IsTuple<readonly [1, 2]>, readonly [1, 2]>>,
     Assert<IsExact<IsTuple<readonly [1, 2, 3]>, readonly [1, 2, 3]>>,
@@ -736,6 +742,18 @@ function testIsTuple() {
     Assert<IsExact<IsTuple<Array<number>>, never>>,
     Assert<IsExact<IsTuple<ReadonlyArray<number>>, never>>,
     Assert<IsExact<IsTuple<{ length: 3 }>, never>>,
+    Assert<IsExact<IsTuple<[1, 2?, 3?]>, [1, 2?, 3?]>>,
+    Assert<IsExact<IsTuple<[1?, 2?, 3?]>, [1?, 2?, 3?]>>,
+    Assert<IsExact<IsTuple<[1, 2, ...number[]]>, [1, 2, ...number[]]>>,
+    Assert<IsExact<IsTuple<[1, 2?, ...number[]]>, [1, 2?, ...number[]]>>,
+    Assert<IsExact<IsTuple<[1?, 2?, ...number[]]>, [1?, 2?, ...number[]]>>,
+    Assert<IsExact<IsTuple<[number?, ...number[]]>, [number?, ...number[]]>>,
+    Assert<IsExact<IsTuple<[1, 2, ...number[], 3, 4]>, [1, 2, ...number[], 3, 4]>>,
+    Assert<IsExact<IsTuple<[...number[], 1, 2]>, [...number[], 1, 2]>>,
+    Assert<IsExact<IsTuple<any[]>, never>>,
+    Assert<IsExact<IsTuple<never[]>, never>>,
+    Assert<IsExact<IsTuple<[any]>, [any]>>,
+    Assert<IsExact<IsTuple<[never]>, [never]>>,
   ];
 }
 
