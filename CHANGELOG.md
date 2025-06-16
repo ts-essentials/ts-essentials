@@ -1,5 +1,12 @@
 # ts-essentials
 
+## 10.1.2
+
+### Patch Changes
+
+- 16e427d: Fix `IsTuple<Type>` type when `Type` is a tuple with both optional elements and a rest element, like
+  `[string?, ...number[]]`
+
 ## 10.1.1
 
 ### Patch Changes
