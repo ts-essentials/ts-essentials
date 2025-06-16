@@ -1,7 +1,10 @@
 import { Builtin } from "../built-in";
+import { IsNever } from "../is-never";
 import { IsTuple } from "../is-tuple";
 
-export type DeepUndefinable<Type> = Type extends Builtin
+export type DeepUndefinable<Type> = IsNever<Type> extends true
+  ? undefined
+  : Type extends Builtin
   ? Type | undefined
   : Type extends Map<infer Keys, infer Values>
   ? Map<DeepUndefinable<Keys>, DeepUndefinable<Values>>

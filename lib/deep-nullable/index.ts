@@ -1,7 +1,10 @@
 import { Builtin } from "../built-in";
+import { IsNever } from "../is-never";
 import { IsTuple } from "../is-tuple";
 
-export type DeepNullable<Type> = Type extends Builtin
+export type DeepNullable<Type> = IsNever<Type> extends true
+  ? null
+  : Type extends Builtin
   ? Type | null
   : Type extends Map<infer Keys, infer Values>
   ? Map<DeepNullable<Keys>, DeepNullable<Values>>
