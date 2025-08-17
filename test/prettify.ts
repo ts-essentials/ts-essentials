@@ -17,3 +17,16 @@ function testPrettify() {
     Assert<IsExact<Prettify<() => void>, () => void>>,
   ];
 }
+
+function testClassPrettify() {
+  class TestClass {
+    private _a: number = Date.now();
+    protected _b: Date = new Date();
+    c?: string;
+    d: boolean = true;
+  }
+
+  type A = Prettify<TestClass>;
+
+  type cases = [Assert<IsExact<Prettify<TestClass>, { c?: string; d: boolean }>>];
+}
