@@ -14,7 +14,6 @@
       <img alt="Telegram" src="https://img.shields.io/badge/-telegram-red?color=white&logo=telegram">
     </a>
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
 
