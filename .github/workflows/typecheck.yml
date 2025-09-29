@@ -29,6 +29,7 @@ jobs:
             "5.6.3",
             "5.7.3",
             "5.8.3",
+            "5.9.2",
           ]
     runs-on: ${{ matrix.os }}
     continue-on-error: true
