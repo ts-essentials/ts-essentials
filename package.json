@@ -31,8 +31,6 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.20.0",
-    "@codechecks/build-size-watcher": "^0.1.0",
-    "@codechecks/client": "^0.1.11",
     "@typescript-eslint/parser": "^8.15.0",
     "conditional-type-checks": "^1.0.4",
     "eslint": "^9.15.0",
