@@ -24,7 +24,6 @@ Prefixes:
 - `Mark*` prefix is used when the partial type changes are applied to a type, e.g. some properties are set to optional
   in [`MarkOptional<Type, Keys>`](/lib/mark-optional)
 - `Non*` prefix is used when type expects to return `Type` or `never` (although this is not strict)
-  - [`NonNever<Type>`](/lib/non-never) doesn't return `never` so has to be renamed to `OmitNeverProperties`
   - [`NonEmptyArray<Type>`](/lib/non-empty-array) doesn't return `never` so has to be renamed `AnyNonEmptyArray`
 - `Strict*` prefix is used when the additional generic constraint is applied to a type parameter to constrain its usage,
   e.g. [`StrictOmit<Type, Keys>`](/lib/strict-omit) adds an additional generic constraint for `Keys extends keyof Type`
@@ -44,4 +43,3 @@ Suffices:
 
 - `*Keys` suffix is used when the names of the properties (i.e. the keys) are returned or manipulated
 - `*Properties` suffix is used when the values of the properties (or simply properties) are returned or manipulated
-  - [`NonNever<Type>`](/lib/non-never) updates properties so has to be renamed to `OmitNeverProperties`
