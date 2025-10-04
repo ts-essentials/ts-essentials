@@ -161,6 +161,7 @@ npm install --save-dev ts-essentials
 - [`IsTuple<Type>`](/lib/is-tuple) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
 - [`NonEmptyObject<Object>`](/lib/non-empty-object) - Returns `Object` when `Object` has at least one key. Otherwise
   returns `never`
+- [`NonUnion<Type>`](/lib/non-union) - Returns `Type` when `Type` is not an union. Otherwise returns `never`
 
 ### Arrays and Tuples
 
