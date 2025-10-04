@@ -148,6 +148,7 @@ npm install --save-dev ts-essentials
   type `Type`, meaning their values cannot be reassigned
 - [`RequiredKeys<Type>`](/lib/required-keys) - Constructs a union type by picking all required properties of object type
   `Type`
+- [`UnionKeys<UnionType>`](/lib/union-keys) - Constructs a union type by picking all properties from all union members of `UnionType`
 - [`WritableKeys<Type>`](/lib/writable-keys) - Constructs a union type by picking all writable properties of object type
   `Type`, meaning their values can be reassigned
 

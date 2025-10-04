@@ -65,6 +65,7 @@ export * from "./optional-keys";
 export * from "./pick-keys";
 export * from "./readonly-keys";
 export * from "./required-keys";
+export * from "./union-keys";
 export * from "./writable-keys";
 
 // Type checkers
