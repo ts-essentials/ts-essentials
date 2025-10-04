@@ -1,1 +1,1 @@
-export type JsonPrimitive = false | null | number | string | true;
+export type JsonPrimitive = null | number | string | boolean;
