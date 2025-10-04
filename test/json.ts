@@ -24,6 +24,14 @@ function testJsonObject() {
   jsonObject = { nullProperty: null };
   // @ts-expect-error: Type 'undefined' is not assignable to type `JsonValue | JsonPrimitive`
   jsonObject = { undefinedProperty: undefined };
+
+  type Person = {
+    name: string;
+    age: number;
+    pets?: string[];
+  };
+
+  jsonObject = {} as Person;
 }
 
 function testJsonArray() {
