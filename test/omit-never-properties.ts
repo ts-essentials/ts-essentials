@@ -1,7 +1,7 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { NonNever } from "../lib";
+import { OmitNeverProperties } from "../lib";
 
-function testNonNever() {
+function testOmitNeverProperties() {
   type TypesMap = { foo: string; bar: number; xyz: undefined };
 
   type Mapped = {
@@ -9,7 +9,7 @@ function testNonNever() {
   };
 
   type TestA = Assert<IsExact<keyof Mapped, "foo" | "bar" | "xyz">>;
-  type TestB = Assert<IsExact<keyof NonNever<Mapped>, "foo" | "bar">>;
+  type TestB = Assert<IsExact<keyof OmitNeverProperties<Mapped>, "foo" | "bar">>;
 }
 
 function testUnions() {
@@ -26,7 +26,7 @@ function testUnions() {
   }
 
   type Union = Circle | Square;
-  type NonNeverUnion = NonNever<Circle | Square>;
+  type Shape = OmitNeverProperties<Circle | Square>;
 
   let union: Union;
   // @ts-expect-error: Property 'sideLength' is missing in type '{ kind: "square"; }' but required in type 'Square'
@@ -44,13 +44,13 @@ function testUnions() {
   // @ts-expect-error: Type '"circle"' is not assignable to type '"square"'
   union = { kind: "circle", radius: 1, sideLength: 2 };
 
-  let nonNeverUnion: NonNeverUnion;
-  nonNeverUnion = { kind: "square" };
-  nonNeverUnion = { kind: "square", radius: 1 };
-  nonNeverUnion = { kind: "square", sideLength: 2 };
-  nonNeverUnion = { kind: "square", radius: 1, sideLength: 2 };
-  nonNeverUnion = { kind: "circle" };
-  nonNeverUnion = { kind: "circle", radius: 1 };
-  nonNeverUnion = { kind: "circle", sideLength: 2 };
-  nonNeverUnion = { kind: "circle", radius: 1, sideLength: 2 };
+  let shape: Shape;
+  shape = { kind: "square" };
+  shape = { kind: "square", radius: 1 };
+  shape = { kind: "square", sideLength: 2 };
+  shape = { kind: "square", radius: 1, sideLength: 2 };
+  shape = { kind: "circle" };
+  shape = { kind: "circle", radius: 1 };
+  shape = { kind: "circle", sideLength: 2 };
+  shape = { kind: "circle", radius: 1, sideLength: 2 };
 }
