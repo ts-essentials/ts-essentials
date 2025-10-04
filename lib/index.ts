@@ -21,8 +21,9 @@ export * from "./dictionary-values";
 export * from "./merge";
 export * from "./merge-n";
 export * from "./newable";
-export * from "./non-never";
+export * from "./non-never"; // deprecated and will be removed in v11.0.0
 export * from "./non-union";
+export * from "./omit-never-properties";
 export * from "./omit-properties";
 export * from "./opaque";
 export * from "./path-value";
