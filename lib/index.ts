@@ -22,6 +22,7 @@ export * from "./merge";
 export * from "./merge-n";
 export * from "./newable";
 export * from "./non-never";
+export * from "./non-union";
 export * from "./omit-properties";
 export * from "./opaque";
 export * from "./path-value";
