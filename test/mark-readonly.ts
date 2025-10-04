@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkReadonly, WritableKeys, ReadonlyKeys, Prettify } from "../lib";
+import { MarkReadonly, WritableKeys, ReadonlyKeys } from "../lib";
 
 type Example = {
   readonly readonly1: Date;
@@ -11,10 +11,11 @@ type Example = {
 };
 
 function testMarkReadonly() {
-  type ExampleWithReadonlyRequired1 = Prettify<MarkReadonly<Example, "required1">>;
+  type ExampleWithReadonlyRequired1 = MarkReadonly<Example, "required1">;
 
   type cases = [
     Assert<IsExact<MarkReadonly<Example, never>, Example>>,
+    Assert<IsExact<MarkReadonly<Example, any>, Readonly<Example>>>,
     Assert<IsExact<MarkReadonly<Example, ReadonlyKeys<Example>>, Example>>,
     Assert<IsExact<MarkReadonly<Example, WritableKeys<Example>>, Readonly<Example>>>,
     Assert<IsExact<ReadonlyKeys<ExampleWithReadonlyRequired1>, "readonly1" | "readonly2" | "required1">>,
@@ -24,8 +25,9 @@ function testMarkReadonly() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkReadonly<Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">, "optional1">
+  type UnionExample = MarkReadonly<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">,
+    "optional1"
   >;
 
   let unionElementFields: UnionExample = {

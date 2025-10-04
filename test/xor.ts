@@ -1,23 +1,26 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
 import { XOR } from "../lib";
 
-function testXOR() {
+function testXOR2InTypes() {
   type TestType1 = { a: string };
   type TestType2 = { a: number; b: boolean };
   type TestType3 = { c: number; d: boolean };
 
   type Actual1 = XOR<TestType1, TestType2>;
-  type Expected1 = { a: string; b?: never } | { a: number; b: boolean } | { a?: never; b?: never };
+  type Expected1 = { a: string; b?: never } | { a: number; b: boolean };
 
   type Actual2 = XOR<TestType1, TestType3>;
-  type Expected2 =
-    | { a: string; c?: never; d?: never }
-    | { a?: never; c: number; d: boolean }
-    | { a?: never; c?: never; d?: never };
+  type Expected2 = { a: string; c?: never; d?: never } | { a?: never; c: number; d: boolean };
+
+  type Actual3 = XOR<TestType2, TestType3>;
+  type Expected3 = { a: number; b: boolean; c?: never; d?: never } | { a?: never; b?: never; c: number; d: boolean };
 
   type Test1 = Assert<IsExact<Actual1, Expected1>>;
   type Test2 = Assert<IsExact<Actual2, Expected2>>;
+  type Test3 = Assert<IsExact<Actual3, Expected3>>;
+}
 
+function testXOR8() {
   type SinglePet = XOR<
     { cat: string },
     { dog: string },
@@ -54,7 +57,7 @@ function testVariadicXOR() {
   type Test = Assert<IsExact<Type1, Type2>>;
 }
 
-function stressTestXOR() {
+function testXOR50Assignability() {
   type StressTest = XOR<
     { property1: string },
     { property2: string },

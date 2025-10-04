@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["lib/**/*.ts"]
+  "include": [
+    "lib/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "test/readonly-keys-arrays-and-index-signatures.ts",
+    "test/writable-keys-arrays-and-index-signatures.ts"
+  ]
 }

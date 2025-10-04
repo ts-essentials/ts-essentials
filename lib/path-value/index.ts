@@ -1,3 +1,5 @@
+import { Prettify } from "../prettify";
+
 // TODO: merge to ExtractFromArray
 type ExtractFromObject<Obj extends Record<PropertyKey, unknown>, Key> = Key extends keyof Obj
   ? Obj[Key]
@@ -14,11 +16,11 @@ type ExtractFromArray<Arr extends readonly any[], Key> = any[] extends Arr
   ? Arr[Key]
   : undefined;
 
-type GetWithArray<Type, Path> = Path extends []
+type GetWithArray<Type, Path, PrettifiedType = Prettify<Type>> = Path extends []
   ? Type
   : Path extends [infer Key, ...infer Rest]
-  ? Type extends Record<PropertyKey, unknown>
-    ? GetWithArray<ExtractFromObject<Type, Key>, Rest>
+  ? PrettifiedType extends Record<PropertyKey, unknown>
+    ? GetWithArray<ExtractFromObject<PrettifiedType, Key>, Rest>
     : Type extends readonly any[]
     ? GetWithArray<ExtractFromArray<Type, Key>, Rest>
     : undefined

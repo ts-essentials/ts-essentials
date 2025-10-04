@@ -20,7 +20,7 @@ jobs:
           node-version: "18.x"
 
       - name: Cache YARN dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             node_modules

@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkRequired, RequiredKeys, OptionalKeys, Prettify } from "../lib";
+import { MarkRequired, RequiredKeys, OptionalKeys } from "../lib";
 
 type Example = {
   readonly readonly1: Date;
@@ -13,6 +13,7 @@ type Example = {
 function testMarkRequired() {
   type cases = [
     Assert<IsExact<MarkRequired<Example, never>, Example>>,
+    Assert<IsExact<MarkRequired<Example, any>, Required<Example>>>,
     Assert<IsExact<MarkRequired<Example, RequiredKeys<Example>>, Example>>,
     Assert<IsExact<MarkRequired<Example, OptionalKeys<Example>>, Required<Example>>>,
     Assert<
@@ -34,8 +35,9 @@ function testMarkRequired() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkRequired<Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">, "optional1">
+  type UnionExample = MarkRequired<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly2" | "optional1">,
+    "optional1"
   >;
 
   let unionElementFields: UnionExample = {
@@ -51,13 +53,15 @@ function testUnionTypes() {
 
 declare let example: Example;
 declare let requiredExample: Required<Example>;
-declare let markedRequiredExample: Prettify<MarkRequired<Example, "optional1">>;
+declare let markedRequiredExample: MarkRequired<Example, "optional1">;
 
 function testAssignability() {
   example = requiredExample;
   example = markedRequiredExample;
   // @ts-expect-error: Type 'Example' is not assignable to type 'Required<Example>'
   requiredExample = example;
+  // @ts-expect-error: Type 'MarkRequired<Example, "optional1">' is not assignable to type 'Required<Example>'
+  requiredExample = markedRequiredExample;
   // @ts-expect-error: Type 'Example' is not assignable to type 'Required<Pick<Example, "optional1">>'
   markedRequiredExample = example;
 
@@ -71,5 +75,20 @@ function testAssignability() {
   let assignabilityCheck2: <Type, PropertyName extends keyof Type>(
     object: Type,
     propertyNames: PropertyName[],
+  ) => object is MarkRequired<Type, PropertyName>;
+
+  // it verifies that type `MarkRequired<Type, PropertyName>` is assignable to type `Partial<Type>`
+
+  let assignabilityCheck3: <Type, PropertyName extends keyof Type>(
+    object: Partial<Type>,
+    propertyNames: PropertyName[],
+  ) => object is MarkRequired<Type, PropertyName>;
+
+  // it verifies that type `MarkRequired<Type, PropertyName>` is NOT assignable to type `Required<Type>`
+
+  let assignabilityCheck4: <Type, PropertyName extends keyof Type>(
+    object: Required<Type>,
+    propertyNames: PropertyName[],
+    // @ts-expect-error: Type 'MarkRequired<Type, PropertyName>' is NOT assignable to type 'Required<Type>'
   ) => object is MarkRequired<Type, PropertyName>;
 }

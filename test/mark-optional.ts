@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkOptional, OptionalKeys, Prettify, RequiredKeys } from "../lib";
+import { MarkOptional, OptionalKeys, RequiredKeys } from "../lib";
 
 type Example = {
   required1: number;
@@ -11,6 +11,7 @@ type Example = {
 function testMarkOptional() {
   type cases = [
     Assert<IsExact<MarkOptional<Example, never>, Example>>,
+    Assert<IsExact<MarkOptional<Example, any>, Partial<Example>>>,
     Assert<IsExact<MarkOptional<Example, OptionalKeys<Example>>, Example>>,
     Assert<IsExact<MarkOptional<Example, RequiredKeys<Example>>, Partial<Example>>>,
     Assert<
@@ -30,8 +31,9 @@ function testMarkOptional() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkOptional<Pick<Example, "required1" | "optional1"> | Pick<Example, "required2" | "optional1">, "optional1">
+  type UnionExample = MarkOptional<
+    Pick<Example, "required1" | "optional1"> | Pick<Example, "required2" | "optional1">,
+    "optional1"
   >;
 
   let unionElementFields: UnionExample = {
@@ -47,7 +49,7 @@ function testUnionTypes() {
 
 declare let example: Example;
 declare let optionalExample: Partial<Example>;
-declare let markedOptionalExample: Prettify<MarkOptional<Example, "required1">>;
+declare let markedOptionalExample: MarkOptional<Example, "required1">;
 
 function testAssignability() {
   // @ts-expect-error: Type 'Partial<Example>' is not assignable to type 'Example'
@@ -55,6 +57,7 @@ function testAssignability() {
   // @ts-expect-error: Type 'Omit<Example, "required1"> & Partial<Pick<Example, "required1">>' is not assignable to type 'Example'
   example = markedOptionalExample;
   optionalExample = example;
+  optionalExample = markedOptionalExample;
   markedOptionalExample = example;
 
   // it verifies that type `Partial<Type>` is NOT assignable to type `Type`
@@ -69,5 +72,12 @@ function testAssignability() {
     object: Type,
     propertyNames: PropertyName[],
     // @ts-expect-error: Type 'MarkOptional<Type, PropertyName>' is not assignable to type 'Type'
+  ) => object is MarkOptional<Type, PropertyName>;
+
+  // it verifies that type `MarkOptional<Type, PropertyName>` is assignable to type `Partial<Type>`
+
+  let assignabilityCheck3: <Type, PropertyName extends keyof Type>(
+    object: Partial<Type>,
+    propertyNames: PropertyName[],
   ) => object is MarkOptional<Type, PropertyName>;
 }

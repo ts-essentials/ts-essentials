@@ -14,7 +14,6 @@
       <img alt="Telegram" src="https://img.shields.io/badge/-telegram-red?color=white&logo=telegram">
     </a>
     <a href="/package.json"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
   </p>
 </p>
 
@@ -65,7 +64,6 @@ npm install --save-dev ts-essentials
 - [`AsyncOrSyncType<Type>`](/lib/async-or-sync-type) - Unwraps `AsyncOrSync` type
 - [`Dictionary<Type, Keys?>`](/lib/dictionary) - Constructs a required object type which property keys are `Keys`
   (`string` by default) and which property values are `Type`
-- [`DictionaryValues<Type>`](/lib/dictionary-values) - This type unwraps `Dictionary` value type
 - [`Merge<Object1, Object2>`](/lib/merge) - Constructs a type by picking all properties from `Object1` and `Object2`.
   Property values from `Object2` override property values from `Object1` when property keys are the same
 - [`MergeN<Tuple>`](/lib/merge-n) - Constructs a type by merging objects with type `Merge` in tuple `Tuple` recursively
@@ -104,6 +102,10 @@ npm install --save-dev ts-essentials
 - [`Buildable<Type>`](/lib/buildable) - Constructs a type by combining `DeepPartial` and `DeepWritable`, meaning all
   properties from type `Type` are recursively set as non-`readonly` and optional, meaning they can be reassigned and
   aren't required
+- [`DeepMarkOptional<Type, KeyPathUnion>`](/lib/deep-mark-optional) - Constructs a type by picking all properties from type `Type` where
+  properties by paths `KeyPathUnion` are set as optional. To mark properties optional on one level, use [`MarkOptional<Type, Keys>`](/lib/mark-optional).  
+- [`DeepMarkRequired<Type, KeyPathUnion>`](/lib/deep-mark-required) - Constructs a type by picking all properties from type `Type` where
+  properties by paths `KeyPathUnion` are set as required. To mark properties required on one level, use [`MarkRequired<Type, Keys>`](/lib/mark-required).
 - [`DeepNonNullable<Type>`](/lib/deep-non-nullable) - Constructs a type by picking all properties from type `Type`
   recursively and exclude `null` and `undefined` property values from all of them. To make properties non-nullable on
   one level, use [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype)
@@ -217,6 +219,7 @@ When one of utility types is known by a different name, kindly ask adding it her
 - `Nominal` - [`Opaque<Type, Token>`](/lib/opaque)
 - `Set*`, e.g. `SetOptional` - `Mark*`, e.g. [`MarkReadonly<Type, Keys>`](/lib/mark-readonly)
 - `Unwrap` - [`Prettify<Type>`](/lib/prettify/)
+- `ValueOf` - `DictionaryValues`
 
 ## Built-in types
 
@@ -228,7 +231,7 @@ facilitate common type transformations. These utilities are available globally.
   they recursively unwrap `Promise`s
 - [`Capitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype) -
   Converts the first character in the string to an uppercase equivalent
-- [`ConstructParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
+- [`ConstructorParameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#constructorparameterstype) -
   Constructs a tuple or array type from the types of a constructor function type `Type`
 - [`Exclude<UnionType, ExcludedMembers>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#excludeuniontype-excludedmembers) -
   Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`
@@ -240,8 +243,10 @@ facilitate common type transformations. These utilities are available globally.
   Converts each character in the string to the lowercase equivalent
 - [`NonNullable<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype) - Constructs a
   type by excluding null and undefined from `Type`
+- [`NoInfer<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#noinfertype) - Blocks inferences to the contained type. Other than blocking inferences, `NoInfer<Type>` is identical to `Type`
 - [`Omit<Type, Keys>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) - Constructs a
   type by picking all properties from `Type` and then removing `Keys`
+- [`OmitThisParameter<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omitthisparametertype) - Removes the `this` parameter from `Type`. If `Type` has no explicitly declared this parameter, the result is simply `Type`. Otherwise, a new function type with no this parameter is created from `Type`. Generics are erased and only the last overload signature is propagated into the new function type.
 - [`Parameters<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype) - Constructs a
   tuple type from the types used in the parameters of a function type `Type`
 - [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) - Constructs a type
@@ -256,6 +261,8 @@ facilitate common type transformations. These utilities are available globally.
   consisting of all properties of `Type` set to required
 - [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) - Constructs a
   type consisting of the return type of function type `Type` parameter
+- [`ThisParameterType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thisparametertypetype) - Extracts the type of the `this` parameter for a function type, or `unknown` if the function type has no `this` parameter
+- [`ThisType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype) - This utility does not return a transformed type. Instead, it serves as a marker for a contextual `this` type. Note that the `noImplicitThis` flag must be enabled to use this utility
 - [`Uncapitalize<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype) -
   Converts the first character in the string to a lowercase equivalent
 - [`Uppercase<StringType>`](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uppercasestringtype) -
@@ -273,62 +280,62 @@ facilitate common type transformations. These utilities are available globally.
 | `^1.0.1`        | `^3.2.2` / dev                                                                        |
 | `^1.0.0`        | `^3.0.3` / dev                                                                        |
 
+## Limitations
+
+- This project doesn't use `extends` Constraints on `infer` Type Variables as it's introduced in TypeScript 4.7, but currently ts-essentials supports versions below, e.g. TypeScript 4.5. Read more in https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#extends-constraints-on-infer-type-variables
+
 ## Contributors
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Special shout-out to active contributors:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://twitter.com/krzkaczor"><img src="https://avatars2.githubusercontent.com/u/1814312?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chris Kaczor</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=krzkaczor" title="Code">💻</a> <a href="#business-krzkaczor" title="Business development">💼</a> <a href="#example-krzkaczor" title="Examples">💡</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=krzkaczor" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://scholar.google.com/citations?user=3xZtvpAAAAAJ"><img src="https://avatars3.githubusercontent.com/u/9780746?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Xiao Liang</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=yxliang01" title="Code">💻</a> <a href="#ideas-yxliang01" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=yxliang01" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/Andarist"><img src="https://avatars2.githubusercontent.com/u/9800850?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mateusz Burzyński</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=Andarist" title="Code">💻</a> <a href="#ideas-Andarist" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=Andarist" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/macbem"><img src="https://avatars1.githubusercontent.com/u/12464061?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Maciej Bembenista</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=macbem" title="Code">💻</a> <a href="#ideas-macbem" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=macbem" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/MichaelTontchev"><img src="https://avatars0.githubusercontent.com/u/12261336?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Michael Tontchev</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=MichaelTontchev" title="Code">💻</a> <a href="#ideas-MichaelTontchev" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=MichaelTontchev" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://ThomasdH.blogspot.com"><img src="https://avatars0.githubusercontent.com/u/3889750?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thomas den Hollander</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=ThomasdenH" title="Code">💻</a> <a href="#ideas-ThomasdenH" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=ThomasdenH" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://twitter.com/esamatti"><img src="https://avatars3.githubusercontent.com/u/225712?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Esa-Matti Suuronen</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=epeli" title="Code">💻</a> <a href="#ideas-epeli" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=epeli" title="Documentation">📖</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/IlyaSemenov"><img src="https://avatars1.githubusercontent.com/u/128121?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ilya Semenov</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=IlyaSemenov" title="Code">💻</a> <a href="#ideas-IlyaSemenov" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=IlyaSemenov" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://codechecks.io"><img src="https://avatars2.githubusercontent.com/u/46399828?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Code Checks</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/pulls?q=is%3Apr+reviewed-by%3Acodechecks" title="Reviewed Pull Requests">👀</a></td>
-    <td align="center"><a href="http://www.nomiclabs.io"><img src="https://avatars1.githubusercontent.com/u/176499?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patricio Palladino</b></sub></a><br /><a href="#ideas-alcuadrado" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="http://twitter.com/quezak2"><img src="https://avatars0.githubusercontent.com/u/666206?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Artur Kozak</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=quezak" title="Code">💻</a> <a href="#ideas-quezak" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=quezak" title="Documentation">📖</a> <a href="https://github.com/ts-essentials/ts-essentials/pulls?q=is%3Apr+reviewed-by%3Aquezak" title="Reviewed Pull Requests">👀</a></td>
-    <td align="center"><a href="https://github.com/lucifer1004"><img src="https://avatars2.githubusercontent.com/u/13583761?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zihua Wu</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=lucifer1004" title="Code">💻</a> <a href="#ideas-lucifer1004" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=lucifer1004" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://kevinpeno.com"><img src="https://avatars1.githubusercontent.com/u/343808?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kevin Peno</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=kevinpeno" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/DomParfitt"><img src="https://avatars2.githubusercontent.com/u/11363907?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dom Parfitt</b></sub></a><br /><a href="#ideas-DomParfitt" title="Ideas, Planning, & Feedback">🤔</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/EduardoRFS"><img src="https://avatars0.githubusercontent.com/u/3393115?v=4?s=100" width="100px;" alt=""/><br /><sub><b>EduardoRFS</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=EduardoRFS" title="Code">💻</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=EduardoRFS" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://andydvorak.net/"><img src="https://avatars1.githubusercontent.com/u/409245?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew C. Dvorak</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=acdvorak" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/a1russell"><img src="https://avatars0.githubusercontent.com/u/241628?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Adam Russell</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=a1russell" title="Code">💻</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=a1russell" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/sz-piotr"><img src="https://avatars2.githubusercontent.com/u/17070569?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Piotr Szlachciak</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=sz-piotr" title="Code">💻</a> <a href="#ideas-sz-piotr" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=sz-piotr" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/mikhailswift"><img src="https://avatars3.githubusercontent.com/u/3218582?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mikhail Swift</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=mikhailswift" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/DevilZh"><img src="https://avatars1.githubusercontent.com/u/10295215?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ryan Zhang</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=DevilZh" title="Code">💻</a> <a href="#ideas-DevilZh" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=DevilZh" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://www.linkedin.com/in/francesco-borzi/"><img src="https://avatars1.githubusercontent.com/u/75517?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Francesco Borzì</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=FrancescoBorzi" title="Documentation">📖</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=FrancescoBorzi" title="Code">💻</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/leaumar"><img src="https://avatars2.githubusercontent.com/u/3950300?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Marnick L'Eau</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=leaumar" title="Code">💻</a> <a href="#ideas-leaumar" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=leaumar" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/kubk"><img src="https://avatars1.githubusercontent.com/u/22447849?v=4?s=100" width="100px;" alt=""/><br /><sub><b>kubk</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=kubk" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/bbarry"><img src="https://avatars0.githubusercontent.com/u/84951?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bill Barry</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=bbarry" title="Code">💻</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=bbarry" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/akwodkiewicz"><img src="https://avatars2.githubusercontent.com/u/22861194?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrzej Wódkiewicz</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=akwodkiewicz" title="Code">💻</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=akwodkiewicz" title="Documentation">📖</a> <a href="#ideas-akwodkiewicz" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="http://chjdev.com"><img src="https://avatars2.githubusercontent.com/u/973941?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christian</b></sub></a><br /><a href="#ideas-chjdev" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/mattleff"><img src="https://avatars0.githubusercontent.com/u/120155?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matthew Leffler</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=mattleff" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/studds"><img src="https://avatars2.githubusercontent.com/u/3046407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>studds</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=studds" title="Code">💻</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/Beraliv"><img src="https://avatars.githubusercontent.com/u/2991847?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Berezin</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=Beraliv" title="Code">💻</a> <a href="https://github.com/ts-essentials/ts-essentials/commits?author=Beraliv" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/vitonsky"><img src="https://avatars.githubusercontent.com/u/86191922?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vitonsky</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=vitonsky" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/itayronen"><img src="https://avatars.githubusercontent.com/u/21139000?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Itay Ronen</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=itayronen" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/cyberbiont"><img src="https://avatars.githubusercontent.com/u/59398323?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yaroslav Larin</b></sub></a><br /><a href="https://github.com/ts-essentials/ts-essentials/commits?author=cyberbiont" title="Code">💻</a></td>
-  </tr>
-</table>
+- [Kris Kaczor](https://x.com/krzkaczor) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=krzkaczor)
+- [Xiao Liang](https://scholar.google.com/citations?user=3xZtvpAAAAAJ) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=yxliang01)
+- [Mateusz Burzyński](https://x.com/AndaristRake) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=Andarist)
+- [Artur Kozak](https://x.com/quezak2) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=quezak)
+- [Zihua Wu](https://x.com/gabriel_wzh) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=lucifer1004)
+- [Alexey Berezin](https://x.com/beraliv) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=Beraliv)
+- [Som Shekhar Mukherjee](https://github.com/som-sm) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=som-sm)
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+And thanks goes to these wonderful people:
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+- [Maciej Bembenista](https://github.com/macbem) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=macbem)
+- [Michael Tontchev](https://www.linkedin.com/in/michael-tontchev-7956a269/) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=MichaelTontchev)
+- [Thomas den Hollander](https://github.com/ThomasdenH) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=ThomasdenH)
+- [Esa-Matti Suuronen](https://x.com/esamatti)
+- [Ilya Semenov](https://github.com/IlyaSemenov) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=IlyaSemenov)
+- [Patricio Palladino](https://github.com/alcuadrado)
+- [Kevin Peno](https://github.com/kevinpeno) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=kevinpeno)
+- [Dom Parfitt](https://github.com/DomParfitt)
+- [Eduardo Rafael](https://x.com/TheEduardoRFS) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=EduardoRFS)
+- [Andrew C. Dvorak](https://github.com/acdvorak) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=acdvorak)
+- [Adam Russell](https://github.com/a1russell) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=a1russell)
+- [Piotr Szlachciak](https://github.com/sz-piotr) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=sz-piotr)
+- [Mikhail Swift](https://github.com/mikhailswift) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mikhailswift)
+- [Ryan Zhang](https://github.com/DevilZh)
+- [Francesco Borzì](https://www.linkedin.com/in/francesco-borzi/) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=FrancescoBorzi)
+- [Marnick L'Eau](https://github.com/leaumar)
+- [Egor Gorbachev](https://github.com/kubk)
+- [Bill Barry](https://github.com/bbarry) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=bbarry)
+- [Andrzej Wódkiewicz](https://github.com/akwodkiewicz) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=akwodkiewicz)
+- [Christian Junker](https://www.linkedin.com/in/chjdev/)
+- [Matthew Leffler](https://github.com/mattleff) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mattleff)
+- [studds](https://github.com/studds) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=studds)
+- [Robert Vitonsky](https://github.com/vitonsky)
+- [Itay Ronen](https://github.com/itayronen) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=itayronen)
+- [Yaroslav Larin](https://github.com/cyberbiont)
+- [liaoyinglong](https://github.com/liaoyinglong) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=liaoyinglong)
+- [Yannick Stachelscheid](https://github.com/yss14) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=yss14)
+- [Peter Smolinský](https://github.com/psmolinsky) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=psmolinsky)
+- [Anurag Hazra](https://github.com/anuraghazra) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=anuraghazra)
+- [Bishwajit Jha](https://github.com/ajitjha393) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=ajitjha393)
+- [Sergey Ukustov](https://github.com/ukstv) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=ukstv)
+- [Homa Wong](https://github.com/unional) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=unional)
+- [polyipseity](https://github.com/polyipseity) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=polyipseity)
+- [Kristóf Poduszló](https://github.com/kripod) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=kripod)
+- [MT Lewis](https://github.com/mtlewis) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mtlewis)
+- [Daniel Bertocci](https://github.com/DanielBertocci) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=DanielBertocci)
+- [Myles J](https://github.com/mylesj) / [💻](https://github.com/ts-essentials/ts-essentials/commits?author=mylesj)
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+💻 - contributions, i.e. links to commits by the user on this project
+
 Contributions of any kind welcome! [Read more](./CONTRIBUTING.md)

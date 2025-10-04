@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { MarkWritable, Writable, ReadonlyKeys, WritableKeys, Prettify } from "../lib";
+import { MarkWritable, Writable, ReadonlyKeys, WritableKeys } from "../lib";
 
 type Example = {
   readonly readonly1: Date;
@@ -11,10 +11,11 @@ type Example = {
 };
 
 function testMarkWritable() {
-  type ExampleWithWritableReadonly1 = Prettify<MarkWritable<Example, "readonly1">>;
+  type ExampleWithWritableReadonly1 = MarkWritable<Example, "readonly1">;
 
   type cases = [
     Assert<IsExact<MarkWritable<Example, never>, Example>>,
+    Assert<IsExact<MarkWritable<Example, any>, Writable<Example>>>,
     Assert<IsExact<MarkWritable<Example, WritableKeys<Example>>, Example>>,
     Assert<IsExact<MarkWritable<Example, ReadonlyKeys<Example>>, Writable<Example>>>,
     Assert<IsExact<ReadonlyKeys<ExampleWithWritableReadonly1>, "readonly2">>,
@@ -24,8 +25,9 @@ function testMarkWritable() {
 }
 
 function testUnionTypes() {
-  type UnionExample = Prettify<
-    MarkWritable<Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly1" | "optional2">, "readonly1">
+  type UnionExample = MarkWritable<
+    Pick<Example, "readonly1" | "optional1"> | Pick<Example, "readonly1" | "optional2">,
+    "readonly1"
   >;
 
   let unionElementFields: UnionExample = {
@@ -41,7 +43,7 @@ function testUnionTypes() {
 
 declare let example: Example;
 declare let writableExample: Writable<Example>;
-declare let markedWritableExample: Prettify<MarkWritable<Example, "readonly1">>;
+declare let markedWritableExample: MarkWritable<Example, "readonly1">;
 
 function testAssignability() {
   example = writableExample;

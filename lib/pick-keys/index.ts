@@ -1,3 +1,3 @@
 import { PickProperties } from "../pick-properties";
 
-export type PickKeys<Type, Value> = Exclude<keyof PickProperties<Type, Value>, undefined>;
+export type PickKeys<Type, Value> = keyof PickProperties<Type, Value>;

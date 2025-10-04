@@ -2,3 +2,4 @@ node_modules
 dist
 testDist
 .attest
+.DS_Store

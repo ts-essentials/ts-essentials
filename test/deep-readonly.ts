@@ -53,6 +53,8 @@ function testDeepReadonly() {
     Assert<IsExact<DeepReadonly<readonly number[]>, readonly number[]>>,
     Assert<IsExact<DeepReadonly<Array<number>>, ReadonlyArray<number>>>,
     Assert<IsExact<DeepReadonly<ReadonlyArray<number>>, ReadonlyArray<number>>>,
+    Assert<IsExact<DeepReadonly<{ foo: [string, ...number[]] }>, { readonly foo: readonly [string, ...number[]] }>>,
+    Assert<IsExact<DeepReadonly<{ foo: [string?, ...number[]] }>, { readonly foo: readonly [string?, ...number[]] }>>,
     Assert<IsExact<DeepReadonly<Promise<number>>, Promise<number>>>,
     Assert<IsExact<DeepReadonly<{ a: 1; b: 2; c: 3 }>, { a: 1; b: 2; c: 3 }>>,
     Assert<IsExact<DeepReadonly<{ foo: () => void }>, { foo: () => void }>>,

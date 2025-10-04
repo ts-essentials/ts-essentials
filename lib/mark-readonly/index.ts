@@ -1,7 +1,7 @@
 import { ReadonlyKeys } from "../readonly-keys";
 import { Writable } from "../writable";
+import { Prettify } from "../prettify";
 
 export type MarkReadonly<Type, Keys extends keyof Type> = Type extends Type
-  ? Readonly<Type> &
-      Writable<Pick<Type, Exclude<keyof Type, Keys | (Type extends object ? ReadonlyKeys<Type> : never)>>>
+  ? Prettify<Readonly<Type> & Writable<Omit<Type, Keys | ReadonlyKeys<Type & object>>>>
   : never;

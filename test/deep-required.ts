@@ -94,6 +94,8 @@ function testDeepRequired() {
     Assert<IsExact<DeepRequired<readonly (number | null | undefined)[]>, readonly (number | null)[]>>,
     Assert<IsExact<DeepRequired<Array<number | null | undefined>>, Array<number | null>>>,
     Assert<IsExact<DeepRequired<ReadonlyArray<number | null | undefined>>, ReadonlyArray<number | null>>>,
+    Assert<IsExact<DeepRequired<{ foo?: [string, ...number[]] }>, { foo: [string, ...number[]] }>>,
+    Assert<IsExact<DeepRequired<{ foo?: [string?, ...number[]] }>, { foo: [string, ...number[]] }>>,
     Assert<IsExact<DeepRequired<ExtendedArray<number | null | undefined>>, Array<number | null>>>,
     Assert<IsExact<DeepRequired<ExtendedReadonlyArray<number | null | undefined>>, ReadonlyArray<number | null>>>,
     Assert<IsExact<DeepRequired<Promise<number | null | undefined>>, Promise<number | null | undefined>>>,

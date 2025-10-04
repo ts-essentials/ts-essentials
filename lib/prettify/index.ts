@@ -1,3 +1,8 @@
-export type Prettify<Type> = {
-  [Key in keyof Type]: Type[Key];
-} & {};
+export type Prettify<Type> = Type extends Function
+  ? Type
+  : Extract<
+      {
+        [Key in keyof Type]: Type[Key];
+      },
+      Type
+    >;
