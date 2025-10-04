@@ -6,11 +6,11 @@ let primitive: JsonPrimitive;
 primitive = 1;
 primitive = "1";
 primitive = true;
-// Type 'unique symbol' is not assignable to type 'JsonPrimitive'
+// @ts-expect-error: Type 'unique symbol' is not assignable to type 'JsonPrimitive'
 primitive = Symbol.iterator;
 primitive = null;
-// Type 'undefined' is not assignable to type 'JsonPrimitive'
+// @ts-expect-error: Type 'undefined' is not assignable to type 'JsonPrimitive'
 primitive = undefined;
 ```
 
-TS Playground - https://tsplay.dev/WP2ReN
+TS Playground - https://tsplay.dev/w8y2dN
