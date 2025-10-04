@@ -36,6 +36,11 @@ npm install --save-dev ts-essentials
 ### Basic
 
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
+- [`JsonArray`](/lib/json-array) - Matches any [JSON array](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonObject`](/lib/json-object) - Matches any [JSON object](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonPrimitive`](/lib/json-primitive) - Matches any
+  [JSON primitive value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonValue`](/lib/json-value) - Matches any [JSON value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
 - [`KeyofBase`](/lib/key-of-base) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
 - [`Prettify<Type>`](/lib/prettify/) - flattens type and makes it more readable on the hover in your IDE
