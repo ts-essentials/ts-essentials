@@ -1,4 +1,4 @@
-import { JsonObject, JsonPrimitive, JsonValue } from "../lib";
+import { JsonArray, JsonObject, JsonPrimitive, JsonValue } from "../lib";
 
 function testJsonPrimitive() {
   let primitive: JsonPrimitive;
@@ -24,6 +24,23 @@ function testJsonObject() {
   jsonObject = { nullProperty: null };
   // @ts-expect-error: Type 'undefined' is not assignable to type `JsonValue | JsonPrimitive`
   jsonObject = { undefinedProperty: undefined };
+}
+
+function testJsonArray() {
+  let jsonArray: JsonArray;
+
+  jsonArray = [{ numberProperty: 1 }];
+  jsonArray = [{ numberProperty: 1 }] as const;
+  jsonArray = [{ stringProperty: "1" }];
+  jsonArray = [{ stringProperty: "1" }] as const;
+  jsonArray = [{ booleanProperty: true }];
+  jsonArray = [{ booleanProperty: true }] as const;
+  // @ts-expect-error: Type 'symbol' is not assignable to type `JsonValue | JsonPrimitive`
+  jsonArray = [{ symbolProperty: Symbol.iterator }];
+  jsonArray = [{ nullProperty: null }];
+  jsonArray = [{ nullProperty: null }] as const;
+  // @ts-expect-error: Type 'undefined' is not assignable to type `JsonValue`
+  jsonArray = [{ undefinedProperty: undefined }];
 }
 
 function testCompatibleJson() {
