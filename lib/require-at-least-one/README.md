@@ -1,4 +1,4 @@
-`RequireAtLeastOne<Type, Keys>` constructs a type with at least one required key from `Keys` and other keys from `Type`, which are not part of `Keys`
+`RequireAtLeastOne<Type, Keys?>` constructs a type with at least one required key from `Keys` (`keyof Type` by default) and other keys from `Type`, which are not part of `Keys`
 
 ```ts
 type JsonFile = { type: 'json' };
