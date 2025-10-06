@@ -17,3 +17,20 @@ function testPrettify() {
     Assert<IsExact<Prettify<() => void>, () => void>>,
   ];
 }
+
+function testAssignability() {
+  let assignabilityCheck1: <Type>(arg: Type) => arg is Prettify<Type>;
+  // @ts-expect-error
+  let assignabilityCheck2: <Type>(arg: Prettify<Type>) => arg is Type; // This fails currently, but shouldn't ideally
+}
+
+function testClass() {
+  class TestClass {
+    private _a: number = Date.now();
+    protected _b: Date = new Date();
+    c?: string;
+    d: boolean = true;
+  }
+
+  type cases = [Assert<IsExact<Prettify<TestClass>, { c?: string; d: boolean }>>];
+}
