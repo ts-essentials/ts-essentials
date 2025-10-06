@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { DeepRequired, DeepMarkOptional, Paths, DeepNullable, DeepPartial } from "../lib";
+import { DeepMarkOptional, Paths, DeepNullable, DeepPartial } from "../lib";
 
 function testWithDeepRequired() {
   type Teacher = { address: { postcode: string; city: string } };

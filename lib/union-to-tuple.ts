@@ -1,8 +1,14 @@
-import { UnionToIntersection } from "./union-to-intersection";
+// Don't use `UnionToIntersection` because assignable version returns `never` in
+// `LastOfUnion` for any union
+type NonAssignableUnionToIntersection<Union> = (Union extends any ? (arg: Union) => void : never) extends (
+  arg: infer Intersection,
+) => void
+  ? Intersection
+  : never;
 
-type LastOfUnion<UnionType> = UnionToIntersection<
-  UnionType extends unknown ? (arg: UnionType) => unknown : never
-> extends (arg: infer LastUnionElement) => unknown
+type LastOfUnion<UnionType> = NonAssignableUnionToIntersection<
+  UnionType extends unknown ? (args: UnionType) => void : never
+> extends (args: infer LastUnionElement) => void
   ? LastUnionElement
   : never;
 
