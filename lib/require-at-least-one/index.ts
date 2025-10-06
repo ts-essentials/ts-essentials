@@ -2,7 +2,7 @@ import { AnyRecord } from "../any-record";
 import { IsAny } from "../is-any";
 import { StrictOmit } from "../strict-omit";
 
-export type _RequireAtLeastOne<Type extends AnyRecord, Keys extends keyof Type = keyof Type> = {
+type _RequireAtLeastOne<Type extends AnyRecord, Keys extends keyof Type> = {
   [Key in Keys]: Required<Pick<Type, Key>>;
 }[Keys] &
   StrictOmit<Type, Keys>;
