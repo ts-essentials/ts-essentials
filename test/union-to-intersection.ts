@@ -2,17 +2,17 @@ import { AssertTrue, IsExact } from "conditional-type-checks";
 import { UnionToIntersection } from "../lib";
 
 function testAssignability() {
-  // `UnionToIntersection<T>` is assignable to `T`
-  let test1: <T>(t: T) => t is UnionToIntersection<T>;
+  // `UnionToIntersection<Type>` is assignable to `Type`
+  let test1: <Type>(t: Type) => t is UnionToIntersection<Type>;
 
-  // @ts-expect-error: `T` is NOT assignable to `UnionToIntersection<T>`
-  let test2: <T>(t: UnionToIntersection<T>) => t is T;
+  // @ts-expect-error: `Type` is NOT assignable to `UnionToIntersection<Type>`
+  let test2: <Type>(t: UnionToIntersection<Type>) => t is Type;
 
-  // `UnionToIntersection<T | U>` is assignable to `T | U`
-  let test3: <T, U>(t: T | U) => t is UnionToIntersection<T | U>;
+  // `UnionToIntersection<Type1 | Type2>` is assignable to `Type1 | Type2`
+  let test3: <Type1, Type2>(t: Type1 | Type2) => t is UnionToIntersection<Type1 | Type2>;
 
-  // @ts-expect-error: `T | U` is NOT assignable to `UnionToIntersection<T | U>`
-  let test4: <T, U>(t: UnionToIntersection<T | U>) => t is T | U;
+  // @ts-expect-error: `Type1 | Type2` is NOT assignable to `UnionToIntersection<Type1 | Type2>`
+  let test4: <Type1, Type2>(t: UnionToIntersection<Type1 | Type2>) => t is Type1 | Type2;
 }
 
 function testUnionToIntersection() {
