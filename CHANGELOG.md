@@ -1,5 +1,24 @@
 # ts-essentials
 
+## 10.2.0
+
+### Minor Changes
+
+- a0a0cc2: Add `NonUnion` utility type
+- e9b7366: Deprecated `NonNever` and renamed it to `OmitNeverProperties`
+- 34f52e0: Added `RequireAtLeastOne` utility type
+- 675a244: Added `UnionKeys` utility type
+- 34f52e0: Added `RequireAtMostOne` utility type
+- 88bfc52: Add `JsonValue`, `JsonPrimitive`, `JsonObject` and `JsonArray` utility types
+
+### Patch Changes
+
+- afa25a9: Fix `Prettify<Type>` type when `Type` is a class with private/protected members
+- 16e427d: Fix `IsTuple<Type>` type when `Type` is a tuple with both optional elements and a rest element, like
+  `[string?, ...number[]]`
+- b83d62b: Fix assignability for `UnionKeys`
+- b83d62b: Fix assignability for `UnionToIntersection`
+
 ## 10.1.1
 
 ### Patch Changes
