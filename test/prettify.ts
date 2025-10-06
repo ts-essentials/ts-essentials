@@ -20,7 +20,8 @@ function testPrettify() {
 
 function testAssignability() {
   let assignabilityCheck1: <Type>(arg: Type) => arg is Prettify<Type>;
-  // let assignabilityCheck2: <Type>(arg: Prettify<Type>) => arg is Type; // This fails currently, but shouldn't ideally
+  // @ts-expect-error
+  let assignabilityCheck2: <Type>(arg: Prettify<Type>) => arg is Type; // This fails currently, but shouldn't ideally
 }
 
 function testClass() {
