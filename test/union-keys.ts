@@ -20,8 +20,6 @@ function testUnionKeys() {
   type UnionOf2 = UnionOf1 | { type: "stop"; reason: string };
   type UnionOf3 = UnionOf2 | { type: "report"; crashed: boolean };
 
-  type a = UnionKeys<never>;
-
   type assertions = [
     AssertTrue<IsExact<UnionKeys<never>, PropertyKey>>,
     AssertTrue<IsExact<UnionKeys<UnionOf1>, "type" | "ms">>,
