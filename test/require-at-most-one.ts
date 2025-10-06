@@ -32,8 +32,6 @@ function testAssignability() {
 }
 
 function testRequireAtMostOne() {
-  type A = RequireAtMostOne<File, "toJson" | "toYaml" | "readable">;
-
   type assertions = [
     AssertTrue<IsExact<RequireAtMostOne<any>, any>>,
     AssertTrue<IsExact<RequireAtMostOne<any, "non-existing">, any>>,
