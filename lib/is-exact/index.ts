@@ -77,7 +77,7 @@ type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = 
   ]
 > extends true
   ? [TValue, TShape] extends [readonly (infer TValueElement)[], readonly (infer TShapeElement)[]]
-    ? Exact<TValueElement, TShapeElement> extends TValueElement
+    ? IsExact<TValueElement, TShapeElement> extends TValueElement
       ? TValue
       : never
     : never
@@ -87,11 +87,7 @@ type ArrayExact<TValue extends readonly any[], TShape extends readonly any[]> = 
 // `isBCorBC3(bcOrBc3)` fails because `bcOrBc3` is inferred as `BC`???
 type PrimitiveExact<TValue, TShape> = [TValue] extends [TShape] ? ([TShape] extends [TValue] ? TValue : never) : never;
 
-
-/**
- * @deprecated `Exact` will be removed in v11.0. Please use `IsExact`
- */
-export type Exact<TValue, TShape> = [TValue] extends [readonly any[]]
+export type IsExact<TValue, TShape> = [TValue] extends [readonly any[]]
   ? [TShape] extends [readonly any[]]
     ? ArrayExact<TValue, TShape>
     : never
