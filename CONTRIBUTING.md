@@ -25,6 +25,10 @@ unclear? Don't hesitate to suggest it in a GitHub issue and please don't forget 
 - [`lib/functions`](lib/functions) — functions that incur _some_ runtime overhead
 - Otherwise, `lib/<type-name>` (e.g. [`lib/merge`](lib/merge)) — pure types, with 0 runtime overhead
 
+Recommendations:
+
+1. When adding a new utility type, add `export * from "./<type-name>";` to `lib/index.ts`, so clients can import `<type-name>` as `import { <type-name> } from 'ts-essentials'`
+
 ### 3. Add/Update unit tests
 
 Tests for type are expected to be in `tests/<type-name>.ts`, e.g. [`test/strict-omit.ts`](/test/strict-omit.ts)
