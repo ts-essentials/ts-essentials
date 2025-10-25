@@ -29,5 +29,9 @@ It supports:
 It doesn't support:
 
 - Enums
+
+Support is addressed in https://github.com/ts-essentials/ts-essentials/issues/342
+
+TS Playground – https://tsplay.dev/wEK9Zm
 Support is addressed in https://github.com/ts-essentials/ts-essentials/issues/454
 TS Playground – https://tsplay.dev/NlrjBW
