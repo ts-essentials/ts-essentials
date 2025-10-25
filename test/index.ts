@@ -18,7 +18,7 @@ import {
   WritableKeys,
   Head,
   Tail,
-  Exact,
+  IsExact as Exact,
   ElementOf,
   DeepUndefinable,
   OptionalKeys,
