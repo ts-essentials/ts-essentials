@@ -19,8 +19,6 @@ Prefixes:
     direct recursive call
 - `Is*` prefix is used when type expects to return `true` or `false`
   - ⚠️ Some types don't follow this convention for performance reasons, e.g. [`IsTuple<Type>`](/lib/is-tuple)
-  - ⚠️ [`Exact<Type, Shape>`](/lib/exact) return `Type` or `never` and has to be updated to `IsExact` to match the name
-    of respective function called `isExact`
 - `Mark*` prefix is used when the partial type changes are applied to a type, e.g. some properties are set to optional
   in [`MarkOptional<Type, Keys>`](/lib/mark-optional)
 - `Non*` prefix is used when type expects to return `Type` or `never` (although this is not strict)
