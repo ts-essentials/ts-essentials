@@ -2,4 +2,4 @@
 "ts-essentials": minor
 ---
 
-Deprecate Exact and introduce IsExact<Type,Shape>
+Deprecate `Exact` and renamed it to `IsExact`
