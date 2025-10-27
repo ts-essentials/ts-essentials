@@ -664,7 +664,7 @@ function testTail() {
   ];
 }
 
-function testExact() {
+function testIsExact() {
   type ABC = { a: number; b: number; c: number };
   type BC = { b: number; c: number };
   type C = { c: number };
