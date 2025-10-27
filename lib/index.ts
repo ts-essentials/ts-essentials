@@ -73,6 +73,7 @@ export * from "./writable-keys";
 // Type checkers
 
 export * from "./exact";
+export * from "./is-exact";
 export * from "./is-any";
 export * from "./is-never";
 export * from "./is-unknown";

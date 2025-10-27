@@ -11,7 +11,7 @@ type LastOfUnion<UnionType> = UnionToIntersection<
  *
  * Please avoid when possible, the `LastOfUnion` logic may break at any TS
  * version. However, it's acceptable to use `UnionToTuple`, when the logic
- * doesn't rely on the tuple order. For example, `Exact` or `DeepMarkRequired`.
+ * doesn't rely on the tuple order. For example, `IsExact` or `DeepMarkRequired`.
  *
  * @see https://github.com/type-challenges/type-challenges/blob/main/questions/00730-hard-union-to-tuple/README.md
  */
