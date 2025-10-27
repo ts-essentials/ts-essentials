@@ -1,4 +1,5 @@
-import { isExact } from "../lib";
+import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
+import { IsExact as Exact, isExact } from "../lib";
 
 function testArray() {
   const readonlyArray: readonly number[] = [1, 2, 3];
@@ -199,4 +200,16 @@ function testEnums() {
   // TODO: fix under a separate bug
   // @ts-expect-error: Argument of type 'MultipleEnum' is not assignable to parameter of type 'never'
   isExact<MultipleValueEnum>()(multipleValueEnum);
+}
+
+function testIsExact() {
+  type ABC = { a: number; b: number; c: number };
+  type BC = { b: number; c: number };
+  type C = { c: number };
+
+  type assertions = [
+    Assert<IsExact<Exact<ABC, C>, never>>,
+    Assert<IsExact<Exact<BC, C>, never>>,
+    Assert<IsExact<Exact<C, C>, C>>,
+  ];
 }

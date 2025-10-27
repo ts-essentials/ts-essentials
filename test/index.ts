@@ -18,7 +18,6 @@ import {
   WritableKeys,
   Head,
   Tail,
-  IsExact as Exact,
   ElementOf,
   DeepUndefinable,
   OptionalKeys,
@@ -662,16 +661,6 @@ function testTail() {
     Assert<IsExact<Tail<any>, unknown[]>>, // refer https://github.com/ts-essentials/ts-essentials/pull/424#discussion_r1867834519 for why it's unknown[]
     Assert<IsExact<Tail<never>, never>>,
   ];
-}
-
-function testIsExact() {
-  type ABC = { a: number; b: number; c: number };
-  type BC = { b: number; c: number };
-  type C = { c: number };
-
-  type a1 = Assert<IsExact<Exact<ABC, C>, never>>;
-  type a2 = Assert<IsExact<Exact<BC, C>, never>>;
-  type a3 = Assert<IsExact<Exact<C, C>, C>>;
 }
 
 function testElementOf() {
