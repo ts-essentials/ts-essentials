@@ -94,3 +94,35 @@ function testDeepWritable() {
     test[0].bar.x = 2;
   }
 }
+
+function testDeepWritableForIterator() {
+  function check1<Type>(iterable: DeepWritable<Iterable<Type>>) {
+    for (const element of iterable) {
+      const assignabilityCheck1: DeepWritable<Type> = element;
+    }
+  }
+
+  interface IterableWithExtraProp<Type> {
+    extraProp: number;
+    [Symbol.iterator](): Iterator<Type>;
+  }
+
+  function check2<Type>(iterable: DeepWritable<IterableWithExtraProp<Type>>) {
+    for (const element of iterable) {
+      const assignabilityCheck2: DeepWritable<Type> = element;
+    }
+  }
+
+  const arrayIterable = {} as DeepWritable<IterableWithExtraProp<readonly number[]>>;
+  for (const array of arrayIterable) {
+    const assignabilityCheck3: readonly number[] = array;
+    const assignabilityCheck4: number[] = array;
+  }
+
+  const iterator = arrayIterable[Symbol.iterator]();
+  const iteratedElement = iterator.next();
+  if (!iteratedElement.done) {
+    const assignabilityCheck5: readonly number[] = iteratedElement.value;
+    const assignabilityCheck6: number[] = iteratedElement.value;
+  }
+}

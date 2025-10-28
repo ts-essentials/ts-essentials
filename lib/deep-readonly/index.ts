@@ -4,6 +4,14 @@ import { IsNever } from "../is-never";
 import { IsTuple } from "../is-tuple";
 import { IsUnknown } from "../is-unknown";
 
+type DeepReadonlyObject<Type> = {
+  readonly [Key in keyof Type]: Key extends typeof Symbol.iterator
+    ? Type[Key] extends () => Iterator<infer IteratorType, infer Return, infer Next>
+      ? () => Iterator<DeepReadonly<IteratorType>, DeepReadonly<Return>, DeepReadonly<Next>>
+      : DeepReadonly<Type[Key]>
+    : DeepReadonly<Type[Key]>;
+};
+
 export type DeepReadonly<Type> = Type extends Exclude<Builtin, Error>
   ? Type
   : Type extends Map<infer Keys, infer Values>
@@ -22,10 +30,10 @@ export type DeepReadonly<Type> = Type extends Exclude<Builtin, Error>
   ? Promise<DeepReadonly<Value>>
   : Type extends AnyArray<infer Values>
   ? IsNever<IsTuple<Type>> extends false
-    ? { readonly [Key in keyof Type]: DeepReadonly<Type[Key]> }
+    ? DeepReadonlyObject<Type>
     : ReadonlyArray<DeepReadonly<Values>>
   : Type extends {}
-  ? { readonly [Key in keyof Type]: DeepReadonly<Type[Key]> }
+  ? DeepReadonlyObject<Type>
   : IsUnknown<Type> extends true
   ? unknown
   : Readonly<Type>;
