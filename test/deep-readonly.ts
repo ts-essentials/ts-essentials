@@ -109,3 +109,37 @@ function testDeepReadonly() {
     const readonlyObj2: DeepReadonly<TestObject> = obj;
   }
 }
+
+function testDeepReadonlyForIterator() {
+  function check1<Type>(iterable: DeepReadonly<Iterable<Type>>) {
+    for (const element of iterable) {
+      const assignabilityCheck1: DeepReadonly<Type> = element;
+    }
+  }
+
+  interface IterableWithExtraProp<Type> {
+    extraProp: number;
+    [Symbol.iterator](): Iterator<Type>;
+  }
+
+  function check2<Type>(iterable: DeepReadonly<IterableWithExtraProp<Type>>) {
+    for (const element of iterable) {
+      const assignabilityCheck2: DeepReadonly<Type> = element;
+    }
+  }
+
+  const arrayIterable = {} as DeepReadonly<IterableWithExtraProp<number[]>>;
+  for (const array of arrayIterable) {
+    const assignabilityCheck3: readonly number[] = array;
+    // @ts-expect-error: readonly array is NOT assignable to mutable array
+    const assignabilityCheck4: number[] = array;
+  }
+
+  const iterator = arrayIterable[Symbol.iterator]();
+  const iteratedElement = iterator.next();
+  if (!iteratedElement.done) {
+    const assignabilityCheck5: readonly number[] = iteratedElement.value;
+    // @ts-expect-error: readonly array is NOT assignable to mutable array
+    const assignabilityCheck6: number[] = iteratedElement.value;
+  }
+}
