@@ -8,9 +8,10 @@ on:
 
 jobs:
   test:
+    name: Test
     strategy:
       matrix:
-        node: ["18.x"]
+        node: ["24.x"]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
