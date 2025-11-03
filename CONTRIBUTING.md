@@ -85,7 +85,7 @@ Recommendations:
 
 Recommendations:
 
-1. Use node version 18, e.g. by running `nvm use 18` if you use [node version manager](https://github.com/nvm-sh/nvm)
+1. Use node version from `.npmrc`, e.g. by running `nvm use` if you use [node version manager](https://github.com/nvm-sh/nvm)
 1. Run `yarn` to install all dependencies
 1. Run `yarn test` to find any TS errors, [ESLint](https://eslint.org/) or [Prettier](https://prettier.io/) errors
 1. Use `yarn test:fix` to fix ESLint/Prettier errors 
