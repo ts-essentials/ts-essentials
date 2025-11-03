@@ -12,8 +12,6 @@ Prefixes:
 - `Any*` prefix is used for top types for specified subset of types, e.g.
   [`AnyFunction<Args?, ReturnType?>`](./lib/any-function/) for any possible functions,
   [`AnyArray<Type?>`](/lib/any-array) for any type of arrays, etc.
-  - ⚠️ [`NonEmptyArray<Type>`](/lib/non-empty-array) doesn't follow this rule and has to be renamed to
-    `AnyNonEmptyArray`
 - `Deep*` prefix is used when the type changes are applied to the whole structure recursively.
   - If you wonder why [`Buildable<Type>`](./lib/buildable/) doesn't include a prefix, it is because it doesn't have
     direct recursive call

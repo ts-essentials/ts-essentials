@@ -29,7 +29,6 @@ import {
   Writable,
   OmitProperties,
   ArrayOrSingle,
-  NonEmptyArray,
   KeyofBase,
 } from "../lib";
 import { ComplexNestedPartial, ComplexNestedRequired } from "./types";
@@ -544,17 +543,6 @@ function testParametrizedTuple() {
   acceptsCertainTuple([42, "foo"]);
 }
 
-function testNonEmptyArray() {
-  type Cases<T> = [
-    Assert<IsExact<NonEmptyArray<T>, [T, ...T[]]>>,
-    AssertFalse<IsExact<NonEmptyArray<T>, []>>,
-
-    AssertFalse<Assignable<NonEmptyArray<T>, []>>,
-    Assert<Assignable<NonEmptyArray<T>, [T]>>,
-    Assert<Assignable<NonEmptyArray<T>, [T, ...T[]]>>,
-  ];
-}
-
 function testReadonlyKeys() {
   type cases = [
     // @ts-expect-error primitives not allowed
@@ -669,9 +657,6 @@ function testElementOf() {
   const t2 = ["one"] as const;
   type a2 = Assert<IsExact<ElementOf<typeof t2>, "one">>;
 }
-
-// T = U
-type Assignable<T, U> = U extends T ? true : false;
 
 function testAsyncOrSyncType() {
   type cases = [

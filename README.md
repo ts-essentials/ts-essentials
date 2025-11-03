@@ -169,10 +169,10 @@ npm install --save-dev ts-essentials
 ### Arrays and Tuples
 
 - [`AnyArray<Type?>`](/lib/any-array) - Matches `Array` or `ReadonlyArray` (`Type` is `any` by default)
+- [`AnyNonEmptyArray<Type>`](/lib/any-non-empty-array) - Matches array with at least one element of type `Type`
 - [`ArrayOrSingle<Type>`](/lib/array-or-single) - Matches `Type` or `Type[]`
 - [`ElementOf<Type>`](/lib/element-of) - Constructs a type which equals to array element type for type `Type`
 - [`Head<Type>`](/lib/head) - Constructs a type which equals to first element in type `Type`
-- [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
 - [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single) - Matches `Type` or `readonly Type[]`
 - [`Tail<Type>`](/lib/tail) - Constructs a type which equals to elements but first one in type `Type`
 - [`Tuple<Type?>`](/lib/tuple) - Matches type constraint for tuple with elements of type `Type` (`any` by default)

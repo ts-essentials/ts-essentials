@@ -83,10 +83,11 @@ export * from "./non-empty-object";
 // Arrays and Tuples
 
 export * from "./any-array";
+export * from "./any-non-empty-array";
 export * from "./array-or-single";
 export * from "./element-of";
 export * from "./head";
-export * from "./non-empty-array";
+export * from "./non-empty-array"; // deprecated and will be removed in v11.0.0
 export * from "./readonly-array-or-single";
 export * from "./tail";
 export * from "./tuple";
