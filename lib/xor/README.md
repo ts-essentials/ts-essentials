@@ -65,4 +65,4 @@ TS Playground – https://tsplay.dev/wRb51w
 
 > [!NOTE]  
 > XOR utility type didn't infer the correct types in functions parameters for TypeScript
-> versions between 4.5.x and 4.8.x. For more details, see [test/xor.function-parameters.ts](../../test/xor.function-parameters.ts) [scripts/update-test-tsconfig.js](../../scripts/update-test-tsconfig.js)
+> versions between 4.7.x and 4.8.x. For more details, see [test/xor.function-parameters.ts](../../test/xor.function-parameters.ts) [scripts/update-test-tsconfig.js](../../scripts/update-test-tsconfig.js)

@@ -276,6 +276,7 @@ facilitate common type transformations. These utilities are available globally.
 
 | `ts-essentials` | `typescript` / type of dependency                                                     |
 | --------------- | ------------------------------------------------------------------------------------- |
+| `^11.0.0`       | `^4.7.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^10.0.0`       | `^4.5.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^9.4.0`        | `^4.1.0` / [peer optional](https://github.com/ts-essentials/ts-essentials/issues/370) |
 | `^8.0.0`        | `^4.1.0` / peer                                                                       |
@@ -283,10 +284,6 @@ facilitate common type transformations. These utilities are available globally.
 | `^3.0.1`        | `^3.5.0` / peer                                                                       |
 | `^1.0.1`        | `^3.2.2` / dev                                                                        |
 | `^1.0.0`        | `^3.0.3` / dev                                                                        |
-
-## Limitations
-
-- This project doesn't use `extends` Constraints on `infer` Type Variables as it's introduced in TypeScript 4.7, but currently ts-essentials supports versions below, e.g. TypeScript 4.5. Read more in https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#extends-constraints-on-infer-type-variables
 
 ## Contributors
 
