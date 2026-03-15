@@ -2,7 +2,6 @@
  * This file contains a lot of unused functions as it's only typechecked.
  */
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-
 import { ReadonlyArrayOrSingle } from "..";
 
 function testReadonlyArrayOrSingle() {

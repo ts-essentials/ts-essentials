@@ -1,5 +1,4 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-
 import { Opaque } from "..";
 
 // T = U
