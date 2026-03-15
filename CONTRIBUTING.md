@@ -31,9 +31,7 @@ Recommendations:
 
 ### 3. Add/Update unit tests
 
-Tests for type are expected to be in `tests/<type-name>.ts`, e.g. [`test/strict-omit.ts`](/test/strict-omit.ts)
-
-However, not all tests are moved to individual files and can still be a part of `test/index.ts`. If this is still the case, the recommendation is to move them to a separate file.
+Tests for type are expected to be in `lib/<type-name>/index.test.ts`, e.g. [`lib/strict-omit/index.test.ts`](/lib/strict-omit/index.test.ts)
 
 ### 4. Update top-level README
 

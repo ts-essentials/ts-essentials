@@ -12,8 +12,8 @@
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
     "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
-    "test": "node scripts/update-test-tsconfig.js && prettier -c {lib,test}/**/*.ts && eslint && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
-    "test:fix": "node scripts/update-test-tsconfig.js && prettier --write {lib,test}/**/*.ts && eslint --fix",
+    "test": "node scripts/update-test-tsconfig.js && prettier -c lib/**/*.ts && eslint && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
+    "test:fix": "node scripts/update-test-tsconfig.js && prettier --write lib/**/*.ts && eslint --fix",
     "prerelease": "yarn test",
     "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
