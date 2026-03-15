@@ -10,8 +10,8 @@ const writeTsVersion = (tsVersion, filename) => {
   fs.writeFileSync(filename, `export type TsVersion = "${tsVersion}";\n`);
 };
 
-const tsVersion = findTsVersion("package-lock.json");
+const tsVersion = findTsVersion("yarn.lock");
 if (tsVersion === undefined) {
-  throw new Error("Cannot find TypeScript version in package-lock.json");
+  throw new Error("Cannot find TypeScript version in yarn.lock");
 }
 writeTsVersion(tsVersion, "lib/ts-version.ts");

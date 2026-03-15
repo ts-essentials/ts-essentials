@@ -35,8 +35,8 @@ function testFunctionParameter() {
   };
 
   function dispatch1<Type extends keyof EventPayload>(type: Type, data: EventPayload[Type]): void;
-  function dispatch1(_type: string, _data: unknown): void {
-    // empty
+  function dispatch1(type: string, data: unknown): void {
+    console.log(type, data);
   }
 
   dispatch1("start", { ms: 1 });
@@ -48,8 +48,8 @@ function testFunctionParameter() {
   dispatch1(type, { ms: 1 });
 
   function dispatch2<Type extends keyof EventPayload>(type: NonUnion<Type>, data: EventPayload[Type]): void;
-  function dispatch2(_type: string, _data: unknown): void {
-    // empty
+  function dispatch2(type: string, data: unknown): void {
+    console.log(type, data);
   }
 
   dispatch2("start", { ms: 1 });
