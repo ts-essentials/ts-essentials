@@ -29,9 +29,16 @@ Recommendations:
 
 1. When adding a new utility type, add `export * from "./<type-name>";` to `lib/index.ts`, so clients can import `<type-name>` as `import { <type-name> } from 'ts-essentials'`
 
+### 2. Add/Update implementation
+
+Add or update the type/function in the file chosen in step 1 (e.g. `lib/<type-name>/index.ts` or `lib/functions/<function-name>/index.ts`).
+
 ### 3. Add/Update unit tests
 
-Tests for type are expected to be in `lib/<type-name>/index.test.ts`, e.g. [`lib/strict-omit/index.test.ts`](/lib/strict-omit/index.test.ts)
+Tests are expected to be co-located with the implementation:
+
+- For pure types: `lib/<type-name>/index.test.ts`, e.g. [`lib/strict-omit/index.test.ts`](/lib/strict-omit/index.test.ts)
+- For functions: `lib/functions/<function-name>/index.test.ts`, e.g. [`lib/functions/assert/index.test.ts`](/lib/functions/assert/index.test.ts)
 
 ### 4. Update top-level README
 
