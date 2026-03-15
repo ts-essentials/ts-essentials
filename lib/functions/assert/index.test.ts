@@ -3,7 +3,6 @@ import { assert } from "../..";
 
 function testAssert() {
   type TestType1 = string | undefined;
-  type Expected = string;
   const anything = undefined as any as TestType1;
 
   assert(anything);
