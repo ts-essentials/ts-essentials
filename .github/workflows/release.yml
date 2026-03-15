@@ -24,21 +24,21 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Cache npm dependencies
+      - name: Cache YARN dependencies
         uses: actions/cache@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.OS }}-${{ matrix.node }}-npm-cache-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-npm-cache-
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
 
       - name: Install
-        run: npm ci
+        run: yarn --no-progress --non-interactive --frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
-          publish: npm run release
+          publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

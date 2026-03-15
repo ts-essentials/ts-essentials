@@ -21,18 +21,18 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Cache npm dependencies
+      - name: Cache YARN dependencies
         uses: actions/cache@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.OS }}-${{ matrix.node }}-npm-cache-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-npm-cache-
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
 
-      - run: npm ci
+      - run: yarn --no-progress --non-interactive --frozen-lockfile
 
-      - run: npm run test
-      - run: npm run build
+      - run: yarn test
+      - run: yarn build
 # Few tips github actions
 # - name: Setup SSH debug session
 #   uses: mxschmitt/action-tmate@v2

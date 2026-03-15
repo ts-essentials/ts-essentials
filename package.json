@@ -11,11 +11,11 @@
   "scripts": {
     "build": "rimraf ./dist && tsc -p tsconfig.prod.json --outDir ./dist",
     "formatDeclarations": "prettier --ignore-path *.js --write dist/*.d.ts",
-    "prepublishOnly": "npm run test && npm run build && npm run formatDeclarations",
+    "prepublishOnly": "yarn test && yarn build && yarn formatDeclarations",
     "test": "node scripts/update-test-tsconfig.js && prettier -c lib/**/*.ts && eslint && tsc --project tsconfig.test.json --outDir ./testDist && rimraf ./testDist",
     "test:fix": "node scripts/update-test-tsconfig.js && prettier --write lib/**/*.ts && eslint --fix",
-    "prerelease": "npm run test",
-    "release": "npm run build && npm run formatDeclarations && npx changeset publish",
+    "prerelease": "yarn test",
+    "release": "yarn build && yarn formatDeclarations && yarn changeset publish",
     "setTsVersion": "node scripts/sync-ts-version.js"
   },
   "files": [
@@ -30,6 +30,7 @@
     }
   },
   "devDependencies": {
+    "@changesets/cli": "^2.20.0",
     "@typescript-eslint/parser": "^8.15.0",
     "conditional-type-checks": "^1.0.4",
     "eslint": "^9.15.0",

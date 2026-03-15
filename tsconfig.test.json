@@ -1,12 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "lib": [
-      "es2015",
-      "es2020.bigint",
-      "esnext.asynciterable"
-    ]
-  },
   "include": [
     "lib/**/*.ts"
   ],
