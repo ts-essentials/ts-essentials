@@ -1,5 +1,5 @@
 import { AssertTrue as Assert, IsExact } from "conditional-type-checks";
-import { DeepReadonly } from "..";
+import { DeepReadonly, ReadonlyKeys } from "..";
 import { ComplexNestedReadonly, ComplexNestedRequired } from "../test-types";
 
 function testDeepReadonly() {
@@ -29,11 +29,8 @@ function testDeepReadonly() {
     Assert<IsExact<DeepReadonly<null>, null>>,
     Assert<IsExact<DeepReadonly<Function>, Function>>,
     Assert<IsExact<DeepReadonly<ExtendedFunction>, ExtendedFunction>>,
-    Assert<IsExact<DeepReadonly<Date>, Date>>,
     Assert<IsExact<DeepReadonly<ExtendedDate>, ExtendedDate>>,
-    Assert<IsExact<DeepReadonly<Error>, Error>>,
     Assert<IsExact<DeepReadonly<ExtendedError>, Readonly<Error> & { readonly code: string }>>,
-    Assert<IsExact<DeepReadonly<RegExp>, RegExp>>,
     Assert<IsExact<DeepReadonly<ExtendedRegExp>, ExtendedRegExp>>,
     Assert<IsExact<DeepReadonly<Map<string, boolean>>, ReadonlyMap<string, boolean>>>,
     Assert<IsExact<DeepReadonly<ReadonlyMap<string, boolean>>, ReadonlyMap<string, boolean>>>,
@@ -108,6 +105,19 @@ function testDeepReadonly() {
 
     const readonlyObj2: DeepReadonly<TestObject> = obj;
   }
+}
+
+function testDeepReadonlyOptions() {
+  type cases = [
+    // default values
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<Date>>, ReadonlyKeys<Date>>>,
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<Error>>, keyof Error>>,
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<RegExp>>, ReadonlyKeys<RegExp>>>,
+    // override values
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<Date, { builtin: { date: true } }>>, keyof Date>>,
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<Error, { builtin: { error: false } }>>, ReadonlyKeys<Error>>>,
+    Assert<IsExact<ReadonlyKeys<DeepReadonly<RegExp, { builtin: { regexp: true } }>>, keyof RegExp>>,
+  ];
 }
 
 function testDeepReadonlyForIterator() {
