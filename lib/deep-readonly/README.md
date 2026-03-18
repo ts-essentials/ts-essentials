@@ -45,24 +45,3 @@ function deepFreeze<Type extends object>(obj: Type): DeepReadonly<Type> {
 ```
 
 TS Playground – https://tsplay.dev/w6x5Em
-
-## Configuration
-
-There are 3 configurable built-in options under `builtin`: `error`, `date`, and `regexp`.
-
-When `false`, the type is treated as a passthrough (returned unchanged). When `true`, it is processed recursively like a plain object.
-
-| Option | Default |
-|--------|---------|
-| `builtin.date` | `false` |
-| `builtin.error` | `true` |
-| `builtin.regexp` | `false` |
-
-Example — make `RegExp` deeply readonly to satisfy `@typescript-eslint/prefer-readonly-parameter-types`:
-
-```ts
-type CustomDeepReadonly<Type> = DeepReadonly<Type, { builtin: { regexp: true; } }>;
-
-type ReadonlyRegExp = CustomDeepReadonly<RegExp>;
-//   ^? Readonly<RegExp> - lastIndex is now readonly
-```
