@@ -122,7 +122,7 @@ npm install --save-dev ts-essentials
 - [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
   values `never` or `true` in type `Filter`, from type `Type`. If you'd like type `Filter` to be validated against a
   structure of `Type`, please use [`StrictDeepPick<Type, Filter>`](./lib/strict-deep-pick/).
-- [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
+- [`DeepReadonly<Type, OverrideDeepReadonlyOptions?>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
   and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use
   [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
 - [`DeepRequired<Type>`](/lib/deep-required) - Constructs a type by picking all properties from type `Type` recursively
