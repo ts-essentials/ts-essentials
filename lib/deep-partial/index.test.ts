@@ -53,6 +53,10 @@ function testDeepPartial() {
     Assert<IsExact<DeepPartial<readonly never[]>, readonly undefined[]>>,
     Assert<IsExact<DeepPartial<[1, 2, 3]>, [(1 | undefined)?, (2 | undefined)?, (3 | undefined)?]>>,
     Assert<IsExact<DeepPartial<readonly [1, 2, 3]>, readonly [(1 | undefined)?, (2 | undefined)?, (3 | undefined)?]>>,
+    Assert<IsExact<DeepPartial<[string, ...number[]]>, [(string | undefined)?, ...(number | undefined)[]]>>,
+    Assert<
+      IsExact<DeepPartial<readonly [string, ...number[]]>, readonly [(string | undefined)?, ...(number | undefined)[]]>
+    >,
     Assert<IsExact<DeepPartial<number[]>, (number | undefined)[]>>,
     Assert<IsExact<DeepPartial<readonly number[]>, readonly (number | undefined)[]>>,
     Assert<IsExact<DeepPartial<Array<number>>, Array<number | undefined>>>,
@@ -76,5 +80,11 @@ function testDeepPartial() {
     Assert<IsExact<DeepPartial<{ a: 1; b: 2; c: 3 }>, { a?: 1; b?: 2; c?: 3 }>>,
     Assert<IsExact<DeepPartial<{ foo: () => void }>, { foo?: () => void }>>,
     Assert<IsExact<DeepPartial<ComplexNestedRequired>, ComplexNestedPartial>>,
+    Assert<
+      IsExact<
+        DeepPartial<{ foo: [string, ...number[]] }>,
+        { foo?: [(string | undefined)?, ...(number | undefined)[]] | undefined }
+      >
+    >,
   ];
 }
