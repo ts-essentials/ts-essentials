@@ -16,12 +16,6 @@ export type DeepPartial<Type> = Type extends Exclude<Builtin, Error>
   ? ReadonlySet<DeepPartial<Values>>
   : Type extends WeakSet<infer Values>
   ? WeakSet<DeepPartial<Values>>
-  : Type extends ReadonlyArray<infer Values>
-  ? Type extends IsTuple<Type>
-    ? { [Key in keyof Type]?: DeepPartial<Type[Key]> }
-    : Type extends Array<Values>
-    ? Array<DeepPartial<Values> | undefined>
-    : ReadonlyArray<DeepPartial<Values> | undefined>
   : Type extends Promise<infer Value>
   ? Promise<DeepPartial<Value>>
   : Type extends {}

@@ -14,4 +14,4 @@ const tsVersion = findTsVersion("yarn.lock");
 if (tsVersion === undefined) {
   throw new Error("Cannot find TypeScript version in yarn.lock");
 }
-writeTsVersion(tsVersion, "test/ts-version.ts");
+writeTsVersion(tsVersion, "lib/ts-version.ts");

@@ -30,4 +30,4 @@ isCat(cat);
 ⚠️ Limitations:
 
 - It has to be a curried function
-- Supported types depend on [`Exact`](../../exact) implementation
+- Supported types depend on [`IsExact`](../../is-exact) implementation

@@ -11,7 +11,7 @@ jobs:
     name: TypeScript ${{ matrix.typescript }}
     strategy:
       matrix:
-        node: ["18.x"]
+        node: ["24.x"]
         os: [ubuntu-latest]
         typescript:
           [

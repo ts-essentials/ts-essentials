@@ -1,6 +1,6 @@
-import { Exact } from "../../exact";
+import { IsExact } from "../../is-exact";
 
 export const isExact =
   <ExpectedShape>() =>
-  <ActualShape>(x: Exact<ActualShape, ExpectedShape>) =>
+  <ActualShape>(x: IsExact<ActualShape, ExpectedShape>) =>
     x as ExpectedShape;

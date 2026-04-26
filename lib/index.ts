@@ -1,8 +1,12 @@
 // Basic
 
-export * from "./primitive";
 export * from "./built-in";
+export * from "./json-array";
+export * from "./json-object";
+export * from "./json-primitive";
+export * from "./json-value";
 export * from "./key-of-base";
+export * from "./primitive";
 export * from "./strict-exclude";
 export * from "./strict-extract";
 export * from "./strict-omit";
@@ -17,13 +21,17 @@ export * from "./dictionary-values";
 export * from "./merge";
 export * from "./merge-n";
 export * from "./newable";
-export * from "./non-never";
+export * from "./non-never"; // deprecated and will be removed in v11.0.0
+export * from "./non-union";
+export * from "./omit-never-properties";
 export * from "./omit-properties";
 export * from "./opaque";
 export * from "./path-value";
 export * from "./paths";
 export * from "./pick-properties";
 export * from "./prettify";
+export * from "./require-at-least-one";
+export * from "./require-at-most-one";
 export * from "./safe-dictionary";
 export * from "./union-to-intersection";
 export * from "./value-of";
@@ -59,11 +67,13 @@ export * from "./optional-keys";
 export * from "./pick-keys";
 export * from "./readonly-keys";
 export * from "./required-keys";
+export * from "./union-keys";
 export * from "./writable-keys";
 
 // Type checkers
 
 export * from "./exact";
+export * from "./is-exact";
 export * from "./is-any";
 export * from "./is-never";
 export * from "./is-unknown";
@@ -73,10 +83,11 @@ export * from "./non-empty-object";
 // Arrays and Tuples
 
 export * from "./any-array";
+export * from "./any-non-empty-array";
 export * from "./array-or-single";
 export * from "./element-of";
 export * from "./head";
-export * from "./non-empty-array";
+export * from "./non-empty-array"; // deprecated and will be removed in v11.0.0
 export * from "./readonly-array-or-single";
 export * from "./tail";
 export * from "./tuple";

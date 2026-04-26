@@ -36,6 +36,11 @@ npm install --save-dev ts-essentials
 ### Basic
 
 - [`Builtin`](/lib/built-in) - Matches primitive, function, date, error or regular expression
+- [`JsonArray`](/lib/json-array) - Matches any [JSON array](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonObject`](/lib/json-object) - Matches any [JSON object](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonPrimitive`](/lib/json-primitive) - Matches any
+  [JSON primitive value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
+- [`JsonValue`](/lib/json-value) - Matches any [JSON value](https://www.rfc-editor.org/rfc/rfc8259#section-3)
 - [`KeyofBase`](/lib/key-of-base) -
   [`keyofStringsOnly`](https://www.typescriptlang.org/tsconfig#keyofStringsOnly)-tolerant analogue for `PropertyKey`
 - [`Prettify<Type>`](/lib/prettify/) - flattens type and makes it more readable on the hover in your IDE
@@ -63,7 +68,7 @@ npm install --save-dev ts-essentials
   Property values from `Object2` override property values from `Object1` when property keys are the same
 - [`MergeN<Tuple>`](/lib/merge-n) - Constructs a type by merging objects with type `Merge` in tuple `Tuple` recursively
 - [`Newable<ReturnType>`](/lib/newable) - Constructs a class type with constructor which has return type `ReturnType`
-- [`NonNever<Type>`](/lib/non-never) - Constructs a type by picking all properties from type `Type` which values don't
+- [`OmitNeverProperties<Type>`](/lib/omit-never-properties) - Constructs a type by picking all properties from type `Type`, which values don't
   equal to `never`
 - [`OmitProperties<Type, Value>`](/lib/omit-properties) - Constructs a type by picking all properties from type `Type`
   and removing those properties which values equal to `Value`
@@ -73,6 +78,8 @@ npm install --save-dev ts-essentials
 - [`Paths<Type>`](/lib/paths) - Constructs a union type by picking all possible paths for type `Type`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`
+- [`RequireAtLeastOne<Type, Keys?>`](/lib/require-at-least-one) - Constructs a type with at least one required key from `Keys` (`keyof Type` by default) and other keys from `Type` which are not part of `Keys`
+- [`RequireAtMostOne<Type, Keys?>`](/lib/require-at-most-one) - Constructs a type with at most one required key from `Keys` (`keyof Type` by default) and other keys from `Type` which are not part of `Keys` 
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
   `Keys` (`string` by default) and which property values are `Type`
 - [`UnionToIntersection<Union>`](/lib/union-to-intersection) - Constructs a intersection type from union type `Union`
@@ -115,7 +122,7 @@ npm install --save-dev ts-essentials
 - [`DeepPick<Type, Filter>`](/lib/deep-pick) - Constructs a type by picking set of properties, which have property
   values `never` or `true` in type `Filter`, from type `Type`. If you'd like type `Filter` to be validated against a
   structure of `Type`, please use [`StrictDeepPick<Type, Filter>`](./lib/strict-deep-pick/).
-- [`DeepReadonly<Type>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
+- [`DeepReadonly<Type, OverrideDeepReadonlyOptions?>`](/lib/deep-readonly) - Constructs a type by picking all properties from type `Type` recursively
   and setting `readonly` modifier, meaning they cannot be reassigned. To make properties `readonly` on one level, use
   [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)
 - [`DeepRequired<Type>`](/lib/deep-required) - Constructs a type by picking all properties from type `Type` recursively
@@ -143,27 +150,29 @@ npm install --save-dev ts-essentials
   type `Type`, meaning their values cannot be reassigned
 - [`RequiredKeys<Type>`](/lib/required-keys) - Constructs a union type by picking all required properties of object type
   `Type`
+- [`UnionKeys<UnionType>`](/lib/union-keys) - Constructs a union type by picking all properties from all union members of `UnionType`
 - [`WritableKeys<Type>`](/lib/writable-keys) - Constructs a union type by picking all writable properties of object type
   `Type`, meaning their values can be reassigned
 
 ### Type checkers
 
-- [`Exact<Type, Shape>`](/lib/exact) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
-  `never`
 - [`IsAny<Type>`](/lib/is-any) - Returns `true` when type `Type` is `any`. Otherwise returns `false`
+- [`IsExact<Type, Shape>`](/lib/is-exact) - Returns `Type` when type `Type` and `Shape` are identical. Otherwise returns
+  `never`
 - [`IsNever<Type>`](/lib/is-never) - Returns `true` when type `Type` is `never`. Otherwise returns `false`
 - [`IsUnknown<Type>`](/lib/is-unknown) - Returns `true` when type `Type` is `unknown`. Otherwise returns `false`
 - [`IsTuple<Type>`](/lib/is-tuple) - Returns `Type` when type `Type` is tuple. Otherwise returns `never`
 - [`NonEmptyObject<Object>`](/lib/non-empty-object) - Returns `Object` when `Object` has at least one key. Otherwise
   returns `never`
+- [`NonUnion<Type>`](/lib/non-union) - Returns `Type` when `Type` is not an union. Otherwise returns `never`
 
 ### Arrays and Tuples
 
 - [`AnyArray<Type?>`](/lib/any-array) - Matches `Array` or `ReadonlyArray` (`Type` is `any` by default)
+- [`AnyNonEmptyArray<Type>`](/lib/any-non-empty-array) - Matches array with at least one element of type `Type`
 - [`ArrayOrSingle<Type>`](/lib/array-or-single) - Matches `Type` or `Type[]`
 - [`ElementOf<Type>`](/lib/element-of) - Constructs a type which equals to array element type for type `Type`
 - [`Head<Type>`](/lib/head) - Constructs a type which equals to first element in type `Type`
-- [`NonEmptyArray<Type>`](/lib/non-empty-array) - Matches array with at least one element of type `Type`
 - [`ReadonlyArrayOrSingle`](/lib/readonly-array-or-single) - Matches `Type` or `readonly Type[]`
 - [`Tail<Type>`](/lib/tail) - Constructs a type which equals to elements but first one in type `Type`
 - [`Tuple<Type?>`](/lib/tuple) - Matches type constraint for tuple with elements of type `Type` (`any` by default)
