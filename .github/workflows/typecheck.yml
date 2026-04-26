@@ -37,9 +37,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          registry-url: "https://registry.npmjs.org"
 
       - name: Cache YARN dependencies
         uses: actions/cache@v4
@@ -50,7 +51,6 @@ jobs:
           restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
 
       - run: yarn --no-progress --non-interactive --frozen-lockfile
-
       - run: yarn add typescript@${{ matrix.typescript }}
       - run: yarn setTsVersion
       - run: yarn test
