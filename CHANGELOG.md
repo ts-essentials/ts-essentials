@@ -1,30 +1,5 @@
 # ts-essentials
 
-## 10.2.0
-
-### Minor Changes
-
-- a0a0cc2: Add `NonUnion` utility type
-- e9b7366: Deprecated `NonNever` and renamed it to `OmitNeverProperties`
-- 34f52e0: Added `RequireAtLeastOne` utility type
-- 675a244: Added `UnionKeys` utility type
-- 34f52e0: Added `RequireAtMostOne` utility type
-- bceeef1: Deprecated `Exact` and renamed it to `IsExact`
-- 88bfc52: Add `JsonValue`, `JsonPrimitive`, `JsonObject` and `JsonArray` utility types
-- bb7d19f: Add `OverrideDeepReadonlyOptions` to `DeepReadonly<Type, OverrideDeepReadonlyOptions?>` to allow configuring
-  passthrough behaviour for built-in types (`Date`, `Error`, `RegExp`) per use-case
-
-### Patch Changes
-
-- afa25a9: Fix `Prettify<Type>` type when `Type` is a class with private/protected members
-- 16e427d: Fix `IsTuple<Type>` type when `Type` is a tuple with both optional elements and a rest element, like
-  `[string?, ...number[]]`
-- 77767a1: Deprecated `NonEmptyArray` and renamed it to `AnyNonEmptyArray`
-- 44dbae4: Fix `DeepPartial<Type>` when `Type` is an array containing rest element, like `[string, ...number[]]`
-- a105b07: Added `Iterable` support for `DeepReadonly` and `DeepWritable`
-- b83d62b: Fix assignability for `UnionKeys`
-- b83d62b: Fix assignability for `UnionToIntersection`
-
 ## 10.1.1
 
 ### Patch Changes
