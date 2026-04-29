@@ -1,17 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "strict": true,
-    "noImplicitThis": true,
     "alwaysStrict": true,
-    "experimentalDecorators": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2015", "esnext.asynciterable"],
+    "module": "commonjs",
+    "noImplicitThis": true,
+    "rootDir": "lib",
+    "skipLibCheck": true,
     "sourceMap": true,
-    "declaration": true
+    "strict": true,
+    "target": "es2017",
+    "types": ["node"],
   },
+  "exclude": ["node_modules"],
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
 }
