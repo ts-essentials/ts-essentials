@@ -12,7 +12,8 @@
     "sourceMap": true,
     "declaration": true,
     "rootDir": "lib",
-    "types": ["node"]
+    "types": ["node"],
+    "skipLibCheck": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"],
