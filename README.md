@@ -225,6 +225,11 @@ When one of utility types is known by a different name, kindly ask adding it her
 - `Unwrap` - [`Prettify<Type>`](/lib/prettify/)
 - `ValueOf` - `DictionaryValues`
 
+## Declined
+
+- [ergonomic `Array.includes`](https://github.com/ts-essentials/ts-essentials/issues/372) - Use [ts-reset](https://github.com/mattpocock/ts-reset) instead. See compromises in [`Array.includes` as a type guard](https://github.com/mattpocock/ts-reset/blob/main/.out-of-scope/array-includes-type-guard.md)
+- [`Boolean` as a type guard in `Array.filter`](https://github.com/ts-essentials/ts-essentials/issues/372) - Use [ts-reset](https://github.com/mattpocock/ts-reset) instead.
+
 ## Built-in types
 
 TypeScript provides several [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) to
