@@ -27,7 +27,7 @@ Prefixes:
   - ⚠️ Inevitably all `Strict*` types lack the support of generic types for the first type parameter `Type` because
     generic constraints rely on a structure of `Type` which cannot be inferred at declaration. To mitigate it, please
     use non-`Strict*` analogue of a utility type.
-- ⚠️ [`PublicInterface<Type>`](/lib/public-interface) is an exception to all prefix rules above because `Public` refers to the TypeScript visibility modifier (`public`/`private`/`protected`), not a structural transformation pattern. No existing prefix captures this concept.
+- ⚠️ [`PublicInterface<Type>`](/lib/public-interface) is an exception to all prefix rules because `Public` refers to the TypeScript visibility modifier (`public`/`private`/`protected`), not a structural transformation pattern. No existing prefix captures this concept.
 
 Body:
 
