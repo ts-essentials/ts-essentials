@@ -78,7 +78,7 @@ npm install --save-dev ts-essentials
 - [`Paths<Type>`](/lib/paths) - Constructs a union type by picking all possible paths for type `Type`
 - [`PickProperties<Type, Value>`](/lib/pick-properties) - Constructs a type by picking all properties from type `Type`
   which values equal to `Value`
-- [`PublicInterface<Type>`](/lib/public-interface) - Constructs a type by extracting only the public members of `Type`, producing a plain object-compatible interface. Useful for creating mock objects in tests without casting
+- [`PublicInterface<Type>`](/lib/public-interface) - Constructs a type by extracting only the public members of `Type`, producing a plain object-compatible interface
 - [`RequireAtLeastOne<Type, Keys?>`](/lib/require-at-least-one) - Constructs a type with at least one required key from `Keys` (`keyof Type` by default) and other keys from `Type` which are not part of `Keys`
 - [`RequireAtMostOne<Type, Keys?>`](/lib/require-at-most-one) - Constructs a type with at most one required key from `Keys` (`keyof Type` by default) and other keys from `Type` which are not part of `Keys` 
 - [`SafeDictionary<Type, Keys?>`](/lib/safe-dictionary) - Constructs an optional object type which property keys are
