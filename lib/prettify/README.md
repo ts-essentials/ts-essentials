@@ -29,4 +29,4 @@ type EverythingAboutPerson = Prettify<Intersection>;
 //   ^? {first: string; second: string; address: string}
 ```
 
-TS Playground - https://tsplay.dev/m3d51W
+TS Playground - https://tsplay.dev/wEXb4W
