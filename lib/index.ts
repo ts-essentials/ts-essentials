@@ -30,6 +30,7 @@ export * from "./path-value";
 export * from "./paths";
 export * from "./pick-properties";
 export * from "./prettify";
+export * from "./public-interface";
 export * from "./require-at-least-one";
 export * from "./require-at-most-one";
 export * from "./safe-dictionary";
