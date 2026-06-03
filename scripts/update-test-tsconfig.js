@@ -4,7 +4,7 @@ const semver = require("semver");
 const { findTsVersion } = require("./find-ts-version");
 
 const CONDITIONAL_FILES = {
-  "lib/xor/function-parameters.test.ts": "4.5 - 4.8",
+  "lib/xor/function-parameters.test.ts": "4.7 - 4.8",
   "lib/readonly-keys/arrays-and-index-signatures.test.ts": "<5.3",
   "lib/writable-keys/arrays-and-index-signatures.test.ts": "<5.3",
 };
