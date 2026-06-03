@@ -1,5 +1,11 @@
 # ts-essentials
 
+## 10.2.1
+
+### Patch Changes
+
+- 4ad58f2: Added `PublicInterface<Type>` utility type
+
 ## 10.2.0
 
 ### Minor Changes
