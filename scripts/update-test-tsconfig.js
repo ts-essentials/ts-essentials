@@ -44,9 +44,9 @@ const updateTsConfig = async (tsVersion, filename) => {
   await fs.writeFile(filename, JSON.stringify(json, null, "  "));
 };
 
-const tsVersion = findTsVersion("yarn.lock");
+const tsVersion = findTsVersion("package-lock.json");
 if (tsVersion === undefined) {
-  throw new Error("Cannot find TypeScript version in yarn.lock");
+  throw new Error("Cannot find TypeScript version in package-lock.json");
 }
 
 updateTsConfig(tsVersion, "tsconfig.test.json");

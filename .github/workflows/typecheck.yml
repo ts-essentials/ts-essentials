@@ -42,15 +42,18 @@ jobs:
           node-version-file: ".nvmrc"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Cache YARN dependencies
+      - run: npm --version
+      - run: node --version
+
+      - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.OS }}-${{ hashFiles('.nvmrc') }}-yarn-cache-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ runner.OS }}-${{ hashFiles('.nvmrc') }}-yarn-cache-
+          key: ${{ runner.OS }}-${{ hashFiles('.nvmrc') }}-npm-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.OS }}-${{ hashFiles('.nvmrc') }}-npm-cache-
 
-      - run: yarn --no-progress --non-interactive --frozen-lockfile
-      - run: yarn add typescript@${{ matrix.typescript }}
-      - run: yarn setTsVersion
-      - run: yarn test
+      - run: npm ci
+      - run: npm install typescript@${{ matrix.typescript }}
+      - run: npm run setTsVersion
+      - run: npm run test
