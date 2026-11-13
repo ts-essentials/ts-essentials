@@ -188,6 +188,8 @@ npm install --save-dev ts-essentials
 
 - [`AnyFunction<Args?, ReturnType?>`](/lib/any-function) - Matches function type with arguments type `Args` (`any[]` by
   default) and return type `ReturnType` (`any` by default)
+- [`AnyThisFunction<ThisType, Args?, ReturnType?>`](/lib/any-this-function) - Matches function type with an explicit
+  `this` type `ThisType`, arguments type `Args` (`any[]` by default) and return type `ReturnType` (`any` by default)
 - [`PredicateFunction`](/lib/predicate-function) - Matches type constraint for type guard, meaning first argument is
   used in return type and return type is
   [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
