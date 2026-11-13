@@ -101,6 +101,7 @@ export * from "./deep-camel-case-properties";
 // Function types
 
 export * from "./any-function";
+export * from "./any-this-function";
 export * from "./predicate-function";
 export * from "./predicate-type";
 
